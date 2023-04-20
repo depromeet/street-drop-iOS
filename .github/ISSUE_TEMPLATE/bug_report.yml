@@ -1,0 +1,38 @@
+name: Bug Report
+description: 버그 이슈
+labels: Bug
+body:
+  - type: textarea
+    attributes:
+      label: 버그 설명
+      placeholder: ex. 제거한 데이터가 화면 전환 후 그대로 남아 있음
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 버그 발생 절차
+      placeholder: ex. 메인 뷰 테이블 셀 제거 후, 서브 뷰 전환 시
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 기대 동작
+      placeholder: ex. 전환된 서브 뷰 테이블에도 제거한 데이터 삭제되어야함
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 환경 정보
+      description: "ex. Device: simulator 14 pro, iOS 16.0, Xcode 14.2"
+      value: |
+        Device: 
+        iOS: 
+        Xcode: 
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: 스크린샷
+      description: "스크린샷 또는 gif 파일을 넣어주세요"
+    validations:
+      required: false

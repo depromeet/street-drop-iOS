@@ -1,0 +1,10 @@
+name: Request
+description: 요청 이슈
+labels: Request
+body:
+  - type: textarea
+    attributes:
+      label: 요청 사항
+      placeholder: ex. 메인 화면 UI 추가
+    validations:
+      required: true
