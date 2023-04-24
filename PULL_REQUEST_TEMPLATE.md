@@ -1,5 +1,5 @@
-## ~~작업 유형 (title)~~
-~~[Feature]~~ ~~[Fix]~~ ~~[Refactor]~~ ~~[Test]~~ ~~[Documentation]~~
+## ~~제목 작성 시 아래 스샷 참고 후 삭제~~
+![image](https://user-images.githubusercontent.com/35060252/233937327-14e76b1b-b4dc-41ee-963e-39719ef27a90.png)
 
 ## 📌 배경
 
