@@ -219,7 +219,6 @@
 				33C6E9256EDABFB58F83B1C8 /* Pods-StreetDrop.debug.xcconfig */,
 				2611E7411DB7C5436A272A27 /* Pods-StreetDrop.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
