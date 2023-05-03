@@ -17,6 +17,7 @@
 		049BC42A2A02826400071A12 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 049BC4292A02826400071A12 /* RxSwift */; };
 		049BC4362A02845900071A12 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 049BC4352A02845900071A12 /* Moya */; };
 		049BC4382A02845900071A12 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 049BC4372A02845900071A12 /* RxMoya */; };
+		049BC43B2A0284E900071A12 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 049BC43A2A0284E900071A12 /* SnapKit */; };
 		04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F252A0215BC0064B3C8 /* MainViewModel.swift */; };
 		04FB1F282A021B0A0064B3C8 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F272A021B0A0064B3C8 /* MainModel.swift */; };
 		04FB1F2B2A021B8F0064B3C8 /* TestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F2A2A021B8F0064B3C8 /* TestRepository.swift */; };
@@ -49,6 +50,7 @@
 				049BC4382A02845900071A12 /* RxMoya in Frameworks */,
 				049BC42A2A02826400071A12 /* RxSwift in Frameworks */,
 				049BC4282A02826400071A12 /* RxRelay in Frameworks */,
+				049BC43B2A0284E900071A12 /* SnapKit in Frameworks */,
 				049BC4362A02845900071A12 /* Moya in Frameworks */,
 				049BC4262A02826400071A12 /* RxCocoa in Frameworks */,
 			);
@@ -218,6 +220,7 @@
 				049BC4292A02826400071A12 /* RxSwift */,
 				049BC4352A02845900071A12 /* Moya */,
 				049BC4372A02845900071A12 /* RxMoya */,
+				049BC43A2A0284E900071A12 /* SnapKit */,
 			);
 			productName = StreetDrop;
 			productReference = 040684FC2A01539800377094 /* StreetDrop.app */;
@@ -250,6 +253,7 @@
 			packageReferences = (
 				049BC4242A02826400071A12 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				049BC4342A02845900071A12 /* XCRemoteSwiftPackageReference "Moya" */,
+				049BC4392A0284E900071A12 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 040684FD2A01539800377094 /* Products */;
 			projectDirPath = "";
@@ -511,6 +515,14 @@
 				kind = branch;
 			};
 		};
+		049BC4392A0284E900071A12 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -538,6 +550,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 049BC4342A02845900071A12 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = RxMoya;
+		};
+		049BC43A2A0284E900071A12 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 049BC4392A0284E900071A12 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
