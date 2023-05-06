@@ -26,8 +26,21 @@
 		18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
 		18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
 		18F76FB02A050133006CF9EF /* ResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAF2A050133006CF9EF /* ResponseDTO.swift */; };
+		41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FF58FB2A06B38800ABB871 /* NetworkManagerTest.swift */; };
+		41FF59022A06B3A100ABB871 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
+		41FF59032A06B3A200ABB871 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		41FF58FD2A06B38800ABB871 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 040684F42A01539800377094 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 040684FB2A01539800377094;
+			remoteInfo = StreetDrop;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		040684FC2A01539800377094 /* StreetDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreetDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +60,8 @@
 		18F76FAF2A050133006CF9EF /* ResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDTO.swift; sourceTree = "<group>"; };
 		2611E7411DB7C5436A272A27 /* Pods-StreetDrop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetDrop.release.xcconfig"; path = "Target Support Files/Pods-StreetDrop/Pods-StreetDrop.release.xcconfig"; sourceTree = "<group>"; };
 		33C6E9256EDABFB58F83B1C8 /* Pods-StreetDrop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetDrop.debug.xcconfig"; path = "Target Support Files/Pods-StreetDrop/Pods-StreetDrop.debug.xcconfig"; sourceTree = "<group>"; };
+		41FF58F92A06B38800ABB871 /* NetworkManagerTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkManagerTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		41FF58FB2A06B38800ABB871 /* NetworkManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerTest.swift; sourceTree = "<group>"; };
 		642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StreetDrop.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -65,6 +80,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		41FF58F62A06B38700ABB871 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -72,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				040684FE2A01539800377094 /* StreetDrop */,
+				41FF58FA2A06B38800ABB871 /* NetworkManagerTest */,
 				040684FD2A01539800377094 /* Products */,
 				DD24191EB8D98350CCDA3174 /* Pods */,
 				9AF428BDAA5509AEF1F4FB64 /* Frameworks */,
@@ -82,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				040684FC2A01539800377094 /* StreetDrop.app */,
+				41FF58F92A06B38800ABB871 /* NetworkManagerTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -219,6 +243,14 @@
 			path = DataMapping;
 			sourceTree = "<group>";
 		};
+		41FF58FA2A06B38800ABB871 /* NetworkManagerTest */ = {
+			isa = PBXGroup;
+			children = (
+				41FF58FB2A06B38800ABB871 /* NetworkManagerTest.swift */,
+			);
+			path = NetworkManagerTest;
+			sourceTree = "<group>";
+		};
 		9AF428BDAA5509AEF1F4FB64 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +298,24 @@
 			productReference = 040684FC2A01539800377094 /* StreetDrop.app */;
 			productType = "com.apple.product-type.application";
 		};
+		41FF58F82A06B38700ABB871 /* NetworkManagerTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 41FF59012A06B38800ABB871 /* Build configuration list for PBXNativeTarget "NetworkManagerTest" */;
+			buildPhases = (
+				41FF58F52A06B38700ABB871 /* Sources */,
+				41FF58F62A06B38700ABB871 /* Frameworks */,
+				41FF58F72A06B38700ABB871 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				41FF58FE2A06B38800ABB871 /* PBXTargetDependency */,
+			);
+			name = NetworkManagerTest;
+			productName = NetworkManagerTest;
+			productReference = 41FF58F92A06B38800ABB871 /* NetworkManagerTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -278,6 +328,10 @@
 				TargetAttributes = {
 					040684FB2A01539800377094 = {
 						CreatedOnToolsVersion = 14.2;
+					};
+					41FF58F82A06B38700ABB871 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 040684FB2A01539800377094;
 					};
 				};
 			};
@@ -300,6 +354,7 @@
 			projectRoot = "";
 			targets = (
 				040684FB2A01539800377094 /* StreetDrop */,
+				41FF58F82A06B38700ABB871 /* NetworkManagerTest */,
 			);
 		};
 /* End PBXProject section */
@@ -311,6 +366,13 @@
 			files = (
 				0406850C2A01539800377094 /* LaunchScreen.storyboard in Resources */,
 				040685092A01539800377094 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		41FF58F72A06B38700ABB871 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,7 +439,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		41FF58F52A06B38700ABB871 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				41FF59022A06B3A100ABB871 /* NetworkManager.swift in Sources */,
+				41FF59032A06B3A200ABB871 /* NetworkService.swift in Sources */,
+				41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		41FF58FE2A06B38800ABB871 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 040684FB2A01539800377094 /* StreetDrop */;
+			targetProxy = 41FF58FD2A06B38800ABB871 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		0406850A2A01539800377094 /* LaunchScreen.storyboard */ = {
@@ -561,6 +641,50 @@
 			};
 			name = Release;
 		};
+		41FF58FF2A06B38800ABB871 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G9W4Z8U9JB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sunny.NetworkManagerTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StreetDrop.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StreetDrop";
+			};
+			name = Debug;
+		};
+		41FF59002A06B38800ABB871 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G9W4Z8U9JB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sunny.NetworkManagerTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StreetDrop.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StreetDrop";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -578,6 +702,15 @@
 			buildConfigurations = (
 				040685112A01539800377094 /* Debug */,
 				040685122A01539800377094 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		41FF59012A06B38800ABB871 /* Build configuration list for PBXNativeTarget "NetworkManagerTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				41FF58FF2A06B38800ABB871 /* Debug */,
+				41FF59002A06B38800ABB871 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
