@@ -43,4 +43,11 @@ extension NetworkService: TargetType {
     var headers: [String: String]? {
         return ["Content-type": "application/json"]
     }
+
+    var sampleData: Data {
+        switch self {
+        case .getWeather:
+            return Data("weatherSampleData".utf8)
+        }
+    }
 }
