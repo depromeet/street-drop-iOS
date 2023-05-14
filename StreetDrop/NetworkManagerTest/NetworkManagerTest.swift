@@ -42,4 +42,26 @@ final class NetworkManagerTest: XCTestCase {
         XCTAssertNotEqual(response, Data("wrongSampleData".utf8))
         XCTAssertEqual(response, Data("weatherSampleData".utf8))
     }
+
+    func test_fetchPOI_success() {
+        //given
+        let (latitude, longitude, zoomLevel) = (123.123, 32.234, 3)
+
+        //then: 첫번째 데이터의 poi 위도는 89.33이다
+        var response: Data?
+
+        sut.fetchPOI(latitude: latitude, longitude: longitude, zoomLevel: zoomLevel)
+            .subscribe {  data in
+                response = data
+            }
+            .dispose()
+
+        do {
+            let allPoi = try JSONDecoder().decode(PoiDTO.self, from: response ?? Data()).allPoi
+            XCTAssertNotEqual(10.12, allPoi[0].latitude)
+            XCTAssertEqual(89.33, allPoi[0].latitude)
+        } catch {
+            XCTFail("Decoding Error")
+        }
+    }
 }
