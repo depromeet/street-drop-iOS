@@ -42,4 +42,26 @@ final class NetworkManagerTest: XCTestCase {
         XCTAssertNotEqual(response, Data("wrongSampleData".utf8))
         XCTAssertEqual(response, Data("weatherSampleData".utf8))
     }
+
+    func test_searchMusic_success() {
+        //given
+        let keyword = "dynamite"
+
+        //then 첫번째 데이터의 artistName이 "방탄소년단"
+        var response: Data?
+        sut.searchMusic(keyword: keyword)
+            .subscribe { data in
+                response = data
+            }
+            .dispose()
+
+        do {
+            let decoder = JSONDecoder()
+            let list = try decoder.decode(SearchedMusicList.self, from: response ?? Data()).list
+            XCTAssertNotEqual("빅뱅", list[0].artistName)
+            XCTAssertEqual("방탄소년단", list[0].artistName)
+        } catch {
+            XCTFail("Decoding Error")
+        }
+    }
 }
