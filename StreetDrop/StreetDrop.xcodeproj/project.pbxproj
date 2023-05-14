@@ -26,6 +26,8 @@
 		18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
 		18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
 		18F76FB02A050133006CF9EF /* ResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAF2A050133006CF9EF /* ResponseDTO.swift */; };
+		41B953682A10E39D00BEC0AB /* SearchedMusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B953672A10E39D00BEC0AB /* SearchedMusicList.swift */; };
+		41B953692A10E5B800BEC0AB /* SearchedMusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B953672A10E39D00BEC0AB /* SearchedMusicList.swift */; };
 		41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FF58FB2A06B38800ABB871 /* NetworkManagerTest.swift */; };
 		41FF59022A06B3A100ABB871 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
 		41FF59032A06B3A200ABB871 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
@@ -60,6 +62,7 @@
 		18F76FAF2A050133006CF9EF /* ResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDTO.swift; sourceTree = "<group>"; };
 		2611E7411DB7C5436A272A27 /* Pods-StreetDrop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetDrop.release.xcconfig"; path = "Target Support Files/Pods-StreetDrop/Pods-StreetDrop.release.xcconfig"; sourceTree = "<group>"; };
 		33C6E9256EDABFB58F83B1C8 /* Pods-StreetDrop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetDrop.debug.xcconfig"; path = "Target Support Files/Pods-StreetDrop/Pods-StreetDrop.debug.xcconfig"; sourceTree = "<group>"; };
+		41B953672A10E39D00BEC0AB /* SearchedMusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedMusicList.swift; sourceTree = "<group>"; };
 		41FF58F92A06B38800ABB871 /* NetworkManagerTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkManagerTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41FF58FB2A06B38800ABB871 /* NetworkManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerTest.swift; sourceTree = "<group>"; };
 		642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StreetDrop.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +241,7 @@
 		18F76FAE2A050110006CF9EF /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				41B953672A10E39D00BEC0AB /* SearchedMusicList.swift */,
 				18F76FAF2A050133006CF9EF /* ResponseDTO.swift */,
 			);
 			path = DataMapping;
@@ -435,6 +439,7 @@
 				04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */,
 				04FB1F2D2A021BAB0064B3C8 /* DefaultTestRepository.swift in Sources */,
 				04FB1F2B2A021B8F0064B3C8 /* TestRepository.swift in Sources */,
+				41B953682A10E39D00BEC0AB /* SearchedMusicList.swift in Sources */,
 				18F76FB02A050133006CF9EF /* ResponseDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,6 +450,7 @@
 			files = (
 				41FF59022A06B3A100ABB871 /* NetworkManager.swift in Sources */,
 				41FF59032A06B3A200ABB871 /* NetworkService.swift in Sources */,
+				41B953692A10E5B800BEC0AB /* SearchedMusicList.swift in Sources */,
 				41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
