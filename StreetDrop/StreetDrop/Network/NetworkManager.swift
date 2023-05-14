@@ -24,4 +24,13 @@ struct NetworkManager {
             .asObservable()
             .catchAndReturn(nil)
     }
+
+    func fetchPOI(latitude: Double, longitude: Double, zoomLevel: Int) -> Single<Data?> {
+        return provider.rx
+            .request(.fetchPOI(latitude: latitude, longitude: longitude, zoomLevel: zoomLevel))
+            .retry(3)
+            .map { response -> Data? in
+                return response.data
+            }
+    }
 }
