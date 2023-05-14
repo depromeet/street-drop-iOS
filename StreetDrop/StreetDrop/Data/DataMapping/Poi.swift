@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PoiDTO: Codable {
+struct Poi: Codable {
     let allPoi: [Poi]
 
     struct Poi: Codable {
