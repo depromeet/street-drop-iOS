@@ -13,6 +13,8 @@
 		040685092A01539800377094 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040685082A01539800377094 /* Assets.xcassets */; };
 		0406850C2A01539800377094 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0406850A2A01539800377094 /* LaunchScreen.storyboard */; };
 		0410388E2A12688A00BC5532 /* DropMusicRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049F50212A122C8A001528CB /* DropMusicRequestDTO.swift */; };
+		041038972A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041038962A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift */; };
+		041038982A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041038962A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift */; };
 		049BC4262A02826400071A12 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 049BC4252A02826400071A12 /* RxCocoa */; };
 		049BC4282A02826400071A12 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 049BC4272A02826400071A12 /* RxRelay */; };
 		049BC42A2A02826400071A12 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 049BC4292A02826400071A12 /* RxSwift */; };
@@ -54,6 +56,7 @@
 		040685082A01539800377094 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0406850B2A01539800377094 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0406850D2A01539800377094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		041038962A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfDroppedMusicByDongResponseDTO.swift; sourceTree = "<group>"; };
 		049F50212A122C8A001528CB /* DropMusicRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropMusicRequestDTO.swift; sourceTree = "<group>"; };
 		04FB1F252A0215BC0064B3C8 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		04FB1F272A021B0A0064B3C8 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
@@ -127,6 +130,14 @@
 				04FB1F232A0214B40064B3C8 /* Network */,
 			);
 			path = StreetDrop;
+			sourceTree = "<group>";
+		};
+		041038952A126D1400BC5532 /* NumberOfDroppedMusicByDong */ = {
+			isa = PBXGroup;
+			children = (
+				041038962A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift */,
+			);
+			path = NumberOfDroppedMusicByDong;
 			sourceTree = "<group>";
 		};
 		049F50242A122C8F001528CB /* DropMusic */ = {
@@ -255,6 +266,7 @@
 				41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift */,
 				18F76FAF2A050133006CF9EF /* ResponseDTO.swift */,
 				049F50242A122C8F001528CB /* DropMusic */,
+				041038952A126D1400BC5532 /* NumberOfDroppedMusicByDong */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -450,6 +462,7 @@
 				04FB1F282A021B0A0064B3C8 /* MainModel.swift in Sources */,
 				04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */,
 				049F50222A122C8A001528CB /* DropMusicRequestDTO.swift in Sources */,
+				041038972A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */,
 				04FB1F2D2A021BAB0064B3C8 /* DefaultTestRepository.swift in Sources */,
 				04FB1F2B2A021B8F0064B3C8 /* TestRepository.swift in Sources */,
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift in Sources */,
@@ -464,6 +477,7 @@
 				41FF59022A06B3A100ABB871 /* NetworkManager.swift in Sources */,
 				41FF59032A06B3A200ABB871 /* NetworkService.swift in Sources */,
 				0410388E2A12688A00BC5532 /* DropMusicRequestDTO.swift in Sources */,
+				041038982A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */,
 				41B953692A10E5B800BEC0AB /* SearchedMusicResponseDTO.swift in Sources */,
 				41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */,
 			);
