@@ -8,7 +8,7 @@
 import Foundation
 
 struct Poi: Codable {
-    let allPoi: [Poi]
+    let allPOI: [Poi]
 
     struct Poi: Codable {
         let itemID: Int
@@ -20,22 +20,9 @@ struct Poi: Codable {
             case itemID = "itemId"
             case albumCover, latitude, longitude
         }
-
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            itemID = try container.decode(Int.self, forKey: .itemID)
-            albumCover = try container.decode(URL.self, forKey: .albumCover)
-            latitude = try container.decode(Double.self, forKey: .latitude)
-            longitude = try container.decode(Double.self, forKey: .longitude)
-        }
     }
 
     private enum CodingKeys: String, CodingKey {
-        case allPoi = "poi"
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        allPoi = try container.decode([Poi].self, forKey: .allPoi)
+        case allPOI = "poi"
     }
 }

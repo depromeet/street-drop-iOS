@@ -57,7 +57,7 @@ final class NetworkManagerTest: XCTestCase {
             .dispose()
 
         do {
-            let allPoi = try JSONDecoder().decode(Poi.self, from: response ?? Data()).allPoi
+            let allPoi = try JSONDecoder().decode(Poi.self, from: response ?? Data()).allPOI
             XCTAssertNotEqual(10.12, allPoi[0].latitude)
             XCTAssertEqual(89.33, allPoi[0].latitude)
         } catch {
