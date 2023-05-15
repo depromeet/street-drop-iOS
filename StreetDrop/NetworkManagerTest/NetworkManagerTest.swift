@@ -74,4 +74,40 @@ final class NetworkManagerTest: XCTestCase {
             XCTFail("Decoding Error")
         }
     }
+    
+    func test_dropMusic_success() {
+        //given
+        let droppingLocation = DropMusicRequestDTO.Location(
+            latitude: 37.35959299999998,
+            logitude: 127.10531600000002,
+            address: "성남시 분당구 정자1동"
+        )
+        
+        let droppingMusic = DropMusicRequestDTO.Music(
+            title: "하입보이",
+            artist: "뉴진스",
+            albumName: "NewJeans 1st EP 'New Jeans'",
+            albumCover: "https://is2-ssl.mzstatic.com/image.../.jpg",
+            genre: [
+                "댄스"
+            ]
+        )
+        //then 드랍 API 성공 시, success Result로 들어옴
+        sut.dropMusic(
+            requestDTO: DropMusicRequestDTO(
+                location: droppingLocation,
+                music: droppingMusic,
+                content: ""
+            )
+        )
+        .subscribe {
+            switch $0 {
+            case .success(_):
+                XCTAssert(true)
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        .dispose()
+    }
 }
