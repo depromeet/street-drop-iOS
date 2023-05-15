@@ -31,4 +31,10 @@ struct NetworkManager {
             .retry(3)
             .map { $0.data }
     }
+    
+    func searchMusic(keyword: String) -> Single<Data> {
+        return provider.rx.request(.searchMusic(keyword: keyword))
+            .retry(3)
+            .map { $0.data }
+    }
 }

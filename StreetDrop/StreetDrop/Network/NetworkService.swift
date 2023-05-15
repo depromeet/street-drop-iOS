@@ -12,28 +12,39 @@ import Moya
 enum NetworkService {
     case getWeather(lat: String, lon: String)
     case fetchPOI(latitude: Double, longitude: Double, zoomLevel: Int)
+    case searchMusic(keyword: String)
 }
 
 extension NetworkService: TargetType {
-    var baseURL: URL { return URL(string: "https://api.openweathermap.org")! }
+    var baseURL: URL {
+        switch self {
+        case .getWeather:
+            return URL(string: "https://api.openweathermap.org")!
+        case .searchMusic:
+            return URL(string: "search.street-drop.com")!
+        }
+    }
+
     var path: String {
         switch self {
         case .getWeather:
             return "/data/2.5/forecast"
         case .fetchPOI:
             return "Sample"
+        default:
+            return ""
         }
     }
-    
+
     var method: Moya.Method {
         switch self {
-        case .getWeather:
+        case .getWeather, .searchMusic:
             return .get
         case .fetchPOI:
             return .get
         }
     }
-    
+
     var task: Moya.Task {
         switch self {
         case .getWeather(let lat, let lon):
@@ -44,6 +55,10 @@ extension NetworkService: TargetType {
                                       encoding: URLEncoding.queryString)
         case .fetchPOI:
             return .requestPlain
+        case .searchMusic(let keyword):
+            return .requestParameters(
+                parameters: ["keyword": keyword],
+                encoding: URLEncoding.queryString)
         }
     }
     
@@ -62,23 +77,38 @@ extension NetworkService: TargetType {
             return Data("weatherSampleData".utf8)
         case .fetchPOI:
             return Data("""
-                    {
-                      "poi": [
                         {
-                          "itemId": 1,
-                          "albumCover" : "http://img.com",
-                          "latitude": 89.33,
-                          "longitude": 123.222
-                        },
-                        {
-                          "itemId": 2,
-                          "albumCover" : "http://img.com",
-                          "latitude": 88.214,
-                          "longitude": 122.908
+                          "poi": [
+                            {
+                              "itemId": 1,
+                              "albumCover" : "http://img.com",
+                              "latitude": 89.33,
+                              "longitude": 123.222
+                            },
+                            {
+                              "itemId": 2,
+                              "albumCover" : "http://img.com",
+                              "latitude": 88.214,
+                              "longitude": 122.908
+                            }
+                          ]
                         }
-                      ]
-                    }
-                    """.utf8)
+                        """.utf8)
+        case .searchMusic:
+            return Data("""
+                        {
+                            "data": [
+                                {
+                                    "albumName": "Dynamite (DayTime Version) - EP",
+                                    "artistName": "방탄소년단",
+                                    "songName": "Dynamite",
+                                    "durationTime": "3:20",
+                                    "albumImg": "https://is2-ssl.mzstatic.com/image.../.jpg",
+                                    "albumThumbnailImg": "https://is2-ssl.mzstatic.com/.../.jpg"
+                                }
+                            ]
+                        }
+                        """.utf8)
         }
     }
 }
