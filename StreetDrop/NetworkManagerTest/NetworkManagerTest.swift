@@ -51,8 +51,13 @@ final class NetworkManagerTest: XCTestCase {
         var response: Data?
 
         sut.fetchPOI(latitude: latitude, longitude: longitude, zoomLevel: zoomLevel)
-            .subscribe { data in
-                response = data
+            .subscribe { result in
+                switch result {
+                case .success(let data):
+                    response = data
+                case .failure(let error):
+                    XCTFail(error.localizedDescription)
+                }
             }
             .dispose()
 
