@@ -1,5 +1,5 @@
 //
-//  SearchedMusicList.swift
+//  searchedMusicResponseDTO.swift
 //  StreetDrop
 //
 //  Created by 맹선아 on 2023/05/14.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SearchMusicResponseDTO: Decodable {
+struct SearchedMusicResponseDTO: Decodable {
     let list: [Music]
 
     struct Music: Decodable {
