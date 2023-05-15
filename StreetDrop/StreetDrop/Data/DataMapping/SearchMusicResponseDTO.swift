@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct SearchMusicResponseDTO: Codable {
+struct SearchMusicResponseDTO: Decodable {
     let list: [Music]
 
-    struct Music: Codable {
+    struct Music: Decodable {
         let albumName: String
         let artistName: String
         let songName: String
