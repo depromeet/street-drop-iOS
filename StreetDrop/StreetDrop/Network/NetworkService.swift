@@ -20,6 +20,8 @@ extension NetworkService: TargetType {
         switch self {
         case .getWeather:
             return URL(string: "https://api.openweathermap.org")!
+        case .fetchPOI:
+            return URL(string: "https://temporaryTestURL")!
         case .searchMusic:
             return URL(string: "search.street-drop.com")!
         }

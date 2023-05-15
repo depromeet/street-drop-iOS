@@ -52,26 +52,26 @@ final class NetworkManagerTest: XCTestCase {
 
         sut.fetchPOI(latitude: latitude, longitude: longitude, zoomLevel: zoomLevel)
             .subscribe { result in
-                      switch result {
-                      case .success(let data):
-                          response = data
-                      case .failure(let error):
-                          XCTFail(error.localizedDescription)
-                      }
-                  }
-                  .dispose()
-      
+                switch result {
+                case .success(let data):
+                    response = data
+                case .failure(let error):
+                    XCTFail(error.localizedDescription)
+                }
+            }
+            .dispose()
+
         do {
             let poiResponse = try JSONDecoder().decode(
-                  PoiResponseDTO.self,
-                  from: response ?? Data()
-              )
-              let allPoi = poiResponse.allPOI
+                PoiResponseDTO.self,
+                from: response ?? Data()
+            )
+            let allPoi = poiResponse.allPOI
 
-              XCTAssertNotEqual(10.12, allPoi[0].latitude)
-              XCTAssertEqual(89.33, allPoi[0].latitude)
+            XCTAssertNotEqual(10.12, allPoi[0].latitude)
+            XCTAssertEqual(89.33, allPoi[0].latitude)
         } catch {
-              XCTFail("Decoding Error")
+            XCTFail("Decoding Error")
         }
     }
 
