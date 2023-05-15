@@ -1,5 +1,5 @@
 //
-//  POIResponse.swift
+//  PoiResponseDTO.swift
 //  StreetDrop
 //
 //  Created by 맹선아 on 2023/05/13.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Poi: Codable {
+struct PoiResponseDTO: Decodable {
     let allPOI: [Poi]
 
-    struct Poi: Codable {
+    struct Poi: Decodable {
         let itemID: Int
         let albumCover: URL
         let latitude: Double

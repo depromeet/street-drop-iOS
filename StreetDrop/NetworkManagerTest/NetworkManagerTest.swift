@@ -51,13 +51,18 @@ final class NetworkManagerTest: XCTestCase {
         var response: Data?
 
         sut.fetchPOI(latitude: latitude, longitude: longitude, zoomLevel: zoomLevel)
-            .subscribe {  data in
+            .subscribe { data in
                 response = data
             }
             .dispose()
 
         do {
-            let allPoi = try JSONDecoder().decode(Poi.self, from: response ?? Data()).allPOI
+            let poiResponse = try JSONDecoder().decode(
+                PoiResponseDTO.self,
+                from: response ?? Data()
+            )
+            let allPoi = poiResponse.allPOI
+
             XCTAssertNotEqual(10.12, allPoi[0].latitude)
             XCTAssertEqual(89.33, allPoi[0].latitude)
         } catch {
