@@ -25,11 +25,9 @@ struct NetworkManager {
             .catchAndReturn(nil)
     }
     
-    func searchMusic(keyword: String) -> Single<Data?> {
+    func searchMusic(keyword: String) -> Single<Data> {
         return provider.rx.request(.searchMusic(keyword: keyword))
             .retry(3)
-            .map { response -> Data? in
-                return response.data
-            }
+            .map { $0.data }
     }
 }
