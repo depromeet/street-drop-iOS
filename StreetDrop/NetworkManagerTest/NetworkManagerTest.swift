@@ -49,18 +49,24 @@ final class NetworkManagerTest: XCTestCase {
 
         //then 첫번째 데이터의 artistName이 "방탄소년단"
         var response: Data?
+
         sut.searchMusic(keyword: keyword)
-            .subscribe { data in
-                response = data
+            .subscribe { result in
+                switch result {
+                case .success(let data):
+                    response = data
+                case .failure(let error):
+                    XCTFail(error.localizedDescription)
+                }
             }
             .dispose()
 
         do {
-            let decoder = JSONDecoder()
-            let searchMusicResponse = try decoder.decode(
-                SearchMusicResponseDTO.self,
-                from: response ?? Data())
-            let list = searchMusicResponse.list
+            let searchedMusic = try JSONDecoder().decode(
+                SearchedMusicResponseDTO.self,
+                from: response ?? Data()
+            )
+            let list = searchedMusic.list
 
             XCTAssertNotEqual("빅뱅", list[0].artistName)
             XCTAssertEqual("방탄소년단", list[0].artistName)
