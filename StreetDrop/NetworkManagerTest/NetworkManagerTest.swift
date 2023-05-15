@@ -57,7 +57,11 @@ final class NetworkManagerTest: XCTestCase {
 
         do {
             let decoder = JSONDecoder()
-            let list = try decoder.decode(SearchedMusicList.self, from: response ?? Data()).list
+            let searchMusicResponse = try decoder.decode(
+                SearchMusicResponseDTO.self,
+                from: response ?? Data())
+            let list = searchMusicResponse.list
+
             XCTAssertNotEqual("빅뱅", list[0].artistName)
             XCTAssertEqual("방탄소년단", list[0].artistName)
         } catch {

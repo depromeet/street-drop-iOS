@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SearchedMusicList: Codable {
+struct SearchMusicResponseDTO: Codable {
     let list: [Music]
 
     struct Music: Codable {
