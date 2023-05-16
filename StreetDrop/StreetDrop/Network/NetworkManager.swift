@@ -42,4 +42,10 @@ struct NetworkManager {
             .retry(3)
             .map { $0.data }
     }
+    
+    func getMusicWithinArea(requestDTO: MusicWithinAreaRequestDTO) -> Single<Data> {
+        return provider.rx.request(.getMusicWithinArea(requestDTO: requestDTO))
+            .retry(3)
+            .map { $0.data }
+    }
 }

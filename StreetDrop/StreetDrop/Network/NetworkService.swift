@@ -14,6 +14,7 @@ enum NetworkService {
     case searchMusic(keyword: String)
     case dropMusic(requestDTO: DropMusicRequestDTO)
     case fetchNumberOfDroppedMusicByDong(address: String)
+    case getMusicWithinArea(requestDTO: MusicWithinAreaRequestDTO)
 }
 
 extension NetworkService: TargetType {
@@ -21,7 +22,7 @@ extension NetworkService: TargetType {
         switch self {
         case .getWeather:
             return URL(string: "https://api.openweathermap.org")!
-        case .searchMusic, .dropMusic, .fetchNumberOfDroppedMusicByDong:
+        case .searchMusic, .dropMusic, .fetchNumberOfDroppedMusicByDong, .getMusicWithinArea:
             return URL(string: "search.street-drop.com")!
         }
     }
@@ -30,6 +31,8 @@ extension NetworkService: TargetType {
         switch self {
         case .getWeather:
             return "/data/2.5/forecast"
+        case .getMusicWithinArea:
+            return "/musicWithinArea"
         default:
             return ""
         }
@@ -41,6 +44,8 @@ extension NetworkService: TargetType {
             return .get
         case .dropMusic:
             return .post
+        case .getMusicWithinArea:
+            return .get
         }
     }
 
@@ -63,6 +68,8 @@ extension NetworkService: TargetType {
                 parameters: ["address": address],
                 encoding: URLEncoding.queryString
             )
+        case .getMusicWithinArea(let musicWithinAreaRequestDTO):
+            return .requestJSONEncodable(musicWithinAreaRequestDTO)
         }
     }
     
@@ -97,6 +104,8 @@ extension NetworkService: TargetType {
                             "numberOfDroppedMusic": 247
                         }
                         """.utf8)
+        case .getMusicWithinArea:
+            return Data()
         }
     }
 }

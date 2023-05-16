@@ -27,8 +27,8 @@
 		04FB1F2B2A021B8F0064B3C8 /* TestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F2A2A021B8F0064B3C8 /* TestRepository.swift */; };
 		04FB1F2D2A021BAB0064B3C8 /* DefaultTestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F2C2A021BAB0064B3C8 /* DefaultTestRepository.swift */; };
 		04FB1F322A021C330064B3C8 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F312A021C330064B3C8 /* TestError.swift */; };
-		18AAF82C2A127172002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF82B2A127172002EF441 /* MusicWithinAreaResponseDTO.swift */; };
 		18AAF82E2A135D56002EF441 /* MusicWithinAreaRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF82D2A135D56002EF441 /* MusicWithinAreaRequestDTO.swift */; };
+		18AAF8422A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF8402A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift */; };
 		18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
 		18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
 		18F76FB02A050133006CF9EF /* ResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAF2A050133006CF9EF /* ResponseDTO.swift */; };
@@ -65,8 +65,8 @@
 		04FB1F2A2A021B8F0064B3C8 /* TestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRepository.swift; sourceTree = "<group>"; };
 		04FB1F2C2A021BAB0064B3C8 /* DefaultTestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTestRepository.swift; sourceTree = "<group>"; };
 		04FB1F312A021C330064B3C8 /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
-		18AAF82B2A127172002EF441 /* MusicWithinAreaResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicWithinAreaResponseDTO.swift; sourceTree = "<group>"; };
 		18AAF82D2A135D56002EF441 /* MusicWithinAreaRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicWithinAreaRequestDTO.swift; sourceTree = "<group>"; };
+		18AAF8402A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicWithinAreaResponseDTO.swift; sourceTree = "<group>"; };
 		18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		18F76FAF2A050133006CF9EF /* ResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDTO.swift; sourceTree = "<group>"; };
@@ -267,7 +267,7 @@
 		18AAF8362A136D9E002EF441 /* MusicWithinArea */ = {
 			isa = PBXGroup;
 			children = (
-				18AAF82B2A127172002EF441 /* MusicWithinAreaResponseDTO.swift */,
+				18AAF8402A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift */,
 				18AAF82D2A135D56002EF441 /* MusicWithinAreaRequestDTO.swift */,
 			);
 			path = MusicWithinArea;
@@ -280,7 +280,6 @@
 				18F76FAF2A050133006CF9EF /* ResponseDTO.swift */,
 				049F50242A122C8F001528CB /* DropMusic */,
 				041038952A126D1400BC5532 /* NumberOfDroppedMusicByDong */,
-				18AAF82B2A127172002EF441 /* MusicWithinAreaResponseDTO.swift */,
 				18AAF8362A136D9E002EF441 /* MusicWithinArea */,
 			);
 			path = DataMapping;
@@ -473,7 +472,6 @@
 				040685042A01539800377094 /* MainViewController.swift in Sources */,
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
 				18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */,
-				18AAF82C2A127172002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				040685022A01539800377094 /* SceneDelegate.swift in Sources */,
 				04FB1F322A021C330064B3C8 /* TestError.swift in Sources */,
 				04FB1F282A021B0A0064B3C8 /* MainModel.swift in Sources */,
@@ -481,6 +479,7 @@
 				049F50222A122C8A001528CB /* DropMusicRequestDTO.swift in Sources */,
 				041038972A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */,
 				04FB1F2D2A021BAB0064B3C8 /* DefaultTestRepository.swift in Sources */,
+				18AAF8412A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				04FB1F2B2A021B8F0064B3C8 /* TestRepository.swift in Sources */,
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift in Sources */,
 				18F76FB02A050133006CF9EF /* ResponseDTO.swift in Sources */,
@@ -496,6 +495,7 @@
 				0410388E2A12688A00BC5532 /* DropMusicRequestDTO.swift in Sources */,
 				041038982A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */,
 				41B953692A10E5B800BEC0AB /* SearchedMusicResponseDTO.swift in Sources */,
+				18AAF8422A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
