@@ -13,18 +13,21 @@ struct MusicWithinAreaResponseDTO: Decodable {
     let items: [ItemDTO]
 }
 
-struct ItemDTO: Decodable {
-    let itemID: Int
-    let music: MusicDTO
-    let content: String
-
-    enum CodingKeys: String, CodingKey {
-        case itemID = "itemId"
-        case music, content
+extension MusicWithinAreaResponseDTO {
+    struct ItemDTO: Decodable {
+        let itemID: Int
+        let music: MusicDTO
+        let content: String
+        
+        enum CodingKeys: String, CodingKey {
+            case itemID = "itemId"
+            case music, content
+        }
     }
 }
 
-struct Music: Decodable {
-    let title, artist, albumCover: String
+extension MusicWithinAreaResponseDTO {
+    struct MusicDTO: Decodable {
+        let title, artist, albumCover: String
+    }
 }
-
