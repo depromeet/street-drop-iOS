@@ -128,7 +128,6 @@ final class NetworkManagerTest: XCTestCase {
                 }
             }
             .dispose()
-        
         do {
             let numberOfDroppedMusicByDong = try JSONDecoder().decode(
                 NumberOfDroppedMusicByDongResponseDTO.self,
@@ -139,5 +138,23 @@ final class NetworkManagerTest: XCTestCase {
         } catch {
             XCTFail("Decoding Error")
         }
+    }
+        
+    
+    func test_getMusicWithinArea_success() {
+        //given
+        let sampleRequestDTO = MusicWithinAreaRequestDTO.init(latitude: 30.33, longitude: 30.33, orderBy: "date")
+        
+        //then
+        sut.getMusicWithinArea(requestDTO: sampleRequestDTO)
+            .subscribe {
+                switch $0 {
+                case .success(_):
+                    XCTAssert(true)
+                case .failure(let error):
+                    XCTFail(error.localizedDescription)
+                }
+            }
+            .dispose()
     }
 }
