@@ -12,7 +12,6 @@ import Moya
 enum NetworkService {
     case getWeather(lat: String, lon: String)
     case searchMusic(keyword: String)
-    case dropMusic(requestDTO: DropMusicRequestDTO)
 }
 
 extension NetworkService: TargetType {
@@ -21,8 +20,6 @@ extension NetworkService: TargetType {
         case .getWeather:
             return URL(string: "https://api.openweathermap.org")!
         case .searchMusic:
-            return URL(string: "search.street-drop.com")!
-        case .dropMusic:
             return URL(string: "search.street-drop.com")!
         }
     }
@@ -40,8 +37,6 @@ extension NetworkService: TargetType {
         switch self {
         case .getWeather, .searchMusic:
             return .get
-        case .dropMusic:
-            return .post
         }
     }
 
@@ -57,8 +52,6 @@ extension NetworkService: TargetType {
             return .requestParameters(
                 parameters: ["keyword": keyword],
                 encoding: URLEncoding.queryString)
-        case .dropMusic(let dropRequestDTO):
-            return .requestJSONEncodable(dropRequestDTO)
         }
     }
     
@@ -85,8 +78,6 @@ extension NetworkService: TargetType {
                             ]
                         }
                         """.utf8)
-        case .dropMusic:
-            return Data()
         }
     }
 }
