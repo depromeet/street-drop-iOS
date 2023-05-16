@@ -16,6 +16,7 @@ enum NetworkService {
     case fetchNumberOfDroppedMusicByDong(address: String)
     case getMusicWithinArea(requestDTO: MusicWithinAreaRequestDTO)
     case getCommunity(itemID: UUID)
+    case getPOI(latitude: Double, longitude: Double, zoomLevel: Int)
 }
 
 extension NetworkService: TargetType {
@@ -23,7 +24,7 @@ extension NetworkService: TargetType {
         switch self {
         case .getWeather:
             return URL(string: "https://api.openweathermap.org")!
-        case .searchMusic, .dropMusic, .fetchNumberOfDroppedMusicByDong, .getMusicWithinArea:
+        default:
             return URL(string: "search.street-drop.com")!
         }
     }
@@ -43,7 +44,7 @@ extension NetworkService: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .getWeather, .searchMusic, .fetchNumberOfDroppedMusicByDong:
+        case .getWeather, .searchMusic, .fetchNumberOfDroppedMusicByDong, .getPOI:
             return .get
         case .dropMusic:
             return .post
@@ -78,6 +79,8 @@ extension NetworkService: TargetType {
         case .getCommunity(let itemID):
             return .requestParameters(parameters: ["itemID": itemID],
                                       encoding: URLEncoding.queryString)
+        case .getPOI:
+            return .requestPlain // API주소 확정 후 수정예정
         }
     }
     
@@ -116,6 +119,25 @@ extension NetworkService: TargetType {
             return Data()
         case .getCommunity:
             return Data()
+        case .getPOI:
+            return Data("""
+                        {
+                            "poi": [
+                            {
+                                "itemId": 1,
+                                "albumThumbnailImage" : "http://img.com",
+                                "latitude": 89.33,
+                                "longitude": 123.222
+                            },
+                            {
+                                "itemId": 2,
+                                "albumThumbnailImage" : "http://img.com",
+                                "latitude": 88.214,
+                                "longitude": 122.908
+                            }
+                            ]
+                        }
+                        """.utf8)
         }
     }
 }
