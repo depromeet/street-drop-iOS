@@ -15,6 +15,7 @@ enum NetworkService {
     case dropMusic(requestDTO: DropMusicRequestDTO)
     case fetchNumberOfDroppedMusicByDong(address: String)
     case getMusicWithinArea(requestDTO: MusicWithinAreaRequestDTO)
+    case getCommunity(itemID: UUID)
 }
 
 extension NetworkService: TargetType {
@@ -33,6 +34,8 @@ extension NetworkService: TargetType {
             return "/data/2.5/forecast"
         case .getMusicWithinArea:
             return "/musicWithinArea"
+        case .getCommunity:
+            return "/community"
         default:
             return ""
         }
@@ -45,6 +48,8 @@ extension NetworkService: TargetType {
         case .dropMusic:
             return .post
         case .getMusicWithinArea:
+            return .get
+        case .getCommunity:
             return .get
         }
     }
@@ -70,6 +75,9 @@ extension NetworkService: TargetType {
             )
         case .getMusicWithinArea(let musicWithinAreaRequestDTO):
             return .requestJSONEncodable(musicWithinAreaRequestDTO)
+        case .getCommunity(let itemID):
+            return .requestParameters(parameters: ["itemID": itemID],
+                                      encoding: URLEncoding.queryString)
         }
     }
     
@@ -105,6 +113,8 @@ extension NetworkService: TargetType {
                         }
                         """.utf8)
         case .getMusicWithinArea:
+            return Data()
+        case .getCommunity:
             return Data()
         }
     }
