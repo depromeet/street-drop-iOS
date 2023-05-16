@@ -291,11 +291,11 @@
 		18F76FAE2A050110006CF9EF /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
-				41E008CC2A14427300F5D99C /* PoiResponse */,
-				41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift */,
 				18F76FAF2A050133006CF9EF /* ResponseDTO.swift */,
 				049F50242A122C8F001528CB /* DropMusic */,
+				41E008CC2A14427300F5D99C /* PoiResponse */,
 				041038952A126D1400BC5532 /* NumberOfDroppedMusicByDong */,
+				41E008CF2A14450100F5D99C /* SearchedMusic */,
 				18AAF83C2A13731A002EF441 /* Community */,
 				18AAF8362A136D9E002EF441 /* MusicWithinArea */,
 			);
@@ -308,6 +308,14 @@
 				41E008CD2A1442A000F5D99C /* PoiResponseDTO.swift */,
 			);
 			path = PoiResponse;
+			sourceTree = "<group>";
+		};
+		41E008CF2A14450100F5D99C /* SearchedMusic */ = {
+			isa = PBXGroup;
+			children = (
+				41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift */,
+			);
+			path = SearchedMusic;
 			sourceTree = "<group>";
 		};
 		41FF58FA2A06B38800ABB871 /* NetworkManagerTest */ = {
