@@ -48,4 +48,10 @@ struct NetworkManager {
             .retry(3)
             .map { $0.data }
     }
+    
+    func getCommunity(itemID: UUID) -> Single<Data> {
+        return provider.rx.request(.getCommunity(itemID: itemID))
+            .retry(3)
+            .map { $0.data }
+    }
 }
