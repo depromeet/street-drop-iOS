@@ -174,4 +174,36 @@ final class NetworkManagerTest: XCTestCase {
             }
             .dispose()
     }
+
+    func test_getPOI_success() {
+        //given
+        let (latitude, longitude, zoomLevel) = (123.123, 32.234, 3)
+
+        //then: 첫번째 데이터의 poi 위도는 89.33이면 성공
+        var response: Data?
+
+        sut.getPoi(latitude: latitude, longitude: longitude, zoomLevel: zoomLevel)
+            .subscribe { result in
+                switch result {
+                case .success(let data):
+                    response = data
+                case .failure(let error):
+                    XCTFail(error.localizedDescription)
+                }
+            }
+            .dispose()
+
+        do {
+            let poiResponse = try JSONDecoder().decode(
+                PoiResponseDTO.self,
+                from: response ?? Data()
+            )
+            let pois = poiResponse.pois
+
+            XCTAssertNotEqual(10.12, pois[0].latitude)
+            XCTAssertEqual(89.33, pois[0].latitude)
+        } catch {
+            XCTFail("Decoding Error")
+        }
+    }
 }

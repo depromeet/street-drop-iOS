@@ -39,6 +39,7 @@
 		41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift */; };
 		41B953692A10E5B800BEC0AB /* SearchedMusicResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift */; };
 		41E008CE2A1442A000F5D99C /* PoiResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E008CD2A1442A000F5D99C /* PoiResponseDTO.swift */; };
+		41E008D02A14493A00F5D99C /* PoiResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E008CD2A1442A000F5D99C /* PoiResponseDTO.swift */; };
 		41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FF58FB2A06B38800ABB871 /* NetworkManagerTest.swift */; };
 		41FF59022A06B3A100ABB871 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
 		41FF59032A06B3A200ABB871 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
@@ -532,6 +533,7 @@
 				41B953692A10E5B800BEC0AB /* SearchedMusicResponseDTO.swift in Sources */,
 				18AAF8422A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				18AAF8382A136FA0002EF441 /* MusicWithinAreaRequestDTO.swift in Sources */,
+				41E008D02A14493A00F5D99C /* PoiResponseDTO.swift in Sources */,
 				18AAF83F2A137435002EF441 /* CommunityResponseDTO.swift in Sources */,
 				41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */,
 			);
