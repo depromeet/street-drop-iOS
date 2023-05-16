@@ -157,4 +157,21 @@ final class NetworkManagerTest: XCTestCase {
             }
             .dispose()
     }
+    
+    func test_getCommunity_success() {
+        //given
+        let sampleItemId = UUID()
+        
+        //then
+        sut.getCommunity(itemID: sampleItemId)
+            .subscribe {
+                switch $0 {
+                case .success(_):
+                    XCTAssert(true)
+                case .failure(let error):
+                    XCTFail(error.localizedDescription)
+                }
+            }
+            .dispose()
+    }
 }

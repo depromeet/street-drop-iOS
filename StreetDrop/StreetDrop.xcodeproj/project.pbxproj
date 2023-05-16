@@ -32,6 +32,7 @@
 		18AAF8372A136F9E002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF82B2A127172002EF441 /* MusicWithinAreaResponseDTO.swift */; };
 		18AAF8382A136FA0002EF441 /* MusicWithinAreaRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF82D2A135D56002EF441 /* MusicWithinAreaRequestDTO.swift */; };
 		18AAF83E2A137349002EF441 /* CommunityResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF83D2A137349002EF441 /* CommunityResponseDTO.swift */; };
+		18AAF83F2A137435002EF441 /* CommunityResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF83D2A137349002EF441 /* CommunityResponseDTO.swift */; };
 		18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
 		18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
 		18F76FB02A050133006CF9EF /* ResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAF2A050133006CF9EF /* ResponseDTO.swift */; };
@@ -512,6 +513,7 @@
 				41B953692A10E5B800BEC0AB /* SearchedMusicResponseDTO.swift in Sources */,
 				18AAF8422A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				18AAF8382A136FA0002EF441 /* MusicWithinAreaRequestDTO.swift in Sources */,
+				18AAF83F2A137435002EF441 /* CommunityResponseDTO.swift in Sources */,
 				41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
