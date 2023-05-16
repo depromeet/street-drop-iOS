@@ -8,7 +8,7 @@
 import Foundation
 
 struct PoiResponseDTO: Decodable {
-    let allPOI: [Poi]
+    let pois: [Poi]
 
     struct Poi: Decodable {
         let itemID: Int
@@ -23,6 +23,6 @@ struct PoiResponseDTO: Decodable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case allPOI = "poi"
+        case pois = "poi"
     }
 }

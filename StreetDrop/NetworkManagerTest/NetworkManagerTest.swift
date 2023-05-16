@@ -66,10 +66,10 @@ final class NetworkManagerTest: XCTestCase {
                 PoiResponseDTO.self,
                 from: response ?? Data()
             )
-            let allPoi = poiResponse.allPOI
+            let pois = poiResponse.pois
 
-            XCTAssertNotEqual(10.12, allPoi[0].latitude)
-            XCTAssertEqual(89.33, allPoi[0].latitude)
+            XCTAssertNotEqual(10.12, pois[0].latitude)
+            XCTAssertEqual(89.33, pois[0].latitude)
         } catch {
             XCTFail("Decoding Error")
         }
