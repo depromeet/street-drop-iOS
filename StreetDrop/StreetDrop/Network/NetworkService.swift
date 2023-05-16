@@ -37,9 +37,9 @@ extension NetworkService: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .getWeather, .searchMusic:
+        case .getWeather, .searchMusic, .fetchNumberOfDroppedMusicByDong:
             return .get
-        case .dropMusic, .fetchNumberOfDroppedMusicByDong:
+        case .dropMusic:
             return .post
         }
     }
