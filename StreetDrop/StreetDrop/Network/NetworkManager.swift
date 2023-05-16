@@ -54,4 +54,11 @@ struct NetworkManager {
             .retry(3)
             .map { $0.data }
     }
+
+    func getPoi(latitude: Double, longitude: Double, zoomLevel: Int) -> Single<Data> {
+        return provider.rx
+            .request(.getPOI(latitude: latitude, longitude: longitude, zoomLevel: zoomLevel))
+            .retry(3)
+            .map { $0.data }
+    }
 }
