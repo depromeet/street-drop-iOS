@@ -110,4 +110,34 @@ final class NetworkManagerTest: XCTestCase {
         }
         .dispose()
     }
+    
+    func test_fetchNumberOfDroppedMusicByDong_success() {
+        //given
+        let address: String = "성남시 분당구 정자1동"
+        
+        //then 동별 드랍된 음악 갯수가 247이면 성공
+        var response: Data?
+        
+        sut.fetchNumberOfDroppedMusicByDong(address: address)
+            .subscribe {
+                switch $0 {
+                case .success(let data):
+                    response = data
+                case .failure(let error):
+                    XCTFail(error.localizedDescription)
+                }
+            }
+            .dispose()
+        
+        do {
+            let numberOfDroppedMusicByDong = try JSONDecoder().decode(
+                NumberOfDroppedMusicByDongResponseDTO.self,
+                from: response ?? Data()
+            )
+
+            XCTAssertEqual(247, numberOfDroppedMusicByDong.numberOfDroppedMusic)
+        } catch {
+            XCTFail("Decoding Error")
+        }
+    }
 }

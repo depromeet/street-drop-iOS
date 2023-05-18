@@ -36,4 +36,10 @@ struct NetworkManager {
             .retry(3)
             .map { $0.data }
     }
+    
+    func fetchNumberOfDroppedMusicByDong(address: String) -> Single<Data> {
+        return provider.rx.request(.fetchNumberOfDroppedMusicByDong(address: address))
+            .retry(3)
+            .map { $0.data }
+    }
 }
