@@ -8,24 +8,19 @@
 import Foundation
 
 struct SearchedMusicResponseDTO: Decodable {
-    let list: [Music]
+    let musicList: [Music]
 
     struct Music: Decodable {
         let albumName: String
         let artistName: String
         let songName: String
         let durationTime: String
-        let albumImage: URL
-        let albumThumbnailImage: URL
-
-        private enum CodingKeys: String, CodingKey {
-            case albumName, artistName, songName, durationTime
-            case albumImage = "albumImg"
-            case albumThumbnailImage = "albumThumbnailImg"
-        }
+        let albumImage: String
+        let albumThumbnailImage: String
+        let genre: [String]
     }
 
     private enum CodingKeys: String, CodingKey {
-        case list = "data"
+        case musicList = "data"
     }
 }
