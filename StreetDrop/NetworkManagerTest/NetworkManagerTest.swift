@@ -66,10 +66,10 @@ final class NetworkManagerTest: XCTestCase {
                 SearchedMusicResponseDTO.self,
                 from: response ?? Data()
             )
-            let list = searchedMusic.list
+            let musicList = searchedMusic.musicList
 
-            XCTAssertNotEqual("빅뱅", list[0].artistName)
-            XCTAssertEqual("방탄소년단", list[0].artistName)
+            XCTAssertNotEqual("빅뱅", musicList[0].artistName)
+            XCTAssertEqual("방탄소년단", musicList[0].artistName)
         } catch {
             XCTFail("Decoding Error")
         }
