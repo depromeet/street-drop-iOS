@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+import RxSwift
+
+protocol SearchingMusicRepository {
+    func fetchMusic(keyword: String) -> Single<[SearchedMusicResponseDTO.Music]>
+}
