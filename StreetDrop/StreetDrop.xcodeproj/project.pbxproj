@@ -38,6 +38,7 @@
 		4151132B2A1663680051F809 /* UI+ConvenienceInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4151132A2A1663680051F809 /* UI+ConvenienceInit.swift */; };
 		41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift */; };
 		41B953692A10E5B800BEC0AB /* SearchedMusicResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift */; };
+		41D0974F2A19065B00C011A0 /* UIView+generateCircleGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D0974E2A19065B00C011A0 /* UIView+generateCircleGradientView.swift */; };
 		41E008CE2A1442A000F5D99C /* PoiResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E008CD2A1442A000F5D99C /* PoiResponseDTO.swift */; };
 		41E008D02A14493A00F5D99C /* PoiResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E008CD2A1442A000F5D99C /* PoiResponseDTO.swift */; };
 		41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FF58FB2A06B38800ABB871 /* NetworkManagerTest.swift */; };
