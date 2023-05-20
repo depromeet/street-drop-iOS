@@ -122,6 +122,7 @@
 		415113262A165DC50051F809 /* MusicDropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDropViewController.swift; sourceTree = "<group>"; };
 		4151132A2A1663680051F809 /* UI+ConvenienceInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI+ConvenienceInit.swift"; sourceTree = "<group>"; };
 		41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedMusicResponseDTO.swift; sourceTree = "<group>"; };
+		41D0974E2A19065B00C011A0 /* UIView+generateCircleGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+generateCircleGradientView.swift"; sourceTree = "<group>"; };
 		41E008CD2A1442A000F5D99C /* PoiResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoiResponseDTO.swift; sourceTree = "<group>"; };
 		41FF58F92A06B38800ABB871 /* NetworkManagerTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkManagerTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41FF58FB2A06B38800ABB871 /* NetworkManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerTest.swift; sourceTree = "<group>"; };
@@ -740,6 +741,7 @@
 				04FB1F282A021B0A0064B3C8 /* MainModel.swift in Sources */,
 				C434A4CE2A17970A00C63526 /* SearchingMusicModel.swift in Sources */,
 				04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */,
+				41D0974F2A19065B00C011A0 /* UIView+generateCircleGradientView.swift in Sources */,
 				049F50222A122C8A001528CB /* DropMusicRequestDTO.swift in Sources */,
 				041038972A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */,
 				41E008CE2A1442A000F5D99C /* PoiResponseDTO.swift in Sources */,

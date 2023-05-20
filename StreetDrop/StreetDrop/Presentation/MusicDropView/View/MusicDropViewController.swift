@@ -7,6 +7,7 @@
 
 import UIKit
 
+import SnapKit
 
 final class MusicDropViewController: UIViewController {
 
@@ -16,6 +17,12 @@ final class MusicDropViewController: UIViewController {
 
         configureHierarchy()
         configureLayout()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        makeViewIntoGradientCircle()
     }
 
     //MARK: - 디자인 요소 (레이아웃 잡힌 후 그라데이션 layer 적용)
@@ -151,6 +158,22 @@ extension MusicDropViewController {
             $0.bottom.equalToSuperview().inset(10)
             $0.height.equalToSuperview().multipliedBy(0.07)
             $0.centerX.equalToSuperview()
+        }
+    }
+
+    private func makeViewIntoGradientCircle() {
+        topGradientCircleView.makeGradientCircleView(
+            colors: [UIColor.darkGray.cgColor, UIColor.black.cgColor, UIColor.darkGray.cgColor],
+            gradientLocations: [0, 0.5, 1],
+            viewBackgroundColor: .black
+        )
+
+        [smallerCenterGradientCircleView, LargerCenterGradientCircleView].forEach {
+            $0.makeGradientCircleView(
+                colors: [UIColor.black.cgColor, UIColor.black.cgColor, UIColor.blue.cgColor],
+                gradientLocations: [0, 0.8, 1],
+                viewBackgroundColor: .black
+            )
         }
     }
 }
