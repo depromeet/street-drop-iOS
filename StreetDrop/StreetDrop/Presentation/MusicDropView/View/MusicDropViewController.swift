@@ -15,6 +15,7 @@ final class MusicDropViewController: UIViewController {
         view.backgroundColor = .black
 
         configureHierarchy()
+        configureLayout()
     }
 
     //MARK: - 뷰 아이템 요소
@@ -90,5 +91,35 @@ extension MusicDropViewController {
             .forEach {
                 self.view.addSubview($0)
             }
+    }
+
+    private func configureLayout() {
+        albumImageView.snp.makeConstraints {
+            $0.width.equalTo(self.view.safeAreaLayoutGuide).multipliedBy(0.30)
+            $0.height.equalTo(albumImageView.snp.width)
+        }
+
+        musicInfoStackView.snp.makeConstraints {
+            $0.width.equalTo(self.view.safeAreaLayoutGuide).multipliedBy(0.8)
+            $0.height.greaterThanOrEqualTo(self.view.safeAreaLayoutGuide).multipliedBy(0.4)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+            $0.centerX.equalToSuperview()
+        }
+
+        musicInfoStackView.setCustomSpacing(30, after: locationLabel)
+
+        commentStackView.snp.makeConstraints {
+            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(20)
+            $0.width.equalToSuperview().multipliedBy(0.9)
+            $0.height.greaterThanOrEqualToSuperview().multipliedBy(0.1)
+            $0.centerX.equalToSuperview()
+        }
+
+        dropButton.snp.makeConstraints {
+            $0.width.equalTo(commentTextView)
+            $0.bottom.equalToSuperview().inset(10)
+            $0.height.equalToSuperview().multipliedBy(0.07)
+            $0.centerX.equalToSuperview()
+        }
     }
 }
