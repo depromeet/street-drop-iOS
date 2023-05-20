@@ -6,3 +6,22 @@
 //
 
 import Foundation
+
+import RxSwift
+
+protocol SearchingMusicModel {
+    func fetchMusic(keyword: String) -> Single<[SearchedMusicResponseDTO.Music]>
+}
+
+final class DefaultSearchingMusicModel: SearchingMusicModel {
+    private let searchingMusicRepository: SearchingMusicRepository
+    
+    init(searchingMusicRepository: SearchingMusicRepository = DefaultSearchingMusicRepository()) {
+        self.searchingMusicRepository = searchingMusicRepository
+    }
+    
+    // FIXME: 클린아키텍처로 리팩토링 시, 반환값을 [SearchedMusicResponseDTO.Music]가 아닌 Music이라는 Entity를 만들어 반환하도록 함
+    func fetchMusic(keyword: String) -> Single<[SearchedMusicResponseDTO.Music]> {
+        return searchingMusicRepository.fetchMusic(keyword: keyword)
+    }
+}
