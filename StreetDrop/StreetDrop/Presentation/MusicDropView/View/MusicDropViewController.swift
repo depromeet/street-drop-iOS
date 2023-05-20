@@ -18,6 +18,11 @@ final class MusicDropViewController: UIViewController {
         configureLayout()
     }
 
+    //MARK: - 디자인 요소 (레이아웃 잡힌 후 그라데이션 layer 적용)
+    private var topGradientCircleView: UIView = UIView()
+    private var smallerCenterGradientCircleView: UIView = UIView()
+    private var LargerCenterGradientCircleView: UIView = UIView()
+
     //MARK: - 뷰 아이템 요소
     private let locationLabel: UILabel = UILabel(
         text: "'성동구 성수1가 1동' 위치에 \n 음악을 드랍할게요",
@@ -86,6 +91,11 @@ extension MusicDropViewController {
                 commentStackView.addArrangedSubview($0)
             }
 
+        // 디자인요소인 GradientCircleView들 먼저 add합니다. 순서 변경 불가능합니다.
+        [LargerCenterGradientCircleView, smallerCenterGradientCircleView, topGradientCircleView]
+            .forEach {
+                self.view.addSubview($0)
+            }
 
         [musicInfoStackView, commentStackView, dropButton]
             .forEach {
@@ -94,6 +104,27 @@ extension MusicDropViewController {
     }
 
     private func configureLayout() {
+        topGradientCircleView.snp.makeConstraints {
+            $0.width.equalToSuperview().multipliedBy(1.1)
+            $0.height.equalTo(topGradientCircleView.snp.width)
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().multipliedBy(0.1)
+        }
+
+        smallerCenterGradientCircleView.snp.makeConstraints {
+            $0.width.equalToSuperview().multipliedBy(1.1)
+            $0.height.equalTo(smallerCenterGradientCircleView.snp.width)
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().multipliedBy(0.9)
+        }
+
+        LargerCenterGradientCircleView.snp.makeConstraints {
+            $0.width.equalToSuperview().multipliedBy(1.4)
+            $0.height.equalTo(LargerCenterGradientCircleView.snp.width)
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().multipliedBy(0.9)
+        }
+
         albumImageView.snp.makeConstraints {
             $0.width.equalTo(self.view.safeAreaLayoutGuide).multipliedBy(0.30)
             $0.height.equalTo(albumImageView.snp.width)
