@@ -13,6 +13,8 @@ final class MusicDropViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
+
+        configureHierarchy()
     }
 
     //MARK: - 뷰 아이템 요소
@@ -68,4 +70,25 @@ final class MusicDropViewController: UIViewController {
 
         return button
     }()
+}
+
+//MARK: - 계층, 레이아웃
+extension MusicDropViewController {
+    private func configureHierarchy() {
+        [locationLabel, albumImageView, albumNameLabel, singerNameLabel]
+            .forEach {
+                musicInfoStackView.addArrangedSubview($0)
+            }
+
+        [commentTextView, CommentGuidanceLabel]
+            .forEach {
+                commentStackView.addArrangedSubview($0)
+            }
+
+
+        [musicInfoStackView, commentStackView, dropButton]
+            .forEach {
+                self.view.addSubview($0)
+            }
+    }
 }
