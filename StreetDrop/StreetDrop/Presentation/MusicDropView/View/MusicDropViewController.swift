@@ -74,15 +74,52 @@ final class MusicDropViewController: UIViewController {
         spacing: 5
     )
 
-    private let dropButton: UIButton = {
+    private lazy var dropButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("드랍하기", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = .darkGray
+        button.addAction(touchedUpDropButton(), for: .touchUpInside)
 
         return button
     }()
+
+    private lazy var dropAnimationImageView: UIImageView = {
+        let dropAnimationImage: UIImage = UIImage(named: "DropAnimationImage") ?? UIImage()
+        let imageView = UIImageView(image: dropAnimationImage)
+        imageView.backgroundColor = .clear
+        imageView.contentMode = .scaleAspectFit
+
+        return imageView
+    }()
+}
+
+//MARK: - 드랍 액션
+extension MusicDropViewController {
+    private func touchedUpDropButton() -> UIAction {
+        return UIAction { [weak self] _ in
+            self?.showDropAnimation()
+        }
+    }
+
+    private func showDropAnimation() {
+        removeViewItemComponents()
+
+        self.view.addSubview(dropAnimationImageView)
+        dropAnimationImageView.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.5)
+            $0.height.equalToSuperview().multipliedBy(0.5)
+        }
+    }
+
+    private func removeViewItemComponents() {
+        [musicInfoStackView, commentStackView, dropButton]
+            .forEach {
+                $0.removeFromSuperview()
+            }
+    }
 }
 
 //MARK: - 계층, 레이아웃
