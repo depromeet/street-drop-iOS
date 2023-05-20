@@ -46,6 +46,12 @@ final class MusicDropViewController: UIViewController {
         self.commentTextView.endEditing(true)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        makeViewIntoGradientCircle()
+    }
+
     //MARK: - 디자인 요소 (레이아웃 잡힌 후 그라데이션 layer 적용)
     private var topGradientCircleView: UIView = UIView()
     private var smallerCenterGradientCircleView: UIView = UIView()
