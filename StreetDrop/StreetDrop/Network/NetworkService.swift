@@ -101,8 +101,32 @@ extension NetworkService: TargetType {
                                         "artistName": "방탄소년단",
                                         "songName": "Dynamite",
                                         "durationTime": "3:20",
-                                        "albumImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/{w}x{h}bb.jpg",
-                                        "albumThumbnailImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/{w}x{h}bb.jpg",
+                                        "albumImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/300x300bb.jpg",
+                                        "albumThumbnailImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/100x100bb.jpg",
+                                        "genre": [
+                                            "Rock",
+                                            "K-pop"
+                                        ]
+                                    },
+                                    {
+                                        "albumName": "Dynamite (DayTime Version) - EP",
+                                        "artistName": "방탄소년단",
+                                        "songName": "Dynamite",
+                                        "durationTime": "3:20",
+                                        "albumImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/300x300bb.jpg",
+                                        "albumThumbnailImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/100x100bb.jpg",
+                                        "genre": [
+                                            "Rock",
+                                            "K-pop"
+                                        ]
+                                    },
+                                    {
+                                        "albumName": "Dynamite (DayTime Version) - EP",
+                                        "artistName": "방탄소년단",
+                                        "songName": "Dynamite",
+                                        "durationTime": "3:20",
+                                        "albumImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/300x300bb.jpg",
+                                        "albumThumbnailImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/100x100bb.jpg",
                                         "genre": [
                                             "Rock",
                                             "K-pop"
