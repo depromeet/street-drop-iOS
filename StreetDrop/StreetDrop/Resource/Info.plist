@@ -14,6 +14,12 @@
 		<string>Pretendard-SemiBold.otf</string>
 		<string>Pretendard-Thin.otf</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>위치 권한 허용이 필요합니다.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>위치 권한 허용이 필요합니다.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>위치 권한 허용이 필요합니다.</string>
 	<key>NMFClientId</key>
 	<string>95d477gbj5</string>
 	<key>UIApplicationSceneManifest</key>
