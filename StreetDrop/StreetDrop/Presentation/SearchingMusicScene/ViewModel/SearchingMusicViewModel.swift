@@ -38,7 +38,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
             .disposed(by: disposedBag)
         
         input.searchTextFieldDidEditEvent
-            .filter({ $0 != "" })
+            .skip(2) // 최초 실행 시, 최초 텍스트 필드 클릭 이벤트 무시
             .bind { [weak self] keyword in
                 self?.searchMusic(keyword: keyword)
             }
@@ -52,18 +52,22 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     }
     
     func searchMusic(keyword: String) {
-        model.fetchMusic(keyword: keyword)
-            .subscribe { result in
-                switch result {
-                case .success(let musicList):
-                    self.searchedMusicList.accept(musicList)
-                    break
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    break
+        if keyword.isEmpty {
+            self.searchedMusicList.accept([])
+        } else {
+            model.fetchMusic(keyword: keyword)
+                .subscribe { result in
+                    switch result {
+                    case .success(let musicList):
+                        self.searchedMusicList.accept(musicList)
+                        break
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        break
+                    }
                 }
-            }
-            .disposed(by: disposeBag)
+                .disposed(by: disposeBag)
+        }
     }
 }
 
