@@ -5,6 +5,7 @@
 //  Created by Joseph Cha on 2023/05/02.
 //
 
+import CoreLocation
 import UIKit
 
 import NMapsMap
@@ -24,7 +25,7 @@ final class MainViewController: UIViewController {
         return topBarView
     }()
     private let locationIconImageView: UIImageView = {
-       let locationIconImageView = UIImageView()
+        let locationIconImageView = UIImageView()
         locationIconImageView.image = UIImage(named: "locationIcon.png")
         locationIconImageView.contentMode = .scaleAspectFit
         return locationIconImageView
@@ -74,9 +75,15 @@ final class MainViewController: UIViewController {
         return musicDropButton
     }()
     
+    private var locationManager: LocationManager?
+    private let currentLocationMarker = NMFMarker()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUI()
+        
+        self.locationManager = LocationManager()
+        self.locationManager?.delegate = self
     }
 }
 
@@ -176,5 +183,19 @@ private extension MainViewController {
         self.musicDropButton.snp.updateConstraints { make in
             make.bottom.equalTo(self.bottomBarImageView.snp.bottom).inset(self.musicDropButton.frame.height / 3)
         }
+    }
+}
+
+// MARK: - Map
+
+extension MainViewController {
+    func drawCurrentLocationMarker(location: CLLocation) {
+        mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude,
+                                                               lng: location.coordinate.longitude)))
+        currentLocationMarker.mapView = nil
+        currentLocationMarker.iconImage = NMFOverlayImage(image: UIImage(named: "locationMarker.png") ?? UIImage())
+        currentLocationMarker.position = NMGLatLng(lat: location.coordinate.latitude,
+                                               lng: location.coordinate.longitude)
+        currentLocationMarker.mapView = mapView
     }
 }
