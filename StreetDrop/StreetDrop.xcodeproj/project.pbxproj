@@ -48,6 +48,22 @@
 		C434A4D12A17981C00C63526 /* DefaultSearchingMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CF2A17981C00C63526 /* DefaultSearchingMusicRepository.swift */; };
 		C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */; };
 		C434A4D42A17983A00C63526 /* SearchingMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */; };
+		C434A4D82A17AAAB00C63526 /* SearchingMusicViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */; };
+		C434A4D92A17AB5300C63526 /* SearchingMusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CB2A1796F300C63526 /* SearchingMusicViewModel.swift */; };
+		C434A4DA2A17AB5600C63526 /* SearchingMusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CD2A17970A00C63526 /* SearchingMusicModel.swift */; };
+		C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
+		C434A4DD2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
+		C4D16FBC2A1B917B008B076F /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB32A1B917B008B076F /* Pretendard-Regular.otf */; };
+		C4D16FBD2A1B917B008B076F /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB42A1B917B008B076F /* Pretendard-ExtraBold.otf */; };
+		C4D16FBE2A1B917B008B076F /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB52A1B917B008B076F /* Pretendard-SemiBold.otf */; };
+		C4D16FBF2A1B917B008B076F /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB62A1B917B008B076F /* Pretendard-Thin.otf */; };
+		C4D16FC02A1B917B008B076F /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB72A1B917B008B076F /* Pretendard-Medium.otf */; };
+		C4D16FC12A1B917B008B076F /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB82A1B917B008B076F /* Pretendard-Black.otf */; };
+		C4D16FC22A1B917B008B076F /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB92A1B917B008B076F /* Pretendard-Light.otf */; };
+		C4D16FC32A1B917B008B076F /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FBA2A1B917B008B076F /* Pretendard-ExtraLight.otf */; };
+		C4D16FC42A1B917B008B076F /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FBB2A1B917B008B076F /* Pretendard-Bold.otf */; };
+		C4D16FC92A1B9338008B076F /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */; };
+		C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
 /* End PBXBuildFile section */
 
@@ -92,6 +108,19 @@
 		C434A4CD2A17970A00C63526 /* SearchingMusicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicModel.swift; sourceTree = "<group>"; };
 		C434A4CF2A17981C00C63526 /* DefaultSearchingMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSearchingMusicRepository.swift; sourceTree = "<group>"; };
 		C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicRepository.swift; sourceTree = "<group>"; };
+		C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicViewModelTest.swift; sourceTree = "<group>"; };
+		C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicTableViewCell.swift; sourceTree = "<group>"; };
+		C4D16FB32A1B917B008B076F /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		C4D16FB42A1B917B008B076F /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		C4D16FB52A1B917B008B076F /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		C4D16FB62A1B917B008B076F /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		C4D16FB72A1B917B008B076F /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		C4D16FB82A1B917B008B076F /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		C4D16FB92A1B917B008B076F /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		C4D16FBA2A1B917B008B076F /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		C4D16FBB2A1B917B008B076F /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+LineHeight.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +271,8 @@
 		04FB1F222A0214A20064B3C8 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				C4D16FCA2A1B985F008B076F /* Extensions */,
+				C4D16FC72A1B931E008B076F /* Font */,
 				04FB1F302A021C250064B3C8 /* Error */,
 			);
 			path = Util;
@@ -260,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				040685082A01539800377094 /* Assets.xcassets */,
+				C4D16FC52A1B9184008B076F /* Font */,
 				0406850D2A01539800377094 /* Info.plist */,
 			);
 			path = Resource;
@@ -332,6 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				41FF58FB2A06B38800ABB871 /* NetworkManagerTest.swift */,
+				C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */,
 			);
 			path = NetworkManagerTest;
 			sourceTree = "<group>";
@@ -358,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				C434A4C92A1796E400C63526 /* SearchingMusicViewController.swift */,
+				C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -392,6 +426,46 @@
 				C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */,
 			);
 			path = SearchingMusic;
+			sourceTree = "<group>";
+		};
+		C4D16FC52A1B9184008B076F /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				C4D16FC62A1B918C008B076F /* Pretendard */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		C4D16FC62A1B918C008B076F /* Pretendard */ = {
+			isa = PBXGroup;
+			children = (
+				C4D16FB62A1B917B008B076F /* Pretendard-Thin.otf */,
+				C4D16FBA2A1B917B008B076F /* Pretendard-ExtraLight.otf */,
+				C4D16FB92A1B917B008B076F /* Pretendard-Light.otf */,
+				C4D16FB32A1B917B008B076F /* Pretendard-Regular.otf */,
+				C4D16FB72A1B917B008B076F /* Pretendard-Medium.otf */,
+				C4D16FB52A1B917B008B076F /* Pretendard-SemiBold.otf */,
+				C4D16FBB2A1B917B008B076F /* Pretendard-Bold.otf */,
+				C4D16FB42A1B917B008B076F /* Pretendard-ExtraBold.otf */,
+				C4D16FB82A1B917B008B076F /* Pretendard-Black.otf */,
+			);
+			path = Pretendard;
+			sourceTree = "<group>";
+		};
+		C4D16FC72A1B931E008B076F /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		C4D16FCA2A1B985F008B076F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		DD24191EB8D98350CCDA3174 /* Pods */ = {
@@ -499,8 +573,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4D16FC42A1B917B008B076F /* Pretendard-Bold.otf in Resources */,
+				C4D16FC02A1B917B008B076F /* Pretendard-Medium.otf in Resources */,
 				0406850C2A01539800377094 /* LaunchScreen.storyboard in Resources */,
+				C4D16FC32A1B917B008B076F /* Pretendard-ExtraLight.otf in Resources */,
+				C4D16FBC2A1B917B008B076F /* Pretendard-Regular.otf in Resources */,
+				C4D16FBE2A1B917B008B076F /* Pretendard-SemiBold.otf in Resources */,
+				C4D16FBF2A1B917B008B076F /* Pretendard-Thin.otf in Resources */,
+				C4D16FBD2A1B917B008B076F /* Pretendard-ExtraBold.otf in Resources */,
+				C4D16FC12A1B917B008B076F /* Pretendard-Black.otf in Resources */,
 				040685092A01539800377094 /* Assets.xcassets in Resources */,
+				C4D16FC22A1B917B008B076F /* Pretendard-Light.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,13 +645,16 @@
 			files = (
 				18AAF83E2A137349002EF441 /* CommunityResponseDTO.swift in Sources */,
 				18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */,
+				C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */,
 				18AAF82E2A135D56002EF441 /* MusicWithinAreaRequestDTO.swift in Sources */,
+				C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */,
 				C434A4D02A17981C00C63526 /* DefaultSearchingMusicRepository.swift in Sources */,
 				040685042A01539800377094 /* MainViewController.swift in Sources */,
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
 				18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */,
 				040685022A01539800377094 /* SceneDelegate.swift in Sources */,
+				C4D16FC92A1B9338008B076F /* UIFont+Extension.swift in Sources */,
 				04FB1F322A021C330064B3C8 /* TestError.swift in Sources */,
 				04FB1F282A021B0A0064B3C8 /* MainModel.swift in Sources */,
 				C434A4CE2A17970A00C63526 /* SearchingMusicModel.swift in Sources */,
@@ -587,16 +673,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C434A4DD2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */,
 				18AAF8372A136F9E002EF441 /* (null) in Sources */,
 				41FF59022A06B3A100ABB871 /* NetworkManager.swift in Sources */,
 				41FF59032A06B3A200ABB871 /* NetworkService.swift in Sources */,
 				0410388E2A12688A00BC5532 /* DropMusicRequestDTO.swift in Sources */,
 				041038982A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */,
 				41B953692A10E5B800BEC0AB /* SearchedMusicResponseDTO.swift in Sources */,
+				C434A4D82A17AAAB00C63526 /* SearchingMusicViewModelTest.swift in Sources */,
 				C434A4D12A17981C00C63526 /* DefaultSearchingMusicRepository.swift in Sources */,
 				18AAF8422A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				18AAF8382A136FA0002EF441 /* MusicWithinAreaRequestDTO.swift in Sources */,
+				C434A4DA2A17AB5600C63526 /* SearchingMusicModel.swift in Sources */,
 				41E008D02A14493A00F5D99C /* PoiResponseDTO.swift in Sources */,
+				C434A4D92A17AB5300C63526 /* SearchingMusicViewModel.swift in Sources */,
 				18AAF83F2A137435002EF441 /* CommunityResponseDTO.swift in Sources */,
 				41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */,
 				C434A4D42A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,

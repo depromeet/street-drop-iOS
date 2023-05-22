@@ -88,12 +88,22 @@ final class SearchingMusicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 0.024, green: 0.046, blue: 0.12, alpha: 1)
+        bindUI()
         bindViewModel()
         setupLayout()
     }
 }
 
 private extension SearchingMusicViewController {
+    func bindUI() {
+        self.searchCancleButton.rx.tap
+            .bind {
+                self.searchTextField.text = ""
+                self.searchTextField.sendActions(for: .valueChanged)
+            }
+            .disposed(by: disposeBag)
+    }
+    
     func bindViewModel() {
         let input = DefaultSearchingMusicViewModel.Input(
             viewDidAppearEvent: .just(()),
