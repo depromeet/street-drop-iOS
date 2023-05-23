@@ -19,7 +19,7 @@ extension UIFont {
     }
 }
 
-private enum PretendardFontWeight: Int {
+enum PretendardFontWeight: Int {
     case thin = 100
     case extraLight = 200
     case light = 300
