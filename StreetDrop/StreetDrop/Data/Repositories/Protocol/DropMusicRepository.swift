@@ -11,4 +11,5 @@ import RxSwift
 
 protocol DropMusicRepository {
     func dropMusic(droppingInfo: DroppingInfo, adress: String, content: String) -> Single<Int>
+    func dropMusic(droppingInfo: DroppingInfo, adress: String, content: String) -> Single<String>
 }
