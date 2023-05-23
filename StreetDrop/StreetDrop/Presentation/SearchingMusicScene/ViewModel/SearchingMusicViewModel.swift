@@ -22,7 +22,7 @@ protocol SearchingMusicViewModel {
 final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     private let model: SearchingMusicModel
     private let disposeBag: DisposeBag = DisposeBag()
-    private let searchedMusicList: PublishRelay = PublishRelay<[SearchedMusicResponseDTO.Music]>()
+    let searchedMusicList: PublishRelay = PublishRelay<[SearchedMusicResponseDTO.Music]>()
     
     init(model: SearchingMusicModel = DefaultSearchingMusicModel()) {
         self.model = model

@@ -11,8 +11,9 @@ import RxSwift
 import Moya
 
 final class SearchingMusicViewModelTest: XCTestCase {
-    var viewModel: SearchingMusicViewModel!
-    var viewModelWithEncryptedKeyword: SearchingMusicViewModel!
+    private var viewModel: DefaultSearchingMusicViewModel!
+    private var viewModelWithEncryptedKeyword: DefaultSearchingMusicViewModel!
+    private var disposeBag: DisposeBag = DisposeBag()
     
     override func setUpWithError() throws {
         self.viewModel = DefaultSearchingMusicViewModel(
@@ -30,6 +31,7 @@ final class SearchingMusicViewModelTest: XCTestCase {
 
     override func tearDownWithError() throws {
         self.viewModel = nil
+        self.viewModelWithEncryptedKeyword = nil
     }
     
     func test_searchMusic_success() {
@@ -38,18 +40,40 @@ final class SearchingMusicViewModelTest: XCTestCase {
         
         //then
         viewModel.searchMusic(keyword: keyword)
+        
+        viewModel.searchedMusicList
+            .bind { musicList in
+                if musicList.isEmpty {
+                    XCTFail()
+                } else {
+                    XCTAssert(true)
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
+    //FIXME: Mock 데이터 활용법을 위한 테스트 코드 (추후 삭제 바람)
     func test_searchMusic_with_encryptedKeyword_success() {
         //given
         let keyword = "방탄소년단"
         
         //then
-        viewModelwithEncryptedKeyword.searchMusic(keyword: keyword)
+        viewModelWithEncryptedKeyword.searchMusic(keyword: keyword)
+        
+        viewModelWithEncryptedKeyword.searchedMusicList
+            .bind { musicList in
+                if musicList.isEmpty {
+                    XCTFail()
+                } else {
+                    XCTAssert(true)
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 
 private extension SearchingMusicViewModelTest {
+    //FIXME: Mock 데이터 활용법을 위한 Mock 데이터 (추후 삭제 바람)
     final class MockSearchingMusicRepository: SearchingMusicRepository {
         private let networkManager: NetworkManager
         
