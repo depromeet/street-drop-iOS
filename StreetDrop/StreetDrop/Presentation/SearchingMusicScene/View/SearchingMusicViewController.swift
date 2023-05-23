@@ -102,6 +102,14 @@ private extension SearchingMusicViewController {
                 self.searchTextField.sendActions(for: .valueChanged)
             }
             .disposed(by: disposeBag)
+        
+        self.searchTextField.rx.text
+            .bind { keyword in
+                if let keyword = keyword {
+                    self.tableView.isHidden = keyword.isEmpty
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindViewModel() {
