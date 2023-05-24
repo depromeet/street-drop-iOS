@@ -14,6 +14,10 @@ import RxMoya
 struct NetworkManager {
     let provider: MoyaProvider<NetworkService>
     let disposeBag = DisposeBag()
+
+    init(provider: MoyaProvider<NetworkService> = MoyaProvider()) {
+        self.provider = provider
+    }
     
     func getWeather(lat: String, lon: String) -> Observable<Data?> {
         return provider.rx.request(.getWeather(lat: lat, lon: lon))
