@@ -23,6 +23,11 @@ extension DefaultDropMusicRepository: DropMusicRepository {
             location: DropMusicRequestDTO.Location(
                 latitude: droppingInfo.location.latitude,
                 longitude: droppingInfo.location.longitude,
+    func dropMusic(droppingInfo: DroppingInfo, adress: String, content: String) -> Single<String> {
+        return networkManager.dropMusic(requestDTO: DropMusicRequestDTO(
+            location: DropMusicRequestDTO.Location(
+                latitude: droppingInfo.location.latitude,
+                logitude: droppingInfo.location.longitude,
                 address: adress
             ),
             music: DropMusicRequestDTO.Music(
@@ -30,9 +35,13 @@ extension DefaultDropMusicRepository: DropMusicRepository {
                 artist: droppingInfo.music.artist,
                 albumName: droppingInfo.music.albumName,
                 albumImage: droppingInfo.music.albumCover,
+                albumCover: droppingInfo.music.albumCover,
                 genre: droppingInfo.music.genre
             ),
             content: content
         ))
+        .map { data in
+            data.base64EncodedString()
+        }
     }
 }
