@@ -12,10 +12,17 @@ import RxSwift
 
 final class DefaultSearchingMusicRepository: SearchingMusicRepository {
     private let networkManager: NetworkManager
+    private let recentMusicQueriesPersistentStorage: RecentMusicQueriesStorage
     
     //FIXME: 서버 API 구현 완료되면, MoyaProvider<NetworkService>(stubClosure: MoyaProvider.immediatelyStub) -> MoyaProvider<NetworkService>()
-    init(networkManager: NetworkManager = NetworkManager(provider: MoyaProvider<NetworkService>(stubClosure: MoyaProvider.immediatelyStub))) {
+    init(
+        networkManager: NetworkManager = NetworkManager(
+            provider: MoyaProvider<NetworkService>(stubClosure: MoyaProvider.immediatelyStub)
+        ),
+        recentMusicQueriesPersistentStorage: RecentMusicQueriesStorage = UserDefaultsRecentMusicQueriesStorage(maxStorageLimit: 10)
+    ) {
         self.networkManager = networkManager
+        self.recentMusicQueriesPersistentStorage = recentMusicQueriesPersistentStorage
     }
     
     // FIXME: 클린아키텍처로 리팩토링 시, 반환값을 [SearchedMusicResponseDTO.Music]가 아닌 Music이라는 Entity를 만들어 반환하도록 함
@@ -27,6 +34,18 @@ final class DefaultSearchingMusicRepository: SearchingMusicRepository {
                     from: musicData
                 )
                 return searchedMusic.musicList
+            }
+    }
+    
+    func saveMusic(keyword: String) {
+        self.recentMusicQueriesPersistentStorage.saveRecentQuery(
+            query: RecentMusicQueryDTO(query: keyword)) { result in
+                switch result {
+                case .success(let query):
+                    print("최근 검색어 '\(query)' 내부 저장소 저장 성공")
+                case .failure(let error):
+                    print("최근 검색어 '\(keyword)' 내부 저장소 저장 실패, Error: \(error.localizedDescription)")
+                }
             }
     }
 }
