@@ -11,4 +11,5 @@ import RxSwift
 
 protocol SearchingMusicRepository {
     func fetchMusic(keyword: String) -> Single<[SearchedMusicResponseDTO.Music]>
+    func saveMusic(keyword: String)
 }
