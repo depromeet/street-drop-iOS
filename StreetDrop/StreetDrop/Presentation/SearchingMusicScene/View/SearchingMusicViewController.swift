@@ -113,9 +113,13 @@ private extension SearchingMusicViewController {
     }
     
     func bindViewModel() {
+        let keyBoardDidPressSearchEventWithKeyword = self.searchTextField.rx.controlEvent(.editingDidEndOnExit)
+            .compactMap { self.searchTextField.text }
+        
         let input = DefaultSearchingMusicViewModel.Input(
             viewDidAppearEvent: .just(()),
-            searchTextFieldDidEditEvent: self.searchTextField.rx.text.orEmpty
+            searchTextFieldDidEditEvent: self.searchTextField.rx.text.orEmpty,
+            keyBoardDidPressSearchEventWithKeyword: keyBoardDidPressSearchEventWithKeyword
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
         
