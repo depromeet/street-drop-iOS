@@ -13,6 +13,7 @@ import Moya
 final class SearchingMusicViewModelTest: XCTestCase {
     private var viewModel: DefaultSearchingMusicViewModel!
     private var viewModelWithEncryptedKeyword: DefaultSearchingMusicViewModel!
+    private var userDefaultsMoviesQueriesStorage: UserDefaultsRecentMusicQueriesStorage!
     private var disposeBag: DisposeBag = DisposeBag()
     
     override func setUpWithError() throws {
@@ -27,6 +28,8 @@ final class SearchingMusicViewModelTest: XCTestCase {
                 searchingMusicRepository: MockSearchingMusicRepository()
             )
         )
+        // 저장소 최대 저장 갯수 5개
+        self.userDefaultsMoviesQueriesStorage = UserDefaultsRecentMusicQueriesStorage(maxStorageLimit: 5)
     }
 
     override func tearDownWithError() throws {
@@ -70,6 +73,27 @@ final class SearchingMusicViewModelTest: XCTestCase {
             }
             .disposed(by: disposeBag)
     }
+    
+    func test_saveRecentQuery() {
+        let promise = expectation(description: "UserDefaults 동기화 되는 시간")
+        
+        userDefaultsMoviesQueriesStorage.saveRecentQuery(
+            query: RecentMusicQueryDTO(query: "Dynamite")) { result in
+                print(result)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
+                    promise.fulfill()
+                })
+                XCTAssert(true)
+            }
+        
+        wait(for: [promise], timeout: 10)
+    }
+    
+    func test_fetchMoviesQueries() {
+        userDefaultsMoviesQueriesStorage.fetchRecentsQueries(maxCount: 5) { result in
+            print(result)
+        }
+    }
 }
 
 private extension SearchingMusicViewModelTest {
@@ -97,5 +121,7 @@ private extension SearchingMusicViewModelTest {
                     return searchedMusic.musicList
                 }
         }
+        
+        func saveMusic(keyword: String) {}
     }
 }
