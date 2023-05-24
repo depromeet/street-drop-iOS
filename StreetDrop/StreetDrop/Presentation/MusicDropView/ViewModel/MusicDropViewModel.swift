@@ -12,7 +12,7 @@ import RxRelay
 
 final class MusicDropViewModel {
     private let droppingInfo: DroppingInfo
-    private let locationManager: LocationManager
+    private let adressManager: AdressManager
     private let disposeBag: DisposeBag = DisposeBag()
     var locationTitle: BehaviorRelay<(adress: String, text: String)>
     var albumCover: BehaviorRelay<Data?>
@@ -25,10 +25,10 @@ final class MusicDropViewModel {
 
     init (
         droppingInfo: DroppingInfo,
-        locationManager: LocationManager = DefaultLocationManager()
+        adressManager: AdressManager = DefaultAdressManager()
     ) {
         self.droppingInfo = droppingInfo
-        self.locationManager = locationManager
+        self.adressManager = adressManager
         self.albumCover = BehaviorRelay(value: nil)
         self.locationTitle = BehaviorRelay(value: (adress: "여기", text: "여기에\n음악을 드랍할게요"))
         self.MusicTitle = Observable<String>.just(droppingInfo.music.title)
@@ -41,7 +41,7 @@ final class MusicDropViewModel {
     }
 
     func fetchAdress() {
-        locationManager.fetchAdress(
+        adressManager.fetchAdress(
             latitude: droppingInfo.location.latitude,
             longitude: droppingInfo.location.longitude
         )

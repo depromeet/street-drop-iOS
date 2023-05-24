@@ -26,18 +26,18 @@ struct DroppingInfo {
     let location: Location
     let music: Music
     
-    private let locationManager: LocationManager
+    private let adressManager: AdressManager
     private let dropMusicRepository: DropMusicRepository
 
     init(
         location: Location,
         music: Music,
-        locationManager: LocationManager = DefaultLocationManager(),
+        adressManager: AdressManager = DefaultAdressManager(),
         dropMusicRepository: DropMusicRepository = DefaultDropMusicRepository()
     ) {
         self.location = location
         self.music = music
-        self.locationManager = locationManager
+        self.adressManager = adressManager
         self.dropMusicRepository = dropMusicRepository
     }
 
