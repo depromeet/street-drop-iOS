@@ -9,6 +9,8 @@ import CoreLocation
 import UIKit
 
 import NMapsMap
+import RxCocoa
+import RxSwift
 import SnapKit
 
 final class MainViewController: UIViewController {
@@ -74,9 +76,28 @@ final class MainViewController: UIViewController {
         musicDropButton.contentHorizontalAlignment = .fill
         return musicDropButton
     }()
+    private let droppedMusicWithinAreaCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3, height: UIScreen.main.bounds.width * 219 / 377)
+        layout.minimumLineSpacing = 0
+        let droppedMusicWithinAreaCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        droppedMusicWithinAreaCollectionView.register(DroppedMusicWithinAreaCollectionViewCell.self, forCellWithReuseIdentifier: DroppedMusicWithinAreaCollectionViewCell.identifier)
+        droppedMusicWithinAreaCollectionView.isPagingEnabled = false
+        droppedMusicWithinAreaCollectionView.decelerationRate = .fast
+        droppedMusicWithinAreaCollectionView.showsHorizontalScrollIndicator = false
+        droppedMusicWithinAreaCollectionView.backgroundColor = .clear
+        return droppedMusicWithinAreaCollectionView
+    }()
+    private let bottomCoverImageView: UIImageView = {
+        let bottomCoverImageView = UIImageView()
+        bottomCoverImageView.image = UIImage(named: "bottomCover.png")
+        return bottomCoverImageView
+    }()
     
     private var locationManager: LocationManager?
     private let currentLocationMarker = NMFMarker()
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -183,6 +204,59 @@ private extension MainViewController {
         self.musicDropButton.snp.updateConstraints { make in
             make.bottom.equalTo(self.bottomBarImageView.snp.bottom).inset(self.musicDropButton.frame.height / 3)
         }
+        
+        // MARK: - Bottom Cover ImageView
+        
+        self.view.addSubview(self.bottomCoverImageView)
+        self.bottomCoverImageView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(152)
+        }
+        
+        // MARK: - Dropped Music Within Area CollectionView
+        
+        self.view.addSubview(self.droppedMusicWithinAreaCollectionView)
+        self.droppedMusicWithinAreaCollectionView.snp.makeConstraints { make in
+            make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
+            make.height.equalTo(UIScreen.main.bounds.width * 219 / 377)
+        }
+        self.droppedMusicWithinAreaCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        self.bindCardListCollectionView()
+    }
+}
+
+// MARK: - CollectionView
+
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    private func bindCardListCollectionView() {
+        Observable.of([1, 2])
+            .observe(on: MainScheduler.instance)
+            .bind(to: droppedMusicWithinAreaCollectionView.rx.items(cellIdentifier: DroppedMusicWithinAreaCollectionViewCell.identifier, cellType: DroppedMusicWithinAreaCollectionViewCell.self)) { index, item, cell in
+                cell.setData(musicTitle: "음악 이름", singerName: "가수 이름", comment: "동해물과 백두산이 마르고 닳도록")
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Delegate Methods
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if scrollView != droppedMusicWithinAreaCollectionView { return }
+        guard let layout = droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
+        let estimatedIndex = scrollView.contentOffset.x / cellWidth
+        var index: Int
+        if velocity.x > 0 {
+            index = Int(ceil(estimatedIndex)) < [1, 2].count ? Int(ceil(estimatedIndex)) : [1, 2].count - 1
+        } else {
+            index = Int(floor(estimatedIndex)) >= 0 ? Int(floor(estimatedIndex)) : 0
+        }
+        targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidth, y: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: collectionView.bounds.width / 3, bottom: 0, right: collectionView.bounds.width / 3)
     }
 }
 
@@ -195,7 +269,7 @@ extension MainViewController {
         currentLocationMarker.mapView = nil
         currentLocationMarker.iconImage = NMFOverlayImage(image: UIImage(named: "locationMarker.png") ?? UIImage())
         currentLocationMarker.position = NMGLatLng(lat: location.coordinate.latitude,
-                                               lng: location.coordinate.longitude)
+                                                   lng: location.coordinate.longitude)
         currentLocationMarker.mapView = mapView
     }
 }
