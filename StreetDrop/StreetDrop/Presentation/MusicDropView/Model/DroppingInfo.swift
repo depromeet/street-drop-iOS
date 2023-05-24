@@ -7,6 +7,8 @@
 
 import Foundation
 
+import RxSwift
+
 struct DroppingInfo {
     struct Location {
         var latitude: Double
@@ -25,14 +27,21 @@ struct DroppingInfo {
     let music: Music
     
     private let locationManager: LocationManager
+    private let dropMusicRepository: DropMusicRepository
 
     init(
         location: Location,
         music: Music,
         locationManager: LocationManager = DefaultLocationManager(),
+        dropMusicRepository: DropMusicRepository = DefaultDropMusicRepository()
     ) {
         self.location = location
         self.music = music
         self.locationManager = locationManager
+        self.dropMusicRepository = dropMusicRepository
+    }
+
+    func drop(adress: String, content: String) -> Single<String> {
+        return dropMusicRepository.dropMusic(droppingInfo: self, adress: adress, content: content)
     }
 }
