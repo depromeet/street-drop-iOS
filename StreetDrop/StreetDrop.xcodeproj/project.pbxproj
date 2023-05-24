@@ -68,6 +68,14 @@
 		C434A4DA2A17AB5600C63526 /* SearchingMusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CD2A17970A00C63526 /* SearchingMusicModel.swift */; };
 		C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
 		C434A4DD2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
+		C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */; };
+		C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */; };
+		C45BF3A12A1D133000CEDE74 /* RecentMusicQueryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A02A1D133000CEDE74 /* RecentMusicQueryDTO.swift */; };
+		C45BF3A32A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A22A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift */; };
+		C45BF3A42A1D19BF00CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */; };
+		C45BF3A62A1D19C600CEDE74 /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */; };
+		C45BF3A72A1D19CC00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A22A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift */; };
+		C45BF3A82A1D19D100CEDE74 /* RecentMusicQueryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A02A1D133000CEDE74 /* RecentMusicQueryDTO.swift */; };
 		C49BA7612A1BDFC900A83E95 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */; };
 		C49BA7622A1BDFCC00A83E95 /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */; };
 		C49BA7832A1BE71700A83E95 /* SearchingMusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CB2A1796F300C63526 /* SearchingMusicViewModel.swift */; };
@@ -160,6 +168,10 @@
 		C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicRepository.swift; sourceTree = "<group>"; };
 		C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicViewModelTest.swift; sourceTree = "<group>"; };
 		C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicTableViewCell.swift; sourceTree = "<group>"; };
+		C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKey.swift; sourceTree = "<group>"; };
+		C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRecentMusicSearches.swift; sourceTree = "<group>"; };
+		C45BF3A02A1D133000CEDE74 /* RecentMusicQueryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicQueryDTO.swift; sourceTree = "<group>"; };
+		C45BF3A22A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicQueriesStorage.swift; sourceTree = "<group>"; };
 		C4D16FB32A1B917B008B076F /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		C4D16FB42A1B917B008B076F /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		C4D16FB52A1B917B008B076F /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
@@ -263,6 +275,7 @@
 			children = (
 				18F76FAE2A050110006CF9EF /* DataMapping */,
 				04FB1F1C2A02139C0064B3C8 /* Repositories */,
+				C45BF3992A1D0ED600CEDE74 /* PersistentStorages */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -331,6 +344,7 @@
 				C4D16FC72A1B931E008B076F /* Font */,
 				414139982A20D03D005418A1 /* Color */,
 				04FB1F302A021C250064B3C8 /* Error */,
+				C45BF3982A1D0AE200CEDE74 /* Constant */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -399,6 +413,7 @@
 				41E008CF2A14450100F5D99C /* SearchedMusic */,
 				18AAF83C2A13731A002EF441 /* Community */,
 				18AAF8362A136D9E002EF441 /* MusicWithinArea */,
+				C45BF39F2A1D12EF00CEDE74 /* RecentMusicSearch */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -583,6 +598,55 @@
 				C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */,
 			);
 			path = SearchingMusic;
+			sourceTree = "<group>";
+		};
+		C45BF3982A1D0AE200CEDE74 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
+		C45BF3992A1D0ED600CEDE74 /* PersistentStorages */ = {
+			isa = PBXGroup;
+			children = (
+				C45BF39A2A1D0F4300CEDE74 /* UserDefaultsStorage */,
+			);
+			path = PersistentStorages;
+			sourceTree = "<group>";
+		};
+		C45BF39A2A1D0F4300CEDE74 /* UserDefaultsStorage */ = {
+			isa = PBXGroup;
+			children = (
+				C45BF39B2A1D105100CEDE74 /* Protocol */,
+				C45BF39C2A1D105B00CEDE74 /* RecentMusicSearch */,
+			);
+			path = UserDefaultsStorage;
+			sourceTree = "<group>";
+		};
+		C45BF39B2A1D105100CEDE74 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				C45BF3A22A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		C45BF39C2A1D105B00CEDE74 /* RecentMusicSearch */ = {
+			isa = PBXGroup;
+			children = (
+				C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */,
+			);
+			path = RecentMusicSearch;
+			sourceTree = "<group>";
+		};
+		C45BF39F2A1D12EF00CEDE74 /* RecentMusicSearch */ = {
+			isa = PBXGroup;
+			children = (
+				C45BF3A02A1D133000CEDE74 /* RecentMusicQueryDTO.swift */,
+			);
+			path = RecentMusicSearch;
 			sourceTree = "<group>";
 		};
 		C4D16FC52A1B9184008B076F /* Font */ = {
@@ -814,6 +878,7 @@
 				18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */,
 				C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */,
 				18AAF82E2A135D56002EF441 /* MusicWithinAreaRequestDTO.swift in Sources */,
+				C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */,
 				C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */,
 				C434A4D02A17981C00C63526 /* DefaultSearchingMusicRepository.swift in Sources */,
 				040685042A01539800377094 /* MainViewController.swift in Sources */,
@@ -824,6 +889,10 @@
 				414139972A20B434005418A1 /* UIImageView+makeCircleShape.swift in Sources */,
 				414139922A20506D005418A1 /* CommunityViewModel.swift in Sources */,
 				415113272A165DC50051F809 /* MusicDropViewController.swift in Sources */,
+				C45BF3A12A1D133000CEDE74 /* RecentMusicQueryDTO.swift in Sources */,
+				040685002A01539800377094 /* AppDelegate.swift in Sources */,
+				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
+				C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */,
 				18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */,
 				040685022A01539800377094 /* SceneDelegate.swift in Sources */,
 				C4D16FC92A1B9338008B076F /* UIFont+Extension.swift in Sources */,
@@ -833,6 +902,7 @@
 				04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */,
 				41D0974F2A19065B00C011A0 /* UIView+generateCircleGradientView.swift in Sources */,
 				049F50222A122C8A001528CB /* DropMusicRequestDTO.swift in Sources */,
+				C45BF3A32A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */,
 				041038972A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */,
 				4141398F2A1FA252005418A1 /* PaddingLabel.swift in Sources */,
 				41D097532A19BE6C00C011A0 /* DroppingInfo.swift in Sources */,
@@ -853,20 +923,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				C434A4DD2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */,
+				C45BF3A62A1D19C600CEDE74 /* UserDefaultKey.swift in Sources */,
 				18AAF8372A136F9E002EF441 /* (null) in Sources */,
 				41FF59022A06B3A100ABB871 /* NetworkManager.swift in Sources */,
 				41FF59032A06B3A200ABB871 /* NetworkService.swift in Sources */,
 				0410388E2A12688A00BC5532 /* DropMusicRequestDTO.swift in Sources */,
 				041038982A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */,
+				C45BF3A82A1D19D100CEDE74 /* RecentMusicQueryDTO.swift in Sources */,
 				C49BA7612A1BDFC900A83E95 /* UIFont+Extension.swift in Sources */,
 				41B953692A10E5B800BEC0AB /* SearchedMusicResponseDTO.swift in Sources */,
 				C434A4D82A17AAAB00C63526 /* SearchingMusicViewModelTest.swift in Sources */,
+				C45BF3A72A1D19CC00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */,
 				C434A4D12A17981C00C63526 /* DefaultSearchingMusicRepository.swift in Sources */,
 				18AAF8422A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				C49BA7622A1BDFCC00A83E95 /* UILabel+LineHeight.swift in Sources */,
 				18AAF8382A136FA0002EF441 /* MusicWithinAreaRequestDTO.swift in Sources */,
 				C434A4DA2A17AB5600C63526 /* SearchingMusicModel.swift in Sources */,
 				41E008D02A14493A00F5D99C /* PoiResponseDTO.swift in Sources */,
+				C45BF3A42A1D19BF00CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */,
 				18AAF83F2A137435002EF441 /* CommunityResponseDTO.swift in Sources */,
 				41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */,
 				C434A4D42A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
