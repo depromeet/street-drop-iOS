@@ -43,6 +43,12 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
                 self?.searchMusic(keyword: keyword)
             }
             .disposed(by: disposedBag)
+        
+        input.keyBoardDidPressSearchEventWithKeyword
+            .bind { keyword in
+                self.model.saveRecentSearch(keyword: keyword)
+            }
+            .disposed(by: disposedBag)
                 
         self.searchedMusicList
             .bind(to: output.searchedMusicList)
@@ -75,6 +81,7 @@ extension DefaultSearchingMusicViewModel {
     struct Input {
         let viewDidAppearEvent: Observable<Void>
         let searchTextFieldDidEditEvent: ControlProperty<String>
+        let keyBoardDidPressSearchEventWithKeyword: Observable<String>
     }
     
     struct Output {
