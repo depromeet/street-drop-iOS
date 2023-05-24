@@ -125,6 +125,7 @@
 		41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedMusicResponseDTO.swift; sourceTree = "<group>"; };
 		41D0974E2A19065B00C011A0 /* UIView+generateCircleGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+generateCircleGradientView.swift"; sourceTree = "<group>"; };
 		41E008CD2A1442A000F5D99C /* PoiResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoiResponseDTO.swift; sourceTree = "<group>"; };
+		41F23B4A2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDropMusicRepository.swift; sourceTree = "<group>"; };
 		41F23B4D2A1B6EE80083D2EC /* DropMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropMusicRepository.swift; sourceTree = "<group>"; };
 		41FF58F92A06B38800ABB871 /* NetworkManagerTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkManagerTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41FF58FB2A06B38800ABB871 /* NetworkManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerTest.swift; sourceTree = "<group>"; };
@@ -248,6 +249,8 @@
 			children = (
 				04FB1F292A021B750064B3C8 /* Protocol */,
 				C434A4D52A17984200C63526 /* SearchingMusic */,
+				04FB1F2C2A021BAB0064B3C8 /* DefaultTestRepository.swift */,
+				41F23B4A2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -751,6 +754,9 @@
 				041038972A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */,
 				41E008CE2A1442A000F5D99C /* PoiResponseDTO.swift in Sources */,
 				C434A4CC2A1796F300C63526 /* SearchingMusicViewModel.swift in Sources */,
+				04FB1F2D2A021BAB0064B3C8 /* DefaultTestRepository.swift in Sources */,
+				41F23B4B2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift in Sources */,
+				04FB1F2B2A021B8F0064B3C8 /* TestRepository.swift in Sources */,
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift in Sources */,
 				C434A4CA2A1796E400C63526 /* SearchingMusicViewController.swift in Sources */,
 				18F76FB02A050133006CF9EF /* ResponseDTO.swift in Sources */,
