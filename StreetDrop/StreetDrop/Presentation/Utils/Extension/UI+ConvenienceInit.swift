@@ -57,6 +57,8 @@ extension UITextView {
         self.backgroundColor = backgroundColor
         self.layer.cornerRadius = cornerRadius
         self.textContainerInset = .init(top: inset, left: inset, bottom: inset, right: inset)
+        self.keyboardDismissMode = .interactive
+        self.keyboardAppearance = .dark
         self.showsVerticalScrollIndicator = false
     }
 }
