@@ -161,6 +161,16 @@ final class MusicListDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func prepareInfiniteCarousel() {
+        // originData: "1,2,3" -> 앞뒤2개씩 추가 to be: "2,3,1,2,3,1,2"
+        var newMusicList: [String] = []
+        newMusicList += musicList[musicList.count-2...musicList.count - 1]
+        newMusicList += musicList
+        newMusicList += musicList[0...1]
+
+        musicList = newMusicList
+    }
+
     private func generateGenreLabels(genres: [String]) -> [PaddingLabel] {
         var labels: [PaddingLabel] = []
         genres.forEach { genreTitle in
@@ -298,5 +308,56 @@ extension MusicListDetailViewController: UICollectionViewDelegate, UICollectionV
         cell.prepare(number: musicList[indexPath.item])
 
         return cell
+    }
+
+    // 무한스크롤 설정
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let layout = self.albumCollectionView.collectionViewLayout
+                as? UICollectionViewFlowLayout else { return }
+
+        let count = musicList.count
+        let cellWidth = layout.itemSize.width
+
+        if scrollView.contentOffset.x < cellWidth {
+            scrollView.setContentOffset(
+                .init(x: scrollView.contentSize.width-(cellWidth*3), y: 0),
+                animated: false
+            )
+        }
+
+        if scrollView.contentOffset.x > cellWidth * Double(count-3) {
+            scrollView.setContentOffset(
+                .init(x: cellWidth, y: 0),
+                animated: false
+            )
+        }
+    }
+}
+
+extension MusicListDetailViewController: UIScrollViewDelegate {
+    func scrollViewWillEndDragging(
+        _ scrollView: UIScrollView,
+        withVelocity velocity: CGPoint,
+        targetContentOffset: UnsafeMutablePointer<CGPoint>
+    ) {
+        guard let layout = self.albumCollectionView.collectionViewLayout
+                as? UICollectionViewFlowLayout else { return }
+
+        let cellWidth = layout.itemSize.width
+        let estimatedIndex = scrollView.contentOffset.x / cellWidth
+        let index: Int
+
+        if velocity.x > 0 {
+            index = Int(ceil(estimatedIndex))
+        } else if velocity.x < 0 {
+            index = Int(floor(estimatedIndex))
+        } else {
+            index = Int(round(estimatedIndex))
+        }
+
+        targetContentOffset.pointee = CGPoint(
+            x: (CGFloat(index) * cellWidth),
+            y: 0
+        )
     }
 }
