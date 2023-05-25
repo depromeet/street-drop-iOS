@@ -76,6 +76,8 @@
 		C45BF3A62A1D19C600CEDE74 /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */; };
 		C45BF3A72A1D19CC00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A22A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift */; };
 		C45BF3A82A1D19D100CEDE74 /* RecentMusicQueryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A02A1D133000CEDE74 /* RecentMusicQueryDTO.swift */; };
+		C45BF3AA2A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */; };
+		C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */; };
 		C49BA7612A1BDFC900A83E95 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */; };
 		C49BA7622A1BDFCC00A83E95 /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */; };
 		C49BA7832A1BE71700A83E95 /* SearchingMusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CB2A1796F300C63526 /* SearchingMusicViewModel.swift */; };
@@ -172,6 +174,8 @@
 		C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRecentMusicSearches.swift; sourceTree = "<group>"; };
 		C45BF3A02A1D133000CEDE74 /* RecentMusicQueryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicQueryDTO.swift; sourceTree = "<group>"; };
 		C45BF3A22A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicQueriesStorage.swift; sourceTree = "<group>"; };
+		C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicSearchScrollView.swift; sourceTree = "<group>"; };
+		C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentQueryButton.swift; sourceTree = "<group>"; };
 		C4D16FB32A1B917B008B076F /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		C4D16FB42A1B917B008B076F /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		C4D16FB52A1B917B008B076F /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
@@ -564,6 +568,8 @@
 			children = (
 				C434A4C92A1796E400C63526 /* SearchingMusicViewController.swift */,
 				C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */,
+				C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */,
+				C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -877,6 +883,7 @@
 				412D668C2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift in Sources */,
 				18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */,
 				C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */,
+				C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */,
 				18AAF82E2A135D56002EF441 /* MusicWithinAreaRequestDTO.swift in Sources */,
 				C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */,
 				C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */,
@@ -914,6 +921,7 @@
 				04FB1F2B2A021B8F0064B3C8 /* TestRepository.swift in Sources */,
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift in Sources */,
 				C434A4CA2A1796E400C63526 /* SearchingMusicViewController.swift in Sources */,
+				C45BF3AA2A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift in Sources */,
 				18F76FB02A050133006CF9EF /* ResponseDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
