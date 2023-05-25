@@ -12,6 +12,7 @@ import RxSwift
 protocol SearchingMusicModel {
     func fetchMusic(keyword: String) -> Single<[SearchedMusicResponseDTO.Music]>
     func saveRecentSearch(keyword: String)
+    func fetchRecentSearch() -> Single<[String]>
 }
 
 final class DefaultSearchingMusicModel: SearchingMusicModel {
@@ -28,5 +29,9 @@ final class DefaultSearchingMusicModel: SearchingMusicModel {
     
     func saveRecentSearch(keyword: String) {
         self.searchingMusicRepository.saveMusic(keyword: keyword)
+    }
+    
+    func fetchRecentSearch() -> Single<[String]> {
+        return self.searchingMusicRepository.fetchRecentMusicQueries()
     }
 }
