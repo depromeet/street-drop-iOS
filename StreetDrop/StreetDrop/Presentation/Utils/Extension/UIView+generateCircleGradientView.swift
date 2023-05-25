@@ -12,8 +12,7 @@ extension UIView {
         colors: [Any],
         gradientLocations: [NSNumber],
         viewBackgroundColor: UIColor
-    )
-    {
+    ){
         let axialGradient = CAGradientLayer()
         axialGradient.type = .axial
         axialGradient.colors = colors
