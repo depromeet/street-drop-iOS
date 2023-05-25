@@ -32,8 +32,17 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         let output = Output()
         
         input.viewDidAppearEvent
-            .subscribe(onNext: {
-                print("SearchingMusicViewController ViewDidLoad됨")
+            .subscribe(onNext: { [weak self] in
+                self?.model.fetchRecentSearch()
+                    .subscribe { result in
+                        switch result {
+                        case .success(let queries):
+                            output.recentMusicQueries.accept(queries)
+                        case .failure(_):
+                            output.recentMusicQueries.accept([])
+                        }
+                    }
+                    .disposed(by: disposedBag)
             })
             .disposed(by: disposedBag)
         
@@ -86,5 +95,6 @@ extension DefaultSearchingMusicViewModel {
     
     struct Output {
         let searchedMusicList = PublishRelay<[SearchedMusicResponseDTO.Music]>()
+        let recentMusicQueries = BehaviorRelay<[String]>(value: [""])
     }
 }

@@ -152,6 +152,12 @@ private extension SearchingMusicViewController {
                 searchingMusicTableViewCell.setData(music: music)
             }
             .disposed(by: disposeBag)
+        
+        output.recentMusicQueries
+            .bind { queries in
+                self.recentMusicSearchScrollView.setData(queries: queries)
+            }
+            .disposed(by: disposeBag)
     }
     
     func setupLayout() {
