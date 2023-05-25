@@ -74,6 +74,25 @@ final class SearchingMusicViewController: UIViewController {
         return button
     }()
     
+    private lazy var recentMusicSearchView: UIView = {
+        let uiView: UIView = UIView()
+        return uiView
+    }()
+    
+    private lazy var recentSearchResultLabel: UILabel = {
+        let uilabel: UILabel = UILabel()
+        uilabel.text = "최근 검색 결과"
+        uilabel.textColor = UIColor(red: 0.958, green: 0.958, blue: 0.958, alpha: 1)
+        uilabel.font = .pretendard(size: 12, weight: 500)
+        uilabel.setLineHeight(lineHeight: 14.32)
+        return uilabel
+    }()
+    
+    private lazy var recentMusicSearchScrollView: RecentMusicSearchScrollView = {
+        let view = RecentMusicSearchScrollView()
+        return view
+    }()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
@@ -143,11 +162,19 @@ private extension SearchingMusicViewController {
             self.searchView.addSubview($0)
         }
         
+        [
+            self.recentSearchResultLabel,
+            self.recentMusicSearchScrollView
+        ].forEach {
+            self.recentMusicSearchView.addSubview($0)
+        }
+        
         self.searchCancleView.addSubview(self.searchCancleButton)
         
         [
             self.searchView,
-            self.tableView
+            self.tableView,
+            self.recentMusicSearchView
         ].forEach {
             self.view.addSubview($0)
         }
@@ -181,6 +208,22 @@ private extension SearchingMusicViewController {
             $0.width.height.equalTo(20)
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview()
+        }
+        
+        self.recentMusicSearchView.snp.makeConstraints {
+            $0.top.equalTo(self.searchView.snp.bottom).offset(22)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        self.recentSearchResultLabel.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview().inset(24)
+        }
+        
+        self.recentMusicSearchScrollView.snp.makeConstraints {
+            $0.top.equalTo(self.recentSearchResultLabel.snp.bottom).offset(8)
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(33)
         }
         
         self.tableView.snp.makeConstraints {
