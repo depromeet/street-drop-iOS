@@ -36,6 +36,7 @@ extension DefaultDropMusicRepository: DropMusicRepository {
                 albumName: droppingInfo.music.albumName,
                 albumImage: droppingInfo.music.albumCover,
                 albumCover: droppingInfo.music.albumCover,
+                albumImage: droppingInfo.music.albumImage,
                 genre: droppingInfo.music.genre
             ),
             content: content

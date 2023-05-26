@@ -13,7 +13,7 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
 
     static let identifier: String = "AlbumCollectionViewCell"
 
-    private let albumCoverImageView: UIImageView = {
+    private let albumImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 10
         imageView.backgroundColor = .white
@@ -22,11 +22,11 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
     }()
 
     private func configureHierarchy() {
-        self.contentView.addSubview(albumCoverImageView)
+        self.contentView.addSubview(albumImageView)
     }
 
     private func configureLayout() {
-        albumCoverImageView.snp.makeConstraints {
+        albumImageView.snp.makeConstraints {
             $0.width.height.equalToSuperview().multipliedBy(0.8)
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().inset(10)

@@ -79,7 +79,7 @@ final class NetworkManagerTest: XCTestCase {
         //given
         let droppingLocation = DropMusicRequestDTO.Location(
             latitude: 37.35959299999998,
-            logitude: 127.10531600000002,
+            longitude: 127.10531600000002,
             address: "성남시 분당구 정자1동"
         )
         
@@ -87,7 +87,7 @@ final class NetworkManagerTest: XCTestCase {
             title: "하입보이",
             artist: "뉴진스",
             albumName: "NewJeans 1st EP 'New Jeans'",
-            albumCover: "https://is2-ssl.mzstatic.com/image.../.jpg",
+            albumImage: "https://is2-ssl.mzstatic.com/image.../.jpg",
             genre: [
                 "댄스"
             ]

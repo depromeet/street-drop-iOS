@@ -15,7 +15,7 @@ final class MusicDropViewModel {
     private let adressManager: AdressManager
     private let disposeBag: DisposeBag = DisposeBag()
     var locationTitle: BehaviorRelay<(adress: String, text: String)>
-    var albumCover: BehaviorRelay<Data?>
+    var albumImage: BehaviorRelay<Data?>
     var MusicTitle: Observable<String>
     var artistTitle: Observable<String>
     var commentPalceHolder: Observable<String>
@@ -29,7 +29,7 @@ final class MusicDropViewModel {
     ) {
         self.droppingInfo = droppingInfo
         self.adressManager = adressManager
-        self.albumCover = BehaviorRelay(value: nil)
+        self.albumImage = BehaviorRelay(value: nil)
         self.locationTitle = BehaviorRelay(value: (adress: "여기", text: "여기에\n음악을 드랍할게요"))
         self.MusicTitle = Observable<String>.just(droppingInfo.music.title)
         self.artistTitle = Observable<String>.just(droppingInfo.music.artist)
@@ -54,13 +54,13 @@ final class MusicDropViewModel {
         .disposed(by: disposeBag)
     }
 
-    func fetchAlbumCover() {
-        if let albumCoverUrl = URL(string: droppingInfo.music.albumCover) {
+    func fetchAlbumImage() {
+        if let albumImageUrl = URL(string: droppingInfo.music.albumImage) {
             DispatchQueue.global().async {
                 do {
-                    self.albumCover.accept(try Data(contentsOf: albumCoverUrl))
+                    self.albumImage.accept(try Data(contentsOf: albumImageUrl))
                 } catch {
-                    self.errorDescription.accept("albumCover 불러오기에 실패했습니다")
+                    self.errorDescription.accept("albumImage 불러오기에 실패했습니다")
                 }
             }
         }
