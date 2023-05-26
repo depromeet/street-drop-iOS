@@ -83,7 +83,7 @@ final class CommunityViewController: UIViewController {
 
     private let commentStackView: UIStackView = UIStackView(
         spacing: 5,
-        backgroundColor: .clear,
+        backgroundColor: .secondaryNavy,
         cornerRadius: 10,
         inset: 20
     )
@@ -307,7 +307,7 @@ extension CommunityViewController {
             $0.top.equalTo(commentStackView.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(0.9)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
 
         youtubeMusicLogo.snp.makeConstraints { make in
