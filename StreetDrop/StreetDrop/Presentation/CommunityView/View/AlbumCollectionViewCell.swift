@@ -14,7 +14,8 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
     static let identifier: String = "AlbumCollectionViewCell"
 
     private let albumImageView: UIImageView = {
-        let imageView = UIImageView()
+        let loadingImage = UIImage(systemName: "slowmo")
+        let imageView = UIImageView(image: loadingImage) // 디폴트이미지
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
@@ -35,10 +36,12 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func prepare(image: Data) {
+    func layout() {
         configureHierarchy()
         configureLayout()
+    }
 
+    func setupImage(image: Data) {
         let image = UIImage(data: image)
         self.albumImageView.image = image
     }

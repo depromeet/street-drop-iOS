@@ -356,12 +356,14 @@ extension CommunityViewController: UICollectionViewDelegate, UICollectionViewDat
             return UICollectionViewCell()
         }
 
+        cell.layout()
+
         let albumImageURL = viewModel.albumImages[indexPath.item]
         viewModel.fetchImage(url: albumImageURL)
             .observe(on: MainScheduler.instance)
             .subscribe {
                 if let data = $0.element {
-                    cell.prepare(image: data)
+                    cell.setupImage(image: data)
                 }
             }.disposed(by: disposeBag)
 
