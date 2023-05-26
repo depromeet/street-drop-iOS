@@ -8,9 +8,11 @@
 import UIKit
 
 import RxRelay
+import RxSwift
 
 final class RecentMusicSearchScrollView: UIView {
     let queryButtonDidTappedEvent: PublishRelay = PublishRelay<String>()
+    private let disposeBag: DisposeBag = DisposeBag()
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -42,9 +44,10 @@ final class RecentMusicSearchScrollView: UIView {
             let recentQueryButton = RecentQueryButton()
             recentQueryButton.query = query
             recentQueryButton.rx.controlEvent(.touchUpInside)
-                .bind {
-                    print(query)
+                .bind { [weak self] in
+                    self?.queryButtonDidTappedEvent.accept(query)
                 }
+                .disposed(by: disposeBag)
             self.stackView.addArrangedSubview(recentQueryButton)
             recentQueryButton.snp.makeConstraints {
                 $0.top.bottom.equalToSuperview()

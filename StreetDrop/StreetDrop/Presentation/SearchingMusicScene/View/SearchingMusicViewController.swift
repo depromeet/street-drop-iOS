@@ -130,6 +130,13 @@ private extension SearchingMusicViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        self.recentMusicSearchScrollView.queryButtonDidTappedEvent
+            .bind { recentQuery in
+                self.searchTextField.text = recentQuery
+                self.searchTextField.sendActions(for: .valueChanged)
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindViewModel() {
