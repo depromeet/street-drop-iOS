@@ -27,7 +27,7 @@ extension NetworkService: TargetType {
         case .dropMusic:
             return URL(string: "https://api.street-drop.com")!
         default:
-            return URL(string: "search.street-drop.com")!
+            return URL(string: "https://search.street-drop.com")!
         }
     }
 
@@ -41,6 +41,8 @@ extension NetworkService: TargetType {
             return "/community"
         case .dropMusic:
             return "/items"
+        case .searchMusic:
+            return "/music"
         default:
             return ""
         }
