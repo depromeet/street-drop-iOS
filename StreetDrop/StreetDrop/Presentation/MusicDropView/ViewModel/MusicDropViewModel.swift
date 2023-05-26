@@ -69,7 +69,7 @@ final class MusicDropViewModel {
     func drop(content: String) {
         droppingInfo.drop(adress: locationTitle.value.adress, content: content)
             .subscribe { response in
-                if response != "200" {
+                if !(200...299).contains(response) {
                     self.errorDescription.accept("저장에 실패했습니다")
                 }
             } onFailure: { error in

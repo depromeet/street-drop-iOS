@@ -24,6 +24,8 @@ extension NetworkService: TargetType {
         switch self {
         case .getWeather:
             return URL(string: "https://api.openweathermap.org")!
+        case .dropMusic:
+            return URL(string: "https://api.street-drop.com")!
         default:
             return URL(string: "search.street-drop.com")!
         }
@@ -37,6 +39,8 @@ extension NetworkService: TargetType {
             return "/musicWithinArea"
         case .getCommunity:
             return "/community"
+        case .dropMusic:
+            return "/items"
         default:
             return ""
         }

@@ -18,24 +18,21 @@ final class DefaultDropMusicRepository {
 }
 
 extension DefaultDropMusicRepository: DropMusicRepository {
-    func dropMusic(droppingInfo: DroppingInfo, adress: String, content: String) -> Single<String> {
+    func dropMusic(droppingInfo: DroppingInfo, adress: String, content: String) -> Single<Int> {
         return networkManager.dropMusic(requestDTO: DropMusicRequestDTO(
             location: DropMusicRequestDTO.Location(
                 latitude: droppingInfo.location.latitude,
-                logitude: droppingInfo.location.longitude,
+                longitude: droppingInfo.location.longitude,
                 address: adress
             ),
             music: DropMusicRequestDTO.Music(
                 title: droppingInfo.music.title,
                 artist: droppingInfo.music.artist,
                 albumName: droppingInfo.music.albumName,
-                albumCover: droppingInfo.music.albumCover,
+                albumImage: droppingInfo.music.albumCover,
                 genre: droppingInfo.music.genre
             ),
             content: content
         ))
-        .map { data in
-            data.base64EncodedString()
-        }
     }
 }
