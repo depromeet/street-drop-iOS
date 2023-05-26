@@ -43,8 +43,7 @@ final class CommunityViewController: UIViewController {
     )
 
     private let musicInfoStackView: UIStackView = UIStackView(
-        alignment: .center,
-        spacing: 5
+        alignment: .center
     )
 
     // comment 요소
@@ -273,7 +272,7 @@ extension CommunityViewController {
         albumCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(-viewWidth/4)
-            $0.height.equalTo(albumCollectionView.snp.width).multipliedBy(0.4)
+            $0.height.equalTo(albumCollectionView.snp.width).multipliedBy(0.34)
         }
 
         musicInfoStackView.snp.makeConstraints {
@@ -292,7 +291,7 @@ extension CommunityViewController {
         }
 
         commentStackView.snp.makeConstraints {
-            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(10)
+            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(0.9)
             $0.height.equalToSuperview().multipliedBy(0.3)
