@@ -68,7 +68,6 @@ final class MusicDropViewController: UIViewController {
         textAlignment: .center,
         font: .title2,
         numberOfLines: 2
-        // 👉 남은이슈: 주소만 글씨색 다르게하기
     )
 
     private let albumImageView: UIImageView = UIImageView(
@@ -129,7 +128,10 @@ final class MusicDropViewController: UIViewController {
 
         return imageView
     }()
+}
 
+//MARK: - 뷰모델 바인딩
+extension MusicDropViewController {
     private func bindViewModel() {
         viewModel.locationTitle.subscribe { [weak self] in
             if let element: (adress: String, text: String) = $0.element {
