@@ -7,6 +7,7 @@
 
 import UIKit
 
+import RxRelay
 import RxSwift
 import SnapKit
 
@@ -34,12 +35,10 @@ final class CommunityViewController: UIViewController {
 
     // MusicInfo 요소
     private let musicNameLabel: UILabel = UILabel(
-        text: "Can't Control myself",
         font: .title2
     )
 
     private let artistLabel: UILabel = UILabel(
-        text: "태연",
         font: .body
     )
 
@@ -49,9 +48,7 @@ final class CommunityViewController: UIViewController {
     )
 
     // comment 요소
-    private lazy var genreLabels: [PaddingLabel] = {
-        return generateGenreLabels(genres: ["신남쓰", "장르다"])
-    }()
+    private var genreLabels: [PaddingLabel] = []
 
     private let genreLabelStackView: UIStackView = UIStackView(
         axis: .horizontal,
@@ -61,25 +58,21 @@ final class CommunityViewController: UIViewController {
     private let voidView: UIView = UIView()
 
     private let commentLabel: UILabel = UILabel(
-        text: "삶은 너무 짧습니다...\n후회하지 말고 잘 사시길 바랍니다",
         font: .caption1,
         numberOfLines: 0
     )
 
     private let profileImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
-        imageView.image = UIImage(systemName: "car")
 
         return imageView
     }()
 
     private let nicknameLabel: UILabel = UILabel(
-        text: "일이삼사오육칠팔구십일이",
         font: .caption1
     )
 
     private let dateLabel: UILabel = UILabel(
-        text: "2023.04.01",
         font: .caption2
     )
 
@@ -149,6 +142,7 @@ final class CommunityViewController: UIViewController {
 
         configureHierarchy()
         configureLayout()
+        bindViewModel()
     }
 
     init(viewModel: CommunityViewModel) {
@@ -186,7 +180,52 @@ final class CommunityViewController: UIViewController {
 
         return layout
     }
+}
 
+//MARK: - 뷰모델 바인딩
+extension CommunityViewController {
+    private func bindViewModel() {
+        viewModel.MusicTitle.subscribe { [weak self] in
+            self?.musicNameLabel.text = $0
+        }.disposed(by: disposeBag)
+
+        viewModel.artistTitle.subscribe { [weak self] in
+            self?.artistLabel.text = $0
+        }.disposed(by: disposeBag)
+
+        viewModel.genresText.subscribe { [weak self] in
+            if let self = self {
+                self.genreLabels = self.generateGenreLabels(genres: $0)
+            }
+        }.disposed(by: disposeBag)
+
+        viewModel.commentText.subscribe { [weak self] in
+            self?.commentLabel.text = $0
+        }.disposed(by: disposeBag)
+
+        viewModel.profileImage.subscribe { [weak self] urlString in
+            guard let self = self else { return }
+            self.viewModel.fetchImage(url: urlString)
+                .observe(on: MainScheduler.instance)
+                .subscribe {
+                    if let data = $0.element {
+                        self.profileImageView.image = UIImage(data: data)
+                    }
+                }.disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
+
+        viewModel.nicknameText.subscribe { [weak self] in
+            self?.nicknameLabel.text = $0
+        }.disposed(by: disposeBag)
+
+        viewModel.dateText.subscribe { [weak self] in
+            self?.dateLabel.text = $0
+        }.disposed(by: disposeBag)
+    }
+}
+
+//MARK: - 계층, 레이아웃
+extension CommunityViewController {
     private func configureHierarchy() {
         [musicNameLabel, artistLabel].forEach {
             musicInfoStackView.addArrangedSubview($0)
@@ -273,6 +312,7 @@ final class CommunityViewController: UIViewController {
     }
 }
 
+//MARK: - 컬렉션뷰 데이터소스, 컬렉션뷰 델리게이트
 extension CommunityViewController: UICollectionViewDelegate, UICollectionViewDataSource  {
     func collectionView(
         _ collectionView: UICollectionView,
@@ -295,7 +335,7 @@ extension CommunityViewController: UICollectionViewDelegate, UICollectionViewDat
         }
 
         let albumImageURL = viewModel.albumImages[indexPath.item]
-        viewModel.fetchAlbumImage(url: albumImageURL)
+        viewModel.fetchImage(url: albumImageURL)
             .observe(on: MainScheduler.instance)
             .subscribe {
                 if let data = $0.element {
@@ -328,9 +368,8 @@ extension CommunityViewController: UICollectionViewDelegate, UICollectionViewDat
             )
         }
     }
-}
 
-extension CommunityViewController: UIScrollViewDelegate {
+    // 스크롤시 한 Cell씩 가운데 오도록 설정
     func scrollViewWillEndDragging(
         _ scrollView: UIScrollView,
         withVelocity velocity: CGPoint,
@@ -355,5 +394,7 @@ extension CommunityViewController: UIScrollViewDelegate {
             x: (CGFloat(index) * cellWidth),
             y: 0
         )
+
+        viewModel.changeCurrentMusic(to: index)
     }
 }
