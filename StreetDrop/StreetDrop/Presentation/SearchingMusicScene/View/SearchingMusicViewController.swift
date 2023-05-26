@@ -126,6 +126,7 @@ private extension SearchingMusicViewController {
             .bind { keyword in
                 if let keyword = keyword {
                     self.tableView.isHidden = keyword.isEmpty
+                    self.recentMusicSearchView.isHidden = !keyword.isEmpty
                 }
             }
             .disposed(by: disposeBag)
