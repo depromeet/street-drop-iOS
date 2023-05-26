@@ -15,7 +15,9 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
 
     private let albumImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
         imageView.backgroundColor = .white
 
         return imageView
@@ -33,8 +35,11 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func prepare(number: String) {
+    func prepare(image: Data) {
         configureHierarchy()
         configureLayout()
+
+        let image = UIImage(data: image)
+        self.albumImageView.image = image
     }
 }

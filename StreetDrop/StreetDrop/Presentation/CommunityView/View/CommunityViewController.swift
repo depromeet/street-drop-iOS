@@ -7,11 +7,12 @@
 
 import UIKit
 
+import RxSwift
 import SnapKit
 
 final class CommunityViewController: UIViewController {
-    private var musicList: [String]
-    private var currentIndex: Int = .zero
+    private let viewModel: CommunityViewModel
+    private let disposeBag = DisposeBag()
 
     private lazy var albumCollectionView: UICollectionView = {
         let collectionView = UICollectionView(
@@ -146,29 +147,17 @@ final class CommunityViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .black
 
-        prepareInfiniteCarousel()
         configureHierarchy()
         configureLayout()
     }
 
-    init(musicList: [String], currentIndex: Int) {
-        self.musicList = musicList
-        self.currentIndex = currentIndex
+    init(viewModel: CommunityViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    private func prepareInfiniteCarousel() {
-        // originData: "1,2,3" -> 앞뒤2개씩 추가 to be: "2,3,1,2,3,1,2"
-        var newMusicList: [String] = []
-        newMusicList += musicList[musicList.count-2...musicList.count - 1]
-        newMusicList += musicList
-        newMusicList += musicList[0...1]
-
-        musicList = newMusicList
     }
 
     private func generateGenreLabels(genres: [String]) -> [PaddingLabel] {
@@ -289,7 +278,7 @@ extension CommunityViewController: UICollectionViewDelegate, UICollectionViewDat
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return musicList.count
+        return viewModel.communityInfoCount
     }
 
     func collectionView(
@@ -305,7 +294,14 @@ extension CommunityViewController: UICollectionViewDelegate, UICollectionViewDat
             return UICollectionViewCell()
         }
 
-        cell.prepare(number: musicList[indexPath.item])
+        let albumImageURL = viewModel.albumImages[indexPath.item]
+        viewModel.fetchAlbumImage(url: albumImageURL)
+            .observe(on: MainScheduler.instance)
+            .subscribe {
+                if let data = $0.element {
+                    cell.prepare(image: data)
+                }
+            }.disposed(by: disposeBag)
 
         return cell
     }
@@ -315,7 +311,7 @@ extension CommunityViewController: UICollectionViewDelegate, UICollectionViewDat
         guard let layout = self.albumCollectionView.collectionViewLayout
                 as? UICollectionViewFlowLayout else { return }
 
-        let count = musicList.count
+        let count = viewModel.communityInfoCount
         let cellWidth = layout.itemSize.width
 
         if scrollView.contentOffset.x < cellWidth {
