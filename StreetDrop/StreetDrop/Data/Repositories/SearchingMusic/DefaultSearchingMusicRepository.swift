@@ -17,7 +17,7 @@ final class DefaultSearchingMusicRepository: SearchingMusicRepository {
     //FIXME: 서버 API 구현 완료되면, MoyaProvider<NetworkService>(stubClosure: MoyaProvider.immediatelyStub) -> MoyaProvider<NetworkService>()
     init(
         networkManager: NetworkManager = NetworkManager(
-            provider: MoyaProvider<NetworkService>(stubClosure: MoyaProvider.immediatelyStub)
+            provider: MoyaProvider<NetworkService>()
         ),
         recentMusicQueriesPersistentStorage: RecentMusicQueriesStorage = UserDefaultsRecentMusicQueriesStorage(maxStorageLimit: 10)
     ) {
