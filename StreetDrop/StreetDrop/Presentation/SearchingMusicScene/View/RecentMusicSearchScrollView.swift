@@ -23,7 +23,6 @@ final class RecentMusicSearchScrollView: UIView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 16.0
-        stackView.backgroundColor = .separator
         
         return stackView
     }()
