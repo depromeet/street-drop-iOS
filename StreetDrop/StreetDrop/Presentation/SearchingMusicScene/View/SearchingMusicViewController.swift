@@ -93,6 +93,39 @@ final class SearchingMusicViewController: UIViewController {
         return view
     }()
     
+    private lazy var questionLabel: UILabel = {
+        let label: UILabel = UILabel()
+        label.font = .pretendard(size: 20, weight: 700)
+        label.text = "지금 이 주변에\n드랍하고 싶은 음악은 무엇인가요?"
+        label.textColor = .white
+        label.numberOfLines = 2
+        /*
+         중간 글자에 대해 attributedString을 적용하기에,
+         setLineHeight(내부에서 attributedString 사용)을 쓰지 않고 직점 구현
+         */
+        let fullText = label.text ?? ""
+        let attributedString = NSMutableAttributedString(string: fullText)
+        let range = (fullText as NSString).range(of: "드랍하고 싶은 음악")
+        attributedString.addAttribute(
+            .foregroundColor,
+            value: UIColor(red: 145/255, green: 141/255, blue: 255/255, alpha: 1),
+            range: range
+        )
+        
+        let style = NSMutableParagraphStyle()
+        style.maximumLineHeight = 32
+        style.minimumLineHeight = 32
+        let attributes: [NSAttributedString.Key: Any] = [
+            .paragraphStyle: style,
+            .baselineOffset: (32 - label.font.lineHeight) / 4
+        ]
+        attributedString.addAttributes(attributes, range: NSMakeRange(0, fullText.count - 1))
+        
+        label.attributedText = attributedString
+
+        return label
+    }()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
@@ -178,7 +211,8 @@ private extension SearchingMusicViewController {
         
         [
             self.recentSearchResultLabel,
-            self.recentMusicSearchScrollView
+            self.recentMusicSearchScrollView,
+            self.questionLabel
         ].forEach {
             self.recentMusicSearchView.addSubview($0)
         }
@@ -238,6 +272,11 @@ private extension SearchingMusicViewController {
             $0.top.equalTo(self.recentSearchResultLabel.snp.bottom).offset(8)
             $0.leading.trailing.equalToSuperview().inset(24)
             $0.height.equalTo(33)
+        }
+        
+        self.questionLabel.snp.makeConstraints {
+            $0.top.equalTo(self.recentMusicSearchScrollView.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview().inset(24)
         }
         
         self.tableView.snp.makeConstraints {
