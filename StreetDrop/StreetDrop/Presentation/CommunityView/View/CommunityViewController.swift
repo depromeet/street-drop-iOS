@@ -22,7 +22,7 @@ final class CommunityViewController: UIViewController {
         )
         collectionView.isPagingEnabled = false
         collectionView.decelerationRate = .fast
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .primaryBackground
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(
@@ -83,7 +83,7 @@ final class CommunityViewController: UIViewController {
 
     private let commentStackView: UIStackView = UIStackView(
         spacing: 5,
-        backgroundColor: .darkGray,
+        backgroundColor: .clear,
         cornerRadius: 10,
         inset: 20
     )
@@ -104,7 +104,7 @@ final class CommunityViewController: UIViewController {
     private let listeningGuideStackView: UIStackView = UIStackView(
         alignment: .center,
         spacing: 10,
-        backgroundColor: .darkGray,
+        backgroundColor: .secondaryNavy,
         cornerRadius: 10,
         inset: 10
     )
@@ -125,7 +125,7 @@ final class CommunityViewController: UIViewController {
     private let likeStackView: UIStackView = UIStackView(
         alignment: .center,
         spacing: 10,
-        backgroundColor: .darkGray,
+        backgroundColor: .secondaryNavy,
         cornerRadius: 10,
         inset: 10
     )
@@ -138,7 +138,7 @@ final class CommunityViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .primaryBackground
 
         configureHierarchy()
         configureLayout()

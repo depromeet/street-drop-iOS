@@ -27,7 +27,7 @@ final class MusicDropViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .primaryBackground
 
         configureHierarchy()
         configureLayout()
@@ -283,16 +283,24 @@ extension MusicDropViewController {
 
     private func makeViewIntoGradientCircle() {
         topGradientCircleView.makeGradientCircleView(
-            colors: [UIColor.darkGray.cgColor, UIColor.black.cgColor, UIColor.darkGray.cgColor],
+            colors: [
+                UIColor.darkGray.cgColor,
+                UIColor.primaryBackground.cgColor,
+                UIColor.darkGray.cgColor
+            ],
             gradientLocations: [0, 0.5, 1],
-            viewBackgroundColor: .black
+            viewBackgroundColor: .primaryBackground
         )
 
         [smallerCenterGradientCircleView, LargerCenterGradientCircleView].forEach {
             $0.makeGradientCircleView(
-                colors: [UIColor.black.cgColor, UIColor.black.cgColor, UIColor.blue.cgColor],
+                colors: [
+                    UIColor.primaryBackground.cgColor,
+                    UIColor.primaryBackground.cgColor,
+                    UIColor.blue.cgColor
+                ],
                 gradientLocations: [0, 0.8, 1],
-                viewBackgroundColor: .black
+                viewBackgroundColor: .primaryBackground
             )
         }
     }
