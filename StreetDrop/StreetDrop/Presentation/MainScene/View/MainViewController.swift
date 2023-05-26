@@ -79,7 +79,7 @@ final class MainViewController: UIViewController {
     private let droppedMusicWithinAreaCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3, height: UIScreen.main.bounds.width * 219 / 377)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3, height: UIScreen.main.bounds.width * 1.125 / 3)
         layout.minimumLineSpacing = 0
         let droppedMusicWithinAreaCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         droppedMusicWithinAreaCollectionView.register(DroppedMusicWithinAreaCollectionViewCell.self, forCellWithReuseIdentifier: DroppedMusicWithinAreaCollectionViewCell.identifier)
@@ -87,14 +87,22 @@ final class MainViewController: UIViewController {
         droppedMusicWithinAreaCollectionView.decelerationRate = .fast
         droppedMusicWithinAreaCollectionView.showsHorizontalScrollIndicator = false
         droppedMusicWithinAreaCollectionView.backgroundColor = .clear
+        droppedMusicWithinAreaCollectionView.isHidden = true
         return droppedMusicWithinAreaCollectionView
     }()
     private let bottomCoverImageView: UIImageView = {
         let bottomCoverImageView = UIImageView()
         bottomCoverImageView.image = UIImage(named: "bottomCover.png")
+        bottomCoverImageView.isHidden = true
         return bottomCoverImageView
     }()
+    private let backToMapButton: UIButton = {
+        let backToMapButton = UIButton()
+        backToMapButton.isHidden = true
+        return backToMapButton
+    }()
     
+    private let viewModel = MainViewModel()
     private var locationManager: LocationManager?
     private let currentLocationMarker = NMFMarker()
     private let disposeBag = DisposeBag()
@@ -102,6 +110,8 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUI()
+        self.bindAction()
+        self.bindViewModel()
         
         self.locationManager = LocationManager()
         self.locationManager?.delegate = self
@@ -205,11 +215,19 @@ private extension MainViewController {
             make.bottom.equalTo(self.bottomBarImageView.snp.bottom).inset(self.musicDropButton.frame.height / 3)
         }
         
+        // MARK: - Back To Map Button
+        
+        self.view.addSubview(backToMapButton)
+        self.backToMapButton.snp.makeConstraints { make in
+            make.left.right.top.bottom.equalToSuperview()
+        }
+        
         // MARK: - Bottom Cover ImageView
         
         self.view.addSubview(self.bottomCoverImageView)
         self.bottomCoverImageView.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.top.equalTo(self.view.snp.bottom)
             make.height.equalTo(152)
         }
         
@@ -218,12 +236,91 @@ private extension MainViewController {
         self.view.addSubview(self.droppedMusicWithinAreaCollectionView)
         self.droppedMusicWithinAreaCollectionView.snp.makeConstraints { make in
             make.left.right.equalTo(self.view.safeAreaLayoutGuide)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
-            make.height.equalTo(UIScreen.main.bounds.width * 219 / 377)
+            make.top.equalTo(self.view.snp.bottom)
+            make.height.equalTo(UIScreen.main.bounds.width * 1.125 / 3 + 35)
         }
         self.droppedMusicWithinAreaCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         self.bindCardListCollectionView()
+    }
+    
+    // MARK: - Action Binding
+    
+    private func bindAction() {
+        backToMapButton.rx.tap
+            .bind { [weak self] in
+                guard let self = self else { return }
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
+                        make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+                        make.top.equalTo(self.view.snp.bottom)
+                        make.height.equalTo(UIScreen.main.bounds.width * 1.125 / 3 + 35)
+                    }
+                    self.bottomCoverImageView.snp.remakeConstraints { make in
+                        make.left.right.equalToSuperview()
+                        make.top.equalTo(self.view.snp.bottom)
+                        make.height.equalTo(152)
+                    }
+                    
+                    self.view.layoutIfNeeded()
+                }, completion: { _ in
+                    
+                    self.droppedMusicWithinAreaCollectionView.isHidden = true
+                    self.bottomCoverImageView.isHidden = true
+                    self.backToMapButton.isHidden = true
+                })
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Data Binding
+    
+    private func bindViewModel() {
+        Observable.of([
+            (37.450019, 126.653485),
+            (37.4513, 126.6565),
+            (37.4553, 126.651),
+        ])
+            .bind(onNext: { [weak self] coordList in
+                coordList.forEach {
+                    self?.drawMusicMarker(lat: $0.0, lng: $0.1)
+                    print("\($0.0) \($0.1)")
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+
+    // MARK: - Draw Marker
+    private func drawMusicMarker(lat: Double, lng: Double) {
+        let musicMarker = NMFMarker()
+        musicMarker.iconImage = NMFOverlayImage(image: UIImage(named: "musicMarker") ?? UIImage())
+        musicMarker.position = NMGLatLng(lat: lat, lng: lng)
+        musicMarker.mapView = self.mapView
+        bindMusicMarker(musicMarker: musicMarker)
+    }
+    
+    private func bindMusicMarker(musicMarker: NMFMarker) {
+        musicMarker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
+            guard let self = self else { return true }
+            UIView.animate(withDuration: 0.5, animations: {
+                self.droppedMusicWithinAreaCollectionView.isHidden = false
+                self.bottomCoverImageView.isHidden = false
+                self.backToMapButton.isHidden = false
+
+                self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
+                    make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+                    make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
+                    make.height.equalTo(UIScreen.main.bounds.width * 1.125 / 3 + 35)
+                }
+                self.bottomCoverImageView.snp.remakeConstraints { make in
+                    make.left.right.bottom.equalToSuperview()
+                    make.height.equalTo(152)
+                }
+
+                self.view.layoutIfNeeded()
+            })
+            return true
+        }
     }
 }
 
@@ -231,10 +328,10 @@ private extension MainViewController {
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     private func bindCardListCollectionView() {
-        Observable.of([1, 2])
+        Observable.of([0, 1, 2, 3, 4, 5])
             .observe(on: MainScheduler.instance)
             .bind(to: droppedMusicWithinAreaCollectionView.rx.items(cellIdentifier: DroppedMusicWithinAreaCollectionViewCell.identifier, cellType: DroppedMusicWithinAreaCollectionViewCell.self)) { index, item, cell in
-                cell.setData(musicTitle: "음악 이름", singerName: "가수 이름", comment: "동해물과 백두산이 마르고 닳도록")
+                cell.setData(musicTitle: "음악 이름", singerName: "가수 이름")
             }
             .disposed(by: disposeBag)
     }
@@ -248,7 +345,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
         let estimatedIndex = scrollView.contentOffset.x / cellWidth
         var index: Int
         if velocity.x > 0 {
-            index = Int(ceil(estimatedIndex)) < [1, 2].count ? Int(ceil(estimatedIndex)) : [1, 2].count - 1
+            index = Int(ceil(estimatedIndex)) < [0, 1, 2, 3, 4, 5].count ? Int(ceil(estimatedIndex)) : [0, 1, 2, 3, 4, 5].count - 1
         } else {
             index = Int(floor(estimatedIndex)) >= 0 ? Int(floor(estimatedIndex)) : 0
         }

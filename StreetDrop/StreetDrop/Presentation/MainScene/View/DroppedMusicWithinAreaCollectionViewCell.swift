@@ -36,22 +36,6 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         albumCoverButton.isUserInteractionEnabled = true
         return albumCoverButton
     }()
-    private let commentContainerImageView: UIImageView = {
-        let commentContainerImageView = UIImageView()
-        commentContainerImageView.backgroundColor = .clear
-        commentContainerImageView.image = UIImage(named: "commentContainer.png")
-        commentContainerImageView.isUserInteractionEnabled = true
-        commentContainerImageView.contentMode = .scaleToFill
-        return commentContainerImageView
-    }()
-    private let commentLabel: UILabel = {
-        let commentLabel = UILabel()
-        commentLabel.font = .systemFont(ofSize: 14)
-        commentLabel.textColor = .black
-        commentLabel.numberOfLines = 2
-        commentLabel.textAlignment = .center
-        return commentLabel
-    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -62,10 +46,9 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setData(musicTitle: String, singerName: String, comment: String) {
+    func setData(musicTitle: String, singerName: String) {
         self.musicTitleLabel.text = musicTitle
         self.singerNameLabel.text = singerName
-        self.commentLabel.text = comment
     }
 }
 
@@ -99,22 +82,6 @@ private extension DroppedMusicWithinAreaCollectionViewCell {
             make.centerX.equalTo(self.safeAreaLayoutGuide)
             make.bottom.equalTo(self.musicTitleLabel.snp.top).inset(-12)
             make.width.height.equalTo(84)
-        }
-        
-        // MARK: - Comment Container ImageView
-        
-        self.addSubview(self.commentContainerImageView)
-        self.commentContainerImageView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
-            make.bottom.equalTo(self.albumCoverButton.snp.top).inset(-12)
-        }
-        
-        // MARK: - Comment Label
-        
-        self.commentContainerImageView.addSubview(self.commentLabel)
-        self.commentLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(12)
-            make.left.right.equalToSuperview().inset(16)
         }
     }
 }

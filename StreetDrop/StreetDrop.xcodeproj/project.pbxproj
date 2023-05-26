@@ -295,7 +295,6 @@
 			children = (
 				04FB1F292A021B750064B3C8 /* Protocol */,
 				C434A4D52A17984200C63526 /* SearchingMusic */,
-				04FB1F2C2A021BAB0064B3C8 /* DefaultTestRepository.swift */,
 				41F23B4A2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift */,
 			);
 			path = Repositories;
@@ -385,7 +384,6 @@
 			isa = PBXGroup;
 			children = (
 				C434A4D62A17986400C63526 /* SearchingMusic */,
-				04FB1F2A2A021B8F0064B3C8 /* TestRepository.swift */,
 				41F23B4D2A1B6EE80083D2EC /* DropMusicRepository.swift */,
 			);
 			path = Protocol;
@@ -927,9 +925,7 @@
 				412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */,
 				41E008CE2A1442A000F5D99C /* PoiResponseDTO.swift in Sources */,
 				C434A4CC2A1796F300C63526 /* SearchingMusicViewModel.swift in Sources */,
-				04FB1F2D2A021BAB0064B3C8 /* DefaultTestRepository.swift in Sources */,
 				41F23B4B2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift in Sources */,
-				04FB1F2B2A021B8F0064B3C8 /* TestRepository.swift in Sources */,
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift in Sources */,
 				C434A4CA2A1796E400C63526 /* SearchingMusicViewController.swift in Sources */,
 				C45BF3AA2A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift in Sources */,
