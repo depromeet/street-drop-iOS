@@ -31,7 +31,7 @@ final class MusicDropViewController: UIViewController {
 
         configureHierarchy()
         configureLayout()
-        viewModel.fetchAlbumCover()
+        viewModel.fetchAlbumImage()
         viewModel.fetchAdress()
         bindViewModel()
     }
@@ -140,7 +140,7 @@ final class MusicDropViewController: UIViewController {
             }
         }.disposed(by: disposeBag)
 
-        viewModel.albumCover.subscribe { [weak self] data in
+        viewModel.albumImage.subscribe { [weak self] data in
             if let data = data {
                 DispatchQueue.main.async {
                     self?.albumImageView.image = UIImage(data: data)

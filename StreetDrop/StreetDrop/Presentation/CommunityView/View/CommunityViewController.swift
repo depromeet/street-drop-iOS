@@ -1,5 +1,5 @@
 //
-//  MusicListDetailViewController.swift
+//  CommunityViewController.swift
 //  StreetDrop
 //
 //  Created by 맹선아 on 2023/05/24.
@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class MusicListDetailViewController: UIViewController {
+final class CommunityViewController: UIViewController {
     private var musicList: [String]
     private var currentIndex: Int = .zero
 
@@ -284,7 +284,7 @@ final class MusicListDetailViewController: UIViewController {
     }
 }
 
-extension MusicListDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource  {
+extension CommunityViewController: UICollectionViewDelegate, UICollectionViewDataSource  {
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -334,7 +334,7 @@ extension MusicListDetailViewController: UICollectionViewDelegate, UICollectionV
     }
 }
 
-extension MusicListDetailViewController: UIScrollViewDelegate {
+extension CommunityViewController: UIScrollViewDelegate {
     func scrollViewWillEndDragging(
         _ scrollView: UIScrollView,
         withVelocity velocity: CGPoint,

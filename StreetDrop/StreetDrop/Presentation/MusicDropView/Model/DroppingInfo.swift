@@ -20,7 +20,7 @@ struct DroppingInfo {
         let title: String
         let artist: String
         let albumName: String
-        let albumCover: String
+        let albumImage: String
         let genre: [String]
     }
 
