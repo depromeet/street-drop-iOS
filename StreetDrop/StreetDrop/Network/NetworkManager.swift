@@ -12,7 +12,7 @@ import RxSwift
 import RxMoya
 
 struct NetworkManager {
-    let provider: MoyaProvider<NetworkService>
+    var provider = MoyaProvider<NetworkService>()
     let disposeBag = DisposeBag()
 
     init(provider: MoyaProvider<NetworkService> = MoyaProvider()) {
@@ -59,9 +59,9 @@ struct NetworkManager {
             .map { $0.data }
     }
 
-    func getPoi(latitude: Double, longitude: Double, zoomLevel: Int) -> Single<Data> {
+    func getPoi(latitude: Double, longitude: Double, distance: Double) -> Single<Data> {
         return provider.rx
-            .request(.getPOI(latitude: latitude, longitude: longitude, zoomLevel: zoomLevel))
+            .request(.getPOI(latitude: latitude, longitude: longitude, distance: distance))
             .retry(3)
             .map { $0.data }
     }

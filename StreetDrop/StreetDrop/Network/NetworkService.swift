@@ -16,7 +16,7 @@ enum NetworkService {
     case fetchNumberOfDroppedMusicByDong(address: String)
     case getMusicWithinArea(requestDTO: MusicWithinAreaRequestDTO)
     case getCommunity(itemID: UUID)
-    case getPOI(latitude: Double, longitude: Double, zoomLevel: Int)
+    case getPOI(latitude: Double, longitude: Double, distance: Double)
 }
 
 extension NetworkService: TargetType {
@@ -43,6 +43,8 @@ extension NetworkService: TargetType {
             return "/items"
         case .searchMusic:
             return "/music"
+        case .fetchNumberOfDroppedMusicByDong:
+            return "/villages/items/count"
         default:
             return ""
         }
