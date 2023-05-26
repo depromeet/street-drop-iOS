@@ -20,12 +20,6 @@ final class PaddingLabel: UILabel {
         super.drawText(in: rect.inset(by: padding))
     }
 
-//    override func draw(_ rect: CGRect) {
-//        super.draw(rect)
-//        layer.masksToBounds = true
-//        layer.cornerRadius = rect.height/2
-//    }
-
     override var intrinsicContentSize: CGSize {
         var contentSize = super.intrinsicContentSize
         contentSize.height += padding.top + padding.bottom

@@ -61,8 +61,9 @@ final class CommunityViewController: UIViewController {
         numberOfLines: 0
     )
 
-    private let profileImageView: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
+    private var profileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
 
         return imageView
     }()
@@ -142,6 +143,11 @@ final class CommunityViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         bindViewModel()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        profileImageView.makeCircleShape()
     }
 
     init(viewModel: CommunityViewModel) {
