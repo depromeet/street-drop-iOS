@@ -195,7 +195,11 @@ extension CommunityViewController {
 
         viewModel.genresText.subscribe { [weak self] in
             if let self = self {
+                self.genreLabels.forEach { view in
+                    (view as UIView).removeFromSuperview()
+                }
                 self.genreLabels = self.generateGenreLabels(genres: $0)
+                self.updateGenreLabelStackView()
             }
         }.disposed(by: disposeBag)
 
@@ -282,6 +286,11 @@ extension CommunityViewController {
         nicknameLabel.setContentHuggingPriority(.init(1), for: .horizontal)
         voidView.setContentHuggingPriority(.init(1), for: .horizontal)
 
+        profileImageView.snp.makeConstraints {
+            $0.width.equalToSuperview().multipliedBy(0.1)
+            $0.height.equalTo(profileImageView.snp.width)
+        }
+
         commentStackView.snp.makeConstraints {
             $0.top.equalTo(musicInfoStackView.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
@@ -309,6 +318,14 @@ extension CommunityViewController {
         listeningGuideStackView.snp.makeConstraints {
             $0.width.equalTo(likeStackView.snp.width)
         }
+    }
+
+    private func updateGenreLabelStackView() {
+        genreLabels.forEach {
+            genreLabelStackView.addArrangedSubview($0)
+        }
+
+        genreLabelStackView.addArrangedSubview(voidView)
     }
 }
 
