@@ -5,7 +5,7 @@
 //  Created by JoongkyuPark on 2023/05/05.
 //
 
-import Foundation
+import UIKit
 
 import Moya
 
@@ -91,7 +91,10 @@ extension NetworkService: TargetType {
     }
     
     var headers: [String: String]? {
-        return ["Content-type": "application/json"]
+        return [
+            "Content-type": "application/json",
+            "x-sdp-idfv": UIDevice.current.identifierForVendor?.uuidString ?? ""
+        ]
     }
 
     var sampleData: Data {
