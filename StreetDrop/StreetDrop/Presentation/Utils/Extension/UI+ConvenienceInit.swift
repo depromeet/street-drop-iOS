@@ -13,21 +13,23 @@ extension UILabel {
         text: String = "",
         textColor: UIColor = .white,
         textAlignment: NSTextAlignment = .natural,
-        font: UIFont.TextStyle = .body,
+        pretendardFont: UIFont = .pretendard(size: 10, weight: 500),
         numberOfLines: Int = 1,
         cornerRadius: CGFloat = 0,
-        inset: CGFloat = 0
+        inset: CGFloat = 0,
+        lineHeight: CGFloat = 20
     )
     {
         self.init(frame: .zero)
         self.text = text
         self.textColor = textColor
         self.textAlignment = textAlignment
-        self.font = .preferredFont(forTextStyle: font)
+        self.font = pretendardFont
         self.numberOfLines = numberOfLines
         self.layer.cornerRadius = cornerRadius
         self.clipsToBounds = true
         self.translatesAutoresizingMaskIntoConstraints = false
+        self.setLineHeight(lineHeight: lineHeight)
     }
 }
 

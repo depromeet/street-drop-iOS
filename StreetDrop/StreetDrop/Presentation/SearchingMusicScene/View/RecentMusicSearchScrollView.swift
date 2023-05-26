@@ -40,19 +40,22 @@ final class RecentMusicSearchScrollView: UIView {
     }
     
     func setData(queries: [String]) {
-        queries.enumerated().forEach { (index, query) in
-            let recentQueryButton = RecentQueryButton()
-            recentQueryButton.query = query
-            recentQueryButton.rx.controlEvent(.touchUpInside)
-                .bind { [weak self] in
-                    self?.queryButtonDidTappedEvent.accept(query)
+        DispatchQueue.main.async {
+            queries.enumerated().forEach { (index, query) in
+                let recentQueryButton = RecentQueryButton()
+                recentQueryButton.query = query
+                recentQueryButton.rx.controlEvent(.touchUpInside)
+                    .bind { [weak self] in
+                        self?.queryButtonDidTappedEvent.accept(query)
+                    }
+                    .disposed(by: self.disposeBag)
+                self.stackView.addArrangedSubview(recentQueryButton)
+                recentQueryButton.snp.makeConstraints {
+                    $0.top.bottom.equalToSuperview()
                 }
-                .disposed(by: disposeBag)
-            self.stackView.addArrangedSubview(recentQueryButton)
-            recentQueryButton.snp.makeConstraints {
-                $0.top.bottom.equalToSuperview()
             }
         }
+        
     }
 }
 

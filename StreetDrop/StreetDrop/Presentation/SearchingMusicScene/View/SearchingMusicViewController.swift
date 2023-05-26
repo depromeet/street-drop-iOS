@@ -14,6 +14,7 @@ import SnapKit
 final class SearchingMusicViewController: UIViewController {
     private let viewModel: DefaultSearchingMusicViewModel
     private let disposeBag: DisposeBag = DisposeBag()
+    private var musicList: [SearchedMusicResponseDTO.Music] = []
     
     init(viewModel: DefaultSearchingMusicViewModel = DefaultSearchingMusicViewModel()) {
         self.viewModel = viewModel
@@ -170,6 +171,39 @@ private extension SearchingMusicViewController {
                 self.searchTextField.sendActions(for: .valueChanged)
             }
             .disposed(by: disposeBag)
+        
+        self.backButton.rx.tap
+            .bind {
+                self.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        self.tableView.rx.itemSelected
+            .bind { indexPath in
+                let music = self.musicList[indexPath.row]
+                let model: DroppingInfo = DroppingInfo(
+                            location: DroppingInfo.Location(
+                                latitude: 37.450022,
+                                longitude: 126.653488,
+                                address: "미추홀구 용현1.4동"
+                            ),
+                            music: DroppingInfo.Music(
+                                title: music.songName,
+                                artist: music.artistName,
+                                albumName: music.albumName,
+                                albumImage: music.albumImage,
+                                genre: music.genre
+                            )
+                        )
+                
+                let musicDropViewController = MusicDropViewController(
+                    viewModel: MusicDropViewModel(droppingInfo: model)
+                )
+                self.navigationController?.pushViewController(
+                    musicDropViewController, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     func bindViewModel() {
@@ -184,6 +218,9 @@ private extension SearchingMusicViewController {
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
         
         output.searchedMusicList
+            .do(onNext: { musicList in
+                self.musicList = musicList
+            })
             .bind(
                 to: tableView.rx.items(
                     cellIdentifier: SearchingMusicTableViewCell.identifier,

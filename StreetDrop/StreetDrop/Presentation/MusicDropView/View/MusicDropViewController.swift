@@ -52,7 +52,6 @@ final class MusicDropViewController: UIViewController {
     //MARK: - 뷰 아이템 요소
     private let locationLabel: UILabel = UILabel(
         textAlignment: .center,
-        font: .title2,
         numberOfLines: 2
     )
 
@@ -61,11 +60,9 @@ final class MusicDropViewController: UIViewController {
     )
 
     private let musicNameLabel: UILabel = UILabel(
-        font: .body
     )
 
     private let artistLabel: UILabel = UILabel(
-        font: .caption1
     )
 
     private let musicInfoStackView: UIStackView = UIStackView(
@@ -80,7 +77,6 @@ final class MusicDropViewController: UIViewController {
     )
 
     private let CommentGuidanceLabel: UILabel = UILabel(
-        font: .caption2
     )
 
     private let commentStackView: UIStackView = UIStackView(
@@ -91,7 +87,7 @@ final class MusicDropViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
-        button.backgroundColor = .darkGray
+        button.backgroundColor = UIColor(red: 145/255, green: 141/255, blue: 255/255, alpha: 1)
         button.addAction(touchedUpDropButton(), for: .touchUpInside)
 
         return button
@@ -114,7 +110,7 @@ extension MusicDropViewController {
             if let element: (adress: String, text: String) = $0.element {
                 self?.locationLabel.attributedText = element.text.changeColorPartially(
                     element.adress,
-                    to: .blue
+                    to: UIColor(red: 145/255, green: 141/255, blue: 255/255, alpha: 1)
                 )
             }
         }.disposed(by: disposeBag)
@@ -172,6 +168,10 @@ extension MusicDropViewController {
             $0.width.equalToSuperview().multipliedBy(0.5)
             $0.height.equalToSuperview().multipliedBy(0.5)
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.navigationController?.popToRootViewController(animated: true)
+        })
     }
 
     private func removeViewItemComponents() {
@@ -274,7 +274,7 @@ extension MusicDropViewController {
                 colors: [
                     UIColor.primaryBackground.cgColor,
                     UIColor.primaryBackground.cgColor,
-                    UIColor.blue.cgColor
+                    UIColor(red: 145/255, green: 141/255, blue: 255/255, alpha: 1).cgColor
                 ],
                 gradientLocations: [0, 0.8, 1],
                 viewBackgroundColor: .primaryBackground

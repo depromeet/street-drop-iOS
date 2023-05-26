@@ -36,7 +36,7 @@ final class MainViewController: UIViewController {
         let locationLabel = UILabel()
         locationLabel.font = .systemFont(ofSize: 14)
         locationLabel.textColor = UIColor(red: 0.867, green: 0.902, blue: 0.942, alpha: 1)
-        locationLabel.text = "성동구 성수 1가 1동"
+        locationLabel.text = "미추홀구 용현1.4동"
         return locationLabel
     }()
     private let musicDroppedCountContainerView: UIView = {
@@ -49,7 +49,7 @@ final class MainViewController: UIViewController {
         let musicDroppedCountLabel = UILabel()
         musicDroppedCountLabel.font = .systemFont(ofSize: 12)
         musicDroppedCountLabel.textColor = UIColor(red: 0.408, green: 0.396, blue: 0.971, alpha: 1)
-        musicDroppedCountLabel.text = "드랍된 음악 247개"
+        musicDroppedCountLabel.text = "드랍된 음악 15개"
         return musicDroppedCountLabel
     }()
     private let bottomBarImageView: UIImageView = {
@@ -107,6 +107,27 @@ final class MainViewController: UIViewController {
     private let currentLocationMarker = NMFMarker()
     private let disposeBag = DisposeBag()
     
+    let music1 = CommunityInfo.Music.init(
+        title: "LAST DANCE",
+        artist: "BIGBANG",
+        albumImage: "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/5b/9b/8e/5b9b8ef2-998e-1210-8454-dfebfbf6271c/BB_COVER_IMAGE_4000.jpg/500x500bb.jpg",
+        genre: ["K-Pop", "음악", "팝"]
+    )
+    
+    let music2 = CommunityInfo.Music.init(
+        title: "봄여름가을겨울 (Still Life)",
+        artist: "BIGBANG",
+        albumImage: "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/f6/67/3a/f6673a7c-e2bc-8084-f8b6-523cad1ab277/BIGBANG_Still_Life.jpg/500x500bb.jpg",
+        genre: ["K-Pop", "음악", "팝"]
+    )
+    
+    let music3 = CommunityInfo.Music.init(
+        title: "삐딱하게",
+        artist: "G-DRAGON",
+        albumImage: "https://is3-ssl.mzstatic.com/image/thumb/Music124/v4/6f/ea/f0/6feaf05d-1c45-a7ac-479e-f294d0ca4b70/8806197910472.jpg/500x500bb.jpg",
+        genre: ["힙합/랩", "음악", "팝", "K-Pop"]
+    )
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUI()
@@ -115,6 +136,7 @@ final class MainViewController: UIViewController {
         
         self.locationManager = LocationManager()
         self.locationManager?.delegate = self
+        self.navigationController?.isNavigationBarHidden = true
     }
 }
 
@@ -271,6 +293,71 @@ private extension MainViewController {
                 })
             }
             .disposed(by: disposeBag)
+        
+        musicDropButton.rx.tap
+            .bind {
+                let searchingMusicViewController = SearchingMusicViewController()
+                self.navigationController?.pushViewController(
+                    searchingMusicViewController,
+                    animated: true
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        self.droppedMusicWithinAreaCollectionView.rx.itemSelected
+            .bind { indexPath in
+                
+                
+                let user1 = CommunityInfo.User.init(nickname: "박중규",
+                                                    profileImage: "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg",
+                                                    musicApp: "youtubemusic"
+                )
+                
+                let user2 = CommunityInfo.User.init(nickname: "써니 쿠키",
+                                                    profileImage: "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg",
+                                                    musicApp: "youtubemusic"
+                )
+                
+                let user3 = CommunityInfo.User.init(nickname: "조셉촤",
+                                                    profileImage: "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg",
+                                                    musicApp: "youtubemusic"
+                )
+                
+                let community1 = CommunityInfo(adress: "미추홀구 용현1.4동",
+                                               music: self.music1,
+                                               comment: "TESTTESTTESTTEST",
+                                               user: user1,
+                                               dropDate: "2023-05-26 01:13:14"
+                )
+                
+                let community2 = CommunityInfo(adress: "미추홀구 용현1.4동",
+                                               music: self.music2,
+                                               comment: "테스트더미 만들기귀찮아 죽것다아아\n두번째줄\n세번째줄\n네번째줄",
+                                               user: user2,
+                                               dropDate: "2023-05-21 01:13:14"
+                )
+                
+                let community3 = CommunityInfo(adress: "미추홀구 용현1.4동",
+                                               music: self.music3,
+                                               comment: "테스트더미 만들기귀찮아 죽것다아아\n두번째줄\n세번째줄\n네번째줄",
+                                               user: user3,
+                                               dropDate: "2023-05-21 01:13:14"
+                )
+                
+                let communityViewController = CommunityViewController(
+                    viewModel: CommunityViewModel(
+                        communityInfos: [community1, community2, community3],
+                        index: 0
+                    )
+                )
+                
+                self.navigationController?.pushViewController(
+                    communityViewController,
+                    animated: true
+                )
+                
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Data Binding
@@ -328,10 +415,10 @@ private extension MainViewController {
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     private func bindCardListCollectionView() {
-        Observable.of([0, 1, 2, 3, 4, 5])
+        Observable.of([self.music1, self.music2, self.music3])
             .observe(on: MainScheduler.instance)
             .bind(to: droppedMusicWithinAreaCollectionView.rx.items(cellIdentifier: DroppedMusicWithinAreaCollectionViewCell.identifier, cellType: DroppedMusicWithinAreaCollectionViewCell.self)) { index, item, cell in
-                cell.setData(musicTitle: "음악 이름", singerName: "가수 이름")
+                cell.setData(musicTitle: item.title, singerName: item.artist, albumImage: item.albumImage)
             }
             .disposed(by: disposeBag)
     }

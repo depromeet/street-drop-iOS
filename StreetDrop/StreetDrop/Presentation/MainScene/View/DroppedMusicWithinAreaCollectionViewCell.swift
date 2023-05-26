@@ -16,7 +16,8 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     
     private let musicTitleLabel: UILabel = {
         let musicTitleLabel = UILabel()
-        musicTitleLabel.font = .systemFont(ofSize: 14)
+        musicTitleLabel.font = .pretendard(size: 16, weight: 700)
+        musicTitleLabel.setLineHeight(lineHeight: 22.4)
         musicTitleLabel.textColor = .white
         musicTitleLabel.numberOfLines = 1
         musicTitleLabel.textAlignment = .center
@@ -24,7 +25,8 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     }()
     private let singerNameLabel: UILabel = {
         let singerNameLabel = UILabel()
-        singerNameLabel.font = .systemFont(ofSize: 14)
+        singerNameLabel.font = .pretendard(size: 12, weight: 600)
+        singerNameLabel.setLineHeight(lineHeight: 16.8)
         singerNameLabel.textColor = .white
         singerNameLabel.numberOfLines = 1
         singerNameLabel.textAlignment = .center
@@ -34,6 +36,8 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         let albumCoverButton = UIButton()
         albumCoverButton.backgroundColor = .gray
         albumCoverButton.isUserInteractionEnabled = true
+        albumCoverButton.layer.cornerRadius = 12
+        albumCoverButton.clipsToBounds = true
         return albumCoverButton
     }()
 
@@ -46,9 +50,18 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setData(musicTitle: String, singerName: String) {
+    func setData(musicTitle: String, singerName: String, albumImage: String) {
         self.musicTitleLabel.text = musicTitle
         self.singerNameLabel.text = singerName
+        
+        if let url = URL(string: albumImage) {
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: url)
+                DispatchQueue.main.async {
+                    self.albumCoverButton.setImage(UIImage(data: data ?? Data()), for: .normal)
+                }
+            }
+        }
     }
 }
 

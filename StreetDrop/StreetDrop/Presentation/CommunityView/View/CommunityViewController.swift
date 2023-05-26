@@ -7,6 +7,7 @@
 
 import UIKit
 
+import RxCocoa
 import RxRelay
 import RxSwift
 import SnapKit
@@ -35,11 +36,13 @@ final class CommunityViewController: UIViewController {
 
     // MusicInfo 요소
     private let musicNameLabel: UILabel = UILabel(
-        font: .title2
+        pretendardFont: .pretendard(size: 20, weight: 700),
+        lineHeight: 26.4
     )
 
     private let artistLabel: UILabel = UILabel(
-        font: .body
+        pretendardFont: .pretendard(size: 14, weight: 500),
+        lineHeight: 19.6
     )
 
     private let musicInfoStackView: UIStackView = UIStackView(
@@ -57,7 +60,6 @@ final class CommunityViewController: UIViewController {
     private let voidView: UIView = UIView()
 
     private let commentLabel: UILabel = UILabel(
-        font: .caption1,
         numberOfLines: 0
     )
 
@@ -69,11 +71,9 @@ final class CommunityViewController: UIViewController {
     }()
 
     private let nicknameLabel: UILabel = UILabel(
-        font: .caption1
     )
 
     private let dateLabel: UILabel = UILabel(
-        font: .caption2
     )
 
     private let userInfoStackView: UIStackView = UIStackView(
@@ -89,16 +89,17 @@ final class CommunityViewController: UIViewController {
     )
 
     // listeningGuide 요소
-    private let youtubeMusicLogo: UIImageView = {
+    private let youtubeMusicLogo: UIButton = {
+        let button: UIButton = UIButton()
         let youtubeLogo = UIImage(named: "MusicLogo")
-        let imageView = UIImageView(image: youtubeLogo)
-
-        return imageView
+        button.setImage(youtubeLogo, for: .normal)
+        
+        
+        return button
     }()
 
     private let listeningGuideLabel: UILabel = UILabel(
-        text: "음악듣기",
-        font: .body
+        text: "음악듣기"
     )
 
     private let listeningGuideStackView: UIStackView = UIStackView(
@@ -118,8 +119,7 @@ final class CommunityViewController: UIViewController {
     }()
 
     private let likeCountLabel: UILabel = UILabel(
-        text: "31.8K",
-        font: .body
+        text: "31.8K"
     )
 
     private let likeStackView: UIStackView = UIStackView(
@@ -165,7 +165,8 @@ final class CommunityViewController: UIViewController {
             let label = PaddingLabel(padding: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
             label.text = genreTitle
             label.textAlignment = .center
-            label.font = .preferredFont(forTextStyle: .caption1)
+            label.font = .pretendard(size: 12, weight: 600)
+            label.setLineHeight(lineHeight: 16.8)
             label.numberOfLines = 1
             label.layer.cornerRadius = 10
             label.clipsToBounds = true
@@ -230,6 +231,16 @@ extension CommunityViewController {
         viewModel.dateText.subscribe { [weak self] in
             self?.dateLabel.text = $0
         }.disposed(by: disposeBag)
+        
+        youtubeMusicLogo.rx.tap
+            .bind {
+                guard let url = URL(string: "https://music.youtube.com/search?q=%EB%B4%84%EC%97%AC%EB%A6%84%EA%B0%80%EC%9D%84%EA%B2%A8%EC%9A%B8-%EB%B9%85%EB%B1%85") else {
+                    return
+                }
+                
+                UIApplication.shared.open(url)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
