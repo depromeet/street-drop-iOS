@@ -14,7 +14,7 @@ struct DropMusicRequestDTO: Encodable {
     
     struct Location: Encodable {
         let latitude: Double
-        let logitude: Double
+        let longitude: Double
         let address: String
     }
     
@@ -22,7 +22,7 @@ struct DropMusicRequestDTO: Encodable {
         let title: String
         let artist: String
         let albumName: String
-        let albumCover: String
+        let albumImage: String
         let genre: [String]
     }
 }

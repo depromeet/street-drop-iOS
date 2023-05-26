@@ -13,6 +13,7 @@ struct DroppingInfo {
     struct Location {
         var latitude: Double
         var longitude: Double
+        var address: String
     }
 
     struct Music {
@@ -41,7 +42,7 @@ struct DroppingInfo {
         self.dropMusicRepository = dropMusicRepository
     }
 
-    func drop(adress: String, content: String) -> Single<String> {
+    func drop(adress: String, content: String) -> Single<Int> {
         return dropMusicRepository.dropMusic(droppingInfo: self, adress: adress, content: content)
     }
 }

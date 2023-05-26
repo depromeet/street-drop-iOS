@@ -35,10 +35,10 @@ struct NetworkManager {
             .map { $0.data }
     }
     
-    func dropMusic(requestDTO: DropMusicRequestDTO) -> Single<Data> {
+    func dropMusic(requestDTO: DropMusicRequestDTO) -> Single<Int> {
         return provider.rx.request(.dropMusic(requestDTO: requestDTO))
             .retry(3)
-            .map { $0.data }
+            .map { $0.statusCode }
     }
     
     func fetchNumberOfDroppedMusicByDong(address: String) -> Single<Data> {
