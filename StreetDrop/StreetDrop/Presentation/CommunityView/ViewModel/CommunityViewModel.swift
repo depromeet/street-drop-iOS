@@ -35,7 +35,7 @@ final class CommunityViewModel {
 
     init(communityInfos: [CommunityInfo], index: Int) {
         let communityInfo = communityInfos[index]
-        
+
         self.communityInfos = communityInfos
         self.currentIndex = BehaviorRelay(value: index)
         self.addressTitle = Observable<String>.just(communityInfo.adress)
@@ -96,7 +96,21 @@ extension CommunityViewModel {
             self.commentText.accept(communityInfo.comment)
             self.profileImage.accept(communityInfo.user.profileImage)
             self.nicknameText.accept(communityInfo.user.nickname)
-            self.dateText.accept(communityInfo.dropDate)
+            self.dateText.accept(self.convertDateFormat(date: communityInfo.dropDate))
         }.disposed(by: disposeBag)
+    }
+
+    private func convertDateFormat(date: String) -> String {
+        //"2023-05-21 01:13:14" -> "2023.05.21"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        guard let convertDate = dateFormatter.date(from: date) else {
+            return ""
+        }
+
+        let myDateFormatter = DateFormatter()
+        myDateFormatter.dateFormat = "yyyy.MM.dd"
+
+        return myDateFormatter.string(from: convertDate)
     }
 }
