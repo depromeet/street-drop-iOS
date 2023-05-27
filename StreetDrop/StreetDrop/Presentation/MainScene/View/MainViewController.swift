@@ -347,7 +347,7 @@ private extension MainViewController {
                 let communityViewController = CommunityViewController(
                     viewModel: CommunityViewModel(
                         communityInfos: [community1, community2, community3],
-                        index: 0
+                        index: 2
                     )
                 )
                 
