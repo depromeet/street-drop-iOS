@@ -27,13 +27,12 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
     }()
 
     private let albumImageView: UIImageView = {
-        let loadingImage = UIImage(systemName: "slowmo")
+        let loadingImage = UIImage()
         let imageView = UIImageView(image: loadingImage) // 디폴트이미지
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .white
-        imageView.layer.borderColor = UIColor.white.cgColor
+//        imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.borderWidth = 0.5
 
 
@@ -66,5 +65,6 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
     func setupImage(image: Data) {
         let image = UIImage(data: image)
         self.albumImageView.image = image
+        self.albumImageView.layer.borderColor = UIColor.white.cgColor
     }
 }

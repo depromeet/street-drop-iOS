@@ -324,7 +324,7 @@ private extension MainViewController {
                 
                 let community1 = CommunityInfo(adress: "미추홀구 용현1.4동",
                                                music: self.music1,
-                                               comment: "TESTTESTTESTTEST",
+                                               comment: "이 근처 노래방에서 빅뱅 노래 많이 불렀었지..",
                                                user: user1,
                                                dropDate: "2023-05-26 01:13:14"
                 )
@@ -346,7 +346,7 @@ private extension MainViewController {
                 let communityViewController = CommunityViewController(
                     viewModel: CommunityViewModel(
                         communityInfos: [community1, community2, community3],
-                        index: 2
+                        index: 0
                     )
                 )
                 
