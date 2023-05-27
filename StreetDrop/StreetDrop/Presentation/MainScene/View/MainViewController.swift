@@ -108,16 +108,16 @@ final class MainViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     let music1 = CommunityInfo.Music.init(
-        title: "LAST DANCE",
+        title: "봄여름가을겨울 (Still Life)",
         artist: "BIGBANG",
-        albumImage: "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/5b/9b/8e/5b9b8ef2-998e-1210-8454-dfebfbf6271c/BB_COVER_IMAGE_4000.jpg/500x500bb.jpg",
+        albumImage: "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/f6/67/3a/f6673a7c-e2bc-8084-f8b6-523cad1ab277/BIGBANG_Still_Life.jpg/500x500bb.jpg",
         genre: ["K-Pop", "음악", "팝"]
     )
     
     let music2 = CommunityInfo.Music.init(
-        title: "봄여름가을겨울 (Still Life)",
+        title: "LAST DANCE",
         artist: "BIGBANG",
-        albumImage: "https://is2-ssl.mzstatic.com/image/thumb/Music122/v4/f6/67/3a/f6673a7c-e2bc-8084-f8b6-523cad1ab277/BIGBANG_Still_Life.jpg/500x500bb.jpg",
+        albumImage: "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/5b/9b/8e/5b9b8ef2-998e-1210-8454-dfebfbf6271c/BB_COVER_IMAGE_4000.jpg/500x500bb.jpg",
         genre: ["K-Pop", "음악", "팝"]
     )
     
@@ -306,7 +306,6 @@ private extension MainViewController {
         
         self.droppedMusicWithinAreaCollectionView.rx.itemSelected
             .bind { indexPath in
-                
                 
                 let user1 = CommunityInfo.User.init(nickname: "박중규",
                                                     profileImage: "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg",
