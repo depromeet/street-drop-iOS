@@ -26,6 +26,7 @@ final class CommunityViewController: UIViewController {
         collectionView.backgroundColor = .primaryBackground
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.clipsToBounds = false
         collectionView.register(
             AlbumCollectionViewCell.self,
             forCellWithReuseIdentifier: AlbumCollectionViewCell.identifier
