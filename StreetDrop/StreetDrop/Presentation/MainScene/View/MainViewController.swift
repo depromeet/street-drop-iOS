@@ -314,12 +314,12 @@ private extension MainViewController {
                 )
                 
                 let user2 = CommunityInfo.User.init(nickname: "써니 쿠키",
-                                                    profileImage: "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg",
+                                                    profileImage: "https://accounts.kakao.com/assets/weblogin/img_profile.png",
                                                     musicApp: "youtubemusic"
                 )
                 
                 let user3 = CommunityInfo.User.init(nickname: "조셉촤",
-                                                    profileImage: "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg",
+                                                    profileImage: "https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_363.png",
                                                     musicApp: "youtubemusic"
                 )
                 
@@ -339,7 +339,7 @@ private extension MainViewController {
                 
                 let community3 = CommunityInfo(adress: "미추홀구 용현1.4동",
                                                music: self.music3,
-                                               comment: "테스트더미 만들기귀찮아 죽것다아아\n두번째줄\n세번째줄\n네번째줄",
+                                               comment: "중간발표 잘할수 있을까요\n드디어 중간발표\n최종발표까지5조화이팅!!!",
                                                user: user3,
                                                dropDate: "2023-05-21 01:13:14"
                 )
