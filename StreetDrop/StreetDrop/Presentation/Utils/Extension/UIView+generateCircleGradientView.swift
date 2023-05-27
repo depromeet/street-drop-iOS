@@ -11,14 +11,16 @@ extension UIView {
     func makeGradientCircleView(
         colors: [Any],
         gradientLocations: [NSNumber],
-        viewBackgroundColor: UIColor
+        viewBackgroundColor: UIColor,
+        startPoint: CGPoint,
+        endPoint: CGPoint
     ){
         let axialGradient = CAGradientLayer()
         axialGradient.type = .axial
         axialGradient.colors = colors
         axialGradient.locations = gradientLocations
-        axialGradient.startPoint = CGPoint(x: 0.5, y: 0)
-        axialGradient.endPoint = CGPoint(x: 0.5, y: 1)
+        axialGradient.startPoint = startPoint
+        axialGradient.endPoint = endPoint
         axialGradient.frame = self.bounds
 
         self.backgroundColor = viewBackgroundColor

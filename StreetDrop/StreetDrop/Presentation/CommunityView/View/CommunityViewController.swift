@@ -60,7 +60,9 @@ final class CommunityViewController: UIViewController {
     private let voidView: UIView = UIView()
 
     private let commentLabel: UILabel = UILabel(
-        numberOfLines: 0
+        numberOfLines: 0,
+        pretendardFont: .pretendard(size: 14, weight: 500),
+        lineHeight: 19.6
     )
 
     private var profileImageView: UIImageView = {
@@ -71,9 +73,13 @@ final class CommunityViewController: UIViewController {
     }()
 
     private let nicknameLabel: UILabel = UILabel(
+        pretendardFont: .pretendard(size: 14, weight: 500),
+        lineHeight: 19.6
     )
 
     private let dateLabel: UILabel = UILabel(
+        pretendardFont: .pretendard(size: 12, weight: 400),
+        lineHeight: 16.8
     )
 
     private let userInfoStackView: UIStackView = UIStackView(
@@ -83,7 +89,7 @@ final class CommunityViewController: UIViewController {
 
     private let commentStackView: UIStackView = UIStackView(
         spacing: 5,
-        backgroundColor: .secondaryNavy,
+        backgroundColor: UIColor(red: 0.078, green: 0.093, blue: 0.167, alpha: 1),
         cornerRadius: 10,
         inset: 20
     )
@@ -93,19 +99,20 @@ final class CommunityViewController: UIViewController {
         let button: UIButton = UIButton()
         let youtubeLogo = UIImage(named: "MusicLogo")
         button.setImage(youtubeLogo, for: .normal)
-        
-        
+
         return button
     }()
 
     private let listeningGuideLabel: UILabel = UILabel(
-        text: "음악듣기"
+        text: "바로 듣기",
+        pretendardFont: .pretendard(size: 14, weight: 500),
+        lineHeight: 19.6
     )
 
     private let listeningGuideStackView: UIStackView = UIStackView(
         alignment: .center,
         spacing: 10,
-        backgroundColor: .secondaryNavy,
+        backgroundColor: UIColor(red: 0.102, green: 0.133, blue: 0.179, alpha: 1),
         cornerRadius: 10,
         inset: 10
     )
@@ -119,13 +126,15 @@ final class CommunityViewController: UIViewController {
     }()
 
     private let likeCountLabel: UILabel = UILabel(
-        text: "31.8K"
+        text: "31.8K",
+        pretendardFont: .pretendard(size: 14, weight: 500),
+        lineHeight: 19.6
     )
 
     private let likeStackView: UIStackView = UIStackView(
         alignment: .center,
         spacing: 10,
-        backgroundColor: .secondaryNavy,
+        backgroundColor: UIColor(red: 0.102, green: 0.133, blue: 0.179, alpha: 1),
         cornerRadius: 10,
         inset: 10
     )
@@ -162,15 +171,16 @@ final class CommunityViewController: UIViewController {
     private func generateGenreLabels(genres: [String]) -> [PaddingLabel] {
         var labels: [PaddingLabel] = []
         genres.forEach { genreTitle in
-            let label = PaddingLabel(padding: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
+            let label = PaddingLabel(padding: UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12))
             label.text = genreTitle
+            label.textColor = .white
             label.textAlignment = .center
             label.font = .pretendard(size: 12, weight: 600)
             label.setLineHeight(lineHeight: 16.8)
             label.numberOfLines = 1
-            label.layer.cornerRadius = 10
+            label.layer.cornerRadius = 12
             label.clipsToBounds = true
-            label.backgroundColor = .systemGray
+            label.backgroundColor = UIColor(red: 0.922, green: 0.932, blue: 0.983, alpha: 0.12)
             labels.append(label)
         }
 
@@ -287,14 +297,14 @@ extension CommunityViewController {
         let viewWidth = self.view.frame.width
 
         albumCollectionView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
             $0.leading.trailing.equalToSuperview().inset(-viewWidth/4)
             $0.height.equalTo(albumCollectionView.snp.width).multipliedBy(0.34)
         }
 
         musicInfoStackView.snp.makeConstraints {
-            $0.top.equalTo(albumCollectionView.snp.bottom)
-            $0.height.greaterThanOrEqualToSuperview().multipliedBy(0.1)
+            $0.top.equalTo(albumCollectionView.snp.bottom).offset(24)
+//            $0.height.greaterThanOrEqualToSuperview().multipliedBy(0.1)
             $0.centerX.equalToSuperview()
         }
 
@@ -308,21 +318,21 @@ extension CommunityViewController {
         }
 
         commentStackView.snp.makeConstraints {
-            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(20)
+            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(37)
             $0.centerX.equalToSuperview()
+            $0.height.greaterThanOrEqualTo(221)
             $0.width.equalToSuperview().multipliedBy(0.9)
-            $0.height.equalToSuperview().multipliedBy(0.3)
         }
 
         listeningAndLikeStackView.snp.makeConstraints {
             $0.top.equalTo(commentStackView.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(0.9)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
+            $0.height.lessThanOrEqualTo(96)
         }
 
         youtubeMusicLogo.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.3)
+            make.height.equalToSuperview().multipliedBy(0.4)
             make.width.equalTo(youtubeMusicLogo.snp.height)
         }
 

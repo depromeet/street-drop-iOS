@@ -13,23 +13,22 @@ extension UILabel {
         text: String = "",
         textColor: UIColor = .white,
         textAlignment: NSTextAlignment = .natural,
-        pretendardFont: UIFont = .pretendard(size: 10, weight: 500),
         numberOfLines: Int = 1,
         cornerRadius: CGFloat = 0,
         inset: CGFloat = 0,
+        pretendardFont: UIFont = .pretendard(size: 10, weight: 500),
         lineHeight: CGFloat = 20
     )
     {
         self.init(frame: .zero)
+        self.font = pretendardFont
+        self.setLineHeight(lineHeight: lineHeight)
         self.text = text
         self.textColor = textColor
         self.textAlignment = textAlignment
-        self.font = pretendardFont
         self.numberOfLines = numberOfLines
         self.layer.cornerRadius = cornerRadius
         self.clipsToBounds = true
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.setLineHeight(lineHeight: lineHeight)
     }
 }
 
@@ -38,6 +37,7 @@ extension UIImageView {
         self.init(frame: .zero)
         self.layer.cornerRadius = cornerRadius
         self.translatesAutoresizingMaskIntoConstraints = false
+        self.clipsToBounds = true
 
         if let loadingImage = UIImage(systemName: "slowmo") {
             self.image = loadingImage

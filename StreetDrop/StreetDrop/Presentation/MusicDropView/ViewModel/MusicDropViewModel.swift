@@ -15,6 +15,7 @@ final class MusicDropViewModel {
     private let adressManager: AdressManager
     private let disposeBag: DisposeBag = DisposeBag()
     var locationTitle: BehaviorRelay<(adress: String, text: String)>
+    var dropGuideTitle: Observable<String>
     var albumImage: BehaviorRelay<Data?>
     var MusicTitle: Observable<String>
     var artistTitle: Observable<String>
@@ -30,7 +31,8 @@ final class MusicDropViewModel {
         self.droppingInfo = droppingInfo
         self.adressManager = adressManager
         self.albumImage = BehaviorRelay(value: nil)
-        self.locationTitle = BehaviorRelay(value: (adress: "여기", text: "여기에\n음악을 드랍할게요"))
+        self.locationTitle = BehaviorRelay(value: (adress: "여기", text: "여기에"))
+        self.dropGuideTitle = Observable<String>.just("음악을 드랍할게요")
         self.MusicTitle = Observable<String>.just(droppingInfo.music.title)
         self.artistTitle = Observable<String>.just(droppingInfo.music.artist)
         self.commentPalceHolder = Observable<String>.just("음악에 대해 하고싶은 말이 있나요?")

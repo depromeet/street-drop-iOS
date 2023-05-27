@@ -50,34 +50,74 @@ final class MusicDropViewController: UIViewController {
     private var LargerCenterGradientCircleView: UIView = UIView()
 
     //MARK: - 뷰 아이템 요소
-    private let locationLabel: UILabel = UILabel(
-        textAlignment: .center,
-        numberOfLines: 2
-    )
+
+    private let locationLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = .pretendard(size: 20, weight: 700)
+        label.setLineHeight(lineHeight: 29.5)
+        label.textColor = .white
+
+        return label
+    }()
+
+    private let dropGuideLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = .pretendard(size: 20, weight: 700)
+        label.setLineHeight(lineHeight: 32)
+        label.textColor = .white
+
+        return label
+    }()
 
     private let albumImageView: UIImageView = UIImageView(
         cornerRadius: 10
     )
 
-    private let musicNameLabel: UILabel = UILabel(
-    )
+    private lazy var musicNameLabel: UILabel = {
+        let label: UILabel = UILabel()
+        label.font = .pretendard(size: 16, weight: 700)
+        label.setLineHeight(lineHeight: 24)
+        label.numberOfLines = 1
+        label.textColor = .white
+        return label
+    }()
 
-    private let artistLabel: UILabel = UILabel(
-    )
+    private lazy var artistLabel: UILabel = {
+        let label: UILabel = UILabel()
+        label.font = .pretendard(size: 12, weight: 500)
+        label.setLineHeight(lineHeight: 18)
+        label.numberOfLines = 1
+        label.textColor = .white
+        return label
+    }()
 
     private let musicInfoStackView: UIStackView = UIStackView(
         alignment: .center,
         spacing: 5
     )
 
-    private let commentTextView: UITextView = UITextView(
-        backgroundColor: .darkGray,
-        cornerRadius: 10,
-        inset: 10
-    )
+    private let commentTextView: UITextView = {
+        let textView = UITextView()
+        textView.textContainerInset = .init(top: 10, left: 10, bottom: 10, right: 10)
+        textView.layer.cornerRadius = 10
+        textView.textColor = .white
+        textView.font = .pretendard(size: 14, weight: 500)
+        textView.backgroundColor = UIColor(red: 0.213, green: 0.213, blue: 0.213, alpha: 1)
 
-    private let CommentGuidanceLabel: UILabel = UILabel(
-    )
+        return textView
+    }()
+
+    private lazy var CommentGuidanceLabel: UILabel = {
+        let label: UILabel = UILabel()
+        label.font = .pretendard(size: 11, weight: 400)
+        label.setLineHeight(lineHeight: 17)
+        label.numberOfLines = 1
+        label.textColor = .white
+        return label
+    }()
+
 
     private let commentStackView: UIStackView = UIStackView(
         spacing: 5
@@ -115,6 +155,10 @@ extension MusicDropViewController {
             }
         }.disposed(by: disposeBag)
 
+        viewModel.dropGuideTitle.subscribe { [weak self] in
+            self?.dropGuideLabel.text = $0
+        }.disposed(by: disposeBag)
+
         viewModel.albumImage.subscribe { [weak self] data in
             if let data = data {
                 DispatchQueue.main.async {
@@ -146,6 +190,10 @@ extension MusicDropViewController {
         viewModel.errorDescription.subscribe { _ in
             // 👉 TODO: Error팝업띄우기
         }.disposed(by: disposeBag)
+
+        musicInfoStackView.setCustomSpacing(0, after: locationLabel)
+        musicInfoStackView.setCustomSpacing(32, after: dropGuideLabel)
+        musicInfoStackView.setCustomSpacing(16, after: albumImageView)
     }
 }
 
@@ -185,7 +233,7 @@ extension MusicDropViewController {
 //MARK: - 계층, 레이아웃
 extension MusicDropViewController {
     private func configureHierarchy() {
-        [locationLabel, albumImageView, musicNameLabel, artistLabel]
+        [locationLabel, dropGuideLabel, albumImageView, musicNameLabel, artistLabel]
             .forEach {
                 musicInfoStackView.addArrangedSubview($0)
             }
@@ -235,9 +283,8 @@ extension MusicDropViewController {
         }
 
         musicInfoStackView.snp.makeConstraints {
-            $0.width.equalTo(self.view.safeAreaLayoutGuide).multipliedBy(0.8)
-            $0.height.greaterThanOrEqualTo(self.view.safeAreaLayoutGuide).multipliedBy(0.4)
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+            //$0.width.equalTo(self.view.safeAreaLayoutGuide).multipliedBy(0.8)
+            $0.top.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).inset(20)
             $0.centerX.equalToSuperview()
         }
 
@@ -252,7 +299,7 @@ extension MusicDropViewController {
 
         dropButton.snp.makeConstraints {
             $0.width.equalTo(commentTextView)
-            $0.bottom.equalToSuperview().inset(10)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
             $0.height.equalToSuperview().multipliedBy(0.07)
             $0.centerX.equalToSuperview()
         }
@@ -261,12 +308,14 @@ extension MusicDropViewController {
     private func makeViewIntoGradientCircle() {
         topGradientCircleView.makeGradientCircleView(
             colors: [
-                UIColor.darkGray.cgColor,
-                UIColor.primaryBackground.cgColor,
-                UIColor.darkGray.cgColor
+                UIColor(red: 0.078, green: 0.078, blue: 0.078, alpha: 1).cgColor,
+                UIColor(red: 0.078, green: 0.078, blue: 0.078, alpha: 0.61).cgColor,
+                UIColor(red: 0.208, green: 0.207, blue: 0.292, alpha: 1).cgColor,
             ],
             gradientLocations: [0, 0.5, 1],
-            viewBackgroundColor: .primaryBackground
+            viewBackgroundColor: .black,
+            startPoint: CGPoint(x: 0.5, y: 0.25),
+            endPoint: CGPoint(x: 0.5, y: 0.75)
         )
 
         [smallerCenterGradientCircleView, LargerCenterGradientCircleView].forEach {
@@ -277,7 +326,9 @@ extension MusicDropViewController {
                     UIColor(red: 145/255, green: 141/255, blue: 255/255, alpha: 1).cgColor
                 ],
                 gradientLocations: [0, 0.8, 1],
-                viewBackgroundColor: .primaryBackground
+                viewBackgroundColor: .primaryBackground,
+                startPoint: CGPoint(x: 0.5, y: 0),
+                endPoint:  CGPoint(x: 0.5, y: 1)
             )
         }
     }
