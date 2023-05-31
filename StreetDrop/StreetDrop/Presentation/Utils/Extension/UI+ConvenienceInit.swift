@@ -7,30 +7,6 @@
 
 import UIKit
 
-
-extension UILabel {
-    convenience init(
-        text: String = "",
-        textColor: UIColor = .white,
-        textAlignment: NSTextAlignment = .natural,
-        font: UIFont.TextStyle = .body,
-        numberOfLines: Int = 1,
-        cornerRadius: CGFloat = 0,
-        inset: CGFloat = 0
-    )
-    {
-        self.init(frame: .zero)
-        self.text = text
-        self.textColor = textColor
-        self.textAlignment = textAlignment
-        self.font = .preferredFont(forTextStyle: font)
-        self.numberOfLines = numberOfLines
-        self.layer.cornerRadius = cornerRadius
-        self.clipsToBounds = true
-        self.translatesAutoresizingMaskIntoConstraints = false
-    }
-}
-
 extension UIImageView {
     convenience init(cornerRadius: CGFloat = 0) {
         self.init(frame: .zero)
