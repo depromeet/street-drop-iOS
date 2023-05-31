@@ -34,13 +34,25 @@ final class CommunityViewController: UIViewController {
     }()
 
     // MusicInfo 요소
-    private let musicNameLabel: UILabel = UILabel(
-        font: .title2
-    )
 
-    private let artistLabel: UILabel = UILabel(
-        font: .body
-    )
+    private let musicNameLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = .pretendard(size: 20, weight: 700)
+        label.setLineHeight(lineHeight: 26.4)
+
+        return label
+    }()
+
+    private let artistLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = .pretendard(size: 14, weight: 500)
+        label.setLineHeight(lineHeight: 19.6)
+
+        return label
+    }()
+    
 
     private let musicInfoStackView: UIStackView = UIStackView(
         alignment: .center
@@ -56,10 +68,15 @@ final class CommunityViewController: UIViewController {
 
     private let voidView: UIView = UIView()
 
-    private let commentLabel: UILabel = UILabel(
-        font: .caption1,
-        numberOfLines: 0
-    )
+    private let commentLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.numberOfLines = 0
+        label.font = .pretendard(size: 14, weight: 500)
+        label.setLineHeight(lineHeight: 19.6)
+
+        return label
+    }()
 
     private var profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -68,13 +85,23 @@ final class CommunityViewController: UIViewController {
         return imageView
     }()
 
-    private let nicknameLabel: UILabel = UILabel(
-        font: .caption1
-    )
+    private let nicknameLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = .pretendard(size: 14, weight: 500)
+        label.setLineHeight(lineHeight: 19.6)
 
-    private let dateLabel: UILabel = UILabel(
-        font: .caption2
-    )
+        return label
+    }()
+
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = .pretendard(size: 12, weight: 400)
+        label.setLineHeight(lineHeight: 16.8)
+
+        return label
+    }()
 
     private let userInfoStackView: UIStackView = UIStackView(
         axis: .horizontal,
@@ -96,10 +123,15 @@ final class CommunityViewController: UIViewController {
         return imageView
     }()
 
-    private let listeningGuideLabel: UILabel = UILabel(
-        text: "음악듣기",
-        font: .body
-    )
+    private let listeningGuideLabel: UILabel = {
+        let label = UILabel()
+        label.text = "바로 듣기"
+        label.textColor = .white
+        label.font = .pretendard(size: 14, weight: 500)
+        label.setLineHeight(lineHeight: 19.6)
+
+        return label
+    }()
 
     private let listeningGuideStackView: UIStackView = UIStackView(
         alignment: .center,
@@ -117,10 +149,15 @@ final class CommunityViewController: UIViewController {
         return imageView
     }()
 
-    private let likeCountLabel: UILabel = UILabel(
-        text: "31.8K",
-        font: .body
-    )
+    private let likeCountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "31.8K"
+        label.textColor = .white
+        label.font = .pretendard(size: 14, weight: 500)
+        label.setLineHeight(lineHeight: 19.6)
+
+        return label
+    }()
 
     private let likeStackView: UIStackView = UIStackView(
         alignment: .center,

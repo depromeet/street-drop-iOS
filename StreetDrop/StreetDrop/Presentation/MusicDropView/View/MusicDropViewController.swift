@@ -50,23 +50,49 @@ final class MusicDropViewController: UIViewController {
     private var LargerCenterGradientCircleView: UIView = UIView()
 
     //MARK: - 뷰 아이템 요소
-    private let locationLabel: UILabel = UILabel(
-        textAlignment: .center,
-        font: .title2,
-        numberOfLines: 2
-    )
+    private let locationLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = .pretendard(size: 20, weight: 700)
+        label.setLineHeight(lineHeight: 29.5)
+
+        return label
+    }()
+
+    private let dropGuideLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = .pretendard(size: 20, weight: 700)
+        label.setLineHeight(lineHeight: 32)
+
+        return label
+    }()
 
     private let albumImageView: UIImageView = UIImageView(
         cornerRadius: 10
     )
 
-    private let musicNameLabel: UILabel = UILabel(
-        font: .body
-    )
+    private let musicNameLabel: UILabel = {
+        let label: UILabel = UILabel()
+        label.numberOfLines = 1
+        label.textColor = .white
+        label.font = .pretendard(size: 16, weight: 700)
+        label.setLineHeight(lineHeight: 24)
 
-    private let artistLabel: UILabel = UILabel(
-        font: .caption1
-    )
+        return label
+    }()
+
+    private let artistLabel: UILabel = {
+        let label: UILabel = UILabel()
+        label.numberOfLines = 1
+        label.textColor = .white
+        label.font = .pretendard(size: 12, weight: 500)
+        label.setLineHeight(lineHeight: 18)
+
+        return label
+    }()
 
     private let musicInfoStackView: UIStackView = UIStackView(
         alignment: .center,
@@ -79,9 +105,15 @@ final class MusicDropViewController: UIViewController {
         inset: 10
     )
 
-    private let CommentGuidanceLabel: UILabel = UILabel(
-        font: .caption2
-    )
+    private let CommentGuidanceLabel: UILabel = {
+        let label: UILabel = UILabel()
+        label.numberOfLines = 1
+        label.textColor = .white
+        label.font = .pretendard(size: 11, weight: 400)
+        label.setLineHeight(lineHeight: 17)
+        
+        return label
+    }()
 
     private let commentStackView: UIStackView = UIStackView(
         spacing: 5
@@ -112,11 +144,16 @@ extension MusicDropViewController {
     private func bindViewModel() {
         viewModel.locationTitle.subscribe { [weak self] in
             if let element: (adress: String, text: String) = $0.element {
+                self?.locationLabel.text = element.text
                 self?.locationLabel.attributedText = element.text.changeColorPartially(
                     element.adress,
                     to: .blue
                 )
             }
+        }.disposed(by: disposeBag)
+
+        viewModel.dropGuideTitle.subscribe { [weak self] in
+            self?.dropGuideLabel.text = $0
         }.disposed(by: disposeBag)
 
         viewModel.albumImage.subscribe { [weak self] data in
@@ -185,7 +222,7 @@ extension MusicDropViewController {
 //MARK: - 계층, 레이아웃
 extension MusicDropViewController {
     private func configureHierarchy() {
-        [locationLabel, albumImageView, musicNameLabel, artistLabel]
+        [locationLabel, dropGuideLabel, albumImageView, musicNameLabel, artistLabel]
             .forEach {
                 musicInfoStackView.addArrangedSubview($0)
             }
@@ -234,14 +271,14 @@ extension MusicDropViewController {
             $0.height.equalTo(albumImageView.snp.width)
         }
 
+        musicInfoStackView.setCustomSpacing(3, after: locationLabel)
+        musicInfoStackView.setCustomSpacing(32, after: dropGuideLabel)
+        musicInfoStackView.setCustomSpacing(16, after: albumImageView)
+
         musicInfoStackView.snp.makeConstraints {
-            $0.width.equalTo(self.view.safeAreaLayoutGuide).multipliedBy(0.8)
-            $0.height.greaterThanOrEqualTo(self.view.safeAreaLayoutGuide).multipliedBy(0.4)
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+            $0.top.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).inset(20)
             $0.centerX.equalToSuperview()
         }
-
-        musicInfoStackView.setCustomSpacing(30, after: locationLabel)
 
         commentStackView.snp.makeConstraints {
             $0.top.equalTo(musicInfoStackView.snp.bottom).offset(20)
@@ -252,7 +289,7 @@ extension MusicDropViewController {
 
         dropButton.snp.makeConstraints {
             $0.width.equalTo(commentTextView)
-            $0.bottom.equalToSuperview().inset(10)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
             $0.height.equalToSuperview().multipliedBy(0.07)
             $0.centerX.equalToSuperview()
         }
