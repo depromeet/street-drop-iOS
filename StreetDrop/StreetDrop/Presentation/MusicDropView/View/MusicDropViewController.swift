@@ -7,8 +7,9 @@
 
 import UIKit
 
-import SnapKit
+import RxCocoa
 import RxSwift
+import SnapKit
 
 final class MusicDropViewController: UIViewController {
     private var viewModel: MusicDropViewModel
@@ -32,6 +33,7 @@ final class MusicDropViewController: UIViewController {
         viewModel.fetchAlbumImage()
         viewModel.fetchAdress()
         bindViewModel()
+        bindCommentTextView()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -194,7 +196,7 @@ extension MusicDropViewController {
             self?.artistLabel.text = $0
         }.disposed(by: disposeBag)
 
-        viewModel.commentPalceHolder.subscribe { [weak self] in
+        viewModel.commentPlaceHolder.subscribe { [weak self] in
             self?.commentTextView.text = $0
         }.disposed(by: disposeBag)
 
@@ -209,6 +211,49 @@ extension MusicDropViewController {
         viewModel.errorDescription.subscribe { _ in
             // 👉 TODO: Error팝업띄우기
         }.disposed(by: disposeBag)
+    }
+}
+
+//MARK: - 코멘트 플레이스홀더
+extension MusicDropViewController {
+    private func bindCommentTextView() {
+        commentTextView.rx.didBeginEditing
+            .subscribe { [weak self] element in
+                self?.removePlaceHolder()
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.didEndEditing
+            .subscribe { [weak self] element in
+                self?.setupPlaceHolder()
+            }.disposed(by: disposeBag)
+    }
+
+    private func setupPlaceHolder() {
+        var placeHolder: String?
+
+        viewModel.commentPlaceHolder
+            .subscribe {
+                placeHolder = $0
+            }.disposed(by: disposeBag)
+
+        if(commentTextView.text == nil || commentTextView.text == "") {
+            commentTextView.text = placeHolder
+            commentTextView.textColor = UIColor(red: 0.587, green: 0.587, blue: 0.587, alpha: 1)
+        }
+    }
+
+    private func removePlaceHolder() {
+        var placeHolder: String?
+
+        viewModel.commentPlaceHolder
+            .subscribe {
+                placeHolder = $0
+            }.disposed(by: disposeBag)
+
+        if(commentTextView.text == placeHolder) {
+            commentTextView.text = nil
+            commentTextView.textColor = .white
+        }
     }
 }
 

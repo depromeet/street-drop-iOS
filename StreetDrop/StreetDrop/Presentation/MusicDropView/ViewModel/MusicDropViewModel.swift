@@ -19,7 +19,7 @@ final class MusicDropViewModel {
     var albumImage: BehaviorRelay<Data?>
     var MusicTitle: Observable<String>
     var artistTitle: Observable<String>
-    var commentPalceHolder: Observable<String>
+    var commentPlaceHolder: Observable<String>
     var commentGuidanceText: Observable<String>
     var dropButtonTitle: Observable<String>
     var errorDescription: BehaviorRelay<String?>
@@ -35,7 +35,7 @@ final class MusicDropViewModel {
         self.dropGuideTitle = Observable<String>.just("음악을 드랍할게요")
         self.MusicTitle = Observable<String>.just(droppingInfo.music.title)
         self.artistTitle = Observable<String>.just(droppingInfo.music.artist)
-        self.commentPalceHolder = Observable<String>.just("음악에 대해 하고싶은 말이 있나요?")
+        self.commentPlaceHolder = Observable<String>.just("음악에 대해 하고싶은 말이 있나요?")
         self.dropButtonTitle = Observable<String>.just("드랍하기")
         self.commentGuidanceText = Observable<String>
             .just("• 텍스트는 생략이 가능하며 욕설, 성희롱, 비방과 같은 내용은 삭제합니다")
