@@ -70,9 +70,15 @@ final class MusicDropViewController: UIViewController {
         return label
     }()
 
-    private let albumImageView: UIImageView = UIImageView(
-        cornerRadius: 10
-    )
+    private let albumImageView: UIImageView = {
+        let loadingImage = UIImage(systemName: "slowmo")
+        let imageView = UIImageView(image: loadingImage)
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
+
+        return imageView
+    }()
 
     private let musicNameLabel: UILabel = {
         let label: UILabel = UILabel()
