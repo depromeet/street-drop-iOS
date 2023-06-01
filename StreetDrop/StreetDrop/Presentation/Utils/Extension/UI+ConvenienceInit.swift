@@ -7,18 +7,6 @@
 
 import UIKit
 
-extension UIImageView {
-    convenience init(cornerRadius: CGFloat = 0) {
-        self.init(frame: .zero)
-        self.layer.cornerRadius = cornerRadius
-        self.translatesAutoresizingMaskIntoConstraints = false
-
-        if let loadingImage = UIImage(systemName: "slowmo") {
-            self.image = loadingImage
-        }
-    }
-}
-
 extension UITextView {
     convenience init(
         text: String = "",
