@@ -52,19 +52,26 @@ final class CommunityViewController: UIViewController {
 
         return label
     }()
-    
 
-    private let musicInfoStackView: UIStackView = UIStackView(
-        alignment: .center
-    )
+    private let musicInfoStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+
+        return stackView
+    }()
+
 
     // comment 요소
     private var genreLabels: [PaddingLabel] = []
 
-    private let genreLabelStackView: UIStackView = UIStackView(
-        axis: .horizontal,
-        spacing: 5
-    )
+    private let genreLabelStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+
+        return stackView
+    }()
 
     private let voidView: UIView = UIView()
 
@@ -103,17 +110,25 @@ final class CommunityViewController: UIViewController {
         return label
     }()
 
-    private let userInfoStackView: UIStackView = UIStackView(
-        axis: .horizontal,
-        spacing: 5
-    )
+    private let userInfoStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 5
 
-    private let commentStackView: UIStackView = UIStackView(
-        spacing: 5,
-        backgroundColor: .secondaryNavy,
-        cornerRadius: 10,
-        inset: 20
-    )
+        return stackView
+    }()
+
+    private let commentStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 5
+        stackView.layer.cornerRadius = 12
+        stackView.backgroundColor = UIColor(red: 0.089, green: 0.099, blue: 0.12, alpha: 1)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 24, left: 24, bottom: 24, right: 24)
+
+        return stackView
+    }()
 
     // listeningGuide 요소
     private let youtubeMusicLogo: UIImageView = {
@@ -133,13 +148,18 @@ final class CommunityViewController: UIViewController {
         return label
     }()
 
-    private let listeningGuideStackView: UIStackView = UIStackView(
-        alignment: .center,
-        spacing: 10,
-        backgroundColor: .secondaryNavy,
-        cornerRadius: 10,
-        inset: 10
-    )
+    private let listeningGuideStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 16
+        stackView.layer.cornerRadius = 12
+        stackView.backgroundColor = UIColor(red: 0.089, green: 0.099, blue: 0.12, alpha: 1)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+
+        return stackView
+    }()
 
     // Like 요소
     private let likeLogo: UIImageView = {
@@ -159,19 +179,27 @@ final class CommunityViewController: UIViewController {
         return label
     }()
 
-    private let likeStackView: UIStackView = UIStackView(
-        alignment: .center,
-        spacing: 10,
-        backgroundColor: .secondaryNavy,
-        cornerRadius: 10,
-        inset: 10
-    )
+    private let likeStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 16
+        stackView.layer.cornerRadius = 12
+        stackView.backgroundColor = UIColor(red: 0.089, green: 0.099, blue: 0.12, alpha: 1)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
 
-    private let listeningAndLikeStackView: UIStackView = UIStackView(
-        axis: .horizontal,
-        distribution: .fillEqually,
-        spacing: 10
-    )
+        return stackView
+    }()
+
+    private let listeningAndLikeStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
+
+        return stackView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -341,7 +369,7 @@ extension CommunityViewController {
         }
 
         listeningAndLikeStackView.snp.makeConstraints {
-            $0.top.equalTo(commentStackView.snp.bottom).offset(10)
+            $0.top.equalTo(commentStackView.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(0.9)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)

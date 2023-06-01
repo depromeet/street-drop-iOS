@@ -100,10 +100,14 @@ final class MusicDropViewController: UIViewController {
         return label
     }()
 
-    private let musicInfoStackView: UIStackView = UIStackView(
-        alignment: .center,
-        spacing: 5
-    )
+    private let musicInfoStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 5
+
+        return stackView
+    }()
 
     private let commentTextView: UITextView = {
         let textView = UITextView()
@@ -129,9 +133,13 @@ final class MusicDropViewController: UIViewController {
         return label
     }()
 
-    private let commentStackView: UIStackView = UIStackView(
-        spacing: 5
-    )
+    private let commentStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 5
+
+        return stackView
+    }()
 
     private lazy var dropButton: UIButton = {
         let button = UIButton(type: .system)
