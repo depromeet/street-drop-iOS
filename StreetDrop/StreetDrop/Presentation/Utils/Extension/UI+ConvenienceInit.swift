@@ -7,28 +7,6 @@
 
 import UIKit
 
-extension UITextView {
-    convenience init(
-        text: String = "",
-        textColor: UIColor = .white,
-        font: UIFont.TextStyle = .body,
-        backgroundColor: UIColor = .black,
-        cornerRadius: CGFloat = 0,
-        inset: CGFloat = 10
-    ){
-        self.init()
-        self.text = text
-        self.textColor = textColor
-        self.font = .preferredFont(forTextStyle: font)
-        self.backgroundColor = backgroundColor
-        self.layer.cornerRadius = cornerRadius
-        self.textContainerInset = .init(top: inset, left: inset, bottom: inset, right: inset)
-        self.keyboardDismissMode = .interactive
-        self.keyboardAppearance = .dark
-        self.showsVerticalScrollIndicator = false
-    }
-}
-
 extension UIStackView {
     convenience init(
         axis: NSLayoutConstraint.Axis = .vertical,

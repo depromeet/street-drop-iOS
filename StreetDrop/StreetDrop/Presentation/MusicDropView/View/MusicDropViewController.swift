@@ -105,11 +105,19 @@ final class MusicDropViewController: UIViewController {
         spacing: 5
     )
 
-    private let commentTextView: UITextView = UITextView(
-        backgroundColor: .darkGray,
-        cornerRadius: 10,
-        inset: 10
-    )
+    private let commentTextView: UITextView = {
+        let textView = UITextView()
+        textView.textColor = .white
+        textView.font = .pretendard(size: 14, weight: 500)
+        textView.backgroundColor = UIColor(red: 0.213, green: 0.213, blue: 0.213, alpha: 1)
+        textView.layer.cornerRadius = 8
+        textView.textContainerInset = .init(top: 12, left: 14, bottom: 12, right: 14)
+        textView.keyboardDismissMode = .interactive
+        textView.keyboardAppearance = .dark
+        textView.showsVerticalScrollIndicator = false
+
+        return textView
+    }()
 
     private let CommentGuidanceLabel: UILabel = {
         let label: UILabel = UILabel()
