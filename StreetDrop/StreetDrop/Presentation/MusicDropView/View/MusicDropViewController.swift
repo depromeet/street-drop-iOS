@@ -32,6 +32,7 @@ final class MusicDropViewController: UIViewController {
         configureLayout()
         viewModel.fetchAlbumImage()
         viewModel.fetchAdress()
+        bindAction()
         bindViewModel()
         bindCommentTextView()
     }
@@ -148,7 +149,6 @@ final class MusicDropViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = .darkGray
-        button.addAction(touchedUpDropButton(), for: .touchUpInside)
 
         return button
     }()
@@ -165,6 +165,13 @@ final class MusicDropViewController: UIViewController {
 
 //MARK: - 뷰모델 바인딩
 extension MusicDropViewController {
+    private func bindAction() {
+        dropButton.rx.tap
+            .bind {
+                self.touchedUpDropButton()
+            }.disposed(by: disposeBag)
+    }
+
     private func bindViewModel() {
         viewModel.locationTitle.subscribe { [weak self] in
             if let element: (adress: String, text: String) = $0.element {
