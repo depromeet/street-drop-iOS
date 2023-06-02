@@ -10,7 +10,6 @@ import UIKit
 import Moya
 
 enum NetworkService {
-    case getWeather(lat: String, lon: String)
     case searchMusic(keyword: String)
     case dropMusic(requestDTO: DropMusicRequestDTO)
     case fetchNumberOfDroppedMusicByDong(address: String)
@@ -22,8 +21,6 @@ enum NetworkService {
 extension NetworkService: TargetType {
     var baseURL: URL {
         switch self {
-        case .getWeather:
-            return URL(string: "https://api.openweathermap.org")!
         case .dropMusic:
             return URL(string: "https://api.street-drop.com")!
         default:
@@ -33,8 +30,6 @@ extension NetworkService: TargetType {
 
     var path: String {
         switch self {
-        case .getWeather:
-            return "/data/2.5/forecast"
         case .getMusicWithinArea:
             return "/musicWithinArea"
         case .getCommunity:
@@ -52,7 +47,7 @@ extension NetworkService: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .getWeather, .searchMusic, .fetchNumberOfDroppedMusicByDong, .getPOI:
+        case .searchMusic, .fetchNumberOfDroppedMusicByDong, .getPOI:
             return .get
         case .dropMusic:
             return .post
@@ -65,12 +60,6 @@ extension NetworkService: TargetType {
 
     var task: Moya.Task {
         switch self {
-        case .getWeather(let lat, let lon):
-            return .requestParameters(parameters: ["lat": lat,
-                                                   "lon": lon,
-                                                   "units": "metric",
-                                                   "appid": "a50685674910fa58b68f60c8d0d7835a"],
-                                      encoding: URLEncoding.queryString)
         case .searchMusic(let keyword):
             return .requestParameters(
                 parameters: ["keyword": keyword],
@@ -101,8 +90,6 @@ extension NetworkService: TargetType {
 
     var sampleData: Data {
         switch self {
-        case .getWeather:
-            return Data("weatherSampleData".utf8)
         case .searchMusic:
             return Data("""
                         {

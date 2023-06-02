@@ -14,94 +14,6 @@ import RxSwift
 import SnapKit
 
 final class MainViewController: UIViewController {
-    private let mapView: NMFMapView = {
-        let mapView = NMFMapView()
-        mapView.mapType = .navi
-        mapView.isNightModeEnabled = true
-        return mapView
-    }()
-    private let topBarView: UIView = {
-        let topBarView = UIView()
-        topBarView.layer.cornerRadius = 8
-        topBarView.backgroundColor = UIColor(red: 2.0 / 255.0, green: 4.0 / 255.0, blue: 15.0 / 255.0, alpha: 1.0)
-        return topBarView
-    }()
-    private let locationIconImageView: UIImageView = {
-        let locationIconImageView = UIImageView()
-        locationIconImageView.image = UIImage(named: "locationIcon.png")
-        locationIconImageView.contentMode = .scaleAspectFit
-        return locationIconImageView
-    }()
-    private let locationLabel: UILabel = {
-        let locationLabel = UILabel()
-        locationLabel.font = .systemFont(ofSize: 14)
-        locationLabel.textColor = UIColor(red: 0.867, green: 0.902, blue: 0.942, alpha: 1)
-        locationLabel.text = "성동구 성수 1가 1동"
-        return locationLabel
-    }()
-    private let musicDroppedCountContainerView: UIView = {
-        let musicDroppedCountContainerView = UIView()
-        musicDroppedCountContainerView.layer.cornerRadius = 4
-        musicDroppedCountContainerView.backgroundColor = UIColor(red: 0.068, green: 0.101, blue: 0.15, alpha: 1)
-        return musicDroppedCountContainerView
-    }()
-    private let musicDroppedCountLabel: UILabel = {
-        let musicDroppedCountLabel = UILabel()
-        musicDroppedCountLabel.font = .systemFont(ofSize: 12)
-        musicDroppedCountLabel.textColor = UIColor(red: 0.408, green: 0.396, blue: 0.971, alpha: 1)
-        musicDroppedCountLabel.text = "드랍된 음악 247개"
-        return musicDroppedCountLabel
-    }()
-    private let bottomBarImageView: UIImageView = {
-        let bottomBarImageView = UIImageView()
-        bottomBarImageView.backgroundColor = .clear
-        bottomBarImageView.image = UIImage(named: "bottomBar.png")
-        bottomBarImageView.isUserInteractionEnabled = true
-        return bottomBarImageView
-    }()
-    private let homeButton: UIButton = {
-        let homeButton = UIButton()
-        homeButton.setImage(UIImage(named: "homeButton.png"), for: .normal)
-        return homeButton
-    }()
-    private let notificationButton: UIButton = {
-        let notificationButton = UIButton()
-        notificationButton.setImage(UIImage(named: "notificationButton.png"), for: .normal)
-        return notificationButton
-    }()
-    private let musicDropButton: UIButton = {
-        let musicDropButton = UIButton()
-        musicDropButton.setImage(UIImage(named: "musicDropButton.png"), for: .normal)
-        musicDropButton.contentVerticalAlignment = .fill
-        musicDropButton.contentHorizontalAlignment = .fill
-        return musicDropButton
-    }()
-    private let droppedMusicWithinAreaCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3, height: UIScreen.main.bounds.width * 1.125 / 3)
-        layout.minimumLineSpacing = 0
-        let droppedMusicWithinAreaCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        droppedMusicWithinAreaCollectionView.register(DroppedMusicWithinAreaCollectionViewCell.self, forCellWithReuseIdentifier: DroppedMusicWithinAreaCollectionViewCell.identifier)
-        droppedMusicWithinAreaCollectionView.isPagingEnabled = false
-        droppedMusicWithinAreaCollectionView.decelerationRate = .fast
-        droppedMusicWithinAreaCollectionView.showsHorizontalScrollIndicator = false
-        droppedMusicWithinAreaCollectionView.backgroundColor = .clear
-        droppedMusicWithinAreaCollectionView.isHidden = true
-        return droppedMusicWithinAreaCollectionView
-    }()
-    private let bottomCoverImageView: UIImageView = {
-        let bottomCoverImageView = UIImageView()
-        bottomCoverImageView.image = UIImage(named: "bottomCover.png")
-        bottomCoverImageView.isHidden = true
-        return bottomCoverImageView
-    }()
-    private let backToMapButton: UIButton = {
-        let backToMapButton = UIButton()
-        backToMapButton.isHidden = true
-        return backToMapButton
-    }()
-    
     private let viewModel = MainViewModel()
     private var locationManager: LocationManager?
     private let currentLocationMarker = NMFMarker()
@@ -116,9 +28,109 @@ final class MainViewController: UIViewController {
         self.locationManager = LocationManager()
         self.locationManager?.delegate = self
     }
+    
+    // MARK: - UI
+    
+    private lazy var mapView: NMFMapView = {
+        let mapView = NMFMapView()
+        mapView.mapType = .navi
+        mapView.isNightModeEnabled = true
+        return mapView
+    }()
+    
+    private lazy var topBarView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 8
+        view.backgroundColor = UIColor(red: 2.0 / 255.0, green: 4.0 / 255.0, blue: 15.0 / 255.0, alpha: 1.0)
+        return view
+    }()
+    
+    private lazy var locationIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "locationIcon.png")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private lazy var locationLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = UIColor(red: 0.867, green: 0.902, blue: 0.942, alpha: 1)
+        label.text = "성동구 성수 1가 1동"
+        return label
+    }()
+    
+    private lazy var musicDroppedCountContainerView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 4
+        view.backgroundColor = UIColor(red: 0.068, green: 0.101, blue: 0.15, alpha: 1)
+        return view
+    }()
+    
+    private lazy var musicDroppedCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = UIColor(red: 0.408, green: 0.396, blue: 0.971, alpha: 1)
+        label.text = "드랍된 음악 247개"
+        return label
+    }()
+    
+    private lazy var bottomBarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .clear
+        imageView.image = UIImage(named: "bottomBar.png")
+        imageView.isUserInteractionEnabled = true
+        return imageView
+    }()
+    
+    private lazy var homeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "homeButton.png"), for: .normal)
+        return button
+    }()
+    
+    private lazy var notificationButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "notificationButton.png"), for: .normal)
+        return button
+    }()
+    
+    private lazy var musicDropButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "musicDropButton.png"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        return button
+    }()
+    
+    private lazy var droppedMusicWithinAreaCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3, height: UIScreen.main.bounds.width * 1.125 / 3)
+        layout.minimumLineSpacing = 0
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(DroppedMusicWithinAreaCollectionViewCell.self, forCellWithReuseIdentifier: DroppedMusicWithinAreaCollectionViewCell.identifier)
+        collectionView.isPagingEnabled = false
+        collectionView.decelerationRate = .fast
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .clear
+        collectionView.isHidden = true
+        return collectionView
+    }()
+    
+    private lazy var bottomCoverImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "bottomCover.png")
+        imageView.isHidden = true
+        return imageView
+    }()
+    
+    private lazy var backToMapButton: UIButton = {
+        let button = UIButton()
+        button.isHidden = true
+        return button
+    }()
 }
-
-// MARK: - Private Functions
 
 private extension MainViewController {
     
@@ -283,7 +295,7 @@ private extension MainViewController {
         ])
             .bind(onNext: { [weak self] coordList in
                 coordList.forEach {
-                    self?.drawMusicMarker(lat: $0.0, lng: $0.1)
+                    self?.drawMusicMarker(latitude: $0.0, longitude: $0.1)
                     print("\($0.0) \($0.1)")
                 }
             })
@@ -291,10 +303,10 @@ private extension MainViewController {
     }
 
     // MARK: - Draw Marker
-    private func drawMusicMarker(lat: Double, lng: Double) {
+    private func drawMusicMarker(latitude: Double, longitude: Double) {
         let musicMarker = NMFMarker()
         musicMarker.iconImage = NMFOverlayImage(image: UIImage(named: "musicMarker") ?? UIImage())
-        musicMarker.position = NMGLatLng(lat: lat, lng: lng)
+        musicMarker.position = NMGLatLng(lat: latitude, lng: longitude)
         musicMarker.mapView = self.mapView
         bindMusicMarker(musicMarker: musicMarker)
     }

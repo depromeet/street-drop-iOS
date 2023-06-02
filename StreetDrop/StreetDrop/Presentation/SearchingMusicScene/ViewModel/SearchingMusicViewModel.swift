@@ -11,11 +11,7 @@ import RxCocoa
 import RxRelay
 import RxSwift
 
-protocol SearchingMusicViewModel {
-    associatedtype Input
-    associatedtype Output
-    
-    func convert(input: Input, disposedBag: DisposeBag) -> Output
+protocol SearchingMusicViewModel: ViewModel {
     func searchMusic(keyword: String)
 }
 
@@ -23,6 +19,17 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     private let model: SearchingMusicModel
     private let disposeBag: DisposeBag = DisposeBag()
     let searchedMusicList: PublishRelay = PublishRelay<[SearchedMusicResponseDTO.Music]>()
+    
+    struct Input {
+        let viewDidAppearEvent: Observable<Void>
+        let searchTextFieldDidEditEvent: ControlProperty<String>
+        let keyBoardDidPressSearchEventWithKeyword: Observable<String>
+    }
+    
+    struct Output {
+        let searchedMusicList = PublishRelay<[SearchedMusicResponseDTO.Music]>()
+        let recentMusicQueries = BehaviorRelay<[String]>(value: [""])
+    }
     
     init(model: SearchingMusicModel = DefaultSearchingMusicModel()) {
         self.model = model
@@ -83,18 +90,5 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
                 }
                 .disposed(by: disposeBag)
         }
-    }
-}
-
-extension DefaultSearchingMusicViewModel {
-    struct Input {
-        let viewDidAppearEvent: Observable<Void>
-        let searchTextFieldDidEditEvent: ControlProperty<String>
-        let keyBoardDidPressSearchEventWithKeyword: Observable<String>
-    }
-    
-    struct Output {
-        let searchedMusicList = PublishRelay<[SearchedMusicResponseDTO.Music]>()
-        let recentMusicQueries = BehaviorRelay<[String]>(value: [""])
     }
 }

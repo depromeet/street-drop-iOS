@@ -10,21 +10,6 @@ import UIKit
 import RxRelay
 
 final class RecentQueryButton: UIControl {
-    private lazy var queryLabel: UILabel = {
-        let label = UILabel()
-        label.font = .pretendard(size: 14, weight: 500)
-        label.setLineHeight(lineHeight: 16.71)
-        label.textColor = UIColor(red: 0.958, green: 0.958, blue: 0.958, alpha: 1)
-        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        return label
-    }()
-    
-    private lazy var deletingButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "deletingQuery"), for: .normal)
-        return button
-    }()
-    
     var query: String {
         get {
             return self.queryLabel.text ?? ""
@@ -39,15 +24,31 @@ final class RecentQueryButton: UIControl {
         super.init(frame: frame)
         self.backgroundColor = UIColor(red: 0.225, green: 0.225, blue: 0.225, alpha: 1)
         self.layer.cornerRadius = 16
-        self.setupLayout()
+        self.configureUI()
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - UI
+    private lazy var queryLabel: UILabel = {
+        let label = UILabel()
+        label.font = .pretendard(size: 14, weight: 500)
+        label.setLineHeight(lineHeight: 16.71)
+        label.textColor = UIColor(red: 0.958, green: 0.958, blue: 0.958, alpha: 1)
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        return label
+    }()
+    
+    private lazy var deletingButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "deletingQuery"), for: .normal)
+        return button
+    }()
 
-    private func setupLayout() {
+    private func configureUI() {
         [
             self.queryLabel,
             self.deletingButton

@@ -12,7 +12,7 @@
 		040685042A01539800377094 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040685032A01539800377094 /* MainViewController.swift */; };
 		040685092A01539800377094 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040685082A01539800377094 /* Assets.xcassets */; };
 		0406850C2A01539800377094 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0406850A2A01539800377094 /* LaunchScreen.storyboard */; };
-		0410388E2A12688A00BC5532 /* DropMusicRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049F50212A122C8A001528CB /* DropMusicRequestDTO.swift */; };
+		0410388E2A12688A00BC5532 /* DropMusicRequestDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049F50212A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift */; };
 		041038972A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041038962A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift */; };
 		041038982A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041038962A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift */; };
 		049BC4262A02826400071A12 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 049BC4252A02826400071A12 /* RxCocoa */; };
@@ -21,10 +21,11 @@
 		049BC4362A02845900071A12 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 049BC4352A02845900071A12 /* Moya */; };
 		049BC4382A02845900071A12 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 049BC4372A02845900071A12 /* RxMoya */; };
 		049BC43B2A0284E900071A12 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 049BC43A2A0284E900071A12 /* SnapKit */; };
-		049F50222A122C8A001528CB /* DropMusicRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049F50212A122C8A001528CB /* DropMusicRequestDTO.swift */; };
+		049F50222A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049F50212A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift */; };
 		04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F252A0215BC0064B3C8 /* MainViewModel.swift */; };
 		04FB1F282A021B0A0064B3C8 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F272A021B0A0064B3C8 /* MainModel.swift */; };
 		04FB1F322A021C330064B3C8 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F312A021C330064B3C8 /* TestError.swift */; };
+		18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18683FD82A2A251E005A94AC /* ViewModel.swift */; };
 		188D2C772A1BA74E0088F49C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C762A1BA74E0088F49C /* LocationManager.swift */; };
 		188D2C792A1BA7C60088F49C /* LocationManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C782A1BA7C60088F49C /* LocationManagerDelegate.swift */; };
 		188D2C7B2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C7A2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift */; };
@@ -36,7 +37,6 @@
 		18AAF8422A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF8402A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift */; };
 		18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
 		18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
-		18F76FB02A050133006CF9EF /* ResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAF2A050133006CF9EF /* ResponseDTO.swift */; };
 		4111449E2A1C3D2C00075E71 /* String+changeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4111449D2A1C3D2C00075E71 /* String+changeColor.swift */; };
 		412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412D66892A1E14B600BA4A1B /* CommunityViewController.swift */; };
 		412D668C2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412D668B2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift */; };
@@ -133,10 +133,11 @@
 		0406850B2A01539800377094 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0406850D2A01539800377094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		041038962A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfDroppedMusicByDongResponseDTO.swift; sourceTree = "<group>"; };
-		049F50212A122C8A001528CB /* DropMusicRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropMusicRequestDTO.swift; sourceTree = "<group>"; };
+		049F50212A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DropMusicRequestDTO+Mapping.swift"; sourceTree = "<group>"; };
 		04FB1F252A0215BC0064B3C8 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		04FB1F272A021B0A0064B3C8 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		04FB1F312A021C330064B3C8 /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
+		18683FD82A2A251E005A94AC /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		188D2C762A1BA74E0088F49C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		188D2C782A1BA7C60088F49C /* LocationManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerDelegate.swift; sourceTree = "<group>"; };
 		188D2C7A2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroppedMusicWithinAreaCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -145,7 +146,6 @@
 		18AAF8402A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicWithinAreaResponseDTO.swift; sourceTree = "<group>"; };
 		18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		18F76FAF2A050133006CF9EF /* ResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDTO.swift; sourceTree = "<group>"; };
 		2611E7411DB7C5436A272A27 /* Pods-StreetDrop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetDrop.release.xcconfig"; path = "Target Support Files/Pods-StreetDrop/Pods-StreetDrop.release.xcconfig"; sourceTree = "<group>"; };
 		33C6E9256EDABFB58F83B1C8 /* Pods-StreetDrop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetDrop.debug.xcconfig"; path = "Target Support Files/Pods-StreetDrop/Pods-StreetDrop.debug.xcconfig"; sourceTree = "<group>"; };
 		4111449D2A1C3D2C00075E71 /* String+changeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+changeColor.swift"; sourceTree = "<group>"; };
@@ -265,7 +265,7 @@
 		049F50242A122C8F001528CB /* DropMusic */ = {
 			isa = PBXGroup;
 			children = (
-				049F50212A122C8A001528CB /* DropMusicRequestDTO.swift */,
+				049F50212A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift */,
 			);
 			path = DropMusic;
 			sourceTree = "<group>";
@@ -303,6 +303,7 @@
 		04FB1F1D2A0213B90064B3C8 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				18683FD72A2A2510005A94AC /* Protocol */,
 				415113282A1663190051F809 /* Utils */,
 				415113222A165D940051F809 /* MusicDropView */,
 				412D66872A1E148600BA4A1B /* CommunityView */,
@@ -397,6 +398,14 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
+		18683FD72A2A2510005A94AC /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				18683FD82A2A251E005A94AC /* ViewModel.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		18AAF8362A136D9E002EF441 /* MusicWithinArea */ = {
 			isa = PBXGroup;
 			children = (
@@ -417,7 +426,6 @@
 		18F76FAE2A050110006CF9EF /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
-				18F76FAF2A050133006CF9EF /* ResponseDTO.swift */,
 				049F50242A122C8F001528CB /* DropMusic */,
 				41E008CC2A14427300F5D99C /* PoiResponse */,
 				041038952A126D1400BC5532 /* NumberOfDroppedMusicByDong */,
@@ -917,10 +925,11 @@
 				C434A4CE2A17970A00C63526 /* SearchingMusicModel.swift in Sources */,
 				04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */,
 				41D0974F2A19065B00C011A0 /* UIView+generateCircleGradientView.swift in Sources */,
-				049F50222A122C8A001528CB /* DropMusicRequestDTO.swift in Sources */,
+				049F50222A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift in Sources */,
 				C45BF3A32A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */,
 				041038972A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */,
 				4141398F2A1FA252005418A1 /* PaddingLabel.swift in Sources */,
+				18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */,
 				41D097532A19BE6C00C011A0 /* DroppingInfo.swift in Sources */,
 				412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */,
 				41E008CE2A1442A000F5D99C /* PoiResponseDTO.swift in Sources */,
@@ -929,7 +938,6 @@
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO.swift in Sources */,
 				C434A4CA2A1796E400C63526 /* SearchingMusicViewController.swift in Sources */,
 				C45BF3AA2A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift in Sources */,
-				18F76FB02A050133006CF9EF /* ResponseDTO.swift in Sources */,
 				188D2C7B2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -943,7 +951,7 @@
 				18AAF8372A136F9E002EF441 /* (null) in Sources */,
 				41FF59022A06B3A100ABB871 /* NetworkManager.swift in Sources */,
 				41FF59032A06B3A200ABB871 /* NetworkService.swift in Sources */,
-				0410388E2A12688A00BC5532 /* DropMusicRequestDTO.swift in Sources */,
+				0410388E2A12688A00BC5532 /* DropMusicRequestDTO+Mapping.swift in Sources */,
 				041038982A126E7B00BC5532 /* NumberOfDroppedMusicByDongResponseDTO.swift in Sources */,
 				C45BF3A82A1D19D100CEDE74 /* RecentMusicQueryDTO.swift in Sources */,
 				C49BA7612A1BDFC900A83E95 /* UIFont+Extension.swift in Sources */,

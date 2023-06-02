@@ -14,29 +14,6 @@ import RxSwift
 final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     static let identifier = "DroppedMusicWithinAreaCollectionViewCell"
     
-    private let musicTitleLabel: UILabel = {
-        let musicTitleLabel = UILabel()
-        musicTitleLabel.font = .systemFont(ofSize: 14)
-        musicTitleLabel.textColor = .white
-        musicTitleLabel.numberOfLines = 1
-        musicTitleLabel.textAlignment = .center
-        return musicTitleLabel
-    }()
-    private let singerNameLabel: UILabel = {
-        let singerNameLabel = UILabel()
-        singerNameLabel.font = .systemFont(ofSize: 14)
-        singerNameLabel.textColor = .white
-        singerNameLabel.numberOfLines = 1
-        singerNameLabel.textAlignment = .center
-        return singerNameLabel
-    }()
-    private let albumCoverButton: UIButton = {
-        let albumCoverButton = UIButton()
-        albumCoverButton.backgroundColor = .gray
-        albumCoverButton.isUserInteractionEnabled = true
-        return albumCoverButton
-    }()
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configureUI()
@@ -50,6 +27,33 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         self.musicTitleLabel.text = musicTitle
         self.singerNameLabel.text = singerName
     }
+    
+    // MARK: - UI
+    
+    private lazy var musicTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .white
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var singerNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .white
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var albumCoverButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .gray
+        button.isUserInteractionEnabled = true
+        return button
+    }()
 }
 
 // MARK: - Private Functions
