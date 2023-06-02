@@ -12,6 +12,38 @@ import SnapKit
 class SearchingMusicTableViewCell: UITableViewCell {
     static let identifier = "SearchingMusicTableViewCell"
     
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = .clear
+        self.selectionStyle = .none
+        self.configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been impl")
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
+    func setData(music: SearchedMusicResponseDTO.Music) {
+        if let url = URL(string: music.albumImage) {
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: url)
+                DispatchQueue.main.async {
+                    self.albumImage.image = UIImage(data: data ?? Data())
+                }
+            }
+        }
+        
+        self.songNameLabel.text = music.songName
+        self.artistNameLabel.text = music.artistName
+        self.durationTimeLabel.text = music.durationTime
+    }
+    
+    // MARK: - UI
+    
     private lazy var albumImage: UIImageView = {
         let imageView: UIImageView = UIImageView()
         imageView.layer.cornerRadius = 8.0
@@ -47,40 +79,10 @@ class SearchingMusicTableViewCell: UITableViewCell {
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = .clear
-        self.selectionStyle = .none
-        self.setUpLayout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been impl")
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
-    func setData(music: SearchedMusicResponseDTO.Music) {
-        if let url = URL(string: music.albumImage) {
-            DispatchQueue.global().async {
-                let data = try? Data(contentsOf: url)
-                DispatchQueue.main.async {
-                    self.albumImage.image = UIImage(data: data ?? Data())
-                }
-            }
-        }
-        
-        self.songNameLabel.text = music.songName
-        self.artistNameLabel.text = music.artistName
-        self.durationTimeLabel.text = music.durationTime
-    }
 }
 
 private extension SearchingMusicTableViewCell {
-    func setUpLayout() {
+    func configureUI() {
         [
             self.albumImage,
             self.songNameLabel,

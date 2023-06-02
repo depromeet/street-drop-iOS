@@ -14,24 +14,9 @@ final class RecentMusicSearchScrollView: UIView {
     let queryButtonDidTappedEvent: PublishRelay = PublishRelay<String>()
     private let disposeBag: DisposeBag = DisposeBag()
     
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
-        return scrollView
-    }()
-    
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 16.0
-        
-        return stackView
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLayout()
+        self.configureUI()
     }
     
     @available(*, unavailable)
@@ -54,10 +39,26 @@ final class RecentMusicSearchScrollView: UIView {
             }
         }
     }
+    
+    // MARK: - UI
+    
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 16.0
+        return stackView
+    }()
 }
 
 private extension RecentMusicSearchScrollView {
-    func setupLayout() {
+    func configureUI() {
         self.scrollView.addSubview(stackView)
         self.addSubview(scrollView)
         

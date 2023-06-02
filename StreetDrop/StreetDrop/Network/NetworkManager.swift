@@ -19,16 +19,6 @@ struct NetworkManager {
         self.provider = provider
     }
     
-    func getWeather(lat: String, lon: String) -> Observable<Data?> {
-        return provider.rx.request(.getWeather(lat: lat, lon: lon))
-            .retry(3)
-            .map { response -> Data? in
-                return response.data
-            }
-            .asObservable()
-            .catchAndReturn(nil)
-    }
-    
     func searchMusic(keyword: String) -> Single<Data> {
         return provider.rx.request(.searchMusic(keyword: keyword))
             .retry(3)

@@ -24,9 +24,19 @@ final class SearchingMusicViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor(red: 0.024, green: 0.046, blue: 0.12, alpha: 1)
+        bindAction()
+        bindViewModel()
+        bindUI()
+    }
+    
+    // MARK: - UI
+    
     private lazy var searchView: UIView = {
-        let uiView: UIView = UIView()
-        return uiView
+        let view: UIView = UIView()
+        return view
     }()
     
     private lazy var searchTextField: UITextField = {
@@ -52,17 +62,17 @@ final class SearchingMusicViewController: UIViewController {
         textField.leftView = leftPaddingView
         textField.leftViewMode = .always
         
-        textField.rightView = self.searchCancleView
+        textField.rightView = self.searchCancelView
         textField.rightViewMode = .whileEditing
         return textField
     }()
     
-    private lazy var searchCancleView: UIView = {
-        let uiView = UIView()
-        return uiView
+    private lazy var searchCancelView: UIView = {
+        let view = UIView()
+        return view
     }()
     
-    private lazy var searchCancleButton: UIButton = {
+    private lazy var searchCancelButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "cancleButton"), for: .normal)
         return button
@@ -75,22 +85,22 @@ final class SearchingMusicViewController: UIViewController {
     }()
     
     private lazy var recentMusicSearchView: UIView = {
-        let uiView: UIView = UIView()
-        return uiView
+        let view: UIView = UIView()
+        return view
     }()
     
     private lazy var recentSearchResultLabel: UILabel = {
-        let uilabel: UILabel = UILabel()
-        uilabel.text = "최근 검색 결과"
-        uilabel.textColor = UIColor(red: 0.958, green: 0.958, blue: 0.958, alpha: 1)
-        uilabel.font = .pretendard(size: 12, weight: 500)
-        uilabel.setLineHeight(lineHeight: 14.32)
-        return uilabel
+        let label: UILabel = UILabel()
+        label.text = "최근 검색 결과"
+        label.textColor = UIColor(red: 0.958, green: 0.958, blue: 0.958, alpha: 1)
+        label.font = .pretendard(size: 12, weight: 500)
+        label.setLineHeight(lineHeight: 14.32)
+        return label
     }()
     
     private lazy var recentMusicSearchScrollView: RecentMusicSearchScrollView = {
-        let view = RecentMusicSearchScrollView()
-        return view
+        let scrollView = RecentMusicSearchScrollView()
+        return scrollView
     }()
     
     private lazy var questionLabel: UILabel = {
@@ -136,19 +146,14 @@ final class SearchingMusicViewController: UIViewController {
         tableView.rowHeight = 76
         return tableView
     }()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = UIColor(red: 0.024, green: 0.046, blue: 0.12, alpha: 1)
-        bindUI()
-        bindViewModel()
-        setupLayout()
-    }
 }
 
 private extension SearchingMusicViewController {
-    func bindUI() {
-        self.searchCancleButton.rx.tap
+    
+    // MARK: - UI
+    
+    func bindAction() {
+        self.searchCancelButton.rx.tap
             .bind {
                 self.searchTextField.text = ""
                 self.searchTextField.sendActions(for: .valueChanged)
@@ -201,7 +206,7 @@ private extension SearchingMusicViewController {
             .disposed(by: disposeBag)
     }
     
-    func setupLayout() {
+    func bindUI() {
         [
             self.backButton,
             self.searchTextField
@@ -217,7 +222,7 @@ private extension SearchingMusicViewController {
             self.recentMusicSearchView.addSubview($0)
         }
         
-        self.searchCancleView.addSubview(self.searchCancleButton)
+        self.searchCancelView.addSubview(self.searchCancelButton)
         
         [
             self.searchView,
@@ -247,12 +252,12 @@ private extension SearchingMusicViewController {
             $0.trailing.equalToSuperview().inset(16)
         }
         
-        self.searchCancleView.snp.makeConstraints {
+        self.searchCancelView.snp.makeConstraints {
             $0.width.equalTo(36)
             $0.height.equalTo(44)
         }
         
-        self.searchCancleButton.snp.makeConstraints {
+        self.searchCancelButton.snp.makeConstraints {
             $0.width.height.equalTo(20)
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview()
