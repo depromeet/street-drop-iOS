@@ -122,6 +122,8 @@ final class MusicDropViewController: UIViewController {
         textView.keyboardDismissMode = .interactive
         textView.keyboardAppearance = .dark
         textView.showsVerticalScrollIndicator = false
+        textView.sizeToFit()
+        textView.isScrollEnabled = false
 
         return textView
     }()
@@ -221,12 +223,13 @@ extension MusicDropViewController {
     }
 }
 
-//MARK: - 코멘트 플레이스홀더
+//MARK: - 코멘트 플레이스홀더, 텍스트 줄 수에 맞게 변하는 다이나믹 TextView
 extension MusicDropViewController {
     private func bindCommentTextView() {
         commentTextView.rx.didBeginEditing
             .subscribe { [weak self] element in
                 self?.removePlaceHolder()
+                self?.commentTextView.sizeToFit()
             }.disposed(by: disposeBag)
 
         commentTextView.rx.didEndEditing
