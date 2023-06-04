@@ -23,6 +23,7 @@ final class CommunityViewController: UIViewController {
         collectionView.isPagingEnabled = false
         collectionView.decelerationRate = .fast
         collectionView.backgroundColor = .primaryBackground
+        collectionView.clipsToBounds = false
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(
