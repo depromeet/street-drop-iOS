@@ -192,9 +192,10 @@ final class MusicDropViewController: UIViewController {
 
     private lazy var dropButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(UIColor(red: 0.335, green: 0.338, blue: 0.35, alpha: 1), for: .normal)
         button.layer.cornerRadius = 10
-        button.backgroundColor = .darkGray
+        button.backgroundColor = UIColor(red: 0.225, green: 0.224, blue: 0.25, alpha: 1)
+        button.isEnabled = false
 
         return button
     }()
@@ -267,7 +268,7 @@ extension MusicDropViewController {
     }
 }
 
-//MARK: - 코멘트 플레이스홀더, 텍스트 줄 수에 맞게 변하는 다이나믹 TextView, 줄 수 제한
+//MARK: - 코멘트 플레이스홀더, 텍스트 줄 수에 맞게 변하는 다이나믹 TextView, 줄 수 제한, 커멘트있을때만 드랍가능
 extension MusicDropViewController {
     private func bindCommentTextView() {
         commentTextView.rx.didBeginEditing
@@ -284,6 +285,7 @@ extension MusicDropViewController {
         commentTextView.rx.didChange
             .subscribe { [weak self] _ in
                 self?.checkMaxNumberOfLines(max: 4)
+                self?.checkAvailableToDrop()
             }.disposed(by: disposeBag)
     }
 
@@ -321,6 +323,33 @@ extension MusicDropViewController {
 
         if lines > max {
             commentTextView.text = String(commentTextView.text.dropLast())
+        }
+    }
+
+    private func checkAvailableToDrop() {
+        var placeHolder: String?
+
+        viewModel.commentPlaceHolder
+            .subscribe {
+                placeHolder = $0
+            }.disposed(by: disposeBag)
+
+        if(commentTextView.text != nil
+           && commentTextView.text != ""
+           && commentTextView.text != placeHolder
+        ) {
+            albumImageGradationView.layer.masksToBounds = false
+            dropButton.isEnabled = true
+            dropButton.backgroundColor = UIColor(red: 0.399, green: 0.371, blue: 1, alpha: 1)
+            dropButton.setTitleColor(.white, for: .normal)
+        } else {
+            albumImageGradationView.layer.masksToBounds = true
+            dropButton.isEnabled = false
+            dropButton.setTitleColor(
+                UIColor(red: 0.335, green: 0.338, blue: 0.35, alpha: 1),
+                for: .normal
+            )
+            dropButton.backgroundColor = UIColor(red: 0.225, green: 0.224, blue: 0.25, alpha: 1)
         }
     }
 }
