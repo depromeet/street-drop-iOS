@@ -44,10 +44,6 @@ final class MusicDropViewController: UIViewController {
         makeViewIntoGradientCircle()
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.commentTextView.endEditing(true)
-    }
-
     //MARK: - 디자인 요소 (레이아웃 잡힌 후 그라데이션 layer 적용)
     private var topGradientCircleView: UIView = UIView()
     private var smallerCenterGradientCircleView: UIView = UIView()
@@ -233,7 +229,7 @@ extension MusicDropViewController {
     }
 }
 
-//MARK: - 코멘트 플레이스홀더, 텍스트 줄 수에 맞게 변하는 다이나믹 TextView
+//MARK: - 코멘트 플레이스홀더, 텍스트 줄 수에 맞게 변하는 다이나믹 TextView, 줄 수 제한
 extension MusicDropViewController {
     private func bindCommentTextView() {
         commentTextView.rx.didBeginEditing
@@ -245,6 +241,11 @@ extension MusicDropViewController {
         commentTextView.rx.didEndEditing
             .subscribe { [weak self] element in
                 self?.setupPlaceHolder()
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.didChange
+            .subscribe { [weak self] _ in
+                self?.checkMaxNumberOfLines(max: 4)
             }.disposed(by: disposeBag)
     }
 
@@ -275,16 +276,23 @@ extension MusicDropViewController {
             commentTextView.textColor = .white
         }
     }
+
+    private func checkMaxNumberOfLines(max: Int) {
+        let lineBreakCharacter = "\n"
+        let lines = commentTextView.text.components(separatedBy: lineBreakCharacter).count
+
+        if lines > max {
+            commentTextView.text = String(commentTextView.text.dropLast())
+        }
+    }
 }
 
 //MARK: - 드랍 액션
 extension MusicDropViewController {
-    private func touchedUpDropButton() -> UIAction {
-        return UIAction { [weak self] _ in
-            self?.viewModel.drop(content: self?.commentTextView.text ?? "")
-            // 👉TODO - 애니메이션 추갸하기, 1초정도 보여준 후 VC 네비게이션바에서 pop하기
-            self?.showDropAnimation()
-        }
+    private func touchedUpDropButton() {
+        self.viewModel.drop(content: self.commentTextView.text ?? "")
+        // 👉TODO - 애니메이션 추갸하기, 1초정도 보여준 후 VC 네비게이션바에서 pop하기
+        self.showDropAnimation()
     }
 
     private func showDropAnimation() {
