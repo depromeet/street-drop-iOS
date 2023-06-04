@@ -29,8 +29,8 @@ final class CommunityViewModel {
         return communityInfos.count
     }
 
-    var albumImages: [String] {
-        return communityInfos.map { $0.music.albumImage }
+    var albumImages: Observable<[String]> {
+        return Observable.just(communityInfos.map { $0.music.albumImage })
     }
 
     init(communityInfos: [CommunityInfo], index: Int) {
