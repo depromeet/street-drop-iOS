@@ -62,6 +62,7 @@ final class MusicDropViewController: UIViewController {
 
     private let locationLabel: UILabel = {
         let label = UILabel()
+        label.text = Constant.textDefault
         label.textColor = .white
         label.textAlignment = .center
         label.font = .pretendard(size: 20, weight: 700)
@@ -72,6 +73,7 @@ final class MusicDropViewController: UIViewController {
 
     private let dropGuideLabel: UILabel = {
         let label = UILabel()
+        label.text = Constant.textDefault
         label.textColor = .white
         label.textAlignment = .center
         label.font = .pretendard(size: 20, weight: 700)
@@ -92,6 +94,7 @@ final class MusicDropViewController: UIViewController {
 
     private let musicNameLabel: UILabel = {
         let label: UILabel = UILabel()
+        label.text = Constant.textDefault
         label.numberOfLines = 1
         label.textColor = .white
         label.font = .pretendard(size: 16, weight: 700)
@@ -102,6 +105,7 @@ final class MusicDropViewController: UIViewController {
 
     private let artistLabel: UILabel = {
         let label: UILabel = UILabel()
+        label.text = Constant.textDefault
         label.numberOfLines = 1
         label.textColor = .white
         label.font = .pretendard(size: 12, weight: 500)
@@ -136,6 +140,7 @@ final class MusicDropViewController: UIViewController {
 
     private let CommentGuidanceLabel: UILabel = {
         let label: UILabel = UILabel()
+        label.text = Constant.textDefault
         label.numberOfLines = 1
         label.textColor = .white
         label.font = .pretendard(size: 11, weight: 400)
@@ -379,7 +384,6 @@ extension MusicDropViewController {
             $0.height.equalTo(albumImageView.snp.width)
         }
 
-        musicInfoStackView.setCustomSpacing(3, after: locationLabel)
         musicInfoStackView.setCustomSpacing(32, after: dropGuideLabel)
         musicInfoStackView.setCustomSpacing(16, after: albumImageView)
 
@@ -461,5 +465,12 @@ extension MusicDropViewController {
         let contentInset = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
         scrollView.setContentOffset(.zero, animated: true)
+    }
+}
+
+
+extension MusicDropViewController {
+    enum Constant {
+        static let textDefault: String = " "
     }
 }
