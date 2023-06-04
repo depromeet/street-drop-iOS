@@ -24,6 +24,7 @@ final class CommunityViewController: UIViewController {
         collectionView.decelerationRate = .fast
         collectionView.backgroundColor = .primaryBackground
         collectionView.clipsToBounds = false
+        collectionView.delegate = self
         collectionView.register(
             AlbumCollectionViewCell.self,
             forCellWithReuseIdentifier: AlbumCollectionViewCell.identifier
@@ -210,6 +211,7 @@ final class CommunityViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         bindViewModel()
+        setupInitialOffset()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -422,8 +424,8 @@ extension CommunityViewController {
     }
 }
 
+// MARK: - 무한스크롤 설정
 extension CommunityViewController: UICollectionViewDelegate {
-    // 무한스크롤 설정
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let layout = self.albumCollectionView.collectionViewLayout
                 as? UICollectionViewFlowLayout else { return }
@@ -472,7 +474,20 @@ extension CommunityViewController: UICollectionViewDelegate {
             y: 0
         )
 
-        viewModel.changeCurrentMusic(to: index)
+        viewModel.changeCurrentMusic(to: index+1) //offset0일때, 0번 앨범이아니라 1번앨범내용이므로 index+1
+    }
+
+    // 4,5 + (1...5) + 1,2 로 들어오므로 1이 가운데에오도록 처음 offset지정
+    private func setupInitialOffset() {
+        guard let layout = self.albumCollectionView.collectionViewLayout
+                as? UICollectionViewFlowLayout else { return }
+
+        let cellWidth = layout.itemSize.width
+
+        albumCollectionView.setContentOffset(
+            CGPoint(x: cellWidth, y: .zero),
+            animated: false
+        )
     }
 }
 
