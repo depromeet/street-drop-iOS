@@ -37,6 +37,7 @@ final class CommunityViewController: UIViewController {
 
     private let musicNameLabel: UILabel = {
         let label = UILabel()
+        label.text = Constant.textDefault // setLineHeight() 적용을위해 text 디폴트 값 필요
         label.textColor = .white
         label.font = .pretendard(size: 20, weight: 700)
         label.setLineHeight(lineHeight: 26.4)
@@ -46,6 +47,7 @@ final class CommunityViewController: UIViewController {
 
     private let artistLabel: UILabel = {
         let label = UILabel()
+        label.text = Constant.textDefault
         label.textColor = .white
         label.font = .pretendard(size: 14, weight: 500)
         label.setLineHeight(lineHeight: 19.6)
@@ -77,6 +79,7 @@ final class CommunityViewController: UIViewController {
 
     private let commentLabel: UILabel = {
         let label = UILabel()
+        label.text = Constant.textDefault
         label.textColor = .white
         label.numberOfLines = 0
         label.font = .pretendard(size: 14, weight: 500)
@@ -94,6 +97,7 @@ final class CommunityViewController: UIViewController {
 
     private let nicknameLabel: UILabel = {
         let label = UILabel()
+        label.text = Constant.textDefault
         label.textColor = .white
         label.font = .pretendard(size: 14, weight: 500)
         label.setLineHeight(lineHeight: 19.6)
@@ -103,6 +107,7 @@ final class CommunityViewController: UIViewController {
 
     private let dateLabel: UILabel = {
         let label = UILabel()
+        label.text = Constant.textDefault
         label.textColor = .white
         label.font = .pretendard(size: 12, weight: 400)
         label.setLineHeight(lineHeight: 16.8)
@@ -485,5 +490,11 @@ extension CommunityViewController: UICollectionViewDelegate, UICollectionViewDat
         )
 
         viewModel.changeCurrentMusic(to: index)
+    }
+}
+
+extension CommunityViewController {
+    enum Constant {
+        static let textDefault: String = " "
     }
 }
