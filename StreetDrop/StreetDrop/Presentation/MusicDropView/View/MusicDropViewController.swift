@@ -35,6 +35,7 @@ final class MusicDropViewController: UIViewController {
         bindAction()
         bindViewModel()
         bindCommentTextView()
+        registerKeyboardNotification()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -53,6 +54,16 @@ final class MusicDropViewController: UIViewController {
     private var LargerCenterGradientCircleView: UIView = UIView()
 
     //MARK: - 뷰 아이템 요소
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.keyboardDismissMode = .onDrag
+
+        return scrollView
+    }()
+
+    private let contentView: UIView = UIView()
+
     private let locationLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -119,7 +130,6 @@ final class MusicDropViewController: UIViewController {
         textView.backgroundColor = UIColor(red: 0.213, green: 0.213, blue: 0.213, alpha: 1)
         textView.layer.cornerRadius = 8
         textView.textContainerInset = .init(top: 12, left: 14, bottom: 12, right: 14)
-        textView.keyboardDismissMode = .interactive
         textView.keyboardAppearance = .dark
         textView.showsVerticalScrollIndicator = false
         textView.sizeToFit()
@@ -289,10 +299,7 @@ extension MusicDropViewController {
     }
 
     private func removeViewItemComponents() {
-        [musicInfoStackView, commentStackView, dropButton]
-            .forEach {
-                $0.removeFromSuperview()
-            }
+        scrollView.removeFromSuperview()
     }
 }
 
@@ -309,13 +316,20 @@ extension MusicDropViewController {
                 commentStackView.addArrangedSubview($0)
             }
 
-        // 디자인요소인 GradientCircleView들 먼저 add합니다. 순서 변경 불가능합니다.
-        [LargerCenterGradientCircleView, smallerCenterGradientCircleView, topGradientCircleView]
+        [musicInfoStackView, commentStackView, dropButton]
             .forEach {
-                self.view.addSubview($0)
+                self.contentView.addSubview($0)
             }
 
-        [musicInfoStackView, commentStackView, dropButton]
+        scrollView.addSubview(contentView)
+
+        // 디자인요소인 GradientCircleView들 먼저 add합니다. 순서 변경 불가능합니다.
+        [
+            LargerCenterGradientCircleView,
+            smallerCenterGradientCircleView,
+            topGradientCircleView,
+            scrollView
+        ]
             .forEach {
                 self.view.addSubview($0)
             }
@@ -343,8 +357,17 @@ extension MusicDropViewController {
             $0.centerY.equalToSuperview().multipliedBy(0.9)
         }
 
+        scrollView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        }
+
+        contentView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.width.equalTo(scrollView)
+            $0.height.greaterThanOrEqualTo(scrollView)
+        }
+
         albumImageView.snp.makeConstraints {
-            $0.width.equalTo(self.view.safeAreaLayoutGuide).multipliedBy(0.30)
+            $0.width.equalTo(contentView).multipliedBy(0.30)
             $0.height.equalTo(albumImageView.snp.width)
         }
 
@@ -353,22 +376,23 @@ extension MusicDropViewController {
         musicInfoStackView.setCustomSpacing(16, after: albumImageView)
 
         musicInfoStackView.snp.makeConstraints {
-            $0.top.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).inset(20)
-            $0.centerX.equalToSuperview()
+            $0.top.trailing.leading.equalTo(contentView).inset(20)
+            $0.centerX.equalTo(contentView)
         }
 
         commentStackView.snp.makeConstraints {
             $0.top.equalTo(musicInfoStackView.snp.bottom).offset(20)
-            $0.width.equalToSuperview().multipliedBy(0.9)
-            $0.height.greaterThanOrEqualToSuperview().multipliedBy(0.1)
-            $0.centerX.equalToSuperview()
+            $0.width.equalTo(contentView).multipliedBy(0.9)
+            $0.height.greaterThanOrEqualTo(contentView).multipliedBy(0.1)
+            //$0.bottom.equalTo(contentView).inset(30)
+            $0.centerX.equalTo(contentView)
         }
 
         dropButton.snp.makeConstraints {
             $0.width.equalTo(commentTextView)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
-            $0.height.equalToSuperview().multipliedBy(0.07)
-            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(contentView.snp.bottom).inset(30)
+            $0.height.equalTo(54)
+            $0.centerX.equalTo(contentView)
         }
     }
 
@@ -394,5 +418,40 @@ extension MusicDropViewController {
                 viewBackgroundColor: .primaryBackground
             )
         }
+    }
+}
+
+//MARK: - 키보드
+extension MusicDropViewController {
+    private func registerKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+    }
+
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else {
+            return
+        }
+
+        scrollView.contentInset.bottom = keyboardFrame.size.height
+
+        let activeRect = CommentGuidanceLabel.convert(CommentGuidanceLabel.bounds, to: scrollView)
+        scrollView.scrollRectToVisible(activeRect, animated: true)
+    }
+
+    @objc private func keyboardWillHide() {
+        let contentInset = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
+        scrollView.setContentOffset(.zero, animated: true)
     }
 }
