@@ -20,6 +20,7 @@ final class MusicDropViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -28,8 +29,7 @@ final class MusicDropViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .primaryBackground
 
-        configureHierarchy()
-        configureLayout()
+        configureUI()
         viewModel.fetchAlbumImage()
         viewModel.fetchAdress()
         bindAction()
@@ -44,12 +44,13 @@ final class MusicDropViewController: UIViewController {
         makeViewIntoGradientCircle()
     }
 
-    //MARK: - 디자인 요소 (레이아웃 잡힌 후 그라데이션 layer 적용)
-    private var topGradientCircleView: UIView = UIView()
-    private var smallerCenterGradientCircleView: UIView = UIView()
-    private var LargerCenterGradientCircleView: UIView = UIView()
+    //MARK: - UI
 
-    //MARK: - 뷰 아이템 요소
+    // 디자인 요소 (레이아웃 잡힌 후 그라데이션 layer 적용)
+    private lazy var topGradientCircleView: UIView = UIView()
+    private lazy var smallerCenterGradientCircleView: UIView = UIView()
+    private lazy var LargerCenterGradientCircleView: UIView = UIView()
+
     private lazy var backButton: UIButton = {
         let button: UIButton = UIButton()
         button.setImage(UIImage(named: "backButton"), for: .normal)
@@ -70,7 +71,7 @@ final class MusicDropViewController: UIViewController {
 
     private lazy var topView: UIView = UIView()
 
-    private let scrollView: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
         scrollView.keyboardDismissMode = .onDrag
@@ -78,9 +79,9 @@ final class MusicDropViewController: UIViewController {
         return scrollView
     }()
 
-    private let contentView: UIView = UIView()
+    private lazy var contentView: UIView = UIView()
 
-    private let locationLabel: UILabel = {
+    private lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
         label.textColor = .white
@@ -91,7 +92,7 @@ final class MusicDropViewController: UIViewController {
         return label
     }()
 
-    private let dropGuideLabel: UILabel = {
+    private lazy var dropGuideLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
         label.textColor = .white
@@ -102,7 +103,7 @@ final class MusicDropViewController: UIViewController {
         return label
     }()
 
-    private let albumImageView: UIImageView = {
+    private lazy var albumImageView: UIImageView = {
         let loadingImage = UIImage(systemName: "slowmo")
         let imageView = UIImageView(image: loadingImage)
         imageView.contentMode = .scaleAspectFill
@@ -112,7 +113,7 @@ final class MusicDropViewController: UIViewController {
         return imageView
     }()
 
-    private let albumImageGradationView: UIView = {
+    private lazy var albumImageGradationView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.white.cgColor
         view.layer.borderWidth = 0
@@ -125,7 +126,7 @@ final class MusicDropViewController: UIViewController {
         return view
     }()
 
-    private let musicNameLabel: UILabel = {
+    private lazy var musicNameLabel: UILabel = {
         let label: UILabel = UILabel()
         label.text = Constant.textDefault
         label.numberOfLines = 1
@@ -136,7 +137,7 @@ final class MusicDropViewController: UIViewController {
         return label
     }()
 
-    private let artistLabel: UILabel = {
+    private lazy var artistLabel: UILabel = {
         let label: UILabel = UILabel()
         label.text = Constant.textDefault
         label.numberOfLines = 1
@@ -147,7 +148,7 @@ final class MusicDropViewController: UIViewController {
         return label
     }()
 
-    private let musicInfoStackView: UIStackView = {
+    private lazy var musicInfoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
@@ -156,7 +157,7 @@ final class MusicDropViewController: UIViewController {
         return stackView
     }()
 
-    private let commentTextView: UITextView = {
+    private lazy var commentTextView: UITextView = {
         let textView = UITextView()
         textView.textColor = .white
         textView.font = .pretendard(size: 14, weight: 500)
@@ -171,7 +172,7 @@ final class MusicDropViewController: UIViewController {
         return textView
     }()
 
-    private let CommentGuidanceLabel: UILabel = {
+    private lazy var CommentGuidanceLabel: UILabel = {
         let label: UILabel = UILabel()
         label.text = Constant.textDefault
         label.numberOfLines = 1
@@ -182,7 +183,7 @@ final class MusicDropViewController: UIViewController {
         return label
     }()
 
-    private let commentStackView: UIStackView = {
+    private lazy var commentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 5
@@ -210,14 +211,18 @@ final class MusicDropViewController: UIViewController {
     }()
 }
 
-//MARK: - 뷰모델 바인딩
 extension MusicDropViewController {
+
+    // MARK: - Action Binding
+
     private func bindAction() {
         dropButton.rx.tap
             .bind {
                 self.touchedUpDropButton()
             }.disposed(by: disposeBag)
     }
+
+    // MARK: - Data Binding
 
     private func bindViewModel() {
         viewModel.locationTitle.subscribe { [weak self] in
@@ -266,121 +271,10 @@ extension MusicDropViewController {
             // 👉 TODO: Error팝업띄우기
         }.disposed(by: disposeBag)
     }
-}
 
-//MARK: - 코멘트 플레이스홀더, 텍스트 줄 수에 맞게 변하는 다이나믹 TextView, 줄 수 제한, 커멘트있을때만 드랍가능
-extension MusicDropViewController {
-    private func bindCommentTextView() {
-        commentTextView.rx.didBeginEditing
-            .subscribe { [weak self] element in
-                self?.removePlaceHolder()
-                self?.commentTextView.sizeToFit()
-            }.disposed(by: disposeBag)
+    //MARK: - UI
 
-        commentTextView.rx.didEndEditing
-            .subscribe { [weak self] element in
-                self?.setupPlaceHolder()
-            }.disposed(by: disposeBag)
-
-        commentTextView.rx.didChange
-            .subscribe { [weak self] _ in
-                self?.checkMaxNumberOfLines(max: 4)
-                self?.checkAvailableToDrop()
-            }.disposed(by: disposeBag)
-    }
-
-    private func setupPlaceHolder() {
-        var placeHolder: String?
-
-        viewModel.commentPlaceHolder
-            .subscribe {
-                placeHolder = $0
-            }.disposed(by: disposeBag)
-
-        if(commentTextView.text == nil || commentTextView.text == "") {
-            commentTextView.text = placeHolder
-            commentTextView.textColor = UIColor(red: 0.587, green: 0.587, blue: 0.587, alpha: 1)
-        }
-    }
-
-    private func removePlaceHolder() {
-        var placeHolder: String?
-
-        viewModel.commentPlaceHolder
-            .subscribe {
-                placeHolder = $0
-            }.disposed(by: disposeBag)
-
-        if(commentTextView.text == placeHolder) {
-            commentTextView.text = nil
-            commentTextView.textColor = .white
-        }
-    }
-
-    private func checkMaxNumberOfLines(max: Int) {
-        let lineBreakCharacter = "\n"
-        let lines = commentTextView.text.components(separatedBy: lineBreakCharacter).count
-
-        if lines > max {
-            commentTextView.text = String(commentTextView.text.dropLast())
-        }
-    }
-
-    private func checkAvailableToDrop() {
-        var placeHolder: String?
-
-        viewModel.commentPlaceHolder
-            .subscribe {
-                placeHolder = $0
-            }.disposed(by: disposeBag)
-
-        if(commentTextView.text != nil
-           && commentTextView.text != ""
-           && commentTextView.text != placeHolder
-        ) {
-            albumImageGradationView.layer.masksToBounds = false
-            dropButton.isEnabled = true
-            dropButton.backgroundColor = UIColor(red: 0.399, green: 0.371, blue: 1, alpha: 1)
-            dropButton.setTitleColor(.white, for: .normal)
-        } else {
-            albumImageGradationView.layer.masksToBounds = true
-            dropButton.isEnabled = false
-            dropButton.setTitleColor(
-                UIColor(red: 0.335, green: 0.338, blue: 0.35, alpha: 1),
-                for: .normal
-            )
-            dropButton.backgroundColor = UIColor(red: 0.225, green: 0.224, blue: 0.25, alpha: 1)
-        }
-    }
-}
-
-//MARK: - 드랍 액션
-extension MusicDropViewController {
-    private func touchedUpDropButton() {
-        self.viewModel.drop(content: self.commentTextView.text ?? "")
-        // 👉TODO - 애니메이션 추갸하기, 1초정도 보여준 후 VC 네비게이션바에서 pop하기
-        self.showDropAnimation()
-    }
-
-    private func showDropAnimation() {
-        removeViewItemComponents()
-
-        self.view.addSubview(dropAnimationImageView)
-        dropAnimationImageView.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.5)
-            $0.height.equalToSuperview().multipliedBy(0.5)
-        }
-    }
-
-    private func removeViewItemComponents() {
-        scrollView.removeFromSuperview()
-    }
-}
-
-//MARK: - 계층, 레이아웃
-extension MusicDropViewController {
-    private func configureHierarchy() {
+    private func configureUI() {
         [backButton, cancelButton].forEach {
             topView.addSubview($0)
         }
@@ -415,9 +309,7 @@ extension MusicDropViewController {
             .forEach {
                 self.view.addSubview($0)
             }
-    }
 
-    private func configureLayout() {
         topView.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(self.view.safeAreaLayoutGuide)
             $0.height.equalTo(60)
@@ -502,8 +394,122 @@ extension MusicDropViewController {
             $0.centerX.equalTo(contentView)
         }
     }
+}
 
-    private func makeViewIntoGradientCircle() {
+//MARK: - private
+private extension MusicDropViewController {
+
+    //MARK: - 코멘트 플레이스홀더, 텍스트 줄 수에 맞게 변하는 다이나믹 TextView, 줄 수 제한, 커멘트있을때만 드랍가능
+
+    func bindCommentTextView() {
+        commentTextView.rx.didBeginEditing
+            .subscribe { [weak self] element in
+                self?.removePlaceHolder()
+                self?.commentTextView.sizeToFit()
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.didEndEditing
+            .subscribe { [weak self] element in
+                self?.setupPlaceHolder()
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.didChange
+            .subscribe { [weak self] _ in
+                self?.checkMaxNumberOfLines(max: 4)
+                self?.checkAvailableToDrop()
+            }.disposed(by: disposeBag)
+    }
+
+    func setupPlaceHolder() {
+        var placeHolder: String?
+
+        viewModel.commentPlaceHolder
+            .subscribe {
+                placeHolder = $0
+            }.disposed(by: disposeBag)
+
+        if(commentTextView.text == nil || commentTextView.text == "") {
+            commentTextView.text = placeHolder
+            commentTextView.textColor = UIColor(red: 0.587, green: 0.587, blue: 0.587, alpha: 1)
+        }
+    }
+
+    func removePlaceHolder() {
+        var placeHolder: String?
+
+        viewModel.commentPlaceHolder
+            .subscribe {
+                placeHolder = $0
+            }.disposed(by: disposeBag)
+
+        if(commentTextView.text == placeHolder) {
+            commentTextView.text = nil
+            commentTextView.textColor = .white
+        }
+    }
+
+    func checkMaxNumberOfLines(max: Int) {
+        let lineBreakCharacter = "\n"
+        let lines = commentTextView.text.components(separatedBy: lineBreakCharacter).count
+
+        if lines > max {
+            commentTextView.text = String(commentTextView.text.dropLast())
+        }
+    }
+
+    func checkAvailableToDrop() {
+        var placeHolder: String?
+
+        viewModel.commentPlaceHolder
+            .subscribe {
+                placeHolder = $0
+            }.disposed(by: disposeBag)
+
+        if(commentTextView.text != nil
+           && commentTextView.text != ""
+           && commentTextView.text != placeHolder
+        ) {
+            albumImageGradationView.layer.masksToBounds = false
+            dropButton.isEnabled = true
+            dropButton.backgroundColor = UIColor(red: 0.399, green: 0.371, blue: 1, alpha: 1)
+            dropButton.setTitleColor(.white, for: .normal)
+        } else {
+            albumImageGradationView.layer.masksToBounds = true
+            dropButton.isEnabled = false
+            dropButton.setTitleColor(
+                UIColor(red: 0.335, green: 0.338, blue: 0.35, alpha: 1),
+                for: .normal
+            )
+            dropButton.backgroundColor = UIColor(red: 0.225, green: 0.224, blue: 0.25, alpha: 1)
+        }
+    }
+
+    //MARK: - 드랍 액션
+
+    func touchedUpDropButton() {
+        self.viewModel.drop(content: self.commentTextView.text ?? "")
+        // 👉TODO - 애니메이션 추갸하기, 1초정도 보여준 후 VC 네비게이션바에서 pop하기
+        self.showDropAnimation()
+    }
+
+    func showDropAnimation() {
+        removeViewItemComponents()
+
+        self.view.addSubview(dropAnimationImageView)
+        dropAnimationImageView.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.5)
+            $0.height.equalToSuperview().multipliedBy(0.5)
+        }
+    }
+
+    func removeViewItemComponents() {
+        scrollView.removeFromSuperview()
+    }
+
+    //MARK: - 그라데이션 뷰
+
+    func makeViewIntoGradientCircle() {
         topGradientCircleView.makeGradientCircleView(
             colors: [
                 UIColor(red: 0.078, green: 0.078, blue: 0.078, alpha: 1).cgColor,
@@ -530,11 +536,10 @@ extension MusicDropViewController {
             )
         }
     }
-}
 
-//MARK: - 키보드
-extension MusicDropViewController {
-    private func registerKeyboardNotification() {
+    //MARK: - 키보드
+
+    func registerKeyboardNotification() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
@@ -547,7 +552,7 @@ extension MusicDropViewController {
             object: nil)
     }
 
-    @objc private func keyboardWillShow(_ notification: Notification) {
+    @objc func keyboardWillShow(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
         else {
@@ -560,14 +565,14 @@ extension MusicDropViewController {
         scrollView.scrollRectToVisible(activeRect, animated: true)
     }
 
-    @objc private func keyboardWillHide() {
+    @objc func keyboardWillHide() {
         let contentInset = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
         scrollView.setContentOffset(.zero, animated: true)
     }
 }
 
-
+// MARK: - Constant
 extension MusicDropViewController {
     enum Constant {
         static let textDefault: String = " "

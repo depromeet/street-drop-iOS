@@ -60,8 +60,8 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
         configureLayout()
     }
 
-    func setupImage(image: Data) {
-        let image = UIImage(data: image)
+    func setData(_ data: Data) {
+        let image = UIImage(data: data)
         self.albumImageView.image = image
     }
 

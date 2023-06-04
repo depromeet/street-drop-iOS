@@ -15,6 +15,32 @@ final class CommunityViewController: UIViewController {
     private let viewModel: CommunityViewModel
     private let disposeBag = DisposeBag()
 
+    init(viewModel: CommunityViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .primaryBackground
+
+        configureUI()
+        bindViewModel()
+        setupInitialOffset()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        profileImageView.makeCircleShape()
+    }
+
+    //MARK: - UI
+
     private lazy var backButton: UIButton = {
         let button: UIButton = UIButton()
         button.setImage(UIImage(named: "backButton"), for: .normal)
@@ -68,7 +94,7 @@ final class CommunityViewController: UIViewController {
     }()
 
     // MusicInfo 요소
-    private let musicNameLabel: UILabel = {
+    private lazy var musicNameLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault // setLineHeight() 적용을위해 text 디폴트 값 필요
         label.textColor = .white
@@ -78,7 +104,7 @@ final class CommunityViewController: UIViewController {
         return label
     }()
 
-    private let artistLabel: UILabel = {
+    private lazy var artistLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
         label.textColor = .white
@@ -88,7 +114,7 @@ final class CommunityViewController: UIViewController {
         return label
     }()
 
-    private let musicInfoStackView: UIStackView = {
+    private lazy var musicInfoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
@@ -97,9 +123,9 @@ final class CommunityViewController: UIViewController {
     }()
 
     // comment 요소
-    private var genreLabels: [PaddingLabel] = []
+    private lazy var genreLabels: [PaddingLabel] = []
 
-    private let genreLabelStackView: UIStackView = {
+    private lazy var genreLabelStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 5
@@ -107,9 +133,9 @@ final class CommunityViewController: UIViewController {
         return stackView
     }()
 
-    private let voidView: UIView = UIView()
+    private lazy var voidView: UIView = UIView()
 
-    private let commentLabel: UILabel = {
+    private lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
         label.textColor = .white
@@ -120,14 +146,14 @@ final class CommunityViewController: UIViewController {
         return label
     }()
 
-    private var profileImageView: UIImageView = {
+    private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
 
         return imageView
     }()
 
-    private let nicknameLabel: UILabel = {
+    private lazy var nicknameLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
         label.textColor = .white
@@ -137,7 +163,7 @@ final class CommunityViewController: UIViewController {
         return label
     }()
 
-    private let dateLabel: UILabel = {
+    private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
         label.textColor = .white
@@ -147,7 +173,7 @@ final class CommunityViewController: UIViewController {
         return label
     }()
 
-    private let userInfoStackView: UIStackView = {
+    private lazy var userInfoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 5
@@ -155,7 +181,7 @@ final class CommunityViewController: UIViewController {
         return stackView
     }()
 
-    private let commentStackView: UIStackView = {
+    private lazy var commentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 5
@@ -168,14 +194,14 @@ final class CommunityViewController: UIViewController {
     }()
 
     // listeningGuide 요소
-    private let youtubeMusicLogo: UIImageView = {
+    private lazy var youtubeMusicLogo: UIImageView = {
         let youtubeLogo = UIImage(named: "MusicLogo")
         let imageView = UIImageView(image: youtubeLogo)
 
         return imageView
     }()
 
-    private let listeningGuideLabel: UILabel = {
+    private lazy var listeningGuideLabel: UILabel = {
         let label = UILabel()
         label.text = "바로 듣기"
         label.textColor = .white
@@ -185,7 +211,7 @@ final class CommunityViewController: UIViewController {
         return label
     }()
 
-    private let listeningGuideStackView: UIStackView = {
+    private lazy var listeningGuideStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
@@ -199,14 +225,14 @@ final class CommunityViewController: UIViewController {
     }()
 
     // Like 요소
-    private let likeLogo: UIImageView = {
+    private lazy var likeLogo: UIImageView = {
         let likeLogo = UIImage(named: "LikeLogo")
         let imageView = UIImageView(image: likeLogo)
 
         return imageView
     }()
 
-    private let likeCountLabel: UILabel = {
+    private lazy var likeCountLabel: UILabel = {
         let label = UILabel()
         label.text = "31.8K"
         label.textColor = .white
@@ -216,7 +242,7 @@ final class CommunityViewController: UIViewController {
         return label
     }()
 
-    private let likeStackView: UIStackView = {
+    private lazy var likeStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
@@ -229,7 +255,7 @@ final class CommunityViewController: UIViewController {
         return stackView
     }()
 
-    private let listeningAndLikeStackView: UIStackView = {
+    private lazy var listeningAndLikeStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
@@ -237,61 +263,12 @@ final class CommunityViewController: UIViewController {
 
         return stackView
     }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .primaryBackground
-
-        configureHierarchy()
-        configureLayout()
-        bindViewModel()
-        setupInitialOffset()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        profileImageView.makeCircleShape()
-    }
-
-    init(viewModel: CommunityViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func generateGenreLabels(genres: [String]) -> [PaddingLabel] {
-        var labels: [PaddingLabel] = []
-        genres.forEach { genreTitle in
-            let label = PaddingLabel(padding: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
-            label.text = genreTitle
-            label.textAlignment = .center
-            label.font = .preferredFont(forTextStyle: .caption1)
-            label.numberOfLines = 1
-            label.layer.cornerRadius = 10
-            label.clipsToBounds = true
-            label.backgroundColor = .systemGray
-            labels.append(label)
-        }
-
-        return labels
-    }
-
-    private func createCollectionViewLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        let halfWidth = self.view.frame.width/2
-        layout.itemSize = .init(width: halfWidth, height: halfWidth)
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-
-        return layout
-    }
 }
 
-//MARK: - 뷰모델 바인딩
 extension CommunityViewController {
+
+    // MARK: - Data Binding
+
     private func bindViewModel() {
         viewModel.albumImages
             .bind(to: self.albumCollectionView.rx.items) { [weak self] collectionView, row, url in
@@ -307,7 +284,7 @@ extension CommunityViewController {
                 self?.viewModel.fetchImage(url: url).observe(on: MainScheduler.instance)
                     .subscribe {
                         if let data = $0.element {
-                            cell.setupImage(image: data)
+                            cell.setData(data)
                         }
                     }.disposed(by: self?.disposeBag ?? DisposeBag())
 
@@ -359,11 +336,10 @@ extension CommunityViewController {
             self?.dateLabel.text = $0
         }.disposed(by: disposeBag)
     }
-}
 
-//MARK: - 계층, 레이아웃
-extension CommunityViewController {
-    private func configureHierarchy() {
+    // MARK: - UI
+    
+    private func configureUI() {
         [locationImageView, locationLabel].forEach {
             locationTopView.addSubview($0)
         }
@@ -411,10 +387,6 @@ extension CommunityViewController {
             .forEach {
                 self.view.addSubview($0)
             }
-    }
-
-    private func configureLayout() {
-        let viewWidth = self.view.frame.width
 
         locationImageView.snp.makeConstraints {
             $0.width.height.equalTo(12.5)
@@ -449,7 +421,7 @@ extension CommunityViewController {
 
         albumCollectionView.snp.makeConstraints {
             $0.top.equalTo(topView.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(-viewWidth/4)
+            $0.leading.trailing.equalToSuperview().inset(-self.view.frame.width/4)
             $0.height.equalTo(albumCollectionView.snp.width).multipliedBy(0.34)
         }
 
@@ -506,7 +478,39 @@ extension CommunityViewController {
     }
 }
 
-// MARK: - 무한스크롤 설정
+// MARK: - Private
+
+private extension CommunityViewController {
+    func generateGenreLabels(genres: [String]) -> [PaddingLabel] {
+        var labels: [PaddingLabel] = []
+        genres.forEach { genreTitle in
+            let label = PaddingLabel(padding: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
+            label.text = genreTitle
+            label.textAlignment = .center
+            label.font = .preferredFont(forTextStyle: .caption1)
+            label.numberOfLines = 1
+            label.layer.cornerRadius = 10
+            label.clipsToBounds = true
+            label.backgroundColor = .systemGray
+            labels.append(label)
+        }
+
+        return labels
+    }
+
+    // collectionView Layout
+    func createCollectionViewLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        let halfWidth = self.view.frame.width/2
+        layout.itemSize = .init(width: halfWidth, height: halfWidth)
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+
+        return layout
+    }
+}
+
+// MARK: - 무한스크롤
 extension CommunityViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let layout = self.albumCollectionView.collectionViewLayout
