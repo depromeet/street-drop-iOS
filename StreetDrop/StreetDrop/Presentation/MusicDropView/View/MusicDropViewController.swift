@@ -112,6 +112,19 @@ final class MusicDropViewController: UIViewController {
         return imageView
     }()
 
+    private let albumImageGradationView: UIView = {
+        let view = UIView()
+        view.layer.borderColor = UIColor.white.cgColor
+        view.layer.borderWidth = 0
+        view.layer.shadowOpacity = 1
+        view.layer.shadowColor = UIColor(red: 0.399, green: 0.375, blue: 0.833, alpha: 0.5).cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 0)
+        view.layer.shadowRadius = 10
+        view.layer.masksToBounds = true // true로 지정 후, 코멘트 작성시 false로 바뀜
+
+        return view
+    }()
+
     private let musicNameLabel: UILabel = {
         let label: UILabel = UILabel()
         label.text = Constant.textDefault
@@ -211,7 +224,7 @@ extension MusicDropViewController {
                 self?.locationLabel.text = element.text
                 self?.locationLabel.attributedText = element.text.changeColorPartially(
                     element.adress,
-                    to: .blue
+                    to: UIColor(red: 145/255, green: 141/255, blue: 255/255, alpha: 1)
                 )
             }
         }.disposed(by: disposeBag)
@@ -343,7 +356,9 @@ extension MusicDropViewController {
             topView.addSubview($0)
         }
 
-        [locationLabel, dropGuideLabel, albumImageView, musicNameLabel, artistLabel]
+        albumImageGradationView.addSubview(albumImageView)
+
+        [locationLabel, dropGuideLabel, albumImageGradationView, musicNameLabel, artistLabel]
             .forEach {
                 musicInfoStackView.addArrangedSubview($0)
             }
@@ -427,6 +442,10 @@ extension MusicDropViewController {
         }
 
         albumImageView.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.equalToSuperview()
+        }
+
+        albumImageGradationView.snp.makeConstraints {
             $0.width.equalTo(contentView).multipliedBy(0.30)
             $0.height.equalTo(albumImageView.snp.width)
         }
@@ -458,12 +477,14 @@ extension MusicDropViewController {
     private func makeViewIntoGradientCircle() {
         topGradientCircleView.makeGradientCircleView(
             colors: [
-                UIColor.darkGray.cgColor,
-                UIColor.primaryBackground.cgColor,
-                UIColor.darkGray.cgColor
+                UIColor(red: 0.078, green: 0.078, blue: 0.078, alpha: 1).cgColor,
+                UIColor(red: 0.078, green: 0.078, blue: 0.078, alpha: 0.61).cgColor,
+                UIColor(red: 0.208, green: 0.207, blue: 0.292, alpha: 1).cgColor,
             ],
             gradientLocations: [0, 0.5, 1],
-            viewBackgroundColor: .primaryBackground
+            viewBackgroundColor: .black,
+            startPoint: CGPoint(x: 0.5, y: 0.25),
+            endPoint: CGPoint(x: 0.5, y: 0.75)
         )
 
         [smallerCenterGradientCircleView, LargerCenterGradientCircleView].forEach {
@@ -471,10 +492,12 @@ extension MusicDropViewController {
                 colors: [
                     UIColor.primaryBackground.cgColor,
                     UIColor.primaryBackground.cgColor,
-                    UIColor.blue.cgColor
+                    UIColor(red: 145/255, green: 141/255, blue: 255/255, alpha: 1).cgColor
                 ],
                 gradientLocations: [0, 0.8, 1],
-                viewBackgroundColor: .primaryBackground
+                viewBackgroundColor: .primaryBackground,
+                startPoint: CGPoint(x: 0.5, y: 0),
+                endPoint:  CGPoint(x: 0.5, y: 1)
             )
         }
     }
