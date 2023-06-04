@@ -65,4 +65,9 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
         let image = UIImage(data: image)
         self.albumImageView.image = image
     }
+
+    override func prepareForReuse() {
+      super.prepareForReuse()
+        self.albumImageView.image = UIImage(systemName: "slowmo")
+    }
 }

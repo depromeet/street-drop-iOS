@@ -24,8 +24,6 @@ final class CommunityViewController: UIViewController {
         collectionView.decelerationRate = .fast
         collectionView.backgroundColor = .primaryBackground
         collectionView.clipsToBounds = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
         collectionView.register(
             AlbumCollectionViewCell.self,
             forCellWithReuseIdentifier: AlbumCollectionViewCell.identifier
@@ -35,7 +33,6 @@ final class CommunityViewController: UIViewController {
     }()
 
     // MusicInfo 요소
-
     private let musicNameLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault // setLineHeight() 적용을위해 text 디폴트 값 필요
@@ -63,7 +60,6 @@ final class CommunityViewController: UIViewController {
 
         return stackView
     }()
-
 
     // comment 요소
     private var genreLabels: [PaddingLabel] = []
@@ -261,6 +257,27 @@ final class CommunityViewController: UIViewController {
 //MARK: - 뷰모델 바인딩
 extension CommunityViewController {
     private func bindViewModel() {
+        viewModel.albumImages
+            .bind(to: self.albumCollectionView.rx.items) { [weak self] collectionView, row, url in
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: AlbumCollectionViewCell.identifier,
+                    for: IndexPath(row: row, section: 0)) as? AlbumCollectionViewCell
+                else {
+                    return UICollectionViewCell()
+                }
+
+                cell.layout()
+
+                self?.viewModel.fetchImage(url: url).observe(on: MainScheduler.instance)
+                    .subscribe {
+                        if let data = $0.element {
+                            cell.setupImage(image: data)
+                        }
+                    }.disposed(by: self?.disposeBag ?? DisposeBag())
+
+                return cell
+            }.disposed(by: disposeBag)
+
         viewModel.MusicTitle.subscribe { [weak self] in
             self?.musicNameLabel.text = $0
         }.disposed(by: disposeBag)
@@ -405,42 +422,7 @@ extension CommunityViewController {
     }
 }
 
-//MARK: - 컬렉션뷰 데이터소스, 컬렉션뷰 델리게이트
-extension CommunityViewController: UICollectionViewDelegate, UICollectionViewDataSource  {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-    ) -> Int {
-        return viewModel.communityInfoCount
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let cell = collectionView
-            .dequeueReusableCell(
-            withReuseIdentifier: AlbumCollectionViewCell.identifier,
-            for: indexPath
-        ) as? AlbumCollectionViewCell
-        else {
-            return UICollectionViewCell()
-        }
-
-        cell.layout()
-
-        let albumImageURL = viewModel.albumImages[indexPath.item]
-        viewModel.fetchImage(url: albumImageURL)
-            .observe(on: MainScheduler.instance)
-            .subscribe {
-                if let data = $0.element {
-                    cell.setupImage(image: data)
-                }
-            }.disposed(by: disposeBag)
-
-        return cell
-    }
-
+extension CommunityViewController: UICollectionViewDelegate {
     // 무한스크롤 설정
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let layout = self.albumCollectionView.collectionViewLayout
