@@ -15,6 +15,40 @@ final class CommunityViewController: UIViewController {
     private let viewModel: CommunityViewModel
     private let disposeBag = DisposeBag()
 
+    private lazy var backButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setImage(UIImage(named: "backButton"), for: .normal)
+        return button
+    }()
+
+    private lazy var locationImageView: UIImageView = {
+        let image = UIImage(named: "locationBasic")
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFill
+
+        return imageView
+    }()
+
+    private lazy var locationLabel: UILabel = {
+        let label = UILabel()
+        label.text = Constant.textDefault
+        label.textColor = .white
+        label.font = .pretendard(size: 12, weight: 600)
+        label.setLineHeight(lineHeight: 16)
+
+        return label
+    }()
+
+    private lazy var locationTopView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.089, green: 0.099, blue: 0.12, alpha: 1)
+        view.layer.cornerRadius = 15
+
+        return view
+    }()
+
+    private lazy var topView: UIView = UIView()
+
     private lazy var albumCollectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
@@ -280,6 +314,10 @@ extension CommunityViewController {
                 return cell
             }.disposed(by: disposeBag)
 
+        viewModel.addressTitle.subscribe{ [weak self] in
+            self?.locationLabel.text = $0
+        }.disposed(by: disposeBag)
+
         viewModel.MusicTitle.subscribe { [weak self] in
             self?.musicNameLabel.text = $0
         }.disposed(by: disposeBag)
@@ -326,6 +364,14 @@ extension CommunityViewController {
 //MARK: - 계층, 레이아웃
 extension CommunityViewController {
     private func configureHierarchy() {
+        [locationImageView, locationLabel].forEach {
+            locationTopView.addSubview($0)
+        }
+
+        [backButton, locationTopView].forEach {
+            topView.addSubview($0)
+        }
+
         [musicNameLabel, artistLabel].forEach {
             musicInfoStackView.addArrangedSubview($0)
         }
@@ -356,7 +402,12 @@ extension CommunityViewController {
             listeningAndLikeStackView.addArrangedSubview($0)
         }
 
-        [albumCollectionView, musicInfoStackView, commentStackView, listeningAndLikeStackView]
+        [topView,
+         albumCollectionView,
+         musicInfoStackView,
+         commentStackView,
+         listeningAndLikeStackView
+        ]
             .forEach {
                 self.view.addSubview($0)
             }
@@ -365,8 +416,39 @@ extension CommunityViewController {
     private func configureLayout() {
         let viewWidth = self.view.frame.width
 
+        locationImageView.snp.makeConstraints {
+            $0.width.height.equalTo(12.5)
+            $0.leading.equalToSuperview().inset(16)
+            $0.top.bottom.equalToSuperview().inset(11)
+        }
+
+        locationLabel.snp.makeConstraints {
+            $0.leading.equalTo(locationImageView.snp.trailing).offset(9)
+            $0.top.bottom.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(16)
+        }
+
+        locationTopView.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+        }
+
+        topView.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(56)
+        }
+
+        backButton.snp.makeConstraints {
+            $0.width.height.equalTo(32)
+            $0.leading.equalToSuperview().inset(16)
+            $0.centerY.equalToSuperview()
+        }
+
+        locationTopView.snp.makeConstraints {
+            $0.centerX.centerY.equalTo(topView)
+        }
+
         albumCollectionView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(topView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(-viewWidth/4)
             $0.height.equalTo(albumCollectionView.snp.width).multipliedBy(0.34)
         }

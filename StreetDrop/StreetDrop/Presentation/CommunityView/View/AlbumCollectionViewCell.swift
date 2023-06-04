@@ -51,8 +51,7 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
 
         gradationView.snp.makeConstraints {
             $0.width.height.equalToSuperview().multipliedBy(0.8)
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(10)
+            $0.centerX.centerY.equalToSuperview()
         }
     }
 
