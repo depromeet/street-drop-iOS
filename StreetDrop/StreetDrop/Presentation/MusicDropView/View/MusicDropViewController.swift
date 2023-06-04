@@ -50,6 +50,26 @@ final class MusicDropViewController: UIViewController {
     private var LargerCenterGradientCircleView: UIView = UIView()
 
     //MARK: - 뷰 아이템 요소
+    private lazy var backButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setImage(UIImage(named: "backButton"), for: .normal)
+        button.setTitle("음악검색", for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.titleLabel?.font = .pretendard(size: 14, weight: 600)
+
+        return button
+    }()
+
+    private lazy var cancelButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setTitle("취소", for: .normal)
+        button.titleLabel?.font = .pretendard(size: 14, weight: 600)
+
+        return button
+    }()
+
+    private lazy var topView: UIView = UIView()
+
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -319,6 +339,10 @@ extension MusicDropViewController {
 //MARK: - 계층, 레이아웃
 extension MusicDropViewController {
     private func configureHierarchy() {
+        [backButton, cancelButton].forEach {
+            topView.addSubview($0)
+        }
+
         [locationLabel, dropGuideLabel, albumImageView, musicNameLabel, artistLabel]
             .forEach {
                 musicInfoStackView.addArrangedSubview($0)
@@ -341,6 +365,7 @@ extension MusicDropViewController {
             LargerCenterGradientCircleView,
             smallerCenterGradientCircleView,
             topGradientCircleView,
+            topView,
             scrollView
         ]
             .forEach {
@@ -349,11 +374,32 @@ extension MusicDropViewController {
     }
 
     private func configureLayout() {
+        topView.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            $0.height.equalTo(60)
+        }
+
+        backButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(24)
+            $0.centerY.equalToSuperview()
+        }
+
+        backButton.imageView?.snp.makeConstraints {
+            $0.height.width.equalTo(24)
+            $0.leading.centerY.equalToSuperview()
+            $0.trailing.equalTo(backButton.titleLabel!.snp.leading)
+        }
+
+        cancelButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(19.5)
+            $0.centerY.equalToSuperview()
+        }
+
         topGradientCircleView.snp.makeConstraints {
             $0.width.equalToSuperview().multipliedBy(1.1)
             $0.height.equalTo(topGradientCircleView.snp.width)
             $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().multipliedBy(0.1)
+            $0.centerY.equalToSuperview().multipliedBy(0.2)
         }
 
         smallerCenterGradientCircleView.snp.makeConstraints {
@@ -371,7 +417,8 @@ extension MusicDropViewController {
         }
 
         scrollView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            $0.top.equalTo(topView.snp.bottom)
         }
 
         contentView.snp.makeConstraints {
@@ -394,7 +441,7 @@ extension MusicDropViewController {
 
         commentStackView.snp.makeConstraints {
             $0.top.equalTo(musicInfoStackView.snp.bottom).offset(20)
-            $0.width.equalTo(contentView).multipliedBy(0.9)
+            $0.leading.trailing.equalTo(contentView).inset(24)
             $0.height.greaterThanOrEqualTo(contentView).multipliedBy(0.1)
             //$0.bottom.equalTo(contentView).inset(30)
             $0.centerX.equalTo(contentView)
