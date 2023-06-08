@@ -576,9 +576,3 @@ extension CommunityViewController: UICollectionViewDelegate {
         )
     }
 }
-
-extension CommunityViewController {
-    enum Constant {
-        static let textDefault: String = " "
-    }
-}

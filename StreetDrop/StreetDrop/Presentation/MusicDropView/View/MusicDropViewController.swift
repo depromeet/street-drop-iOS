@@ -383,7 +383,6 @@ private extension MusicDropViewController {
             $0.top.equalTo(musicInfoStackView.snp.bottom).offset(20)
             $0.leading.trailing.equalTo(contentView).inset(24)
             $0.height.greaterThanOrEqualTo(contentView).multipliedBy(0.1)
-            //$0.bottom.equalTo(contentView).inset(30)
             $0.centerX.equalTo(contentView)
         }
 
@@ -569,12 +568,5 @@ private extension MusicDropViewController {
         let contentInset = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
         scrollView.setContentOffset(.zero, animated: true)
-    }
-}
-
-// MARK: - Constant
-extension MusicDropViewController {
-    enum Constant {
-        static let textDefault: String = " "
     }
 }
