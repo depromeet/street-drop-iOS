@@ -27,7 +27,7 @@ class SearchingMusicTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func setData(music: SearchedMusicResponseDTO.Music) {
+    func setData(music: Music) {
         if let url = URL(string: music.albumImage) {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: url)

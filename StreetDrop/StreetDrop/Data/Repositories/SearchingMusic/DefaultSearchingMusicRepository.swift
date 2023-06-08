@@ -26,14 +26,14 @@ final class DefaultSearchingMusicRepository: SearchingMusicRepository {
     }
     
     // FIXME: 클린아키텍처로 리팩토링 시, 반환값을 [SearchedMusicResponseDTO.Music]가 아닌 Music이라는 Entity를 만들어 반환하도록 함
-    func fetchMusic(keyword: String) -> Single<[SearchedMusicResponseDTO.Music]> {
+    func fetchMusic(keyword: String) -> Single<[Music]> {
         return networkManager.searchMusic(keyword: keyword)
-            .map { musicData -> [SearchedMusicResponseDTO.Music] in
+            .map { musicData -> [Music] in
                 let searchedMusic = try JSONDecoder().decode(
                     SearchedMusicResponseDTO.self,
                     from: musicData
                 )
-                return searchedMusic.musicList
+                return searchedMusic.toEntity()
             }
     }
     
