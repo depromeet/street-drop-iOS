@@ -14,14 +14,10 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
     static let identifier: String = "AlbumCollectionViewCell"
 
     private let albumImageView: UIImageView = {
-        let loadingImage = UIImage(systemName: "slowmo")
-        let imageView = UIImageView(image: loadingImage) // 디폴트이미지
+        let imageView = UIImageView()   // TODO: 로딩이미지 추후 진행 (디자인팀과 희의O)
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .white
-        imageView.layer.borderColor = UIColor.white.cgColor
-        imageView.layer.borderWidth = 0.5
 
         return imageView
     }()
@@ -67,6 +63,6 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
 
     override func prepareForReuse() {
       super.prepareForReuse()
-        self.albumImageView.image = UIImage(systemName: "slowmo")
+        self.albumImageView.image = nil
     }
 }
