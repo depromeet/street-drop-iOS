@@ -54,15 +54,20 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
             .disposed(by: disposedBag)
         
         input.searchTextFieldDidEditEvent
-            .skip(2) // 최초 실행 시, 최초 텍스트 필드 클릭 이벤트 무시
             .bind { [weak self] keyword in
-                self?.searchMusic(keyword: keyword)
+                // 검색어가 공백일 경우, 뮤직리스트 빈값으로 설정
+                if keyword.isEmpty {
+                    self?.searchedMusicList.accept([])
+                }
             }
             .disposed(by: disposedBag)
         
         input.keyBoardDidPressSearchEventWithKeyword
-            .bind { keyword in
-                self.model.saveRecentSearch(keyword: keyword)
+            .bind { [weak self] keyword in
+                if !keyword.isEmpty {
+                    self?.searchMusic(keyword: keyword)
+                    self?.model.saveRecentSearch(keyword: keyword)
+                }
             }
             .disposed(by: disposedBag)
                 
@@ -74,21 +79,17 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     }
     
     func searchMusic(keyword: String) {
-        if keyword.isEmpty {
-            self.searchedMusicList.accept([])
-        } else {
-            model.fetchMusic(keyword: keyword)
-                .subscribe { result in
-                    switch result {
-                    case .success(let musicList):
-                        self.searchedMusicList.accept(musicList)
-                        break
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        break
-                    }
+        model.fetchMusic(keyword: keyword)
+            .subscribe { result in
+                switch result {
+                case .success(let musicList):
+                    self.searchedMusicList.accept(musicList)
+                    break
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    break
                 }
-                .disposed(by: disposeBag)
-        }
+            }
+            .disposed(by: disposeBag)
     }
 }

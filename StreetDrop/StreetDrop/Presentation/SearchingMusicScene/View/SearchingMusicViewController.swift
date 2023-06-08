@@ -52,6 +52,8 @@ final class SearchingMusicViewController: UIViewController {
         textField.textColor = UIColor(red: 0.867, green: 0.902, blue: 0.942, alpha: 1)
         textField.layer.cornerRadius = 8.0
         
+        textField.returnKeyType = .search
+        
         let leftPaddingView = UIView(
             frame: CGRect(
                 x: 0,
@@ -288,5 +290,13 @@ private extension SearchingMusicViewController {
             $0.top.equalTo(self.searchView.snp.bottom).offset(26)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+    }
+}
+
+// MARK: - TextField
+extension SearchingMusicViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
