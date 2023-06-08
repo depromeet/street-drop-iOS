@@ -49,7 +49,7 @@ final class MusicDropViewController: UIViewController {
     // 디자인 요소 (레이아웃 잡힌 후 그라데이션 layer 적용)
     private lazy var topGradientCircleView: UIView = UIView()
     private lazy var smallerCenterGradientCircleView: UIView = UIView()
-    private lazy var LargerCenterGradientCircleView: UIView = UIView()
+    private lazy var largerCenterGradientCircleView: UIView = UIView()
 
     private lazy var backButton: UIButton = {
         let button: UIButton = UIButton()
@@ -211,11 +211,11 @@ final class MusicDropViewController: UIViewController {
     }()
 }
 
-extension MusicDropViewController {
+private extension MusicDropViewController {
 
     // MARK: - Action Binding
 
-    private func bindAction() {
+    func bindAction() {
         dropButton.rx.tap
             .bind {
                 self.touchedUpDropButton()
@@ -224,7 +224,7 @@ extension MusicDropViewController {
 
     // MARK: - Data Binding
 
-    private func bindViewModel() {
+    func bindViewModel() {
         viewModel.locationTitle.subscribe { [weak self] in
             if let element: (adress: String, text: String) = $0.element {
                 self?.locationLabel.text = element.text
@@ -247,7 +247,7 @@ extension MusicDropViewController {
             }
         }.disposed(by: disposeBag)
 
-        viewModel.MusicTitle.subscribe { [weak self] in
+        viewModel.musicTitle.subscribe { [weak self] in
             self?.musicNameLabel.text = $0
         }.disposed(by: disposeBag)
 
@@ -274,7 +274,7 @@ extension MusicDropViewController {
 
     //MARK: - UI
 
-    private func configureUI() {
+    func configureUI() {
         [backButton, cancelButton].forEach {
             topView.addSubview($0)
         }
@@ -300,7 +300,7 @@ extension MusicDropViewController {
 
         // 디자인요소인 GradientCircleView들 먼저 add합니다. 순서 변경 불가능합니다.
         [
-            LargerCenterGradientCircleView,
+            largerCenterGradientCircleView,
             smallerCenterGradientCircleView,
             topGradientCircleView,
             topView,
@@ -345,9 +345,9 @@ extension MusicDropViewController {
             $0.centerY.equalToSuperview().multipliedBy(0.9)
         }
 
-        LargerCenterGradientCircleView.snp.makeConstraints {
+        largerCenterGradientCircleView.snp.makeConstraints {
             $0.width.equalToSuperview().multipliedBy(1.4)
-            $0.height.equalTo(LargerCenterGradientCircleView.snp.width)
+            $0.height.equalTo(largerCenterGradientCircleView.snp.width)
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview().multipliedBy(0.9)
         }
@@ -522,7 +522,7 @@ private extension MusicDropViewController {
             endPoint: CGPoint(x: 0.5, y: 0.75)
         )
 
-        [smallerCenterGradientCircleView, LargerCenterGradientCircleView].forEach {
+        [smallerCenterGradientCircleView, largerCenterGradientCircleView].forEach {
             $0.makeGradientCircleView(
                 colors: [
                     UIColor.primaryBackground.cgColor,
