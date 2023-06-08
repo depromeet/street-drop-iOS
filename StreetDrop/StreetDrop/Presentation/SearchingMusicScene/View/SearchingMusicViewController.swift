@@ -178,6 +178,7 @@ private extension SearchingMusicViewController {
                 self.searchTextField.text = recentQuery
                 self.tableView.isHidden = false
                 self.recentMusicSearchView.isHidden = true
+                self.searchTextField.resignFirstResponder()
             }
             .disposed(by: disposeBag)
     }
