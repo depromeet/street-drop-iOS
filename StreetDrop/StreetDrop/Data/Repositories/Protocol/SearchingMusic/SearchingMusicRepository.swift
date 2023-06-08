@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol SearchingMusicRepository {
-    func fetchMusic(keyword: String) -> Single<[SearchedMusicResponseDTO.Music]>
+    func fetchMusic(keyword: String) -> Single<[Music]>
     func saveMusic(keyword: String)
     func fetchRecentMusicQueries() -> Single<[String]>
 }

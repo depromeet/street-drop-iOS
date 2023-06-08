@@ -18,7 +18,7 @@ protocol SearchingMusicViewModel: ViewModel {
 final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     private let model: SearchingMusicModel
     private let disposeBag: DisposeBag = DisposeBag()
-    let searchedMusicList: PublishRelay = PublishRelay<[SearchedMusicResponseDTO.Music]>()
+    let searchedMusicList: PublishRelay = PublishRelay<[Music]>()
     
     struct Input {
         let viewDidAppearEvent: Observable<Void>
@@ -27,7 +27,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     }
     
     struct Output {
-        let searchedMusicList = PublishRelay<[SearchedMusicResponseDTO.Music]>()
+        let searchedMusicList = PublishRelay<[Music]>()
         let recentMusicQueries = BehaviorRelay<[String]>(value: [""])
     }
     
