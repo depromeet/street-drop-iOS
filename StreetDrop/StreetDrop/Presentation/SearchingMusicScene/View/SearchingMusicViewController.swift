@@ -20,6 +20,7 @@ final class SearchingMusicViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -29,7 +30,7 @@ final class SearchingMusicViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: 0.024, green: 0.046, blue: 0.12, alpha: 1)
         bindAction()
         bindViewModel()
-        bindUI()
+        configureUI()
     }
     
     // MARK: - UI
@@ -151,7 +152,6 @@ final class SearchingMusicViewController: UIViewController {
 private extension SearchingMusicViewController {
     
     // MARK: - UI
-    
     func bindAction() {
         self.searchCancelButton.rx.tap
             .bind {
@@ -206,7 +206,7 @@ private extension SearchingMusicViewController {
             .disposed(by: disposeBag)
     }
     
-    func bindUI() {
+    func configureUI() {
         [
             self.backButton,
             self.searchTextField
