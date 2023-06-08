@@ -147,6 +147,8 @@ final class SearchingMusicViewController: UIViewController {
             forCellReuseIdentifier: SearchingMusicTableViewCell.identifier
         )
         tableView.rowHeight = 76
+        tableView.keyboardDismissMode = .onDrag
+        
         return tableView
     }()
 }
