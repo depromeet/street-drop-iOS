@@ -24,6 +24,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         let viewDidAppearEvent: Observable<Void>
         let searchTextFieldDidEditEvent: ControlProperty<String>
         let keyBoardDidPressSearchEventWithKeyword: Observable<String>
+        let recentQueryDidPressEvent: PublishRelay<String>
     }
     
     struct Output {
@@ -71,6 +72,12 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
             }
             .disposed(by: disposedBag)
                 
+        input.recentQueryDidPressEvent
+            .bind { [weak self] recentQuery in
+                self?.searchMusic(keyword: recentQuery)
+            }
+            .disposed(by: disposedBag)
+        
         self.searchedMusicList
             .bind(to: output.searchedMusicList)
             .disposed(by: disposedBag)
