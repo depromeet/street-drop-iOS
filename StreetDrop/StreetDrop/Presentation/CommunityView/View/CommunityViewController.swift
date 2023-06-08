@@ -265,11 +265,11 @@ final class CommunityViewController: UIViewController {
     }()
 }
 
-extension CommunityViewController {
+private extension CommunityViewController {
 
     // MARK: - Data Binding
 
-    private func bindViewModel() {
+    func bindViewModel() {
         viewModel.albumImages
             .bind(to: self.albumCollectionView.rx.items) { [weak self] collectionView, row, url in
                 guard let cell = collectionView.dequeueReusableCell(
@@ -295,7 +295,7 @@ extension CommunityViewController {
             self?.locationLabel.text = $0
         }.disposed(by: disposeBag)
 
-        viewModel.MusicTitle.subscribe { [weak self] in
+        viewModel.musicTitle.subscribe { [weak self] in
             self?.musicNameLabel.text = $0
         }.disposed(by: disposeBag)
 
@@ -339,7 +339,7 @@ extension CommunityViewController {
 
     // MARK: - UI
     
-    private func configureUI() {
+    func configureUI() {
         [locationImageView, locationLabel].forEach {
             locationTopView.addSubview($0)
         }
@@ -469,7 +469,7 @@ extension CommunityViewController {
         }
     }
 
-    private func updateGenreLabelStackView() {
+    func updateGenreLabelStackView() {
         genreLabels.forEach {
             genreLabelStackView.addArrangedSubview($0)
         }

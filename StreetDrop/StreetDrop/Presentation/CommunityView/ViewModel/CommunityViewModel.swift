@@ -16,7 +16,7 @@ final class CommunityViewModel {
     private var currentIndex: BehaviorRelay<Int>
 
     var addressTitle:Observable<String>
-    var MusicTitle: BehaviorRelay<String>
+    var musicTitle: BehaviorRelay<String>
     var artistTitle: BehaviorRelay<String>
     var genresText: BehaviorRelay<[String]>
     var commentText: BehaviorRelay<String>
@@ -39,7 +39,7 @@ final class CommunityViewModel {
         self.communityInfos = communityInfos
         self.currentIndex = BehaviorRelay(value: index)
         self.addressTitle = Observable<String>.just(communityInfo.adress)
-        self.MusicTitle = BehaviorRelay(value: communityInfo.music.title)
+        self.musicTitle = BehaviorRelay(value: communityInfo.music.title)
         self.artistTitle = BehaviorRelay(value: communityInfo.music.artist)
         self.genresText = BehaviorRelay(value: communityInfo.music.genre)
         self.commentText = BehaviorRelay(value: communityInfo.comment)
@@ -90,7 +90,7 @@ extension CommunityViewModel {
             let index = $0.element ?? 0
 
             let communityInfo = self.communityInfos[index]
-            self.MusicTitle.accept(communityInfo.music.title)
+            self.musicTitle.accept(communityInfo.music.title)
             self.artistTitle.accept(communityInfo.music.artist)
             self.genresText.accept(communityInfo.music.genre)
             self.commentText.accept(communityInfo.comment)
