@@ -52,7 +52,7 @@ final class MainViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textColor = UIColor(red: 0.867, green: 0.902, blue: 0.942, alpha: 1)
-        label.text = "성동구 성수 1가 1동"
+        label.text = "위치 정보 없음"
         return label
     }()
     
@@ -67,7 +67,7 @@ final class MainViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
         label.textColor = UIColor(red: 0.408, green: 0.396, blue: 0.971, alpha: 1)
-        label.text = "드랍된 음악 247개"
+        label.text = "드랍된 음악 0개"
         return label
     }()
     
@@ -305,7 +305,13 @@ private extension MainViewController {
         
         output.musicCount
             .bind(onNext: { [weak self] musicCount in
-                self?.musicDroppedCountLabel.text = String(musicCount)
+                self?.musicDroppedCountLabel.text = "드랍된 음악 \(musicCount)개"
+            })
+            .disposed(by: disposeBag)
+        
+        output.address
+            .bind(onNext: { [weak self] address in
+                self?.locationLabel.text = address
             })
             .disposed(by: disposeBag)
     }
