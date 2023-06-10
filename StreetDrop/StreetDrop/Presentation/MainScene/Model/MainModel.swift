@@ -7,6 +7,22 @@
 
 import Foundation
 
+import RxSwift
+
 final class MainModel {
+    private let repository: DefaultMainRepository
     
+    init(repository: DefaultMainRepository) {
+        self.repository = repository
+    }
+}
+
+extension MainModel {
+    func fetchPois(lat: Double, lon: Double, distance: Double) -> Single<Pois> {
+        return repository.fetchPoi(lat: lat, lon: lon, distacne: distance)
+    }
+    
+    func fetchMusicCount(address: String) -> Single<MusicCountEntity> {
+        return repository.fetchMusicCountByDong(address: address)
+    }
 }
