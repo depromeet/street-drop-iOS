@@ -25,24 +25,6 @@ final class NetworkManagerTest: XCTestCase {
         sut = nil
     }
 
-    func test_getWeather_success() {
-        //given
-        let (sampleLat, sampleLon) = ("300", "300")
-
-        //then
-        var response: Data?
-        sut.getWeather(lat: sampleLat, lon: sampleLon)
-            .subscribe(onNext: { data in
-                if let data = data {
-                    response = data
-                }
-            })
-            .dispose()
-
-        XCTAssertNotEqual(response, Data("wrongSampleData".utf8))
-        XCTAssertEqual(response, Data("weatherSampleData".utf8))
-    }
-
     func test_searchMusic_success() {
         //given
         let keyword = "dynamite"
@@ -111,14 +93,14 @@ final class NetworkManagerTest: XCTestCase {
         .dispose()
     }
     
-    func test_fetchNumberOfDroppedMusicByDong_success() {
+    func test_getMusicCountByDong_success() {
         //given
         let address: String = "성남시 분당구 정자1동"
         
         //then 동별 드랍된 음악 갯수가 247이면 성공
         var response: Data?
         
-        sut.fetchNumberOfDroppedMusicByDong(address: address)
+        sut.getMusicCountByDong(address: address)
             .subscribe {
                 switch $0 {
                 case .success(let data):
@@ -128,13 +110,14 @@ final class NetworkManagerTest: XCTestCase {
                 }
             }
             .dispose()
+        
         do {
-            let numberOfDroppedMusicByDong = try JSONDecoder().decode(
-                NumberOfDroppedMusicByDongResponseDTO.self,
+            let result = try JSONDecoder().decode(
+                MusicCountByDongResponseDTO.self,
                 from: response ?? Data()
             )
 
-            XCTAssertEqual(247, numberOfDroppedMusicByDong.numberOfDroppedMusic)
+            XCTAssertEqual(247, result.numberOfDroppedMusic)
         } catch {
             XCTFail("Decoding Error")
         }
@@ -175,14 +158,14 @@ final class NetworkManagerTest: XCTestCase {
             .dispose()
     }
 
-    func test_getPOI_success() {
+    func test_getPoi_success() {
         //given
-        let (latitude, longitude, zoomLevel) = (123.123, 32.234, 3)
+        let (latitude, longitude, distance) = (123.123, 32.234, 1000.0)
 
         //then: 첫번째 데이터의 poi 위도는 89.33이면 성공
         var response: Data?
 
-        sut.getPoi(latitude: latitude, longitude: longitude, zoomLevel: zoomLevel)
+        sut.getPoi(latitude: latitude, longitude: longitude, distance: distance)
             .subscribe { result in
                 switch result {
                 case .success(let data):
