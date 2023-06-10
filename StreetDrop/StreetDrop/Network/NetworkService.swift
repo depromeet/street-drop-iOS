@@ -104,8 +104,8 @@ extension NetworkService: TargetType {
 
     var headers: [String: String]? {
         return [
-            "Content-type": "application/json",
-            "x-sdp-idfv": UIDevice.current.identifierForVendor?.uuidString ?? ""
+            "Content-type": "application/json"
+            // ,"x-sdp-idfv": UIDevice.current.identifierForVendor?.uuidString ?? ""
         ]
     }
 
