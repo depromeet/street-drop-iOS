@@ -37,6 +37,7 @@ extension MainViewModel {
     
     struct Output {
         var location = PublishRelay<CLLocation>()
+        var address = PublishRelay<String>()
         var pois = PublishRelay<Pois>()
         var musicCount = BehaviorRelay<Int>(value: 0)
     }
@@ -86,6 +87,13 @@ extension MainViewModel {
                         }
                     }
                     .disposed(by: disposedBag)
+            })
+            .disposed(by: disposedBag)
+        
+        input.locationUpdated
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                output.address.accept(self.address)
             })
             .disposed(by: disposedBag)
         
