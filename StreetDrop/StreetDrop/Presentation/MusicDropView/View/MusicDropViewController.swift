@@ -12,8 +12,18 @@ import RxSwift
 import SnapKit
 
 final class MusicDropViewController: UIViewController {
+
+    enum Constant {
+        static let textDefault = ""
+        static let dropGuideTitle: String = "음악을 드랍할게요"
+        static let commentPlaceHolder: String = "음악에 대해 하고싶은 말이 있나요?"
+        static let commentGuidanceText: String = "• 텍스트는 생략이 가능하며 욕설, 성희롱, 비방과 같은 내용은 삭제합니다"
+        static let dropButtonTitle: String = "드랍하기"
+    }
+
     private var viewModel: MusicDropViewModel
     private let disposeBag: DisposeBag = DisposeBag()
+    private let viewDidLoadEvent = PublishRelay<Void>()
 
     init(viewModel: MusicDropViewModel) {
         self.viewModel = viewModel
@@ -30,12 +40,10 @@ final class MusicDropViewController: UIViewController {
         view.backgroundColor = .primaryBackground
 
         configureUI()
-        viewModel.fetchAlbumImage()
-        viewModel.fetchAdress()
         bindAction()
         bindViewModel()
-        bindCommentTextView()
         registerKeyboardNotification()
+        viewDidLoadEvent.accept(())
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -94,7 +102,7 @@ final class MusicDropViewController: UIViewController {
 
     private lazy var dropGuideLabel: UILabel = {
         let label = UILabel()
-        label.text = Constant.textDefault
+        label.text = Constant.dropGuideTitle
         label.textColor = .white
         label.textAlignment = .center
         label.font = .pretendard(size: 20, weight: 700)
@@ -174,12 +182,12 @@ final class MusicDropViewController: UIViewController {
 
     private lazy var CommentGuidanceLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.text = Constant.textDefault
+        label.text = Constant.commentGuidanceText
         label.numberOfLines = 1
         label.textColor = .white
         label.font = .pretendard(size: 11, weight: 400)
         label.setLineHeight(lineHeight: 17)
-        
+
         return label
     }()
 
@@ -193,6 +201,7 @@ final class MusicDropViewController: UIViewController {
 
     private lazy var dropButton: UIButton = {
         let button = UIButton(type: .system)
+        button.setTitle(Constant.dropButtonTitle, for: .normal)
         button.setTitleColor(UIColor(red: 0.335, green: 0.338, blue: 0.35, alpha: 1), for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = UIColor(red: 0.225, green: 0.224, blue: 0.25, alpha: 1)
@@ -218,58 +227,77 @@ private extension MusicDropViewController {
     func bindAction() {
         dropButton.rx.tap
             .bind {
-                self.touchedUpDropButton()
+                self.showDropAnimation()
+            }.disposed(by: disposeBag)
+
+        // 코멘트 플레이스홀더, 텍스트 줄 수에 맞게 변하는 다이나믹 TextView, 줄 수 제한, 커멘트있을때만 드랍가능
+        commentTextView.rx.didBeginEditing
+            .subscribe { [weak self] element in
+                self?.removePlaceHolder()
+                self?.commentTextView.sizeToFit()
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.didEndEditing
+            .subscribe { [weak self] element in
+                self?.setupPlaceHolder()
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.didChange
+            .subscribe { [weak self] _ in
+                self?.checkMaxNumberOfLines(max: 4)
+                self?.checkAvailableToDrop()
             }.disposed(by: disposeBag)
     }
 
     // MARK: - Data Binding
 
     func bindViewModel() {
-        viewModel.locationTitle.subscribe { [weak self] in
-            if let element: (adress: String, text: String) = $0.element {
-                self?.locationLabel.text = element.text
-                self?.locationLabel.attributedText = element.text.changeColorPartially(
-                    element.adress,
+        let input = MusicDropViewModel.Input(
+            viewDidLoadEvent: self.viewDidLoadEvent.asObservable(),
+            tapDropButton: self.dropButton.rx.tap.asObservable(),
+            comment: self.commentTextView.rx.text.orEmpty.asObservable()
+        )
+
+        let output = viewModel.convert(input: input, disposedBag: disposeBag)
+
+        // locationTitle
+        output.locationTitle
+            .asDriver(onErrorJustReturn: (address: "", text: ""))
+            .drive(onNext: { [weak self] locationTitle in
+                self?.locationLabel.attributedText = locationTitle.text.changeColorPartially(
+                    locationTitle.address,
                     to: UIColor(red: 145/255, green: 141/255, blue: 255/255, alpha: 1)
                 )
-            }
-        }.disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
 
-        viewModel.dropGuideTitle.subscribe { [weak self] in
-            self?.dropGuideLabel.text = $0
-        }.disposed(by: disposeBag)
+        // musicTitle
+        output.musicTitle
+            .asDriver(onErrorJustReturn: "")
+            .drive(onNext: { [weak self] musicTitle in
+                self?.musicNameLabel.text = musicTitle
+            }).disposed(by: disposeBag)
 
-        viewModel.albumImage.subscribe { [weak self] data in
-            if let data = data {
-                DispatchQueue.main.async {
-                    self?.albumImageView.image = UIImage(data: data)
-                }
-            }
-        }.disposed(by: disposeBag)
+        // artistTitle
+        output.artistTitle
+            .asDriver(onErrorJustReturn: "")
+            .drive(onNext: { [weak self] artistTitle in
+                self?.artistLabel.text = artistTitle
+            }).disposed(by: disposeBag)
 
-        viewModel.musicTitle.subscribe { [weak self] in
-            self?.musicNameLabel.text = $0
-        }.disposed(by: disposeBag)
+        //albumImage
+        output.albumImage
+            .asDriver(onErrorJustReturn: Data())
+            .drive(onNext: { [weak self] data in
+                let albumImage = UIImage(data: data)
+                self?.albumImageView.image = albumImage
+            }).disposed(by: disposeBag)
 
-        viewModel.artistTitle.subscribe { [weak self] in
-            self?.artistLabel.text = $0
-        }.disposed(by: disposeBag)
-
-        viewModel.commentPlaceHolder.subscribe { [weak self] in
-            self?.commentTextView.text = $0
-        }.disposed(by: disposeBag)
-
-        viewModel.commentGuidanceText.subscribe { [weak self] in
-            self?.CommentGuidanceLabel.text = $0
-        }.disposed(by: disposeBag)
-
-        viewModel.dropButtonTitle.subscribe { [weak self] in
-            self?.dropButton.setTitle($0, for: .normal)
-        }.disposed(by: disposeBag)
-
-        viewModel.errorDescription.subscribe { _ in
-            // 👉 TODO: Error팝업띄우기
-        }.disposed(by: disposeBag)
+        // 👉 TODO: Error팝업띄우기
+        output.errorDescription
+            .asDriver()
+            .drive(onNext: { errorDescription in
+                // 팝업띄우기 로직
+            }).disposed(by: disposeBag)
     }
 
     //MARK: - UI
@@ -397,35 +425,9 @@ private extension MusicDropViewController {
 
 //MARK: - private
 private extension MusicDropViewController {
-
-    //MARK: - 코멘트 플레이스홀더, 텍스트 줄 수에 맞게 변하는 다이나믹 TextView, 줄 수 제한, 커멘트있을때만 드랍가능
-
-    func bindCommentTextView() {
-        commentTextView.rx.didBeginEditing
-            .subscribe { [weak self] element in
-                self?.removePlaceHolder()
-                self?.commentTextView.sizeToFit()
-            }.disposed(by: disposeBag)
-
-        commentTextView.rx.didEndEditing
-            .subscribe { [weak self] element in
-                self?.setupPlaceHolder()
-            }.disposed(by: disposeBag)
-
-        commentTextView.rx.didChange
-            .subscribe { [weak self] _ in
-                self?.checkMaxNumberOfLines(max: 4)
-                self?.checkAvailableToDrop()
-            }.disposed(by: disposeBag)
-    }
-
+    //MARK: - 코멘트 (placeHolder, 줄 수 제한, 빈값 확인,
     func setupPlaceHolder() {
-        var placeHolder: String?
-
-        viewModel.commentPlaceHolder
-            .subscribe {
-                placeHolder = $0
-            }.disposed(by: disposeBag)
+        let placeHolder: String = Constant.commentPlaceHolder
 
         if(commentTextView.text == nil || commentTextView.text == "") {
             commentTextView.text = placeHolder
@@ -434,12 +436,7 @@ private extension MusicDropViewController {
     }
 
     func removePlaceHolder() {
-        var placeHolder: String?
-
-        viewModel.commentPlaceHolder
-            .subscribe {
-                placeHolder = $0
-            }.disposed(by: disposeBag)
+        let placeHolder: String = Constant.commentPlaceHolder
 
         if(commentTextView.text == placeHolder) {
             commentTextView.text = nil
@@ -457,12 +454,7 @@ private extension MusicDropViewController {
     }
 
     func checkAvailableToDrop() {
-        var placeHolder: String?
-
-        viewModel.commentPlaceHolder
-            .subscribe {
-                placeHolder = $0
-            }.disposed(by: disposeBag)
+        let placeHolder: String = Constant.commentPlaceHolder
 
         if(commentTextView.text != nil
            && commentTextView.text != ""
@@ -484,13 +476,6 @@ private extension MusicDropViewController {
     }
 
     //MARK: - 드랍 액션
-
-    func touchedUpDropButton() {
-        self.viewModel.drop(content: self.commentTextView.text ?? "")
-        // 👉TODO - 애니메이션 추갸하기, 1초정도 보여준 후 VC 네비게이션바에서 pop하기
-        self.showDropAnimation()
-    }
-
     func showDropAnimation() {
         removeViewItemComponents()
 
