@@ -8,6 +8,8 @@
 import CoreLocation
 import Foundation
 
+import RxSwift
+
 protocol LocationManagerDelegate: AnyObject {
-    func drawCurrentLocationMarker(location: CLLocation)
+    func updateLocation(location: CLLocation) 
 }

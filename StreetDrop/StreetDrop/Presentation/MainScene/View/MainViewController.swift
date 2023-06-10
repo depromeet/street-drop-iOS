@@ -15,7 +15,6 @@ import SnapKit
 
 final class MainViewController: UIViewController {
     private let viewModel = MainViewModel()
-    private var locationManager: LocationManager?
     private let currentLocationMarker = NMFMarker()
     private let disposeBag = DisposeBag()
     
@@ -24,9 +23,6 @@ final class MainViewController: UIViewController {
         self.configureUI()
         self.bindAction()
         self.bindViewModel()
-        
-        self.locationManager = LocationManager()
-        self.locationManager?.delegate = self
     }
     
     // MARK: - UI
@@ -262,7 +258,7 @@ private extension MainViewController {
         backToMapButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                UIView.animate(withDuration: 0.5, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
                         make.left.right.equalTo(self.view.safeAreaLayoutGuide)
                         make.top.equalTo(self.view.snp.bottom)
@@ -288,51 +284,30 @@ private extension MainViewController {
     // MARK: - Data Binding
     
     private func bindViewModel() {
-        Observable.of([
-            (37.450019, 126.653485),
-            (37.4513, 126.6565),
-            (37.4553, 126.651),
-        ])
-            .bind(onNext: { [weak self] coordList in
-                coordList.forEach {
-                    self?.drawMusicMarker(latitude: $0.0, longitude: $0.1)
-                    print("\($0.0) \($0.1)")
+        let input = MainViewModel.Input(
+            locationUpdated: viewModel.locationUpdated
+        )
+        let output = viewModel.convert(input: input, disposedBag: disposeBag)
+        
+        output.location
+            .bind(onNext: { [weak self] location in
+                self?.drawCurrentLocationMarker(location: location)
+            })
+            .disposed(by: disposeBag)
+        
+        output.pois
+            .bind(onNext: { [weak self] pois in
+                pois.forEach { poi in
+                    self?.drawPOI(lat: poi.lat, lon: poi.lon)
                 }
             })
             .disposed(by: disposeBag)
-    }
-
-    // MARK: - Draw Marker
-    private func drawMusicMarker(latitude: Double, longitude: Double) {
-        let musicMarker = NMFMarker()
-        musicMarker.iconImage = NMFOverlayImage(image: UIImage(named: "musicMarker") ?? UIImage())
-        musicMarker.position = NMGLatLng(lat: latitude, lng: longitude)
-        musicMarker.mapView = self.mapView
-        bindMusicMarker(musicMarker: musicMarker)
-    }
-    
-    private func bindMusicMarker(musicMarker: NMFMarker) {
-        musicMarker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
-            guard let self = self else { return true }
-            UIView.animate(withDuration: 0.5, animations: {
-                self.droppedMusicWithinAreaCollectionView.isHidden = false
-                self.bottomCoverImageView.isHidden = false
-                self.backToMapButton.isHidden = false
-
-                self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
-                    make.left.right.equalTo(self.view.safeAreaLayoutGuide)
-                    make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
-                    make.height.equalTo(UIScreen.main.bounds.width * 1.125 / 3 + 35)
-                }
-                self.bottomCoverImageView.snp.remakeConstraints { make in
-                    make.left.right.bottom.equalToSuperview()
-                    make.height.equalTo(152)
-                }
-
-                self.view.layoutIfNeeded()
+        
+        output.musicCount
+            .bind(onNext: { [weak self] musicCount in
+                self?.musicDroppedCountLabel.text = String(musicCount)
             })
-            return true
-        }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -371,7 +346,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
 
 // MARK: - Map
 
-extension MainViewController {
+private extension MainViewController {
     func drawCurrentLocationMarker(location: CLLocation) {
         mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude,
                                                                lng: location.coordinate.longitude)))
@@ -380,5 +355,37 @@ extension MainViewController {
         currentLocationMarker.position = NMGLatLng(lat: location.coordinate.latitude,
                                                    lng: location.coordinate.longitude)
         currentLocationMarker.mapView = mapView
+    }
+    
+    func drawPOI(lat: Double, lon: Double) {
+        let poi = NMFMarker()
+        poi.iconImage = NMFOverlayImage(image: UIImage(named: "musicMarker") ?? UIImage())
+        poi.position = NMGLatLng(lat: lat, lng: lon)
+        poi.mapView = self.mapView
+        bindPOI(poi)
+    }
+    
+    func bindPOI(_ poi: NMFMarker) {
+        poi.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
+            guard let self = self else { return true }
+            UIView.animate(withDuration: 0.5, animations: {
+                self.droppedMusicWithinAreaCollectionView.isHidden = false
+                self.bottomCoverImageView.isHidden = false
+                self.backToMapButton.isHidden = false
+
+                self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
+                    make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+                    make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
+                    make.height.equalTo(UIScreen.main.bounds.width * 1.125 / 3 + 35)
+                }
+                self.bottomCoverImageView.snp.remakeConstraints { make in
+                    make.left.right.bottom.equalToSuperview()
+                    make.height.equalTo(152)
+                }
+
+                self.view.layoutIfNeeded()
+            })
+            return true
+        }
     }
 }
