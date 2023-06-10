@@ -12,12 +12,12 @@ import Moya
 enum NetworkService {
     case searchMusic(keyword: String)
     case dropMusic(requestDTO: DropMusicRequestDTO)
-    case fetchNumberOfDroppedMusicByDong(address: String)
+    case getMusicCountByDong(address: String)
     case getMusicWithinArea(requestDTO: MusicWithinAreaRequestDTO)
     case getCommunity(itemID: UUID)
-    case getPOI(latitude: Double, longitude: Double, distance: Double)
     case postLikeUp(itemID: Int)
     case postLikeDown(itemID: Int)
+    case getPoi(latitude: Double, longitude: Double, distance: Double)
 }
 
 extension NetworkService: TargetType {
@@ -26,7 +26,7 @@ extension NetworkService: TargetType {
         case .dropMusic, .postLikeUp, .postLikeDown:
             return URL(string: "https://api.street-drop.com")!
         default:
-            return URL(string: "https://search.street-drop.com")!
+            return URL(string: "https://api.street-drop.com")!
         }
     }
 
@@ -40,22 +40,22 @@ extension NetworkService: TargetType {
             return "/items"
         case .searchMusic:
             return "/music"
-        case .fetchNumberOfDroppedMusicByDong:
+        case .getMusicCountByDong:
             return "/villages/items/count"
         case .postLikeUp(let itemID):
             return "/items/\(itemID)/likes"
         case .postLikeDown(let itemID):
             return "/items/\(itemID)/unlikes"
-        default:
-            return ""
+        case .getPoi:
+            return "/items/points"
         }
     }
 
     var method: Moya.Method {
         switch self {
         case .searchMusic,
-             .fetchNumberOfDroppedMusicByDong,
-             .getPOI,
+             .getMusicCountByDong,
+             .getPoi,
              .getMusicWithinArea,
              .getCommunity:
             return .get
@@ -74,9 +74,9 @@ extension NetworkService: TargetType {
                 encoding: URLEncoding.queryString)
         case .dropMusic(let dropRequestDTO):
             return .requestJSONEncodable(dropRequestDTO)
-        case .fetchNumberOfDroppedMusicByDong(let address):
+        case .getMusicCountByDong(let address):
             return .requestParameters(
-                parameters: ["address": address],
+                parameters: ["name": address],
                 encoding: URLEncoding.queryString
             )
         case .getMusicWithinArea(let musicWithinAreaRequestDTO):
@@ -84,8 +84,6 @@ extension NetworkService: TargetType {
         case .getCommunity(let itemID):
             return .requestParameters(parameters: ["itemID": itemID],
                                       encoding: URLEncoding.queryString)
-        case .getPOI:
-            return .requestPlain // API주소 확정 후 수정예정
         case .postLikeUp(let itemID):
             return .requestParameters(
                 parameters: ["itemId": itemID],
@@ -94,6 +92,13 @@ extension NetworkService: TargetType {
             return .requestParameters(
                 parameters: ["itemId": itemID],
                 encoding: URLEncoding.queryString)
+        case .getPoi(let lat, let lon, let distance):
+            return .requestParameters(
+                parameters: ["latitude": lat,
+                             "longitude": lon,
+                             "distance": distance],
+                encoding: URLEncoding.queryString
+            )
         }
     }
 
@@ -105,15 +110,15 @@ extension NetworkService: TargetType {
     }
 
     var sampleData: Data {
-        switch self {
-        case .searchMusic:
-            return ResponseSampleData.searchMusicSampleData
-        case .fetchNumberOfDroppedMusicByDong:
-            return ResponseSampleData.fetchNumberOfDroppedMusicByDongSampleData
-        case .getPOI:
-            return ResponseSampleData.getPOISampleData
-        default:
-            return Data()
+            switch self {
+            case .searchMusic:
+                return ResponseSampleData.searchMusicSampleData
+            case .getMusicCountByDong:
+                return ResponseSampleData.fetchNumberOfDroppedMusicByDongSampleData
+            case .getPoi:
+                return ResponseSampleData.getPOISampleData
+            default:
+                return Data()
+            }
         }
-    }
 }
