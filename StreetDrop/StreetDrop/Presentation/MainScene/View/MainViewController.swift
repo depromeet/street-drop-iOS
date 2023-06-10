@@ -362,6 +362,7 @@ private extension MainViewController {
         poi.iconImage = NMFOverlayImage(image: UIImage(named: "musicMarker") ?? UIImage())
         poi.position = NMGLatLng(lat: lat, lng: lon)
         poi.mapView = self.mapView
+        poi.globalZIndex = 400000 // 네이버맵 sdk 오버레이 가이드를 참고한 zIndex 설정
         bindPOI(poi)
     }
     
