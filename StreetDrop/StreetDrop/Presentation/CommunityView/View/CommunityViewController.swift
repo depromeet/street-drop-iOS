@@ -14,6 +14,8 @@ import SnapKit
 final class CommunityViewController: UIViewController {
     private let viewModel: CommunityViewModel
     private let disposeBag = DisposeBag()
+    private let viewDidLoadEvent = PublishRelay<Void>()
+    private let changedAlbumCollectionViewIndexEvent = PublishRelay<Int>()
 
     init(viewModel: CommunityViewModel) {
         self.viewModel = viewModel
@@ -32,6 +34,7 @@ final class CommunityViewController: UIViewController {
         configureUI()
         bindViewModel()
         setupInitialOffset()
+        viewDidLoadEvent.accept(())
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -270,7 +273,14 @@ private extension CommunityViewController {
     // MARK: - Data Binding
 
     func bindViewModel() {
-        viewModel.albumImages
+        let input = CommunityViewModel.Input(
+            viewDidLoadEvent: self.viewDidLoadEvent.asObservable(),
+            changedIndex: self.changedAlbumCollectionViewIndexEvent.asObservable()
+        )
+
+        let output = viewModel.convert(input: input, disposedBag: disposeBag)
+
+        output.albumImages
             .bind(to: self.albumCollectionView.rx.items) { [weak self] collectionView, row, url in
                 guard let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: AlbumCollectionViewCell.identifier,
@@ -281,60 +291,74 @@ private extension CommunityViewController {
 
                 cell.layout()
 
-                self?.viewModel.fetchImage(url: url).observe(on: MainScheduler.instance)
-                    .subscribe {
-                        if let data = $0.element {
-                            cell.setData(data)
-                        }
-                    }.disposed(by: self?.disposeBag ?? DisposeBag())
+                self?.viewModel.fetchImage(url: url, output: output)
+                    .asDriver(onErrorJustReturn: Data())
+                    .drive { cell.setData($0) }
+                    .disposed(by: self?.disposeBag ?? DisposeBag())
 
                 return cell
+
             }.disposed(by: disposeBag)
 
-        viewModel.addressTitle.subscribe{ [weak self] in
-            self?.locationLabel.text = $0
-        }.disposed(by: disposeBag)
+        output.addressTitle
+            .asDriver(onErrorJustReturn: "")
+            .drive { [weak self] in
+                self?.locationLabel.text = $0
+            }.disposed(by: disposeBag)
 
-        viewModel.musicTitle.subscribe { [weak self] in
-            self?.musicNameLabel.text = $0
-        }.disposed(by: disposeBag)
+        output.musicTitle
+            .asDriver(onErrorJustReturn: "")
+            .drive { [weak self] in
+                self?.musicNameLabel.text = $0
+            }.disposed(by: disposeBag)
 
-        viewModel.artistTitle.subscribe { [weak self] in
-            self?.artistLabel.text = $0
-        }.disposed(by: disposeBag)
+        output.artistTitle
+            .asDriver(onErrorJustReturn: "")
+            .drive { [weak self] in
+                self?.artistLabel.text = $0
+            }.disposed(by: disposeBag)
 
-        viewModel.genresText.subscribe { [weak self] in
-            if let self = self {
+        output.genresText
+            .asDriver(onErrorJustReturn: [""])
+            .drive { [weak self] in
+                guard let self = self else { return }
                 self.genreLabels.forEach { view in
                     (view as UIView).removeFromSuperview()
                 }
                 self.genreLabels = self.generateGenreLabels(genres: $0)
                 self.updateGenreLabelStackView()
-            }
-        }.disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
 
-        viewModel.commentText.subscribe { [weak self] in
-            self?.commentLabel.text = $0
-        }.disposed(by: disposeBag)
+        output.commentText
+            .asDriver(onErrorJustReturn: "")
+            .drive { [weak self] in
+                self?.commentLabel.text = $0
+            }.disposed(by: disposeBag)
 
-        viewModel.profileImage.subscribe { [weak self] urlString in
-            guard let self = self else { return }
-            self.viewModel.fetchImage(url: urlString)
-                .observe(on: MainScheduler.instance)
-                .subscribe {
-                    if let data = $0.element {
-                        self.profileImageView.image = UIImage(data: data)
-                    }
-                }.disposed(by: self.disposeBag)
-        }.disposed(by: disposeBag)
+        output.profileImage
+            .asDriver(onErrorJustReturn: Data())
+            .drive { [weak self] data in
+                self?.profileImageView.image = UIImage(data: data)
+            }.disposed(by: disposeBag)
 
-        viewModel.nicknameText.subscribe { [weak self] in
-            self?.nicknameLabel.text = $0
-        }.disposed(by: disposeBag)
+        output.nicknameText
+            .asDriver(onErrorJustReturn: "")
+            .drive { [weak self] in
+                self?.nicknameLabel.text = $0
+            }.disposed(by: disposeBag)
 
-        viewModel.dateText.subscribe { [weak self] in
-            self?.dateLabel.text = $0
-        }.disposed(by: disposeBag)
+        output.dateText
+            .asDriver(onErrorJustReturn: "")
+            .drive { [weak self] in
+                self?.dateLabel.text = $0
+            }.disposed(by: disposeBag)
+
+        // 👉 TODO: Error팝업띄우기
+        output.errorDescription
+            .asDriver()
+            .drive(onNext: { errorDescription in
+                // 팝업띄우기 로직
+            }).disposed(by: disposeBag)
     }
 
     // MARK: - UI
@@ -560,7 +584,7 @@ extension CommunityViewController: UICollectionViewDelegate {
             y: 0
         )
 
-        viewModel.changeCurrentMusic(to: index+1) //offset0일때, 0번 앨범이아니라 1번앨범내용이므로 index+1
+        changedAlbumCollectionViewIndexEvent.accept(index+1) //offset0일때, 0번 앨범이아니라 1번앨범내용이므로 index+1
     }
 
     // 4,5 + (1...5) + 1,2 로 들어오므로 1이 가운데에오도록 처음 offset지정

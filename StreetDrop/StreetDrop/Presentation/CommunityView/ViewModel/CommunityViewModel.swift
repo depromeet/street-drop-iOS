@@ -10,49 +10,78 @@ import Foundation
 import RxRelay
 import RxSwift
 
-final class CommunityViewModel {
-    private var communityInfos: [CommunityInfo]
-    private let disposeBag: DisposeBag = DisposeBag()
-    private var currentIndex: BehaviorRelay<Int>
+final class CommunityViewModel: ViewModel {
 
-    var addressTitle:Observable<String>
-    var musicTitle: BehaviorRelay<String>
-    var artistTitle: BehaviorRelay<String>
-    var genresText: BehaviorRelay<[String]>
-    var commentText: BehaviorRelay<String>
-    var profileImage: BehaviorRelay<String>
-    var nicknameText: BehaviorRelay<String>
-    var dateText: BehaviorRelay<String>
-    var errorDescription: BehaviorRelay<String?>
+    struct Input {
+        let viewDidLoadEvent: Observable<Void>
+        let changedIndex: Observable<Int>
+    }
+
+    struct Output {
+        var addressTitle: PublishRelay<String> = .init()
+        var albumImages: PublishRelay<[String]> = .init()
+        var musicTitle: PublishRelay<String> = .init()
+        var artistTitle: PublishRelay<String> = .init()
+        var genresText: PublishRelay<[String]> = .init()
+        var commentText: PublishRelay<String> = .init()
+        var profileImage: PublishRelay<Data> = .init()
+        var nicknameText: PublishRelay<String> = .init()
+        var dateText: PublishRelay<String> = .init()
+        var errorDescription: BehaviorRelay<String?> = .init(value: nil)
+    }
+
+    private var communityInfos: [CommunityInfo]
+    private var currentIndex: Int
+    private let disposeBag: DisposeBag = DisposeBag()
 
     var communityInfoCount: Int {
         return communityInfos.count
     }
-
-    var albumImages: Observable<[String]> {
-        return Observable.just(communityInfos.map { $0.music.albumImage })
-    }
-
+    
     init(communityInfos: [CommunityInfo], index: Int) {
-        let communityInfo = communityInfos[index]
-
         self.communityInfos = communityInfos
-        self.currentIndex = BehaviorRelay(value: index)
-        self.addressTitle = Observable<String>.just(communityInfo.adress)
-        self.musicTitle = BehaviorRelay(value: communityInfo.music.title)
-        self.artistTitle = BehaviorRelay(value: communityInfo.music.artist)
-        self.genresText = BehaviorRelay(value: communityInfo.music.genre)
-        self.commentText = BehaviorRelay(value: communityInfo.comment)
-        self.profileImage = BehaviorRelay(value: communityInfo.user.profileImage)
-        self.nicknameText = BehaviorRelay(value: communityInfo.user.nickname)
-        self.dateText = BehaviorRelay(value: communityInfo.dropDate)
-        self.errorDescription = BehaviorRelay(value: nil)
+        self.currentIndex = index
 
         prepareInfiniteCarousel()
-        bindCurrentIndex()
     }
 
-    func fetchImage(url: String) -> Observable<Data> {
+    func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
+        let output = Output()
+
+        input.viewDidLoadEvent
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                output.addressTitle.accept(self.communityInfos[self.currentIndex].adress)
+                output.albumImages.accept(self.communityInfos.map {$0.music.albumImage} )
+                self.changeCommunityInfoForIndex(index: self.currentIndex, output: output)
+            }).disposed(by: disposedBag)
+
+        input.changedIndex
+            .subscribe(onNext: { [weak self] index in
+                guard let self = self else { return }
+                self.changeCommunityInfoForIndex(index: index, output: output)
+            }).disposed(by: disposedBag)
+
+        return output
+    }
+
+    private func changeCommunityInfoForIndex(index: Int, output: Output) {
+        let communityInfo = communityInfos[index]
+
+        output.musicTitle.accept(communityInfo.music.title)
+        output.artistTitle.accept(communityInfo.music.artist)
+        output.genresText.accept(communityInfo.music.genre)
+        output.commentText.accept(communityInfo.comment)
+        output.nicknameText.accept(communityInfo.user.nickname)
+        output.dateText.accept(communityInfo.dropDate)
+
+        fetchImage(url: communityInfo.user.profileImage, output: output)
+            .subscribe(onNext: { data in
+                output.profileImage.accept(data)
+            }).disposed(by: disposeBag)
+    }
+
+    func fetchImage(url: String, output: Output) -> Observable<Data> {
         return Observable.create { observer in
             DispatchQueue.global().async {
                 do {
@@ -61,16 +90,12 @@ final class CommunityViewModel {
                         observer.onNext(imageData)
                     }
                 } catch {
-                    self.errorDescription.accept("Image 불러오기에 실패했습니다")
+                    output.errorDescription.accept("Image 불러오기에 실패했습니다")
                 }
             }
-
+            
             return Disposables.create()
         }
-    }
-
-    func changeCurrentMusic(to index: Int) {
-        self.currentIndex.accept(index)
     }
 }
 
@@ -82,22 +107,7 @@ extension CommunityViewModel {
         communityInfos.insert(communityInfos[communityInfos.count-2], at: 0)
         communityInfos.append(communityInfos[2])
         communityInfos.append(communityInfos[3])
-        currentIndex.accept(currentIndex.value+2)
-    }
-
-    private func bindCurrentIndex() {
-        currentIndex.subscribe {
-            let index = $0.element ?? 0
-
-            let communityInfo = self.communityInfos[index]
-            self.musicTitle.accept(communityInfo.music.title)
-            self.artistTitle.accept(communityInfo.music.artist)
-            self.genresText.accept(communityInfo.music.genre)
-            self.commentText.accept(communityInfo.comment)
-            self.profileImage.accept(communityInfo.user.profileImage)
-            self.nicknameText.accept(communityInfo.user.nickname)
-            self.dateText.accept(self.convertDateFormat(date: communityInfo.dropDate))
-        }.disposed(by: disposeBag)
+        currentIndex += 2
     }
 
     private func convertDateFormat(date: String) -> String {
