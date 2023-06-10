@@ -31,8 +31,9 @@ struct NetworkManager {
             .map { $0.statusCode }
     }
     
-    func fetchNumberOfDroppedMusicByDong(address: String) -> Single<Data> {
-        return provider.rx.request(.fetchNumberOfDroppedMusicByDong(address: address))
+    func getMusicCountByDong(address: String) -> Single<Data> {
+        return provider.rx
+            .request(.getMusicCountByDong(address: address))
             .retry(3)
             .map { $0.data }
     }
@@ -51,7 +52,7 @@ struct NetworkManager {
 
     func getPoi(latitude: Double, longitude: Double, distance: Double) -> Single<Data> {
         return provider.rx
-            .request(.getPOI(latitude: latitude, longitude: longitude, distance: distance))
+            .request(.getPoi(latitude: latitude, longitude: longitude, distance: distance))
             .retry(3)
             .map { $0.data }
     }
