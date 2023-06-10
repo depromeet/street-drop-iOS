@@ -29,7 +29,7 @@ extension NetworkService: TargetType {
             return URL(string: "https://api.street-drop.com")!
         }
     }
-
+    
     var path: String {
         switch self {
         case .getMusicWithinArea:
@@ -50,22 +50,22 @@ extension NetworkService: TargetType {
             return "/items/points"
         }
     }
-
+    
     var method: Moya.Method {
         switch self {
         case .searchMusic,
-             .getMusicCountByDong,
-             .getPoi,
-             .getMusicWithinArea,
-             .getCommunity:
+                .getMusicCountByDong,
+                .getPoi,
+                .getMusicWithinArea,
+                .getCommunity:
             return .get
         case .dropMusic,
-             .postLikeUp,
-             .postLikeDown:
+                .postLikeUp,
+                .postLikeDown:
             return .post
         }
     }
-
+    
     var task: Moya.Task {
         switch self {
         case .searchMusic(let keyword):
@@ -101,24 +101,24 @@ extension NetworkService: TargetType {
             )
         }
     }
-
+    
     var headers: [String: String]? {
         return [
             "Content-type": "application/json"
-            // ,"x-sdp-idfv": UIDevice.current.identifierForVendor?.uuidString ?? ""
+            //             ,"x-sdp-idfv": UIDevice.current.identifierForVendor?.uuidString ?? ""
         ]
     }
-
+    
     var sampleData: Data {
-            switch self {
-            case .searchMusic:
-                return ResponseSampleData.searchMusicSampleData
-            case .getMusicCountByDong:
-                return ResponseSampleData.fetchNumberOfDroppedMusicByDongSampleData
-            case .getPoi:
-                return ResponseSampleData.getPOISampleData
-            default:
-                return Data()
-            }
+        switch self {
+        case .searchMusic:
+            return ResponseSampleData.searchMusicSampleData
+        case .getMusicCountByDong:
+            return ResponseSampleData.fetchNumberOfDroppedMusicByDongSampleData
+        case .getPoi:
+            return ResponseSampleData.getPOISampleData
+        default:
+            return Data()
         }
+    }
 }
