@@ -8,9 +8,11 @@
 import CoreLocation
 import Foundation
 
+import RxSwift
+
 final class LocationManager: NSObject {
     private let locationManager = CLLocationManager()
-    var delegate: MainViewController?
+    var delegate: MainViewModel?
     private let defaultLocation = CLLocation(latitude: 37.4979, longitude: 127.0275)
     
     override init() {
@@ -20,30 +22,25 @@ final class LocationManager: NSObject {
     }
 }
 
+// MARK: - Delegate Methods
+
 extension LocationManager: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let currentLocation = locations.last else { return }
-        locationManager.stopUpdatingLocation()
-        delegate?.drawCurrentLocationMarker(location: currentLocation)
-    }
-    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .denied, .restricted:
-            delegate?.drawCurrentLocationMarker(location: defaultLocation)
+            delegate?.updateLocation(location: defaultLocation)
         default:
-            locationManager.requestLocation()
+            self.locationManager.requestLocation()
         }
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let currentLocation = locations.last else { return }
+        locationManager.stopUpdatingLocation()
+        delegate?.updateLocation(location: currentLocation)
+    }
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        delegate?.drawCurrentLocationMarker(location: defaultLocation)
+        delegate?.updateLocation(location: defaultLocation)
     }
 }
-
-extension LocationManager {
-    func requestLocation() {
-        self.locationManager.requestLocation()
-    }
-}
-

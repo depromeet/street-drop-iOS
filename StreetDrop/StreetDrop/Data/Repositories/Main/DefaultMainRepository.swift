@@ -28,12 +28,10 @@ extension DefaultMainRepository {
     
     func fetchMusicCountByDong(address: String) -> Single<MusicCountEntity> {
         networkManager.getMusicCountByDong(address: address)
-            .do {
-                print($0)
-            }
             .map({ data in
                 let dto = try JSONDecoder().decode(MusicCountByDongResponseDTO.self, from: data)
                 return dto.toEntity()
             })
     }
 }
+

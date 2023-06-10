@@ -6,14 +6,13 @@
 //
 
 import Foundation
-
+import CoreLocation
 
 import RxRelay
 import RxSwift
 
 final class MainViewModel: ViewModel {
-    var lat: Double = 0.0
-    var lon: Double = 0.0
+    var location: CLLocation = CLLocation(latitude: 37.4979, longitude: 127.0275)
     var distance: Double = 1000.0
     var address: String = ""
     
@@ -22,17 +21,23 @@ final class MainViewModel: ViewModel {
             networkManager: NetworkManager()
         )
     )
-    private let disposeBag: DisposeBag = DisposeBag()
+    private let locationManager = LocationManager()
+    
+    let locationUpdated = PublishRelay<Void>()
+    
+    init() {
+        self.locationManager.delegate = self
+    }
 }
-
 
 extension MainViewModel {
     struct Input {
-        let viewDidLoadEvent: Observable<(Double, Double, String)>
+        let locationUpdated: PublishRelay<Void>
     }
-
+    
     struct Output {
-        var pois = BehaviorRelay<Pois>(value: [])
+        var location = PublishRelay<CLLocation>()
+        var pois = PublishRelay<Pois>()
         var musicCount = BehaviorRelay<Int>(value: 0)
     }
 }
@@ -41,31 +46,37 @@ extension MainViewModel {
     func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
         let output = Output()
         
-        input.viewDidLoadEvent
+        input.locationUpdated
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                let (lat, lon) = ($0.0, $0.1)
-                self.lat = lat
-                self.lon = lon
-                self.model.fetchPois(lat: lat, lon: lon, distance: self.distance)
-                    .subscribe { result in
-                        switch result {
-                        case .success(let pois):
-                            output.pois.accept(pois)
-                        case .failure(_):
-                            output.pois.accept([])
-                        }
+                self.model.fetchPois(
+                    lat: self.location.coordinate.latitude,
+                    lon: self.location.coordinate.longitude,
+                    distance: self.distance
+                )
+                .subscribe { result in
+                    switch result {
+                    case .success(let pois):
+                        output.pois.accept(pois)
+                    case .failure:
+                        output.pois.accept([])
                     }
-                    .disposed(by: disposedBag)
+                }
+                .disposed(by: disposedBag)
             })
             .disposed(by: disposedBag)
         
-        input.viewDidLoadEvent
+        input.locationUpdated
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                let address = $0.2
-                self.address = address
-                self.model.fetchMusicCount(address: address)
+                output.location.accept(self.location)
+            })
+            .disposed(by: disposedBag)
+        
+        input.locationUpdated
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.model.fetchMusicCount(address: self.address)
                     .subscribe { result in
                         switch result {
                         case .success(let musicCountEntity):
@@ -79,5 +90,20 @@ extension MainViewModel {
             .disposed(by: disposedBag)
         
         return output
+    }
+}
+
+extension MainViewModel: LocationManagerDelegate {
+    func updateLocation(location: CLLocation) {
+        self.location = location
+        let geocoder = CLGeocoder()
+        
+        geocoder.reverseGeocodeLocation(location, preferredLocale: nil) { (placemarks, error) in
+            guard let address = placemarks?.first else { return }
+            // 차후 서버 포맷에 맞게 수정 필요
+//             self.address = address.name ?? ""
+            self.address = "종로구 사직동"
+            self.locationUpdated.accept(())
+        }
     }
 }
