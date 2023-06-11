@@ -23,9 +23,10 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setData(musicTitle: String, singerName: String) {
-        self.musicTitleLabel.text = musicTitle
-        self.singerNameLabel.text = singerName
+    func setData(item: MusicWithinAreaEntity) {
+        self.musicTitleLabel.text = item.musicTitle
+        self.singerNameLabel.text = item.artist
+        self.albumCoverImageView.setImage(with: item.albumImageURL)
     }
     
     // MARK: - UI
@@ -48,11 +49,11 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var albumCoverButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .gray
-        button.isUserInteractionEnabled = true
-        return button
+    private lazy var albumCoverImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .gray
+        imageView.isUserInteractionEnabled = true
+        return imageView
     }()
 }
 
@@ -79,10 +80,10 @@ private extension DroppedMusicWithinAreaCollectionViewCell {
             make.bottom.equalTo(self.singerNameLabel.snp.top)
         }
         
-        // MARK: - Album Cover Button
+        // MARK: - Album Cover ImageView
         
-        self.addSubview(self.albumCoverButton)
-        self.albumCoverButton.snp.makeConstraints { make in
+        self.addSubview(self.albumCoverImageView)
+        self.albumCoverImageView.snp.makeConstraints { make in
             make.centerX.equalTo(self.safeAreaLayoutGuide)
             make.bottom.equalTo(self.musicTitleLabel.snp.top).inset(-12)
             make.width.height.equalTo(84)
