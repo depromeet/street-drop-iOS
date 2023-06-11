@@ -13,9 +13,10 @@ struct MusicWithinAreaResponseDTO: Decodable {
     struct Item: Decodable {
         let itemID: Int
         let user: User
-        let location: String
+        let location: Location
         let music: Music
-        let content, createdAt: String
+        let content: String?
+        let createdAt: String
         
         enum CodingKeys: String, CodingKey {
             case itemID = "itemId"
@@ -23,14 +24,18 @@ struct MusicWithinAreaResponseDTO: Decodable {
         }
     }
     
+    struct User: Decodable {
+        let nickname, profileImage, musicApp: String
+    }
+    
+    struct Location: Decodable {
+        let address: String
+    }
+    
     struct Music: Decodable {
         let title, artist: String
         let albumImage: String
-        let genre: String
-    }
-    
-    struct User: Decodable {
-        let nickname, profileImage, musicApp: String
+        let genre: [String]
     }
 }
 
@@ -42,12 +47,12 @@ extension MusicWithinAreaResponseDTO {
                 userName: $0.user.nickname,
                 userProfileImageURL: $0.user.profileImage,
                 musicApp: $0.user.musicApp,
-                address: $0.location,
+                address: $0.location.address,
                 musicTitle: $0.music.title,
                 artist: $0.music.artist,
                 albumImageURL: $0.music.albumImage,
                 genre: $0.music.genre,
-                content: $0.content,
+                content: $0.content ?? "",
                 createdAt: $0.createdAt
             )
         }
