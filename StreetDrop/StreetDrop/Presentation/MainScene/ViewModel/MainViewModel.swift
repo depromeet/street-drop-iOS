@@ -15,6 +15,7 @@ final class MainViewModel: ViewModel {
     var location: CLLocation = CLLocation(latitude: 37.4979, longitude: 127.0275)
     var distance: Double = 1000.0
     var address: String = ""
+    var musicWithinArea: Musics = []
     
     private let model = MainModel(
         repository: DefaultMainRepository(
@@ -109,7 +110,20 @@ extension MainViewModel {
                 .subscribe { result in
                     switch result {
                     case .success(let musicWithinArea):
-                        output.musicWithinArea.accept(musicWithinArea)
+                        if musicWithinArea.isEmpty {
+                            self.musicWithinArea = []
+                            output.musicWithinArea.accept([])
+                            return
+                        }
+                        // 무한스크롤을 위한 데이터소스
+                        var musicWithinAreaForInfinite = musicWithinArea
+                        musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-1], at: 0)
+                        musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-2], at: 0)
+                        musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[2])
+                        musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[3])
+
+                        self.musicWithinArea = musicWithinAreaForInfinite
+                        output.musicWithinArea.accept(musicWithinAreaForInfinite)
                     case .failure(let error):
                         print(error)
                         output.musicWithinArea.accept([])
