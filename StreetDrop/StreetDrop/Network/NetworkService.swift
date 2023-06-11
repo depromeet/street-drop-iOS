@@ -13,7 +13,7 @@ enum NetworkService {
     case searchMusic(keyword: String)
     case dropMusic(requestDTO: DropMusicRequestDTO)
     case getMusicCountByDong(address: String)
-    case getMusicWithinArea(requestDTO: MusicWithinAreaRequestDTO)
+    case getMusicWithinArea(latitude: Double, longitude: Double, distance: Double)
     case getCommunity(itemID: UUID)
     case postLikeUp(itemID: Int)
     case postLikeDown(itemID: Int)
@@ -33,7 +33,7 @@ extension NetworkService: TargetType {
     var path: String {
         switch self {
         case .getMusicWithinArea:
-            return "/musicWithinArea"
+            return "/items"
         case .getCommunity:
             return "/community"
         case .dropMusic:
@@ -79,8 +79,13 @@ extension NetworkService: TargetType {
                 parameters: ["name": address],
                 encoding: URLEncoding.queryString
             )
-        case .getMusicWithinArea(let musicWithinAreaRequestDTO):
-            return .requestJSONEncodable(musicWithinAreaRequestDTO)
+        case .getMusicWithinArea(let lat, let lon, let distance):
+            return .requestParameters(
+                parameters: ["latitude": lat,
+                             "longitude": lon,
+                             "distance": distance],
+                encoding: URLEncoding.queryString
+            )
         case .getCommunity(let itemID):
             return .requestParameters(parameters: ["itemID": itemID],
                                       encoding: URLEncoding.queryString)
