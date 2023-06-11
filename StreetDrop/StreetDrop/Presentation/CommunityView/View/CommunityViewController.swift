@@ -228,11 +228,12 @@ final class CommunityViewController: UIViewController {
     }()
 
     // Like 요소
-    private lazy var likeLogo: UIImageView = {
-        let likeLogo = UIImage(named: "LikeLogo")
-        let imageView = UIImageView(image: likeLogo)
+    private lazy var likeButton: UIButton = {
+        let button = UIButton()
+        let likeLogo = UIImage(named: "likeFill")
+        button.setImage(likeLogo, for: .normal)
 
-        return imageView
+        return button
     }()
 
     private lazy var likeCountLabel: UILabel = {
@@ -275,7 +276,8 @@ private extension CommunityViewController {
     func bindViewModel() {
         let input = CommunityViewModel.Input(
             viewDidLoadEvent: self.viewDidLoadEvent.asObservable(),
-            changedIndex: self.changedAlbumCollectionViewIndexEvent.asObservable()
+            changedIndex: self.changedAlbumCollectionViewIndexEvent.asObservable(),
+            tapLikeButtonEvent: self.likeButton.rx.tap.asObservable()
         )
 
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
@@ -353,6 +355,21 @@ private extension CommunityViewController {
                 self?.dateLabel.text = $0
             }.disposed(by: disposeBag)
 
+        output.isLiked
+            .asDriver(onErrorJustReturn: false)
+            .drive { [weak self] isLiked in
+                let likeFillImage = UIImage(named: "likeFill")
+                let likeEmptyImage = UIImage(named: "likeEmpty")
+
+                self?.likeButton.setImage(isLiked ? likeFillImage : likeEmptyImage, for: .normal)
+            }.disposed(by: disposeBag)
+
+        output.likeCount
+            .asDriver(onErrorJustReturn: "")
+            .drive { [weak self] likeCount in
+                self?.likeCountLabel.text = likeCount
+            }.disposed(by: disposeBag)
+
         // 👉 TODO: Error팝업띄우기
         output.errorDescription
             .asDriver()
@@ -394,7 +411,7 @@ private extension CommunityViewController {
             listeningGuideStackView.addArrangedSubview($0)
         }
 
-        [likeLogo, likeCountLabel].forEach {
+        [likeButton, likeCountLabel].forEach {
             likeStackView.addArrangedSubview($0)
         }
 
@@ -483,9 +500,9 @@ private extension CommunityViewController {
             make.width.equalTo(youtubeMusicLogo.snp.height)
         }
 
-        likeLogo.snp.makeConstraints { make in
+        likeButton.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.4)
-            make.width.equalTo(likeLogo.snp.height)
+            make.width.equalTo(likeButton.snp.height)
         }
 
         listeningGuideStackView.snp.makeConstraints {
