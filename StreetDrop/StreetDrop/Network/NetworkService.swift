@@ -16,12 +16,14 @@ enum NetworkService {
     case getMusicWithinArea(requestDTO: MusicWithinAreaRequestDTO)
     case getCommunity(itemID: UUID)
     case getPOI(latitude: Double, longitude: Double, distance: Double)
+    case postLikeUp(itemID: UUID)
+    case postLikeDown(itemID: UUID)
 }
 
 extension NetworkService: TargetType {
     var baseURL: URL {
         switch self {
-        case .dropMusic:
+        case .dropMusic, .postLikeUp, .postLikeDown:
             return URL(string: "https://api.street-drop.com")!
         default:
             return URL(string: "https://search.street-drop.com")!
@@ -40,6 +42,10 @@ extension NetworkService: TargetType {
             return "/music"
         case .fetchNumberOfDroppedMusicByDong:
             return "/villages/items/count"
+        case .postLikeUp(let itemID):
+            return "/items/\(itemID)/likes"
+        case .postLikeDown(let itemID):
+            return "/items/\(itemID)/unlikes"
         default:
             return ""
         }
@@ -47,14 +53,16 @@ extension NetworkService: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .searchMusic, .fetchNumberOfDroppedMusicByDong, .getPOI:
+        case .searchMusic,
+             .fetchNumberOfDroppedMusicByDong,
+             .getPOI,
+             .getMusicWithinArea,
+             .getCommunity:
             return .get
-        case .dropMusic:
+        case .dropMusic,
+             .postLikeUp,
+             .postLikeDown:
             return .post
-        case .getMusicWithinArea:
-            return .get
-        case .getCommunity:
-            return .get
         }
     }
 
@@ -78,9 +86,17 @@ extension NetworkService: TargetType {
                                       encoding: URLEncoding.queryString)
         case .getPOI:
             return .requestPlain // API주소 확정 후 수정예정
+        case .postLikeUp(let itemID):
+            return .requestParameters(
+                parameters: ["itemId": itemID],
+                encoding: URLEncoding.queryString)
+        case .postLikeDown(let itemID):
+            return .requestParameters(
+                parameters: ["itemId": itemID],
+                encoding: URLEncoding.queryString)
         }
     }
-    
+
     var headers: [String: String]? {
         return [
             "Content-type": "application/json",
@@ -91,79 +107,13 @@ extension NetworkService: TargetType {
     var sampleData: Data {
         switch self {
         case .searchMusic:
-            return Data("""
-                        {
-                            "data": [
-                                    {
-                                        "albumName": "Dynamite (DayTime Version) - EP",
-                                        "artistName": "방탄소년단",
-                                        "songName": "Dynamite",
-                                        "durationTime": "3:20",
-                                        "albumImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/300x300bb.jpg",
-                                        "albumThumbnailImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/100x100bb.jpg",
-                                        "genre": [
-                                            "Rock",
-                                            "K-pop"
-                                        ]
-                                    },
-                                    {
-                                        "albumName": "Dynamite (DayTime Version) - EP",
-                                        "artistName": "방탄소년단",
-                                        "songName": "Dynamite",
-                                        "durationTime": "3:20",
-                                        "albumImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/300x300bb.jpg",
-                                        "albumThumbnailImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/100x100bb.jpg",
-                                        "genre": [
-                                            "Rock",
-                                            "K-pop"
-                                        ]
-                                    },
-                                    {
-                                        "albumName": "Dynamite (DayTime Version) - EP",
-                                        "artistName": "방탄소년단",
-                                        "songName": "Dynamite",
-                                        "durationTime": "3:20",
-                                        "albumImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/300x300bb.jpg",
-                                        "albumThumbnailImage": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/03/8d/0e/038d0e52-e96d-f386-b8eb-9f77fa013543/195497146918_Cover.jpg/100x100bb.jpg",
-                                        "genre": [
-                                            "Rock",
-                                            "K-pop"
-                                        ]
-                                    }
-                                ]
-                        }
-                        """.utf8)
-        case .dropMusic:
-            return Data()
+            return ResponseSampleData.searchMusicSampleData
         case .fetchNumberOfDroppedMusicByDong:
-            return Data("""
-                        {
-                            "numberOfDroppedMusic": 247
-                        }
-                        """.utf8)
-        case .getMusicWithinArea:
-            return Data()
-        case .getCommunity:
-            return Data()
+            return ResponseSampleData.fetchNumberOfDroppedMusicByDongSampleData
         case .getPOI:
-            return Data("""
-                        {
-                            "poi": [
-                            {
-                                "itemId": 1,
-                                "albumThumbnailImage" : "http://img.com",
-                                "latitude": 89.33,
-                                "longitude": 123.222
-                            },
-                            {
-                                "itemId": 2,
-                                "albumThumbnailImage" : "http://img.com",
-                                "latitude": 88.214,
-                                "longitude": 122.908
-                            }
-                            ]
-                        }
-                        """.utf8)
+            return ResponseSampleData.getPOISampleData
+        default:
+            return Data()
         }
     }
 }
