@@ -23,8 +23,8 @@ enum NetworkService {
 extension NetworkService: TargetType {
     var baseURL: URL {
         switch self {
-        case .dropMusic, .postLikeUp, .postLikeDown:
-            return URL(string: "https://api.street-drop.com")!
+        case .searchMusic:
+            return URL(string: "https://search.street-drop.com")!
         default:
             return URL(string: "https://api.street-drop.com")!
         }
