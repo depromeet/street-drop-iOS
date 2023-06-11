@@ -16,8 +16,8 @@ enum NetworkService {
     case getMusicWithinArea(requestDTO: MusicWithinAreaRequestDTO)
     case getCommunity(itemID: UUID)
     case getPOI(latitude: Double, longitude: Double, distance: Double)
-    case postLikeUp(itemID: UUID)
-    case postLikeDown(itemID: UUID)
+    case postLikeUp(itemID: Int)
+    case postLikeDown(itemID: Int)
 }
 
 extension NetworkService: TargetType {

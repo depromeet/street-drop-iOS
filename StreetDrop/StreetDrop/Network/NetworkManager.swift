@@ -55,4 +55,16 @@ struct NetworkManager {
             .retry(3)
             .map { $0.data }
     }
+
+    func postLikeUp(itemID: Int) -> Single<Int> {
+        return provider.rx.request(.postLikeUp(itemID: itemID))
+            .retry(3)
+            .map { $0.statusCode }
+    }
+
+    func postLikeDown(itemID: Int) -> Single<Int> {
+        return provider.rx.request(.postLikeDown(itemID: itemID))
+            .retry(3)
+            .map { $0.statusCode }
+    }
 }
