@@ -25,4 +25,8 @@ extension MainModel {
     func fetchMusicCount(address: String) -> Single<MusicCountEntity> {
         return repository.fetchMusicCountByDong(address: address)
     }
+    
+    func fetchMusicWithinArea(lat: Double, lon: Double, distance: Double) -> Single<Musics> {
+        return repository.fetchMusicWithinArea(lat: lat, lon: lon, distacne: distance)
+    }
 }

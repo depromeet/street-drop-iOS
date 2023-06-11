@@ -249,7 +249,6 @@ private extension MainViewController {
         }
         self.droppedMusicWithinAreaCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-        self.bindCardListCollectionView()
     }
     
     // MARK: - Action Binding
@@ -314,20 +313,18 @@ private extension MainViewController {
                 self?.locationLabel.text = address
             })
             .disposed(by: disposeBag)
+        
+        output.musicWithinArea
+            .bind(to: droppedMusicWithinAreaCollectionView.rx.items(cellIdentifier: DroppedMusicWithinAreaCollectionViewCell.identifier, cellType: DroppedMusicWithinAreaCollectionViewCell.self)) { index, item, cell in
+                cell.setData(item: item)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
 // MARK: - CollectionView
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    private func bindCardListCollectionView() {
-        Observable.of([0, 1, 2, 3, 4, 5])
-            .observe(on: MainScheduler.instance)
-            .bind(to: droppedMusicWithinAreaCollectionView.rx.items(cellIdentifier: DroppedMusicWithinAreaCollectionViewCell.identifier, cellType: DroppedMusicWithinAreaCollectionViewCell.self)) { index, item, cell in
-                cell.setData(musicTitle: "음악 이름", singerName: "가수 이름")
-            }
-            .disposed(by: disposeBag)
-    }
     
     // MARK: - Delegate Methods
     

@@ -40,6 +40,7 @@ extension MainViewModel {
         var address = PublishRelay<String>()
         var pois = PublishRelay<Pois>()
         var musicCount = BehaviorRelay<Int>(value: 0)
+        var musicWithinArea = BehaviorRelay<Musics>(value: [])
     }
 }
 
@@ -94,6 +95,27 @@ extension MainViewModel {
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
                 output.address.accept(self.address)
+            })
+            .disposed(by: disposedBag)
+        
+        input.locationUpdated
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.model.fetchMusicWithinArea(
+                    lat: self.location.coordinate.latitude,
+                    lon: self.location.coordinate.longitude,
+                    distance: self.distance
+                )
+                .subscribe { result in
+                    switch result {
+                    case .success(let musicWithinArea):
+                        output.musicWithinArea.accept(musicWithinArea)
+                    case .failure(let error):
+                        print(error)
+                        output.musicWithinArea.accept([])
+                    }
+                }
+                .disposed(by: disposedBag)
             })
             .disposed(by: disposedBag)
         
