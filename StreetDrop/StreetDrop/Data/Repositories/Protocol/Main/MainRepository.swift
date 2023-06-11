@@ -12,4 +12,5 @@ import RxSwift
 protocol MainRepository {
     func fetchPoi(lat: Double, lon: Double, distacne: Double) -> Single<Pois>
     func fetchMusicCountByDong(address: String) -> Single<MusicCountEntity>
+    func fetchMusicWithinArea(lat: Double, lon: Double, distacne: Double) -> Single<Musics>
 }
