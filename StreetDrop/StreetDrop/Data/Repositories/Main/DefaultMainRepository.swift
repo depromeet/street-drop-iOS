@@ -33,5 +33,13 @@ extension DefaultMainRepository {
                 return dto.toEntity()
             })
     }
+    
+    func fetchMusicWithinArea(lat: Double, lon: Double, distacne: Double) -> Single<Musics> {
+        networkManager.getMusicWithinArea(latitude: lat, longitude: lon, distance: distacne)
+            .map({ data in
+                let dto = try JSONDecoder().decode(MusicWithinAreaResponseDTO.self, from: data)
+                return dto.toEntity()
+            })
+    }
 }
 
