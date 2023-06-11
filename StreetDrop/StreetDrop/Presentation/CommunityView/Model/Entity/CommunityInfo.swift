@@ -8,11 +8,14 @@
 import Foundation
 
 struct CommunityInfo {
+    let itemID: Int
     let adress: String
     let music: Music
     let comment: String
     let user: User
     let dropDate: String
+    var isLiked: Bool
+    var ikeCount: Int
 
     struct Music {
         let title: String
