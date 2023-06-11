@@ -38,8 +38,9 @@ struct NetworkManager {
             .map { $0.data }
     }
     
-    func getMusicWithinArea(requestDTO: MusicWithinAreaRequestDTO) -> Single<Data> {
-        return provider.rx.request(.getMusicWithinArea(requestDTO: requestDTO))
+    func getMusicWithinArea(latitude: Double, longitude: Double, distance: Double) -> Single<Data> {
+        return provider.rx
+            .request(.getMusicWithinArea(latitude: latitude, longitude: longitude, distance: distance))
             .retry(3)
             .map { $0.data }
     }
