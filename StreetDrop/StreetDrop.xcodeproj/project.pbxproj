@@ -44,6 +44,7 @@
 		18D671EF2A35A1CB003B1A71 /* MusicWithinAreaResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF8402A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift */; };
 		18D671F12A35A4D2003B1A71 /* UIImageView+ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D671F02A35A4D2003B1A71 /* UIImageView+ImageCache.swift */; };
 		18D671F42A35A50E003B1A71 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D671F32A35A50E003B1A71 /* ImageCacheService.swift */; };
+		18D671F62A35C5D4003B1A71 /* UIImage+Resizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D671F52A35C5D4003B1A71 /* UIImage+Resizing.swift */; };
 		18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
 		18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
 		4111449E2A1C3D2C00075E71 /* String+changeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4111449D2A1C3D2C00075E71 /* String+changeColor.swift */; };
@@ -165,6 +166,7 @@
 		18CB7BEC2A359F53002B31FB /* MusicWithinAreaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicWithinAreaEntity.swift; sourceTree = "<group>"; };
 		18D671F02A35A4D2003B1A71 /* UIImageView+ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageCache.swift"; sourceTree = "<group>"; };
 		18D671F32A35A50E003B1A71 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
+		18D671F52A35C5D4003B1A71 /* UIImage+Resizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resizing.swift"; sourceTree = "<group>"; };
 		18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		2611E7411DB7C5436A272A27 /* Pods-StreetDrop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetDrop.release.xcconfig"; path = "Target Support Files/Pods-StreetDrop/Pods-StreetDrop.release.xcconfig"; sourceTree = "<group>"; };
@@ -800,6 +802,7 @@
 				C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */,
 				414345012A31F17B003FEE2A /* UIViewController+Constant.swift */,
 				18D671F02A35A4D2003B1A71 /* UIImageView+ImageCache.swift */,
+				18D671F52A35C5D4003B1A71 /* UIImage+Resizing.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -998,6 +1001,7 @@
 				C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */,
 				C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */,
 				C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */,
+				18D671F62A35C5D4003B1A71 /* UIImage+Resizing.swift in Sources */,
 				C434A4D02A17981C00C63526 /* DefaultSearchingMusicRepository.swift in Sources */,
 				414345232A35B9A3003FEE2A /* LikeMusicRepository.swift in Sources */,
 				040685042A01539800377094 /* MainViewController.swift in Sources */,

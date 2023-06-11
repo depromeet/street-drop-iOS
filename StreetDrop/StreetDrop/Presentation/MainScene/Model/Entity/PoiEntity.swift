@@ -9,7 +9,7 @@ import Foundation
 
 struct PoiEntity {
     let id: Int
-    let imageURL: URL
+    let imageURL: String
     let lat: Double
     let lon: Double
 }

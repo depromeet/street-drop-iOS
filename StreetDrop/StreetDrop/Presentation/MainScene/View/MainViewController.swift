@@ -249,6 +249,7 @@ private extension MainViewController {
         }
         self.droppedMusicWithinAreaCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
+        self.setupInitialOffset()
     }
     
     // MARK: - Action Binding
@@ -297,7 +298,7 @@ private extension MainViewController {
         output.pois
             .bind(onNext: { [weak self] pois in
                 pois.forEach { poi in
-                    self?.drawPOI(lat: poi.lat, lon: poi.lon)
+                    self?.drawPOI(lat: poi.lat, lon: poi.lon, imageURL: poi.imageURL)
                 }
             })
             .disposed(by: disposeBag)
@@ -325,25 +326,54 @@ private extension MainViewController {
 // MARK: - CollectionView
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    // MARK: - Delegate Methods
-    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if scrollView != droppedMusicWithinAreaCollectionView { return }
         guard let layout = droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
+        let cellWidth = layout.itemSize.width
         let estimatedIndex = scrollView.contentOffset.x / cellWidth
-        var index: Int
+        let index: Int
+
         if velocity.x > 0 {
-            index = Int(ceil(estimatedIndex)) < [0, 1, 2, 3, 4, 5].count ? Int(ceil(estimatedIndex)) : [0, 1, 2, 3, 4, 5].count - 1
+            index = Int(ceil(estimatedIndex))
+        } else if velocity.x < 0 {
+            index = Int(floor(estimatedIndex))
         } else {
-            index = Int(floor(estimatedIndex)) >= 0 ? Int(floor(estimatedIndex)) : 0
+            index = Int(round(estimatedIndex))
         }
-        targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidth, y: 0)
+
+        targetContentOffset.pointee = CGPoint(
+            x: (CGFloat(index) * cellWidth),
+            y: 0
+        )
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: collectionView.bounds.width / 3, bottom: 0, right: collectionView.bounds.width / 3)
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView != droppedMusicWithinAreaCollectionView { return }
+        guard let layout = droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        let count = viewModel.musicWithinArea.count
+        let cellWidth = layout.itemSize.width
+
+        if scrollView.contentOffset.x < cellWidth {
+            scrollView.setContentOffset(
+                .init(x: scrollView.contentSize.width - (cellWidth * 3), y: 0),
+                animated: false
+            )
+        }
+        if scrollView.contentOffset.x > cellWidth * Double(count - 3) {
+            scrollView.setContentOffset(
+                .init(x: cellWidth, y: 0),
+                animated: false
+            )
+        }
+    }
+
+    func setupInitialOffset() {
+        guard let layout = droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        let cellWidth = layout.itemSize.width
+        droppedMusicWithinAreaCollectionView.setContentOffset(
+            CGPoint(x: cellWidth, y: .zero),
+            animated: false
+        )
     }
 }
 
@@ -360,9 +390,20 @@ private extension MainViewController {
         currentLocationMarker.mapView = mapView
     }
     
-    func drawPOI(lat: Double, lon: Double) {
+    func drawPOI(lat: Double, lon: Double, imageURL: String) {
         let poi = NMFMarker()
-        poi.iconImage = NMFOverlayImage(image: UIImage(named: "musicMarker") ?? UIImage())
+        
+        // 추후 마커틀 + 앨범이미지로 수정 필요
+        //        poi.iconImage = NMFOverlayImage(image: UIImage(named: "musicMarker") ?? UIImage())
+        UIImage.load(with: imageURL) { image in
+            let originalImage = image
+            let newSize = CGSize(width: 50, height: 50)
+            let resizedImage = originalImage?.resized(to: newSize)
+            DispatchQueue.main.async {
+                poi.iconImage = NMFOverlayImage(image: resizedImage ?? UIImage())
+            }
+        }
+        
         poi.position = NMGLatLng(lat: lat, lng: lon)
         poi.mapView = self.mapView
         poi.globalZIndex = 400000 // 네이버맵 sdk 오버레이 가이드를 참고한 zIndex 설정
@@ -376,7 +417,7 @@ private extension MainViewController {
                 self.droppedMusicWithinAreaCollectionView.isHidden = false
                 self.bottomCoverImageView.isHidden = false
                 self.backToMapButton.isHidden = false
-
+                
                 self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
                     make.left.right.equalTo(self.view.safeAreaLayoutGuide)
                     make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
@@ -386,7 +427,7 @@ private extension MainViewController {
                     make.left.right.bottom.equalToSuperview()
                     make.height.equalTo(152)
                 }
-
+                
                 self.view.layoutIfNeeded()
             })
             return true

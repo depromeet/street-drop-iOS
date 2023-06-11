@@ -12,7 +12,7 @@ struct PoiResponseDTO: Decodable {
 
     struct Poi: Decodable {
         let itemID: Int
-        let albumCover: URL
+        let albumCover: String
         let latitude: Double
         let longitude: Double
 
