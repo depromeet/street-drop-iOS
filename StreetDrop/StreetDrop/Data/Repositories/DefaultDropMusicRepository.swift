@@ -25,8 +25,8 @@ extension DefaultDropMusicRepository: DropMusicRepository {
                 address: droppingInfo.location.address
             ),
             music: DropMusicRequestDTO.Music(
-                title: droppingInfo.music.title,
-                artist: droppingInfo.music.artist,
+                title: droppingInfo.music.songName,
+                artist: droppingInfo.music.artistName,
                 albumName: droppingInfo.music.albumName,
                 albumImage: droppingInfo.music.albumImage,
                 genre: droppingInfo.music.genre

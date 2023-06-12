@@ -285,8 +285,12 @@ private extension MainViewController {
             .disposed(by: disposeBag)
         
         musicDropButton.rx.tap
-            .bind {
-                let searchingMusicViewController = SearchingMusicViewController()
+            .bind { [weak self] in
+                guard let self = self else { return }
+                let searchingMusicViewController = SearchingMusicViewController(viewModel: DefaultSearchingMusicViewModel(
+                    location: self.viewModel.location,
+                    address: self.viewModel.address)
+                )
                 self.navigationController?.pushViewController(
                     searchingMusicViewController,
                     animated: true

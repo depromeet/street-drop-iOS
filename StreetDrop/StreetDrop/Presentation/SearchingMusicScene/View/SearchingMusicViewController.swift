@@ -15,7 +15,7 @@ final class SearchingMusicViewController: UIViewController {
     private let viewModel: DefaultSearchingMusicViewModel
     private let disposeBag: DisposeBag = DisposeBag()
     
-    init(viewModel: DefaultSearchingMusicViewModel = DefaultSearchingMusicViewModel()) {
+    init(viewModel: DefaultSearchingMusicViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -193,11 +193,14 @@ private extension SearchingMusicViewController {
         let keyBoardDidPressSearchEventWithKeyword = self.searchTextField.rx.controlEvent(.editingDidEndOnExit)
             .compactMap { self.searchTextField.text }
         
+        let selectedTableViewCellEvent = self.tableView.rx.itemSelected.map { $0.row }
+        
         let input = DefaultSearchingMusicViewModel.Input(
             viewDidAppearEvent: .just(()),
             searchTextFieldDidEditEvent: self.searchTextField.rx.text.orEmpty,
             keyBoardDidPressSearchEventWithKeyword: keyBoardDidPressSearchEventWithKeyword,
-            recentQueryDidPressEvent: self.recentMusicSearchScrollView.queryButtonDidTappedEvent
+            recentQueryDidPressEvent: self.recentMusicSearchScrollView.queryButtonDidTappedEvent,
+            tableViewCellDidPressedEvent: selectedTableViewCellEvent
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
         
@@ -215,6 +218,29 @@ private extension SearchingMusicViewController {
         output.recentMusicQueries
             .bind { queries in
                 self.recentMusicSearchScrollView.setData(queries: queries)
+            }
+            .disposed(by: disposeBag)
+        
+        output.selectedMusic
+            .bind { [weak self] music in
+                guard let self = self else { return }
+                let musicDropViewController = MusicDropViewController(
+                    viewModel: MusicDropViewModel(
+                        droppingInfo: DroppingInfo(
+                            location: .init(
+                                latitude: viewModel.location.coordinate.latitude,
+                                longitude: viewModel.location.coordinate.longitude,
+                                address: viewModel.address
+                            ),
+                            music: music
+                        )
+                    )
+                )
+                
+                self.navigationController?.pushViewController(
+                    musicDropViewController,
+                    animated: true
+                )
             }
             .disposed(by: disposeBag)
     }

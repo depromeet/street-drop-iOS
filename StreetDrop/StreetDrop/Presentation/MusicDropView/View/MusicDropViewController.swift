@@ -247,6 +247,18 @@ private extension MusicDropViewController {
                 self?.checkMaxNumberOfLines(max: 4)
                 self?.checkAvailableToDrop()
             }.disposed(by: disposeBag)
+        
+        backButton.rx.tap
+            .bind {
+                self.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        cancelButton.rx.tap
+            .bind {
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 
     // MARK: - Data Binding
@@ -303,6 +315,8 @@ private extension MusicDropViewController {
     //MARK: - UI
 
     func configureUI() {
+        self.view.clipsToBounds = true
+        
         [backButton, cancelButton].forEach {
             topView.addSubview($0)
         }

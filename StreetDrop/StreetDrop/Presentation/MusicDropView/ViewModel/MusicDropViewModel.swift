@@ -62,8 +62,8 @@ final class MusicDropViewModel: ViewModel {
                 }
 
                 //음악제목, 가수이름
-                output.musicTitle.accept(self.droppingInfo.music.title)
-                output.artistTitle.accept(self.droppingInfo.music.artist)
+                output.musicTitle.accept(self.droppingInfo.music.songName)
+                output.artistTitle.accept(self.droppingInfo.music.artistName)
             }).disposed(by: disposedBag)
 
         input.tapDropButton

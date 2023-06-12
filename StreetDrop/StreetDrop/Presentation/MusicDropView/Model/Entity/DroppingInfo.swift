@@ -13,15 +13,6 @@ struct DroppingInfo {
         var longitude: Double
         var address: String
     }
-
-    struct Music {
-        let title: String
-        let artist: String
-        let albumName: String
-        let albumImage: String
-        let genre: [String]
-    }
-
     let location: Location
     let music: Music
 }
