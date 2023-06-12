@@ -9,13 +9,13 @@ import Foundation
 
 struct CommunityInfo {
     let itemID: Int
-    let adress: String
+    let address: String
     let music: Music
     let comment: String
     let user: User
     let dropDate: String
     var isLiked: Bool
-    var ikeCount: Int
+    var likeCount: Int
 
     struct Music {
         let title: String
