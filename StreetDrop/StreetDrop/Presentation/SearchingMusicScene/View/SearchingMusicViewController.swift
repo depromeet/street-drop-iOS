@@ -181,6 +181,12 @@ private extension SearchingMusicViewController {
                 self.searchTextField.resignFirstResponder()
             }
             .disposed(by: disposeBag)
+        
+        self.backButton.rx.tap
+            .bind {
+                self.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindViewModel() {

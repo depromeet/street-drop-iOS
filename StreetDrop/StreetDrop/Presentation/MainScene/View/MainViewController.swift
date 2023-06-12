@@ -134,6 +134,10 @@ private extension MainViewController {
     
     func configureUI() {
         
+        // MARK: - NavigationBar
+        
+        self.navigationController?.isNavigationBarHidden = true
+        
         // MARK: - Map View
         
         self.view.addSubview(self.mapView)
@@ -279,6 +283,17 @@ private extension MainViewController {
                 })
             }
             .disposed(by: disposeBag)
+        
+        musicDropButton.rx.tap
+            .bind {
+                let searchingMusicViewController = SearchingMusicViewController()
+                self.navigationController?.pushViewController(
+                    searchingMusicViewController,
+                    animated: true
+                )
+            }
+            .disposed(by: disposeBag)
+
     }
     
     // MARK: - Data Binding
