@@ -19,7 +19,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             rootViewController: MainViewController()
         )
         window?.rootViewController = navigationController
-        window?.rootViewController = SearchingMusicViewController()
         window?.makeKeyAndVisible()
     }
 }
