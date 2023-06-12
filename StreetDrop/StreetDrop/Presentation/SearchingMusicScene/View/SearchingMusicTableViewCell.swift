@@ -7,10 +7,12 @@
 
 import UIKit
 
+import RxSwift
 import SnapKit
 
 class SearchingMusicTableViewCell: UITableViewCell {
     static let identifier = "SearchingMusicTableViewCell"
+    private var disposeBag: DisposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -25,6 +27,12 @@ class SearchingMusicTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.albumImage.image = nil
+        self.disposeBag = DisposeBag()
     }
     
     func setData(music: Music) {
