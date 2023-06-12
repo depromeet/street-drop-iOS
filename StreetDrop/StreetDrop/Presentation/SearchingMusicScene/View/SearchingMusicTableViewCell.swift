@@ -28,15 +28,7 @@ class SearchingMusicTableViewCell: UITableViewCell {
     }
     
     func setData(music: Music) {
-        if let url = URL(string: music.albumImage) {
-            DispatchQueue.global().async {
-                let data = try? Data(contentsOf: url)
-                DispatchQueue.main.async {
-                    self.albumImage.image = UIImage(data: data ?? Data())
-                }
-            }
-        }
-        
+        self.albumImage.setImage(with: music.albumImage, disposeBag: disposeBag)
         self.songNameLabel.text = music.songName
         self.artistNameLabel.text = music.artistName
         self.durationTimeLabel.text = music.durationTime
