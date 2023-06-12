@@ -60,7 +60,7 @@ final class CommunityViewModel: ViewModel {
         input.viewDidLoadEvent
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                output.addressTitle.accept(self.communityInfos[self.currentIndex].adress)
+                output.addressTitle.accept(self.communityInfos[self.currentIndex].address)
                 output.albumImages.accept(self.communityInfos.map {$0.music.albumImage} )
                 self.changeCommunityInfoForIndex(index: self.currentIndex, output: output)
             }).disposed(by: disposedBag)
