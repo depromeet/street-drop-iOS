@@ -300,6 +300,38 @@ private extension MainViewController {
 
     }
     
+    func bindPOI(_ poi: NMFMarker) {
+        poi.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
+            guard let self = self else { return true }
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                self.droppedMusicWithinAreaCollectionView.isHidden = false
+                self.bottomCoverImageView.isHidden = false
+                self.backToMapButton.isHidden = false
+                
+                self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
+                    make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+                    make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
+                    make.height.equalTo(UIScreen.main.bounds.width * 1.125 / 3 + 35)
+                }
+                self.bottomCoverImageView.snp.remakeConstraints { make in
+                    make.left.right.bottom.equalToSuperview()
+                    make.height.equalTo(152)
+                }
+                self.view.layoutIfNeeded()
+            })
+            
+            guard let layout = self.droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return true }
+            let cellWidth = layout.itemSize.width
+            let multiplier = CGFloat(poi.tag)
+            self.droppedMusicWithinAreaCollectionView.setContentOffset(
+                CGPoint(x: cellWidth * multiplier, y: .zero),
+                animated: false
+            )
+            return true
+        }
+    }
+    
     // MARK: - Data Binding
     
     private func bindViewModel() {
@@ -316,8 +348,8 @@ private extension MainViewController {
         
         output.pois
             .bind(onNext: { [weak self] pois in
-                pois.forEach { poi in
-                    self?.drawPOI(lat: poi.lat, lon: poi.lon, imageURL: poi.imageURL)
+                for (tag, poi) in pois.enumerated() {
+                    self?.drawPOI(tag: tag + 1, item: poi)
                 }
             })
             .disposed(by: disposeBag)
@@ -409,45 +441,24 @@ private extension MainViewController {
         currentLocationMarker.mapView = mapView
     }
     
-    func drawPOI(lat: Double, lon: Double, imageURL: String) {
+    func drawPOI(tag: Int, item: PoiEntity) {
         let poi = NMFMarker()
-        UIImage.load(with: imageURL)
+        poi.tag = UInt(tag)
+        UIImage.load(with: item.imageURL)
             .subscribe(onNext: { image in
                 guard let image = image else { return }
                 let originalImage = image
                 let newSize = CGSize(width: 50, height: 50)
                 let resizedImage = originalImage.resized(to: newSize)
+                // FIXME: 추후 마커틀 + 앨범이미지로 수정 필요
+                // poi.iconImage = NMFOverlayImage(image: UIImage(named: "musicMarker") ?? UIImage())
                 poi.iconImage = NMFOverlayImage(image: resizedImage ?? UIImage())
             })
             .disposed(by: disposeBag)
         
-        poi.position = NMGLatLng(lat: lat, lng: lon)
+        poi.position = NMGLatLng(lat: item.lat, lng: item.lon)
         poi.mapView = self.mapView
         poi.globalZIndex = 400000 // 네이버맵 sdk 오버레이 가이드를 참고한 zIndex 설정
         bindPOI(poi)
-    }
-    
-    func bindPOI(_ poi: NMFMarker) {
-        poi.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
-            guard let self = self else { return true }
-            UIView.animate(withDuration: 0.5, animations: {
-                self.droppedMusicWithinAreaCollectionView.isHidden = false
-                self.bottomCoverImageView.isHidden = false
-                self.backToMapButton.isHidden = false
-                
-                self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
-                    make.left.right.equalTo(self.view.safeAreaLayoutGuide)
-                    make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
-                    make.height.equalTo(UIScreen.main.bounds.width * 1.125 / 3 + 35)
-                }
-                self.bottomCoverImageView.snp.remakeConstraints { make in
-                    make.left.right.bottom.equalToSuperview()
-                    make.height.equalTo(152)
-                }
-                
-                self.view.layoutIfNeeded()
-            })
-            return true
-        }
     }
 }
