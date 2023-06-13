@@ -292,11 +292,7 @@ private extension CommunityViewController {
                 }
 
                 cell.layout()
-
-                self?.viewModel.fetchImage(url: url, output: output)
-                    .asDriver(onErrorJustReturn: Data())
-                    .drive { cell.setData($0) }
-                    .disposed(by: self?.disposeBag ?? DisposeBag())
+                cell.setData(url)
 
                 return cell
 
