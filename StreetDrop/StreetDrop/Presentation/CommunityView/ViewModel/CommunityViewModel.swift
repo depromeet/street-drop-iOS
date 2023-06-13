@@ -25,7 +25,7 @@ final class CommunityViewModel: ViewModel {
         var artistTitle: PublishRelay<String> = .init()
         var genresText: PublishRelay<[String]> = .init()
         var commentText: PublishRelay<String> = .init()
-        var profileImage: PublishRelay<Data> = .init()
+        var profileImageURL: PublishRelay<String> = .init()
         var nicknameText: PublishRelay<String> = .init()
         var dateText: PublishRelay<String> = .init()
         var isLiked: PublishRelay<Bool> = .init()
@@ -86,23 +86,6 @@ final class CommunityViewModel: ViewModel {
 
         return output
     }
-
-    func fetchImage(url: String, output: Output) -> Observable<Data> {
-        return Observable.create { observer in
-            DispatchQueue.global().async {
-                do {
-                    if let albumImageUrl = URL(string: url) {
-                        let imageData = try Data(contentsOf: albumImageUrl)
-                        observer.onNext(imageData)
-                    }
-                } catch {
-                    output.errorDescription.accept("Image 불러오기에 실패했습니다")
-                }
-            }
-            
-            return Disposables.create()
-        }
-    }
 }
 
 //MARK: - Private
@@ -127,11 +110,7 @@ private extension CommunityViewModel {
         output.dateText.accept(communityInfo.dropDate)
         output.isLiked.accept(communityInfo.isLiked)
         output.likeCount.accept(String(communityInfo.likeCount))
-
-        fetchImage(url: communityInfo.user.profileImage, output: output)
-            .subscribe(onNext: { data in
-                output.profileImage.accept(data)
-            }).disposed(by: disposeBag)
+        output.profileImageURL.accept(communityInfo.user.profileImage)
     }
 
     func likeDown(itemID: Int, output: Output) {
