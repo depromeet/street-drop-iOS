@@ -272,6 +272,7 @@ private extension SearchingMusicViewController {
         }
         
         self.searchView.snp.makeConstraints {
+            // TODO: 56 -> 60으로 바꼈는지 추후에 피그마 확인
             $0.height.equalTo(56)
             $0.top.equalTo(self.view.safeAreaLayoutGuide)
             $0.leading.equalToSuperview()
