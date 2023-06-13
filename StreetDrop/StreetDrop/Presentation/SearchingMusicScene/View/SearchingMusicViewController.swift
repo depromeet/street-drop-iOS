@@ -228,9 +228,9 @@ private extension SearchingMusicViewController {
                     viewModel: MusicDropViewModel(
                         droppingInfo: DroppingInfo(
                             location: .init(
-                                latitude: viewModel.location.coordinate.latitude,
-                                longitude: viewModel.location.coordinate.longitude,
-                                address: viewModel.address
+                                latitude: self.viewModel.location.coordinate.latitude,
+                                longitude: self.viewModel.location.coordinate.longitude,
+                                address: self.viewModel.address
                             ),
                             music: music
                         )
