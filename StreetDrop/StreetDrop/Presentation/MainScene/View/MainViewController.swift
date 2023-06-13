@@ -411,17 +411,15 @@ private extension MainViewController {
     
     func drawPOI(lat: Double, lon: Double, imageURL: String) {
         let poi = NMFMarker()
-        
-        // 추후 마커틀 + 앨범이미지로 수정 필요
-        //        poi.iconImage = NMFOverlayImage(image: UIImage(named: "musicMarker") ?? UIImage())
-        UIImage.load(with: imageURL) { image in
-            let originalImage = image
-            let newSize = CGSize(width: 50, height: 50)
-            let resizedImage = originalImage?.resized(to: newSize)
-            DispatchQueue.main.async {
+        UIImage.load(with: imageURL)
+            .subscribe(onNext: { image in
+                guard let image = image else { return }
+                let originalImage = image
+                let newSize = CGSize(width: 50, height: 50)
+                let resizedImage = originalImage.resized(to: newSize)
                 poi.iconImage = NMFOverlayImage(image: resizedImage ?? UIImage())
-            }
-        }
+            })
+            .disposed(by: disposeBag)
         
         poi.position = NMGLatLng(lat: lat, lng: lon)
         poi.mapView = self.mapView
