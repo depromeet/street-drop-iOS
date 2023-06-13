@@ -13,6 +13,7 @@ import RxSwift
 final class LocationManager: NSObject {
     private let locationManager = CLLocationManager()
     var delegate: MainViewModel?
+    var viewControllerDelegate: MainViewController?
     private let defaultLocation = CLLocation(latitude: 37.4979, longitude: 127.0275)
     
     override init() {
@@ -25,12 +26,24 @@ final class LocationManager: NSObject {
 // MARK: - Delegate Methods
 
 extension LocationManager: CLLocationManagerDelegate {
+    func requestLocation() {
+        if locationManager.authorizationStatus == .denied ||
+            locationManager.authorizationStatus == .restricted ||
+            locationManager.authorizationStatus == .notDetermined {
+            viewControllerDelegate?.requestLocationService()
+        } 
+
+        locationManager.requestWhenInUseAuthorization()
+    }
+
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
-        case .denied, .restricted:
-            delegate?.updateLocation(location: defaultLocation)
+        case .denied, .restricted, .notDetermined:
+            viewControllerDelegate?.requestLocationService()
+        case .authorized, .authorizedWhenInUse, .authorizedAlways:
+            locationManager.requestLocation()
         default:
-            self.locationManager.requestLocation()
+            return
         }
     }
     

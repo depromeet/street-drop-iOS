@@ -22,8 +22,7 @@ final class MainViewModel: ViewModel {
             networkManager: NetworkManager()
         )
     )
-    private let locationManager = LocationManager()
-    
+    var locationManager = LocationManager()
     let locationUpdated = PublishRelay<Void>()
     
     init() {

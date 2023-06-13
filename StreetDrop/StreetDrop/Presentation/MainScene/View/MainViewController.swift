@@ -14,15 +14,28 @@ import RxSwift
 import SnapKit
 
 final class MainViewController: UIViewController {
-    private let viewModel = MainViewModel()
+    private var viewModel: MainViewModel
     private let currentLocationMarker = NMFMarker()
     private let disposeBag = DisposeBag()
-    
+
+    init(viewModel: MainViewModel = MainViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        
+        self.viewModel.locationManager.viewControllerDelegate = self
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUI()
         self.bindAction()
         self.bindViewModel()
+
+        viewModel.locationManager.viewControllerDelegate = self
     }
     
     // MARK: - UI
@@ -291,6 +304,8 @@ private extension MainViewController {
         musicDropButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
+                self.viewModel.locationManager.requestLocation() // 비동기라 기다렸다가 진행해야하는걸로 수정해야함 // flag사용 또는 MainThread로 보내기
+
                 let searchingMusicViewController = SearchingMusicViewController(viewModel: DefaultSearchingMusicViewModel(
                     location: self.viewModel.location,
                     address: self.viewModel.address)
@@ -489,5 +504,12 @@ private extension MainViewController {
         poi.mapView = self.mapView
         poi.globalZIndex = 400000 // 네이버맵 sdk 오버레이 가이드를 참고한 zIndex 설정
         bindPOI(poi)
+    }
+}
+
+//MARK: - 위치 권한 요청을 위해 설정으로 이동 유도 Alert
+extension MainViewController: Alertable {
+    func requestLocationService() {
+        showLocationServiceRequestAlert()
     }
 }
