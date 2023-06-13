@@ -102,7 +102,7 @@ final class MainViewController: UIViewController {
     private lazy var droppedMusicWithinAreaCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3, height: UIScreen.main.bounds.width * 1.125 / 3)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3, height: 260)
         layout.minimumLineSpacing = 0
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(DroppedMusicWithinAreaCollectionViewCell.self, forCellWithReuseIdentifier: DroppedMusicWithinAreaCollectionViewCell.identifier)
@@ -249,7 +249,7 @@ private extension MainViewController {
         self.droppedMusicWithinAreaCollectionView.snp.makeConstraints { make in
             make.left.right.equalTo(self.view.safeAreaLayoutGuide)
             make.top.equalTo(self.view.snp.bottom)
-            make.height.equalTo(UIScreen.main.bounds.width * 1.125 / 3 + 35)
+            make.height.equalTo(260)
         }
         self.droppedMusicWithinAreaCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
@@ -266,7 +266,7 @@ private extension MainViewController {
                     self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
                         make.left.right.equalTo(self.view.safeAreaLayoutGuide)
                         make.top.equalTo(self.view.snp.bottom)
-                        make.height.equalTo(UIScreen.main.bounds.width * 1.125 / 3 + 35)
+                        make.height.equalTo(260)
                     }
                     self.bottomCoverImageView.snp.remakeConstraints { make in
                         make.left.right.equalToSuperview()
@@ -276,10 +276,14 @@ private extension MainViewController {
                     
                     self.view.layoutIfNeeded()
                 }, completion: { _ in
-                    
                     self.droppedMusicWithinAreaCollectionView.isHidden = true
                     self.bottomCoverImageView.isHidden = true
                     self.backToMapButton.isHidden = true
+                    
+                    for i in 0..<self.viewModel.musicWithinArea.count {
+                        guard let cell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { continue }
+                        cell.setComment(isPresented: false)
+                    }
                 })
             }
             .disposed(by: disposeBag)
@@ -311,14 +315,17 @@ private extension MainViewController {
                 
                 self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
                     make.left.right.equalTo(self.view.safeAreaLayoutGuide)
-                    make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(35)
-                    make.height.equalTo(UIScreen.main.bounds.width * 1.125 / 3 + 35)
+                    make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(24)
+                    make.height.equalTo(260)
                 }
                 self.bottomCoverImageView.snp.remakeConstraints { make in
                     make.left.right.bottom.equalToSuperview()
                     make.height.equalTo(152)
                 }
                 self.view.layoutIfNeeded()
+            }, completion: { _ in
+                guard let currentCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: Int(poi.tag) + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
+                currentCell.setComment(isPresented: true)
             })
             
             guard let layout = self.droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return true }
@@ -328,6 +335,7 @@ private extension MainViewController {
                 CGPoint(x: cellWidth * multiplier, y: .zero),
                 animated: false
             )
+        
             return true
         }
     }
@@ -383,7 +391,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
         let cellWidth = layout.itemSize.width
         let estimatedIndex = scrollView.contentOffset.x / cellWidth
         let index: Int
-
+        
         if velocity.x > 0 {
             index = Int(ceil(estimatedIndex))
         } else if velocity.x < 0 {
@@ -391,11 +399,16 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
         } else {
             index = Int(round(estimatedIndex))
         }
-
         targetContentOffset.pointee = CGPoint(
             x: (CGFloat(index) * cellWidth),
             y: 0
         )
+        for i in 0..<viewModel.musicWithinArea.count {
+            guard let cell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { continue }
+            cell.setComment(isPresented: false)
+        }
+        guard let currentCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
+        currentCell.setComment(isPresented: true)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -403,7 +416,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
         guard let layout = droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
         let count = viewModel.musicWithinArea.count
         let cellWidth = layout.itemSize.width
-
+        
         if scrollView.contentOffset.x < cellWidth {
             scrollView.setContentOffset(
                 .init(x: scrollView.contentSize.width - (cellWidth * 3), y: 0),

@@ -28,6 +28,12 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         self.musicTitleLabel.text = item.musicTitle
         self.singerNameLabel.text = item.artist
         self.albumCoverImageView.setImage(with: item.albumImageURL, disposeBag: disposeBag)
+        self.commentLabel.text = item.content
+    }
+    
+    func setComment(isPresented: Bool) {
+        self.commentContainerImageView.isHidden = !isPresented
+        self.commentLabel.isHidden = !isPresented
     }
     
     // MARK: - UI
@@ -56,6 +62,23 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
+    
+    private lazy var commentContainerImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "comment")
+        imageView.isUserInteractionEnabled = true
+        imageView.isHidden = true
+        return imageView
+    }()
+    
+    private lazy var commentLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
 }
 
 // MARK: - Private Functions
@@ -66,19 +89,22 @@ private extension DroppedMusicWithinAreaCollectionViewCell {
     
     func configureUI() {
         
-        // MARK: - Singer Name Label
+        // MARK: - Comment Container ImageView
         
-        self.addSubview(self.singerNameLabel)
-        self.singerNameLabel.snp.makeConstraints { make in
-            make.left.right.bottom.equalTo(self.safeAreaLayoutGuide)
+        self.addSubview(self.commentContainerImageView)
+        self.commentContainerImageView.snp.makeConstraints { make in
+            make.top.equalTo(self.safeAreaLayoutGuide).offset(20)
+            make.left.right.equalTo(self.safeAreaLayoutGuide)
+            make.height.equalTo(64)
         }
         
-        // MARK: - Music Title Label
+        // MARK: - Comment Label
         
-        self.addSubview(self.musicTitleLabel)
-        self.musicTitleLabel.snp.makeConstraints { make in
-            make.left.right.equalTo(self.safeAreaLayoutGuide)
-            make.bottom.equalTo(self.singerNameLabel.snp.top)
+        self.addSubview(self.commentLabel)
+        self.commentLabel.snp.makeConstraints { make in
+            make.left.right.equalTo(commentContainerImageView).inset(16)
+            make.top.equalTo(commentContainerImageView).inset(12)
+            make.bottom.equalTo(commentContainerImageView).inset(18)
         }
         
         // MARK: - Album Cover ImageView
@@ -86,8 +112,24 @@ private extension DroppedMusicWithinAreaCollectionViewCell {
         self.addSubview(self.albumCoverImageView)
         self.albumCoverImageView.snp.makeConstraints { make in
             make.centerX.equalTo(self.safeAreaLayoutGuide)
-            make.bottom.equalTo(self.musicTitleLabel.snp.top).inset(-12)
+            make.top.equalTo(self.commentContainerImageView.snp.bottom).offset(12)
             make.width.height.equalTo(84)
+        }
+        
+        // MARK: - Music Title Label
+        
+        self.addSubview(self.musicTitleLabel)
+        self.musicTitleLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(self.safeAreaLayoutGuide)
+            make.top.equalTo(self.albumCoverImageView.snp.bottom).offset(12)
+        }
+        
+        // MARK: - Singer Name Label
+        
+        self.addSubview(self.singerNameLabel)
+        self.singerNameLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(self.safeAreaLayoutGuide)
+            make.top.equalTo(self.musicTitleLabel.snp.bottom)
         }
     }
 }
