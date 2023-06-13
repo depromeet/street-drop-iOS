@@ -75,10 +75,12 @@ final class ImageCacheService {
         }
         
         // 2. Lookup Disk
-        if let image = self.checkDisk(imageURL) {
-            return self.get(imageURL: imageURL, etag: image.cacheInfo.etag)
-                .map({ $0.imageData })
-                .catchAndReturn(image.imageData)
+        if isUsingDiskCache {
+            if let image = self.checkDisk(imageURL) {
+                return self.get(imageURL: imageURL, etag: image.cacheInfo.etag)
+                    .map({ $0.imageData })
+                    .catchAndReturn(image.imageData)
+            }
         }
         
         // 3. Network Request
