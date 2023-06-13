@@ -362,6 +362,7 @@
 		04FB1F1E2A0214070064B3C8 /* MainScene */ = {
 			isa = PBXGroup;
 			children = (
+				18D671F82A3892FD003B1A71 /* LocationManager */,
 				04FB1F1F2A0214340064B3C8 /* View */,
 				04FB1F202A02143A0064B3C8 /* ViewModel */,
 				04FB1F212A0214430064B3C8 /* Model */,
@@ -373,8 +374,6 @@
 			isa = PBXGroup;
 			children = (
 				040685032A01539800377094 /* MainViewController.swift */,
-				188D2C762A1BA74E0088F49C /* LocationManager.swift */,
-				188D2C782A1BA7C60088F49C /* LocationManagerDelegate.swift */,
 				188D2C7A2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift */,
 			);
 			path = View;
@@ -499,6 +498,23 @@
 				18AAF83D2A137349002EF441 /* CommunityResponseDTO.swift */,
 			);
 			path = Community;
+			sourceTree = "<group>";
+		};
+		18D671F22A35A4FC003B1A71 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				18D671F32A35A50E003B1A71 /* ImageCacheService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		18D671F82A3892FD003B1A71 /* LocationManager */ = {
+			isa = PBXGroup;
+			children = (
+				188D2C762A1BA74E0088F49C /* LocationManager.swift */,
+				188D2C782A1BA7C60088F49C /* LocationManagerDelegate.swift */,
+			);
+			path = LocationManager;
 			sourceTree = "<group>";
 		};
 		18F76FAE2A050110006CF9EF /* DataMapping */ = {
