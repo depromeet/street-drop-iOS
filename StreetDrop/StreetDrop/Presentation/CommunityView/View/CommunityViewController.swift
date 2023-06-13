@@ -333,10 +333,11 @@ private extension CommunityViewController {
                 self?.commentLabel.text = $0
             }.disposed(by: disposeBag)
 
-        output.profileImage
-            .asDriver(onErrorJustReturn: Data())
-            .drive { [weak self] data in
-                self?.profileImageView.image = UIImage(data: data)
+        output.profileImageURL
+            .asDriver(onErrorJustReturn: String())
+            .drive { [weak self] url in
+                guard let self = self else { return }
+                self.profileImageView.setImage(with: url, disposeBag: self.disposeBag)
             }.disposed(by: disposeBag)
 
         output.nicknameText
