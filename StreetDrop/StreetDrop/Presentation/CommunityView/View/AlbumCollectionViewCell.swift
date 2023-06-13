@@ -7,11 +7,13 @@
 
 import UIKit
 
+import RxSwift
 import SnapKit
 
 final class AlbumCollectionViewCell: UICollectionViewCell {
 
     static let identifier: String = "AlbumCollectionViewCell"
+    private let disposeBag: DisposeBag = DisposeBag()
 
     private let albumImageView: UIImageView = {
         let imageView = UIImageView()   // TODO: 로딩이미지 추후 진행 (디자인팀과 희의O)
@@ -56,9 +58,8 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
         configureLayout()
     }
 
-    func setData(_ data: Data) {
-        let image = UIImage(data: data)
-        self.albumImageView.image = image
+    func setData(_ albumImageURL: String) {
+        self.albumImageView.setImage(with: albumImageURL, disposeBag: disposeBag)
     }
 
     override func prepareForReuse() {
