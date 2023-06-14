@@ -245,6 +245,7 @@ private extension MusicDropViewController {
         commentTextView.rx.didChange
             .subscribe { [weak self] _ in
                 self?.checkMaxNumberOfLines(max: 4)
+                self?.checkMaxCount(max: 40)
                 self?.checkAvailableToDrop()
             }.disposed(by: disposeBag)
         
@@ -463,6 +464,14 @@ private extension MusicDropViewController {
         let lines = commentTextView.text.components(separatedBy: lineBreakCharacter).count
 
         if lines > max {
+            commentTextView.text = String(commentTextView.text.dropLast())
+        }
+    }
+
+    func checkMaxCount(max: Int) {
+        let count = commentTextView.text.count
+
+        if count > max {
             commentTextView.text = String(commentTextView.text.dropLast())
         }
     }
