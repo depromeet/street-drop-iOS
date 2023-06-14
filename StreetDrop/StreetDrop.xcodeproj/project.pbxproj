@@ -404,7 +404,6 @@
 			isa = PBXGroup;
 			children = (
 				4143452C2A373520003FEE2A /* Service */,
-				C45A4CAC2A37103100EE9C36 /* Service */,
 				C4D16FCA2A1B985F008B076F /* Extensions */,
 				C4D16FC72A1B931E008B076F /* Font */,
 				414139982A20D03D005418A1 /* Color */,
@@ -504,14 +503,6 @@
 			path = Community;
 			sourceTree = "<group>";
 		};
-		18D671F22A35A4FC003B1A71 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				18D671F32A35A50E003B1A71 /* ImageCacheService.swift */,
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
 		18D671F82A3892FD003B1A71 /* LocationManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -589,6 +580,7 @@
 		4143452C2A373520003FEE2A /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				C45A4CAD2A37104600EE9C36 /* ImageCacheService.swift */,
 				4143452D2A373550003FEE2A /* AddressManager.swift */,
 			);
 			path = Service;
@@ -744,14 +736,6 @@
 				C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */,
 			);
 			path = SearchingMusic;
-			sourceTree = "<group>";
-		};
-		C45A4CAC2A37103100EE9C36 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				C45A4CAD2A37104600EE9C36 /* ImageCacheService.swift */,
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		C45BF3982A1D0AE200CEDE74 /* Constant */ = {
