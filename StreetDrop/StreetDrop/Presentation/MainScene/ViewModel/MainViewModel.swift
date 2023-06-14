@@ -98,15 +98,20 @@ extension MainViewModel {
                 output.location.accept(self.location)
             })
             .disposed(by: disposedBag)
-        
+
+        // 서나가 고친곳✅✅✅✅✅
 //        input.locationUpdated
 //            .subscribe(onNext: { [weak self] in
 //                guard let self = self else { return }
-//                self.model.fetchMusicCount(address: self.address)
+//                let latitude = self.location.coordinate.latitude
+//                let longitude = self.location.coordinate.longitude
+//
+//                self.model.fetchMusicCount(lat: latitude, lon: longitude)
 //                    .subscribe { result in
 //                        switch result {
 //                        case .success(let musicCountEntity):
 //                            output.musicCount.accept(musicCountEntity.musicCount)
+//                            output.address.accept(musicCountEntity.address)
 //                        case .failure(_):
 //                            output.musicCount.accept(0)
 //                        }
@@ -114,63 +119,23 @@ extension MainViewModel {
 //                    .disposed(by: disposedBag)
 //            })
 //            .disposed(by: disposedBag)
-//
-//        input.locationUpdated
-//            .subscribe(onNext: { [weak self] in
-//                guard let self = self else { return }
-//                output.address.accept(self.address)
-//            })
-//            .disposed(by: disposedBag)
-//
-//        input.locationUpdated
-//            .subscribe(onNext: { [weak self] in
-//                guard let self = self else { return }
-//                self.model.fetchMusicWithinArea(
-//                    lat: self.location.coordinate.latitude,
-//                    lon: self.location.coordinate.longitude,
-//                    distance: self.distance
-//                )
-//                .subscribe { result in
-//                    switch result {
-//                    case .success(let musicWithinArea):
-//                        if musicWithinArea.isEmpty {
-//                            self.musicWithinArea = []
-//                            output.musicWithinArea.accept([])
-//                            return
-//                        }
-//                        // 무한스크롤을 위한 데이터소스
-//                        var musicWithinAreaForInfinite = musicWithinArea
-//                        musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-1], at: 0)
-//                        musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-2], at: 0)
-//                        musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[2])
-//                        musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[3])
-//
-//                        self.musicWithinArea = musicWithinAreaForInfinite
-//                        output.musicWithinArea.accept(musicWithinAreaForInfinite)
-//                    case .failure(let error):
-//                        print(error)
-//                        output.musicWithinArea.accept([])
-//                    }
-//                }
-//                .disposed(by: disposedBag)
-//            })
-//            .disposed(by: disposedBag)
-        
         return output
     }
 }
 
-extension MainViewModel: LocationManagerDelegate {
-    func updateLocation(location: CLLocation) {
-        self.location = location
-        let geocoder = CLGeocoder()
-        
-        geocoder.reverseGeocodeLocation(location, preferredLocale: nil) { (placemarks, error) in
-            guard let address = placemarks?.first else { return }
-            // 차후 서버 포맷에 맞게 수정 필요
-//             self.address = address.name ?? ""
-            self.address = "종로구 사직동"
-            self.locationUpdated.accept(())
-        }
-    }
-}
+
+// 필요없지??
+//extension MainViewModel: LocationManagerDelegate {
+//    func updateLocation(location: CLLocation) {
+//        self.location = location
+//        let geocoder = CLGeocoder()
+//
+//        geocoder.reverseGeocodeLocation(location, preferredLocale: nil) { (placemarks, error) in
+//            guard let address = placemarks?.first else { return }
+//            // 차후 서버 포맷에 맞게 수정 필요
+////             self.address = address.name ?? ""
+//            self.address = "종로구 사직동"
+//            self.locationUpdated.accept(())
+//        }
+//    }
+//}

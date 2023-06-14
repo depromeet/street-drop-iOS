@@ -12,7 +12,7 @@ import Moya
 enum NetworkService {
     case searchMusic(keyword: String)
     case dropMusic(requestDTO: DropMusicRequestDTO)
-    case getMusicCountByDong(address: String)
+    case getMusicCountByDong(latitude: Double, longitude: Double)
     case getMusicWithinArea(latitude: Double, longitude: Double, distance: Double)
     case getCommunity(itemID: UUID)
     case postLikeUp(itemID: Int)

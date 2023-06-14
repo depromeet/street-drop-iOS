@@ -31,9 +31,9 @@ struct NetworkManager {
             .map { $0.statusCode }
     }
     
-    func getMusicCountByDong(address: String) -> Single<Data> {
+    func getMusicCountByDong(latitude: Double, longitude: Double) -> Single<Data> {
         return provider.rx
-            .request(.getMusicCountByDong(address: address))
+            .request(.getMusicCountByDong(latitude: latitude, longitude: longitude))
             .retry(3)
             .map { $0.data }
     }

@@ -26,8 +26,8 @@ extension DefaultMainRepository {
             })
     }
     
-    func fetchMusicCountByDong(address: String) -> Single<MusicCountEntity> {
-        networkManager.getMusicCountByDong(address: address)
+    func fetchMusicCountByDong(lat: Double, lon: Double) -> Single<MusicCountEntity> {
+        networkManager.getMusicCountByDong(latitude: lat, longitude: lon)
             .map({ data in
                 let dto = try JSONDecoder().decode(MusicCountByDongResponseDTO.self, from: data)
                 return dto.toEntity()
