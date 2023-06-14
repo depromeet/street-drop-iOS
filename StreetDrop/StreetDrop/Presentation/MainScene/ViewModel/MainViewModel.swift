@@ -57,40 +57,14 @@ extension MainViewModel {
             .sample(self.locationUpdated) // 앱 실행 시, 두 이벤트 모두 들어올 경우 한번만 fetchPois
             .take(1)
             .bind {_ in
-                self.model.fetchPois(
-                    lat: self.location.coordinate.latitude,
-                    lon: self.location.coordinate.longitude,
-                    distance: self.poisDistance
-                )
-                .subscribe { result in
-                    switch result {
-                    case .success(let pois):
-                        output.pois.accept(pois)
-                    case .failure:
-                        output.pois.accept([])
-                    }
-                }
-                .disposed(by: disposedBag)
+                self.fetchPois(output: output, disposedBag: disposedBag)
             }
             .disposed(by: disposedBag)
             
         input.viewWillAppearEvent // ViewWillAppear 시, fetchPois
             .skip(1) // 첫 ViewWillAppear땐 CLLocation 가져오지 못해 스킵
             .bind {_ in
-                self.model.fetchPois(
-                    lat: self.location.coordinate.latitude,
-                    lon: self.location.coordinate.longitude,
-                    distance: self.poisDistance
-                )
-                .subscribe { result in
-                    switch result {
-                    case .success(let pois):
-                        output.pois.accept(pois)
-                    case .failure:
-                        output.pois.accept([])
-                    }
-                }
-                .disposed(by: disposedBag)
+                self.fetchPois(output: output, disposedBag: disposedBag)
             }
             .disposed(by: disposedBag)
         
@@ -161,6 +135,24 @@ extension MainViewModel {
     }
 }
 
+private extension MainViewModel {
+    func fetchPois(output: Output, disposedBag: DisposeBag) {
+        self.model.fetchPois(
+            lat: self.location.coordinate.latitude,
+            lon: self.location.coordinate.longitude,
+            distance: self.poisDistance
+        )
+        .subscribe { result in
+            switch result {
+            case .success(let pois):
+                output.pois.accept(pois)
+            case .failure:
+                output.pois.accept([])
+            }
+        }
+        .disposed(by: disposedBag)
+    }
+}
 
 extension MainViewModel: LocationManagerDelegate {
     func updateLocation(location: CLLocation) {
