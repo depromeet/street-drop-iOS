@@ -22,6 +22,7 @@ final class MainViewController: UIViewController {
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let viewWillAppearEvent = PublishRelay<Void>()
     private let poiMarkerDidTapEvent = PublishRelay<Void>()
+    private let cameraDidStopEvent = PublishRelay<(latitude: Double, longitude: Double)>()
 
     init(viewModel: MainViewModel = MainViewModel()) {
         self.viewModel = viewModel
@@ -57,6 +58,7 @@ final class MainViewController: UIViewController {
         mapView.isNightModeEnabled = true
         mapView.minZoomLevel = 14.0
         mapView.maxZoomLevel = 14.0
+        mapView.addCameraDelegate(delegate: self)
         return mapView
     }()
     
@@ -402,7 +404,8 @@ private extension MainViewController {
             locationUpdated: viewModel.locationUpdated,
             viewDidLoadEvent: self.viewDidLoadEvent,
             viewWillAppearEvent: self.viewWillAppearEvent,
-            poiMarkerDidTapEvent: self.poiMarkerDidTapEvent
+            poiMarkerDidTapEvent: self.poiMarkerDidTapEvent,
+            cameraDidStopEvent: self.cameraDidStopEvent
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
         
@@ -545,5 +548,13 @@ private extension MainViewController {
 extension MainViewController: Alertable {
     func requestLocationAuthorization() {
         showLocationServiceRequestAlert()
+    }
+}
+
+// MARK: - 네이버 맵 카메라 Delegate
+
+extension MainViewController: NMFMapViewCameraDelegate {
+    func mapViewCameraIdle(_ mapView: NMFMapView) {
+        self.cameraDidStopEvent.accept((mapView.latitude, mapView.longitude))
     }
 }

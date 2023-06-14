@@ -37,6 +37,7 @@ extension MainViewModel {
         let viewDidLoadEvent: PublishRelay<Void>
         let viewWillAppearEvent: PublishRelay<Void>
         let poiMarkerDidTapEvent: PublishRelay<Void>
+        let cameraDidStopEvent: PublishRelay<(latitude: Double, longitude: Double)>
     }
     
     struct Output {
@@ -59,6 +60,12 @@ extension MainViewModel {
             .bind { [weak self] in
                 guard let self = self else { return }
                 self.fetchPois(output: output, disposedBag: disposedBag)
+                self.fetchMusicCount(
+                    latitude: self.location.coordinate.latitude,
+                    longitude: self.location.coordinate.longitude,
+                    output: output,
+                    disposedBag: disposedBag
+                )
             }
             .disposed(by: disposedBag)
             
@@ -66,7 +73,24 @@ extension MainViewModel {
             .skip(1) // 첫 ViewWillAppear땐 CLLocation 가져오지 못해 스킵
             .bind {_ in
                 self.fetchPois(output: output, disposedBag: disposedBag)
-                self.fetchMusicCount(output: output, disposedBag: disposedBag)
+                self.fetchMusicCount(
+                    latitude: self.location.coordinate.latitude,
+                    longitude: self.location.coordinate.longitude,
+                    output: output,
+                    disposedBag: disposedBag
+                )
+            }
+            .disposed(by: disposedBag)
+        
+        input.cameraDidStopEvent
+            .skip(1)
+            .bind { (latitude: Double, longitude: Double) in
+                self.fetchMusicCount(
+                    latitude: latitude,
+                    longitude: longitude,
+                    output: output,
+                    disposedBag: disposedBag
+                )
             }
             .disposed(by: disposedBag)
         
@@ -134,10 +158,12 @@ private extension MainViewModel {
         .disposed(by: disposedBag)
     }
     
-    func fetchMusicCount(output: Output, disposedBag: DisposeBag) {
-        let latitude = self.location.coordinate.latitude
-        let longitude = self.location.coordinate.longitude
-
+    func fetchMusicCount(
+        latitude: Double,
+        longitude: Double,
+        output: Output,
+        disposedBag: DisposeBag
+    ) {
         self.model.fetchMusicCount(lat: latitude, lon: longitude)
             .subscribe { result in
                 switch result {
