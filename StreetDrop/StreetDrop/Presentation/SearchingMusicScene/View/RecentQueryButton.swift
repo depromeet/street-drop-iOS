@@ -37,7 +37,7 @@ final class RecentQueryButton: UIControl {
         let label = UILabel()
         label.font = .pretendard(size: 14, weight: 500)
         label.setLineHeight(lineHeight: 16.71)
-        label.textColor = UIColor(red: 0.958, green: 0.958, blue: 0.958, alpha: 1)
+        label.textColor = UIColor.gray150
         label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return label
     }()

@@ -66,7 +66,7 @@ class SearchingMusicTableViewCell: UITableViewCell {
         label.font = .pretendard(size: 12, weight: 600)
         label.setLineHeight(lineHeight: 18)
         label.numberOfLines = 1
-        label.textColor = UIColor(red: 0.821, green: 0.834, blue: 0.879, alpha: 1)
+        label.textColor = UIColor.gray200
         return label
     }()
     
@@ -75,7 +75,7 @@ class SearchingMusicTableViewCell: UITableViewCell {
         label.font = .pretendard(size: 13, weight: 400)
         label.setLineHeight(lineHeight: 17)
         label.numberOfLines = 1
-        label.textColor = UIColor(red: 0.82, green: 0.835, blue: 0.878, alpha: 1)
+        label.textColor = UIColor.gray200
         label.adjustsFontSizeToFitWidth = true
         return label
     }()

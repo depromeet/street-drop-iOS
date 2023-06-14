@@ -27,7 +27,7 @@ final class SearchingMusicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(red: 0.024, green: 0.046, blue: 0.12, alpha: 1)
+        self.view.backgroundColor = .black
         bindAction()
         bindViewModel()
         configureUI()
@@ -42,14 +42,14 @@ final class SearchingMusicViewController: UIViewController {
     
     private lazy var searchTextField: UITextField = {
         let textField: UITextField = UITextField()
-        textField.backgroundColor = UIColor(red: 0.121, green: 0.146, blue: 0.22, alpha: 1)
+        textField.backgroundColor = UIColor.gray700
         textField.attributedPlaceholder = NSAttributedString(
             string: "드랍할 음악 검색",
             attributes: [
-                .foregroundColor: UIColor(red: 0.235, green: 0.269, blue: 0.354, alpha: 1)
+                .foregroundColor: UIColor.gray300
             ]
         )
-        textField.textColor = UIColor(red: 0.867, green: 0.902, blue: 0.942, alpha: 1)
+        textField.textColor = UIColor.gray100
         textField.layer.cornerRadius = 8.0
         
         textField.returnKeyType = .search
@@ -94,10 +94,10 @@ final class SearchingMusicViewController: UIViewController {
     
     private lazy var recentSearchResultLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.text = "최근 검색 결과"
-        label.textColor = UIColor(red: 0.958, green: 0.958, blue: 0.958, alpha: 1)
-        label.font = .pretendard(size: 12, weight: 500)
-        label.setLineHeight(lineHeight: 14.32)
+        label.text = "최근 검색어"
+        label.textColor = UIColor.gray150
+        label.font = .pretendard(size: 14, weight: 500)
+        label.setLineHeight(lineHeight: 20)
         return label
     }()
     
@@ -121,7 +121,7 @@ final class SearchingMusicViewController: UIViewController {
         let range = (fullText as NSString).range(of: "드랍하고 싶은 음악")
         attributedString.addAttribute(
             .foregroundColor,
-            value: UIColor(red: 145/255, green: 141/255, blue: 255/255, alpha: 1),
+            value: UIColor.primary400,
             range: range
         )
         
