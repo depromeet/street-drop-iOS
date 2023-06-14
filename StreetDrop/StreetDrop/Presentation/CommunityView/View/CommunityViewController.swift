@@ -347,7 +347,13 @@ private extension CommunityViewController {
             .asDriver(onErrorJustReturn: String())
             .drive { [weak self] url in
                 guard let self = self else { return }
-                self.profileImageView.setImage(with: url, disposeBag: self.disposeBag)
+                // 프로필 이미지 URL 생기면 맨 아랫 줄로 바꾸기. 1차 배포는 애플 이미지 사용
+                let image = UIImage(systemName: url)?
+                    .withTintColor(.white, renderingMode: .alwaysOriginal)
+
+                self.profileImageView.image = image
+
+                //self.profileImageView.setImage(with: url, disposeBag: self.disposeBag)
             }.disposed(by: disposeBag)
 
         output.nicknameText

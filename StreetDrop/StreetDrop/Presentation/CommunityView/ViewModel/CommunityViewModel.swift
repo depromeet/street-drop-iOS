@@ -121,7 +121,10 @@ private extension CommunityViewModel {
         output.dateText.accept(communityInfo.createdAt)
         output.isLiked.accept(communityInfo.isLiked)
         output.likeCount.accept(String(communityInfo.likeCount))
-        output.profileImageURL.accept(communityInfo.userProfileImageURL)
+
+        // 프로필 이미지 URL 생기면 두번째 줄로 바꾸기. 1차 배포는 애플 이미지 사용)
+        output.profileImageURL.accept("person.circle")
+        //output.profileImageURL.accept(communityInfo.userProfileImageURL)
     }
 
     func likeDown(itemID: Int, output: Output) {

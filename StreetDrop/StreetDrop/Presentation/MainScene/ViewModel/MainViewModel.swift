@@ -124,18 +124,15 @@ extension MainViewModel {
 }
 
 
-// 필요없지??
-//extension MainViewModel: LocationManagerDelegate {
-//    func updateLocation(location: CLLocation) {
-//        self.location = location
+extension MainViewModel: LocationManagerDelegate {
+    func updateLocation(location: CLLocation) {
+        self.location = location
 //        let geocoder = CLGeocoder()
-//
 //        geocoder.reverseGeocodeLocation(location, preferredLocale: nil) { (placemarks, error) in
 //            guard let address = placemarks?.first else { return }
 //            // 차후 서버 포맷에 맞게 수정 필요
 ////             self.address = address.name ?? ""
 //            self.address = "종로구 사직동"
-//            self.locationUpdated.accept(())
-//        }
-//    }
-//}
+            self.locationUpdated.accept(())
+    }
+}
