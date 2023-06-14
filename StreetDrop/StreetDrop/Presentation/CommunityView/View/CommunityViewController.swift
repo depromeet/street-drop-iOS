@@ -62,7 +62,7 @@ final class CommunityViewController: UIViewController {
     private lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
-        label.textColor = .white
+        label.textColor = .gray100
         label.font = .pretendard(size: 12, weight: 600)
         label.setLineHeight(lineHeight: 16)
 
@@ -71,7 +71,7 @@ final class CommunityViewController: UIViewController {
 
     private lazy var locationTopView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.089, green: 0.099, blue: 0.12, alpha: 1)
+        view.backgroundColor = .gray800
         view.layer.cornerRadius = 15
 
         return view
@@ -111,7 +111,7 @@ final class CommunityViewController: UIViewController {
     private lazy var artistLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
-        label.textColor = .white
+        label.textColor = .gray200
         label.font = .pretendard(size: 14, weight: 500)
         label.setLineHeight(lineHeight: 19.6)
 
@@ -142,7 +142,7 @@ final class CommunityViewController: UIViewController {
     private lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
-        label.textColor = .white
+        label.textColor = .gray50
         label.numberOfLines = 0
         label.font = .pretendard(size: 14, weight: 500)
         label.setLineHeight(lineHeight: 19.6)
@@ -160,7 +160,7 @@ final class CommunityViewController: UIViewController {
     private lazy var nicknameLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
-        label.textColor = .white
+        label.textColor = .gray100
         label.font = .pretendard(size: 14, weight: 500)
         label.setLineHeight(lineHeight: 19.6)
 
@@ -170,7 +170,7 @@ final class CommunityViewController: UIViewController {
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
-        label.textColor = .white
+        label.textColor = .gray300
         label.font = .pretendard(size: 12, weight: 400)
         label.setLineHeight(lineHeight: 16.8)
 
@@ -208,7 +208,7 @@ final class CommunityViewController: UIViewController {
     private lazy var listeningGuideLabel: UILabel = {
         let label = UILabel()
         label.text = "바로 듣기"
-        label.textColor = .white
+        label.textColor = .primary500
         label.font = .pretendard(size: 14, weight: 500)
         label.setLineHeight(lineHeight: 19.6)
 
@@ -219,9 +219,9 @@ final class CommunityViewController: UIViewController {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 16
+        stackView.spacing = 10
         stackView.layer.cornerRadius = 12
-        stackView.backgroundColor = UIColor(red: 0.089, green: 0.099, blue: 0.12, alpha: 1)
+        stackView.backgroundColor = .gray800
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
 
@@ -251,9 +251,9 @@ final class CommunityViewController: UIViewController {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 16
+        stackView.spacing = 10
         stackView.layer.cornerRadius = 12
-        stackView.backgroundColor = UIColor(red: 0.089, green: 0.099, blue: 0.12, alpha: 1)
+        stackView.backgroundColor = .gray800
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
 
@@ -542,13 +542,13 @@ private extension CommunityViewController {
         genres.forEach { genreTitle in
             let label = PaddingLabel(padding: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12))
             label.text = genreTitle
-            label.textColor = .white
+            label.textColor = .gray800
             label.textAlignment = .center
-            label.font = .preferredFont(forTextStyle: .caption1)
+            label.font = .pretendard(size: 12, weight: 600)
             label.numberOfLines = 1
             label.layer.cornerRadius = 12
             label.clipsToBounds = true
-            label.backgroundColor = UIColor(red: 0.213, green: 0.213, blue: 0.213, alpha: 1)
+            label.backgroundColor = .pointGradation_1
             labels.append(label)
         }
 
