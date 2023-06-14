@@ -30,7 +30,7 @@ extension LocationManager: CLLocationManagerDelegate {
         if locationManager.authorizationStatus == .denied ||
             locationManager.authorizationStatus == .restricted ||
             locationManager.authorizationStatus == .notDetermined {
-            viewControllerDelegate?.requestLocationService()
+            viewControllerDelegate?.requestLocationAuthorization()
             return false
         }
         return true
@@ -38,9 +38,9 @@ extension LocationManager: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
-        case .denied, .restricted, .notDetermined:
-            viewControllerDelegate?.requestLocationService()
-        case .authorized, .authorizedWhenInUse, .authorizedAlways:
+        case .denied, .restricted:
+            viewControllerDelegate?.requestLocationAuthorization()
+        case .authorized, .authorizedWhenInUse, .authorizedAlways, .notDetermined:
             locationManager.startUpdatingLocation()
         default:
             return

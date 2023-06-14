@@ -541,7 +541,7 @@ private extension MainViewController {
 
 //MARK: - 위치 권한 요청을 위해 설정으로 이동 유도 Alert
 extension MainViewController: Alertable {
-    func requestLocationService() {
+    func requestLocationAuthorization() {
         showLocationServiceRequestAlert()
     }
 }
