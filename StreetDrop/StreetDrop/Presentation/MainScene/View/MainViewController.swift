@@ -302,6 +302,22 @@ private extension MainViewController {
             }
             .disposed(by: disposeBag)
 
+        droppedMusicWithinAreaCollectionView.rx.itemSelected
+            .bind { [weak self] indexPath in
+                guard let self = self else { return }
+                let communityViewModel = CommunityViewModel(
+                    communityInfos: self.viewModel.musicWithinArea,
+                    index: indexPath.row
+                )
+
+                let communityViewController = CommunityViewController(viewModel: communityViewModel)
+
+                self.navigationController?.pushViewController(
+                    communityViewController,
+                    animated: true
+                )
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindPOI(_ poi: NMFMarker) {

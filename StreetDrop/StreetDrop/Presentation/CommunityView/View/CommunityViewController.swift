@@ -32,6 +32,7 @@ final class CommunityViewController: UIViewController {
         view.backgroundColor = .primaryBackground
 
         configureUI()
+        bindAction()
         bindViewModel()
         setupInitialOffset()
         viewDidLoadEvent.accept(())
@@ -131,7 +132,7 @@ final class CommunityViewController: UIViewController {
     private lazy var genreLabelStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 5
+        stackView.spacing = 8
 
         return stackView
     }()
@@ -270,6 +271,15 @@ final class CommunityViewController: UIViewController {
 }
 
 private extension CommunityViewController {
+    // MARK: - Action Binding
+
+    func bindAction() {
+        backButton.rx.tap
+            .subscribe(onNext: {
+                self.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+    }
 
     // MARK: - Data Binding
 
@@ -522,14 +532,15 @@ private extension CommunityViewController {
     func generateGenreLabels(genres: [String]) -> [PaddingLabel] {
         var labels: [PaddingLabel] = []
         genres.forEach { genreTitle in
-            let label = PaddingLabel(padding: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
+            let label = PaddingLabel(padding: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12))
             label.text = genreTitle
+            label.textColor = .white
             label.textAlignment = .center
             label.font = .preferredFont(forTextStyle: .caption1)
             label.numberOfLines = 1
-            label.layer.cornerRadius = 10
+            label.layer.cornerRadius = 12
             label.clipsToBounds = true
-            label.backgroundColor = .systemGray
+            label.backgroundColor = UIColor(red: 0.213, green: 0.213, blue: 0.213, alpha: 1)
             labels.append(label)
         }
 

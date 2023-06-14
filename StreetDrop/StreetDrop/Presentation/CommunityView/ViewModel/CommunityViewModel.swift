@@ -33,7 +33,7 @@ final class CommunityViewModel: ViewModel {
         var errorDescription: BehaviorRelay<String?> = .init(value: nil)
     }
 
-    private var communityInfos: [CommunityInfo]
+    private var communityInfos: [MusicWithinAreaEntity]
     private var currentIndex: Int
     private var communityModel: CommunityModel
     private let disposeBag: DisposeBag = DisposeBag()
@@ -43,7 +43,7 @@ final class CommunityViewModel: ViewModel {
     }
     
     init(
-        communityInfos: [CommunityInfo],
+        communityInfos: [MusicWithinAreaEntity],
         index: Int,
         communityModel: CommunityModel = DefaultCommunityModel()
     ) {
@@ -61,7 +61,7 @@ final class CommunityViewModel: ViewModel {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 output.addressTitle.accept(self.communityInfos[self.currentIndex].address)
-                output.albumImages.accept(self.communityInfos.map {$0.music.albumImage} )
+                output.albumImages.accept(self.communityInfos.map { $0.albumImageURL })
                 self.changeCommunityInfoForIndex(index: self.currentIndex, output: output)
             }).disposed(by: disposedBag)
 
@@ -77,7 +77,7 @@ final class CommunityViewModel: ViewModel {
                 guard let self = self else { return }
                 let communityInfo = self.communityInfos[self.currentIndex]
                 let isLiked = communityInfo.isLiked
-                let id = communityInfo.itemID
+                let id = communityInfo.id
                 
                 isLiked
                 ? self.likeDown(itemID: id, output: output)
@@ -90,27 +90,38 @@ final class CommunityViewModel: ViewModel {
 
 //MARK: - Private
 private extension CommunityViewModel {
+
     func prepareInfiniteCarousel() {
+        let newCommunityInfosFront = Array(communityInfos[
+            currentIndex...communityInfos.count-1
+        ])
+
+        let newCommunityInfosBack = Array(communityInfos[
+            0...(currentIndex-1)
+        ])
+
+        communityInfos = newCommunityInfosFront + newCommunityInfosBack
+        
         // 데이터 앞 뒤2개씩 추가: origin 1,2,3,4,5 -> to be 4,5 + 1,2,3,4,5 + 1,2
         communityInfos.insert(communityInfos[communityInfos.count-1], at: 0)
         communityInfos.insert(communityInfos[communityInfos.count-2], at: 0)
         communityInfos.append(communityInfos[2])
         communityInfos.append(communityInfos[3])
-        currentIndex += 2
+        currentIndex = 2
     }
 
     func changeCommunityInfoForIndex(index: Int, output: Output) {
         let communityInfo = communityInfos[index]
 
-        output.musicTitle.accept(communityInfo.music.title)
-        output.artistTitle.accept(communityInfo.music.artist)
-        output.genresText.accept(communityInfo.music.genre)
-        output.commentText.accept(communityInfo.comment)
-        output.nicknameText.accept(communityInfo.user.nickname)
-        output.dateText.accept(communityInfo.dropDate)
+        output.musicTitle.accept(communityInfo.musicTitle)
+        output.artistTitle.accept(communityInfo.artist)
+        output.genresText.accept(communityInfo.genre)
+        output.commentText.accept(communityInfo.content)
+        output.nicknameText.accept(communityInfo.userName)
+        output.dateText.accept(communityInfo.createdAt)
         output.isLiked.accept(communityInfo.isLiked)
         output.likeCount.accept(String(communityInfo.likeCount))
-        output.profileImageURL.accept(communityInfo.user.profileImage)
+        output.profileImageURL.accept(communityInfo.userProfileImageURL)
     }
 
     func likeDown(itemID: Int, output: Output) {
