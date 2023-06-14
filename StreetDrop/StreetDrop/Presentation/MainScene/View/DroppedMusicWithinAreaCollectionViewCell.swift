@@ -13,7 +13,7 @@ import RxSwift
 
 final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     static let identifier = "DroppedMusicWithinAreaCollectionViewCell"
-    private let disposeBag: DisposeBag = DisposeBag()
+    private var disposeBag: DisposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,6 +22,12 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.albumCoverImageView.image = nil
+        self.disposeBag = DisposeBag()
     }
     
     func setData(item: MusicWithinAreaEntity) {
