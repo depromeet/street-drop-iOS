@@ -26,14 +26,14 @@ final class LocationManager: NSObject {
 // MARK: - Delegate Methods
 
 extension LocationManager: CLLocationManagerDelegate {
-    func requestLocation() {
+    func checkAuthorizationStatus() -> Bool {
         if locationManager.authorizationStatus == .denied ||
             locationManager.authorizationStatus == .restricted ||
             locationManager.authorizationStatus == .notDetermined {
             viewControllerDelegate?.requestLocationService()
-        } 
-
-        locationManager.requestWhenInUseAuthorization()
+            return false
+        }
+        return true
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

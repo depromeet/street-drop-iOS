@@ -303,9 +303,10 @@ private extension MainViewController {
         
         musicDropButton.rx.tap
             .bind { [weak self] in
-                guard let self = self else { return }
-                self.viewModel.locationManager.requestLocation() // 비동기라 기다렸다가 진행해야하는걸로 수정해야함 // flag사용 또는 MainThread로 보내기
-
+                guard let self = self,
+                      self.viewModel.locationManager.checkAuthorizationStatus()
+                else { return }
+                
                 let searchingMusicViewController = SearchingMusicViewController(viewModel: DefaultSearchingMusicViewModel(
                     location: self.viewModel.location,
                     address: self.viewModel.address)
