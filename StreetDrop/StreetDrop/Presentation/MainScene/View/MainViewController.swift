@@ -399,6 +399,13 @@ private extension MainViewController {
             })
             .disposed(by: disposeBag)
         
+        output.location
+            .take(1) // 앱 실행시에 한번만 현재위치로 카메라 이동
+            .bind(onNext: { [weak self] location in
+                self?.moveCameraToCurrentLocation(location: location)
+            })
+            .disposed(by: disposeBag)
+        
         output.pois
             .bind(onNext: { [weak self] pois in
                 for (tag, poi) in pois.enumerated() {
@@ -490,11 +497,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
 
 private extension MainViewController {
     func drawCurrentLocationMarker(location: CLLocation) {
-        naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude,
-                                                               lng: location.coordinate.longitude)))
-        
         locationOverlay.location = NMGLatLng(lat: location.coordinate.latitude,
                                              lng: location.coordinate.longitude)
+    }
+    
+    func moveCameraToCurrentLocation(location: CLLocation) {
+        self.naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude,
+                                                               lng: location.coordinate.longitude)))
     }
     
     func drawPOI(tag: Int, item: PoiEntity) {
