@@ -537,18 +537,39 @@ private extension MainViewController {
                                                                lng: location.coordinate.longitude)))
     }
     
+    func combineImages(markerFrame: UIImage, album: UIImage) -> UIImage? {
+        let size = markerFrame.size
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+
+        let albumRect = CGRect(x: 13, y: 9, width: album.size.width, height: album.size.height)
+        album.draw(in: albumRect)
+
+        let markerRect = CGRect(x: 0, y: 0, width: markerFrame.size.width, height: markerFrame.size.height)
+        markerFrame.draw(in: markerRect, blendMode: .normal, alpha: 1)
+
+
+        let combinedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return combinedImage
+    }
+    
     func drawPOI(tag: Int, item: PoiEntity) {
         let poi = NMFMarker()
         poi.tag = UInt(tag)
+        
+        let defaultMusicMarkerImage = UIImage(named: "musicMarker") ?? UIImage()
+        poi.iconImage = NMFOverlayImage(image: defaultMusicMarkerImage)
         UIImage.load(with: item.imageURL)
             .subscribe(onNext: { image in
                 guard let image = image else { return }
                 let originalImage = image
-                let newSize = CGSize(width: 50, height: 50)
-                let resizedImage = originalImage.resized(to: newSize)
-                // FIXME: 추후 마커틀 + 앨범이미지로 수정 필요
-                // poi.iconImage = NMFOverlayImage(image: UIImage(named: "musicMarker") ?? UIImage())
-                poi.iconImage = NMFOverlayImage(image: resizedImage ?? UIImage())
+                let newSize = CGSize(width: 28, height: 28)
+                let resizedImage = originalImage.resized(to: newSize)?.withRoundedCorners(radius: newSize.width / 2) ?? UIImage()
+                let musicMarkFrameImage = UIImage(named: "musicMarkerFrame") ?? UIImage()
+                if let combinedImage = self.combineImages(markerFrame: musicMarkFrameImage, album: resizedImage) {
+                    poi.iconImage = NMFOverlayImage(image: combinedImage)
+                }
             })
             .disposed(by: disposeBag)
         
