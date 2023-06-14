@@ -36,6 +36,7 @@
 		188D2C772A1BA74E0088F49C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C762A1BA74E0088F49C /* LocationManager.swift */; };
 		188D2C792A1BA7C60088F49C /* LocationManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C782A1BA7C60088F49C /* LocationManagerDelegate.swift */; };
 		188D2C7B2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C7A2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift */; };
+		188F90C72A39FD7D003A1B4A /* UIImage+cornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F90C62A39FD7D003A1B4A /* UIImage+cornerRadius.swift */; };
 		18AAF8372A136F9E002EF441 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		18AAF83E2A137349002EF441 /* CommunityResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF83D2A137349002EF441 /* CommunityResponseDTO.swift */; };
 		18AAF83F2A137435002EF441 /* CommunityResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF83D2A137349002EF441 /* CommunityResponseDTO.swift */; };
@@ -171,6 +172,7 @@
 		188D2C762A1BA74E0088F49C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		188D2C782A1BA7C60088F49C /* LocationManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerDelegate.swift; sourceTree = "<group>"; };
 		188D2C7A2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroppedMusicWithinAreaCollectionViewCell.swift; sourceTree = "<group>"; };
+		188F90C62A39FD7D003A1B4A /* UIImage+cornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+cornerRadius.swift"; sourceTree = "<group>"; };
 		18AAF83D2A137349002EF441 /* CommunityResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityResponseDTO.swift; sourceTree = "<group>"; };
 		18AAF8402A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicWithinAreaResponseDTO.swift; sourceTree = "<group>"; };
 		18CB7BEC2A359F53002B31FB /* MusicWithinAreaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicWithinAreaEntity.swift; sourceTree = "<group>"; };
@@ -854,6 +856,7 @@
 				C41BD2EB2A3848880090EF2B /* UIImage+loadURLImage.swift */,
 				C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */,
 				414345012A31F17B003FEE2A /* UIViewController+Constant.swift */,
+				188F90C62A39FD7D003A1B4A /* UIImage+cornerRadius.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1040,6 +1043,7 @@
 				4111449E2A1C3D2C00075E71 /* String+changeColor.swift in Sources */,
 				18AAF83E2A137349002EF441 /* CommunityResponseDTO.swift in Sources */,
 				4141399A2A20D04B005418A1 /* Color.swift in Sources */,
+				188F90C72A39FD7D003A1B4A /* UIImage+cornerRadius.swift in Sources */,
 				C41BD2EC2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */,
 				C47F022A2A3869DC00F48884 /* MyPageInfo.swift in Sources */,
 				414345282A35BA3C003FEE2A /* CommunityModel.swift in Sources */,
