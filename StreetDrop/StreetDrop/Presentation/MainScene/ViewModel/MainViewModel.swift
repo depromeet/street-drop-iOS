@@ -13,7 +13,8 @@ import RxSwift
 
 final class MainViewModel: ViewModel {
     var location: CLLocation = CLLocation(latitude: 37.4979, longitude: 127.0275)
-    var distance: Double = 200000 // 1차 앱스토어 배포 시엔, 대한민국 전체 조회를 위해 반지름 200KM로 조회
+    var poisDistance: Double = 200000 // 1차 앱스토어 배포 시엔, 대한민국 전체 조회를 위해 반지름 200KM로 조회
+    var detailItemsDistance: Double = 500
     var address: String = ""
     var musicWithinArea: Musics = []
     
@@ -35,6 +36,7 @@ extension MainViewModel {
         let locationUpdated: PublishRelay<Void>
         let viewDidLoadEvent: PublishRelay<Void>
         let viewWillAppearEvent: PublishRelay<Void>
+        let poiMarkerDidTapEvent: PublishRelay<Void>
     }
     
     struct Output {
@@ -58,7 +60,7 @@ extension MainViewModel {
                 self.model.fetchPois(
                     lat: self.location.coordinate.latitude,
                     lon: self.location.coordinate.longitude,
-                    distance: self.distance
+                    distance: self.poisDistance
                 )
                 .subscribe { result in
                     switch result {
@@ -78,7 +80,7 @@ extension MainViewModel {
                 self.model.fetchPois(
                     lat: self.location.coordinate.latitude,
                     lon: self.location.coordinate.longitude,
-                    distance: self.distance
+                    distance: self.poisDistance
                 )
                 .subscribe { result in
                     switch result {
@@ -119,6 +121,42 @@ extension MainViewModel {
 //                    .disposed(by: disposedBag)
 //            })
 //            .disposed(by: disposedBag)
+        
+        input.poiMarkerDidTapEvent
+            .withLatestFrom(self.locationUpdated)
+            .bind { [weak self] in
+                guard let self = self else { return }
+                self.model.fetchMusicWithinArea(
+                    lat: self.location.coordinate.latitude,
+                    lon: self.location.coordinate.longitude,
+                    distance: self.detailItemsDistance
+                )
+                .subscribe { result in
+                    switch result {
+                    case .success(let musicWithinArea):
+                        if musicWithinArea.isEmpty {
+                            self.musicWithinArea = []
+                            output.musicWithinArea.accept([])
+                            return
+                        }
+                        // 무한스크롤을 위한 데이터소스
+                        var musicWithinAreaForInfinite = musicWithinArea
+                        musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-1], at: 0)
+                        musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-2], at: 0)
+                        musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[2])
+                        musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[3])
+                        
+                        self.musicWithinArea = musicWithinAreaForInfinite
+                        output.musicWithinArea.accept(musicWithinAreaForInfinite)
+                    case .failure(let error):
+                        print(error)
+                        output.musicWithinArea.accept([])
+                    }
+                }
+                .disposed(by: disposedBag)
+            }
+            .disposed(by: disposedBag)
+        
         return output
     }
 }

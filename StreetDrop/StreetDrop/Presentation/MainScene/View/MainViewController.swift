@@ -21,6 +21,7 @@ final class MainViewController: UIViewController {
     private let circleRadius: Double = 500
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let viewWillAppearEvent = PublishRelay<Void>()
+    private let poiMarkerDidTapEvent = PublishRelay<Void>()
 
     init(viewModel: MainViewModel = MainViewModel()) {
         self.viewModel = viewModel
@@ -361,7 +362,7 @@ private extension MainViewController {
     func bindPOI(_ poi: NMFMarker) {
         poi.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
             guard let self = self else { return true }
-            
+            self.poiMarkerDidTapEvent.accept(Void())
             UIView.animate(withDuration: 0.5, animations: {
                 self.droppedMusicWithinAreaCollectionView.isHidden = false
                 self.bottomCoverImageView.isHidden = false
@@ -400,7 +401,8 @@ private extension MainViewController {
         let input = MainViewModel.Input(
             locationUpdated: viewModel.locationUpdated,
             viewDidLoadEvent: self.viewDidLoadEvent,
-            viewWillAppearEvent: self.viewWillAppearEvent
+            viewWillAppearEvent: self.viewWillAppearEvent,
+            poiMarkerDidTapEvent: self.poiMarkerDidTapEvent
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
         
