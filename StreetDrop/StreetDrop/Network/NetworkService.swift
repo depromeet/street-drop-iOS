@@ -26,7 +26,7 @@ extension NetworkService: TargetType {
         case .searchMusic:
             return URL(string: "https://search.street-drop.com")!
         default:
-            return URL(string: "https://api.street-drop.com")!
+            return URL(string: "https://test-api.street-drop.com")!
         }
     }
     
@@ -109,8 +109,8 @@ extension NetworkService: TargetType {
     
     var headers: [String: String]? {
         return [
-            "Content-type": "application/json"
-            //             ,"x-sdp-idfv": UIDevice.current.identifierForVendor?.uuidString ?? ""
+            "Content-type": "application/json",
+            "x-sdp-idfv": UIDevice.current.identifierForVendor?.uuidString ?? ""
         ]
     }
     
