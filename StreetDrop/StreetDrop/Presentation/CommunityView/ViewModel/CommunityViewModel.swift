@@ -118,7 +118,7 @@ private extension CommunityViewModel {
         output.genresText.accept(communityInfo.genre)
         output.commentText.accept(communityInfo.content)
         output.nicknameText.accept(communityInfo.userName)
-        output.dateText.accept(communityInfo.createdAt)
+        output.dateText.accept(convertDateFormat(date: communityInfo.createdAt))
         output.isLiked.accept(communityInfo.isLiked)
         output.likeCount.accept(String(communityInfo.likeCount))
 
