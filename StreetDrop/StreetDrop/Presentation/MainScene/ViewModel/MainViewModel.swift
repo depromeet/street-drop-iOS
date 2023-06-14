@@ -56,7 +56,8 @@ extension MainViewModel {
         input.viewDidLoadEvent
             .sample(self.locationUpdated) // 앱 실행 시, 두 이벤트 모두 들어올 경우 한번만 fetchPois
             .take(1)
-            .bind {_ in
+            .bind { [weak self] in
+                guard let self = self else { return }
                 self.fetchPois(output: output, disposedBag: disposedBag)
             }
             .disposed(by: disposedBag)
@@ -65,6 +66,7 @@ extension MainViewModel {
             .skip(1) // 첫 ViewWillAppear땐 CLLocation 가져오지 못해 스킵
             .bind {_ in
                 self.fetchPois(output: output, disposedBag: disposedBag)
+                self.fetchMusicCount(output: output, disposedBag: disposedBag)
             }
             .disposed(by: disposedBag)
         
@@ -74,27 +76,6 @@ extension MainViewModel {
                 output.location.accept(self.location)
             })
             .disposed(by: disposedBag)
-
-        // 서나가 고친곳✅✅✅✅✅
-//        input.locationUpdated
-//            .subscribe(onNext: { [weak self] in
-//                guard let self = self else { return }
-//                let latitude = self.location.coordinate.latitude
-//                let longitude = self.location.coordinate.longitude
-//
-//                self.model.fetchMusicCount(lat: latitude, lon: longitude)
-//                    .subscribe { result in
-//                        switch result {
-//                        case .success(let musicCountEntity):
-//                            output.musicCount.accept(musicCountEntity.musicCount)
-//                            output.address.accept(musicCountEntity.address)
-//                        case .failure(_):
-//                            output.musicCount.accept(0)
-//                        }
-//                    }
-//                    .disposed(by: disposedBag)
-//            })
-//            .disposed(by: disposedBag)
         
         input.poiMarkerDidTapEvent
             .withLatestFrom(self.locationUpdated)
@@ -151,6 +132,23 @@ private extension MainViewModel {
             }
         }
         .disposed(by: disposedBag)
+    }
+    
+    func fetchMusicCount(output: Output, disposedBag: DisposeBag) {
+        let latitude = self.location.coordinate.latitude
+        let longitude = self.location.coordinate.longitude
+
+        self.model.fetchMusicCount(lat: latitude, lon: longitude)
+            .subscribe { result in
+                switch result {
+                case .success(let musicCountEntity):
+                    output.musicCount.accept(musicCountEntity.musicCount)
+                    output.address.accept(musicCountEntity.address)
+                case .failure(_):
+                    output.musicCount.accept(0)
+                }
+            }
+            .disposed(by: disposedBag)
     }
 }
 
