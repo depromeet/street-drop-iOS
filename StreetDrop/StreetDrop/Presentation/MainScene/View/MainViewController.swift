@@ -45,6 +45,8 @@ final class MainViewController: UIViewController {
         let mapView = NMFMapView()
         mapView.mapType = .navi
         mapView.isNightModeEnabled = true
+        mapView.minZoomLevel = 14.0
+        mapView.maxZoomLevel = 14.0
         return mapView
     }()
     
