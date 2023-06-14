@@ -17,6 +17,7 @@ final class MainViewController: UIViewController {
     private var viewModel: MainViewModel
     private let currentLocationMarker = NMFMarker()
     private let disposeBag = DisposeBag()
+    private let circleRadius: Double = 500
 
     init(viewModel: MainViewModel = MainViewModel()) {
         self.viewModel = viewModel
@@ -51,7 +52,7 @@ final class MainViewController: UIViewController {
         let locationOverlay = self.naverMapView.locationOverlay
         locationOverlay.hidden = false
         locationOverlay.icon = NMFOverlayImage(name: "locationOverlayIcon")
-        locationOverlay.circleRadius = 100
+        locationOverlay.circleRadius = circleRadius / naverMapView.projection.metersPerPixel()
         locationOverlay.circleColor = UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0.16)
         
         return locationOverlay
