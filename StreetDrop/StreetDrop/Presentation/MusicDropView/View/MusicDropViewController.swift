@@ -17,7 +17,7 @@ final class MusicDropViewController: UIViewController {
         static let textDefault = ""
         static let dropGuideTitle: String = "음악을 드랍할게요"
         static let commentPlaceHolder: String = "음악에 대해 하고싶은 말이 있나요?"
-        static let commentGuidanceText: String = "• 텍스트는 생략이 가능하며 욕설, 성희롱, 비방과 같은 내용은 삭제합니다"
+        static let commentGuidanceText: String = "• 5자부터 40자까지 입력 가능합니다.\n• 욕설, 성희롱, 비방과 같은 내용은 삭제됩니다."
         static let dropButtonTitle: String = "드랍하기"
     }
 
@@ -49,6 +49,7 @@ final class MusicDropViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        setupPlaceHolder()
         makeViewIntoGradientCircle()
     }
 
@@ -71,7 +72,7 @@ final class MusicDropViewController: UIViewController {
 
     private lazy var cancelButton: UIButton = {
         let button: UIButton = UIButton()
-        button.setTitle("취소", for: .normal)
+        button.setTitle("나가기", for: .normal)
         button.titleLabel?.font = .pretendard(size: 14, weight: 600)
 
         return button
@@ -149,7 +150,7 @@ final class MusicDropViewController: UIViewController {
         let label: UILabel = UILabel()
         label.text = Constant.textDefault
         label.numberOfLines = 1
-        label.textColor = .white
+        label.textColor = .gray300
         label.font = .pretendard(size: 12, weight: 500)
         label.setLineHeight(lineHeight: 18)
 
@@ -183,9 +184,9 @@ final class MusicDropViewController: UIViewController {
     private lazy var CommentGuidanceLabel: UILabel = {
         let label: UILabel = UILabel()
         label.text = Constant.commentGuidanceText
-        label.numberOfLines = 1
+        label.numberOfLines = 2
         label.textColor = .white
-        label.font = .pretendard(size: 11, weight: 400)
+        label.font = .pretendard(size: 12, weight: 400)
         label.setLineHeight(lineHeight: 17)
 
         return label
@@ -202,9 +203,9 @@ final class MusicDropViewController: UIViewController {
     private lazy var dropButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(Constant.dropButtonTitle, for: .normal)
-        button.setTitleColor(UIColor(red: 0.335, green: 0.338, blue: 0.35, alpha: 1), for: .normal)
+        button.setTitleColor(.gray400, for: .normal)
         button.layer.cornerRadius = 10
-        button.backgroundColor = UIColor(red: 0.225, green: 0.224, blue: 0.25, alpha: 1)
+        button.backgroundColor = .gray300
         button.isEnabled = false
 
         return button
@@ -248,13 +249,13 @@ private extension MusicDropViewController {
                 self?.checkMaxCount(max: 40)
                 self?.checkAvailableToDrop()
             }.disposed(by: disposeBag)
-        
+
         backButton.rx.tap
             .bind {
                 self.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
-        
+
         cancelButton.rx.tap
             .bind {
                 self.navigationController?.popToRootViewController(animated: true)
@@ -279,7 +280,7 @@ private extension MusicDropViewController {
             .drive(onNext: { [weak self] locationTitle in
                 self?.locationLabel.attributedText = locationTitle.text.changeColorPartially(
                     locationTitle.address,
-                    to: UIColor(red: 145/255, green: 141/255, blue: 255/255, alpha: 1)
+                    to: .primary400
                 )
             }).disposed(by: disposeBag)
 
@@ -317,7 +318,7 @@ private extension MusicDropViewController {
 
     func configureUI() {
         self.view.clipsToBounds = true
-        
+
         [backButton, cancelButton].forEach {
             topView.addSubview($0)
         }
@@ -392,7 +393,7 @@ private extension MusicDropViewController {
             $0.width.equalToSuperview().multipliedBy(1.4)
             $0.height.equalTo(largerCenterGradientCircleView.snp.width)
             $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().multipliedBy(0.9)
+            $0.centerY.equalToSuperview().multipliedBy(0.92)
         }
 
         scrollView.snp.makeConstraints {
@@ -446,7 +447,7 @@ private extension MusicDropViewController {
 
         if(commentTextView.text == nil || commentTextView.text == "") {
             commentTextView.text = placeHolder
-            commentTextView.textColor = UIColor(red: 0.587, green: 0.587, blue: 0.587, alpha: 1)
+            commentTextView.textColor = .gray300
         }
     }
 
@@ -455,7 +456,7 @@ private extension MusicDropViewController {
 
         if(commentTextView.text == placeHolder) {
             commentTextView.text = nil
-            commentTextView.textColor = .white
+            commentTextView.textColor = .gray100
         }
     }
 
@@ -485,16 +486,16 @@ private extension MusicDropViewController {
         ) {
             albumImageGradationView.layer.masksToBounds = false
             dropButton.isEnabled = true
-            dropButton.backgroundColor = UIColor(red: 0.399, green: 0.371, blue: 1, alpha: 1)
-            dropButton.setTitleColor(.white, for: .normal)
+            dropButton.backgroundColor = .primary500
+            dropButton.setTitleColor(.gray900, for: .normal)
         } else {
             albumImageGradationView.layer.masksToBounds = true
             dropButton.isEnabled = false
             dropButton.setTitleColor(
-                UIColor(red: 0.335, green: 0.338, blue: 0.35, alpha: 1),
+                .gray400,
                 for: .normal
             )
-            dropButton.backgroundColor = UIColor(red: 0.225, green: 0.224, blue: 0.25, alpha: 1)
+            dropButton.backgroundColor = .gray300
         }
     }
 
@@ -524,29 +525,38 @@ private extension MusicDropViewController {
     func makeViewIntoGradientCircle() {
         topGradientCircleView.makeGradientCircleView(
             colors: [
-                UIColor(red: 0.078, green: 0.078, blue: 0.078, alpha: 1).cgColor,
-                UIColor(red: 0.078, green: 0.078, blue: 0.078, alpha: 0.61).cgColor,
-                UIColor(red: 0.208, green: 0.207, blue: 0.292, alpha: 1).cgColor,
+                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
+                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0.1).cgColor
             ],
-            gradientLocations: [0, 0.5, 1],
+            gradientLocations: [0.53, 1],
             viewBackgroundColor: .black,
             startPoint: CGPoint(x: 0.5, y: 0.25),
             endPoint: CGPoint(x: 0.5, y: 0.75)
         )
 
-        [smallerCenterGradientCircleView, largerCenterGradientCircleView].forEach {
-            $0.makeGradientCircleView(
-                colors: [
-                    UIColor.primaryBackground.cgColor,
-                    UIColor.primaryBackground.cgColor,
-                    UIColor(red: 145/255, green: 141/255, blue: 255/255, alpha: 1).cgColor
-                ],
-                gradientLocations: [0, 0.8, 1],
-                viewBackgroundColor: .primaryBackground,
-                startPoint: CGPoint(x: 0.5, y: 0),
-                endPoint:  CGPoint(x: 0.5, y: 1)
-            )
-        }
+        smallerCenterGradientCircleView.makeGradientCircleView(
+            colors: [
+                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
+                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
+                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0.1).cgColor
+            ],
+            gradientLocations: [0, 0.53, 1],
+            viewBackgroundColor: .black,
+            startPoint: CGPoint(x: 0.5, y: 0),
+            endPoint:  CGPoint(x: 0.5, y: 1)
+        )
+
+        largerCenterGradientCircleView.makeGradientCircleView(
+            colors: [
+                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
+                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
+                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0.08).cgColor
+            ],
+            gradientLocations: [0, 0.53, 1],
+            viewBackgroundColor: .black,
+            startPoint: CGPoint(x: 0.5, y: 0),
+            endPoint:  CGPoint(x: 0.5, y: 1)
+        )
     }
 
     //MARK: - 키보드
