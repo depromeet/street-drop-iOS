@@ -17,10 +17,13 @@ struct MusicWithinAreaResponseDTO: Decodable {
         let music: Music
         let content: String?
         let createdAt: String
-        
+        let isLiked: Bool
+        let likeCount: Int
+
         enum CodingKeys: String, CodingKey {
             case itemID = "itemId"
-            case user, location, music, content, createdAt
+            case likeCount = "itemLikeCount"
+            case user, location, music, content, createdAt, isLiked
         }
     }
     
@@ -53,7 +56,9 @@ extension MusicWithinAreaResponseDTO {
                 albumImageURL: $0.music.albumImage,
                 genre: $0.music.genre,
                 content: $0.content ?? "",
-                createdAt: $0.createdAt
+                createdAt: $0.createdAt,
+                isLiked: $0.isLiked,
+                likeCount: $0.likeCount
             )
         }
     }

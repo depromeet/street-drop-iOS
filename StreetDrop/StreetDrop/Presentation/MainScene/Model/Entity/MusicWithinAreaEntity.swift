@@ -19,6 +19,8 @@ struct MusicWithinAreaEntity {
     let genre: [String]
     let content: String
     let createdAt: String
+    var isLiked: Bool
+    var likeCount: Int
 }
 
 typealias Musics = [MusicWithinAreaEntity]
