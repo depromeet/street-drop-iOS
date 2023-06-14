@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>NMFClientId</key>
+	<string>95d477gbj5</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Black.otf</string>
@@ -14,14 +18,6 @@
 		<string>Pretendard-SemiBold.otf</string>
 		<string>Pretendard-Thin.otf</string>
 	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>위치 권한 허용이 필요합니다.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>위치 권한 허용이 필요합니다.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>위치 권한 허용이 필요합니다.</string>
-	<key>NMFClientId</key>
-	<string>95d477gbj5</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
