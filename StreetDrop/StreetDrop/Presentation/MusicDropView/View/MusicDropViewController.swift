@@ -499,9 +499,14 @@ private extension MusicDropViewController {
             $0.width.equalToSuperview().multipliedBy(0.5)
             $0.height.equalToSuperview().multipliedBy(0.5)
         }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.navigationController?.popToRootViewController(animated: true)
+        })
     }
 
     func removeViewItemComponents() {
+        topView.removeFromSuperview()
         scrollView.removeFromSuperview()
     }
 
