@@ -72,11 +72,13 @@ final class MainViewController: UIViewController {
         return locationOverlay
     }()
     
-    private lazy var topBarView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 8
-        view.backgroundColor = UIColor(red: 2.0 / 255.0, green: 4.0 / 255.0, blue: 15.0 / 255.0, alpha: 1.0)
-        return view
+    private lazy var locationStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 2
+        stackView.backgroundColor = .clear
+        stackView.alignment = .center
+        return stackView
     }()
     
     private lazy var locationIconImageView: UIImageView = {
@@ -96,7 +98,7 @@ final class MainViewController: UIViewController {
     
     private lazy var musicDroppedCountContainerView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 4
+        view.layer.cornerRadius = 16
         view.backgroundColor = UIColor(red: 0.068, green: 0.101, blue: 0.15, alpha: 1)
         return view
     }()
@@ -181,47 +183,41 @@ private extension MainViewController {
         self.view.addSubview(self.naverMapView)
         self.naverMapView.frame = self.view.frame
         
-        // MARK: - Top Bar View
+        // MARK: - Location StackView
         
-        self.view.addSubview(self.topBarView)
-        self.topBarView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).inset(8)
-            make.left.right.equalTo(self.view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(42)
+        self.view.addSubview(self.locationStackView)
+        self.locationStackView.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(12)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(24)
         }
         
         // MARK: - Location Icon ImageView
         
-        self.topBarView.addSubview(self.locationIconImageView)
+        self.locationStackView.addArrangedSubview(self.locationIconImageView)
         self.locationIconImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(20)
-            make.left.equalToSuperview().inset(12)
-            make.centerY.equalToSuperview()
+            make.width.height.equalTo(24)
         }
         
         // MARK: - Location Label
         
-        self.topBarView.addSubview(self.locationLabel)
-        self.locationLabel.snp.makeConstraints { make in
-            make.left.equalTo(self.locationIconImageView.snp.right).offset(4)
-            make.centerY.equalToSuperview()
-        }
+        self.locationStackView.addArrangedSubview(self.locationLabel)
         
         // MARK: - Music Dropped Count Container View
         
-        self.topBarView.addSubview(self.musicDroppedCountContainerView)
+        self.view.addSubview(self.musicDroppedCountContainerView)
         self.musicDroppedCountContainerView.snp.makeConstraints { make in
-            make.width.equalTo(111)
-            make.height.equalTo(26)
-            make.right.equalToSuperview().inset(8)
-            make.centerY.equalToSuperview()
+            make.top.equalTo(self.locationStackView.snp.bottom).offset(12)
+            make.height.equalTo(32)
+            make.centerX.equalToSuperview()
         }
         
         // MARK: - Music Dropped Count Label
         
         self.musicDroppedCountContainerView.addSubview(self.musicDroppedCountLabel)
         self.musicDroppedCountLabel.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.left.right.equalToSuperview().inset(16)
         }
         
         // MARK: - Bottom Bar IamgeView
