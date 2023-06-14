@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "locationMarker.png",
+      "filename" : "locationOverlayIcon@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "locationMarker@2x.png",
+      "filename" : "locationOverlayIcon@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "locationMarker@3x.png",
+      "filename" : "locationOverlayIcon@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

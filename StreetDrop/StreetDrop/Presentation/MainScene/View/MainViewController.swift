@@ -40,11 +40,21 @@ final class MainViewController: UIViewController {
     
     // MARK: - UI
     
-    private lazy var mapView: NMFMapView = {
+    private lazy var naverMapView: NMFMapView = {
         let mapView = NMFMapView()
         mapView.mapType = .navi
         mapView.isNightModeEnabled = true
         return mapView
+    }()
+    
+    private lazy var locationOverlay: NMFLocationOverlay = {
+        let locationOverlay = self.naverMapView.locationOverlay
+        locationOverlay.hidden = false
+        locationOverlay.icon = NMFOverlayImage(name: "locationOverlayIcon")
+        locationOverlay.circleRadius = 100
+        locationOverlay.circleColor = UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0.16)
+        
+        return locationOverlay
     }()
     
     private lazy var topBarView: UIView = {
@@ -153,8 +163,8 @@ private extension MainViewController {
         
         // MARK: - Map View
         
-        self.view.addSubview(self.mapView)
-        self.mapView.frame = self.view.frame
+        self.view.addSubview(self.naverMapView)
+        self.naverMapView.frame = self.view.frame
         
         // MARK: - Top Bar View
         
@@ -477,13 +487,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
 
 private extension MainViewController {
     func drawCurrentLocationMarker(location: CLLocation) {
-        mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude,
+        naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude,
                                                                lng: location.coordinate.longitude)))
-        currentLocationMarker.mapView = nil
-        currentLocationMarker.iconImage = NMFOverlayImage(image: UIImage(named: "locationMarker.png") ?? UIImage())
-        currentLocationMarker.position = NMGLatLng(lat: location.coordinate.latitude,
-                                                   lng: location.coordinate.longitude)
-        currentLocationMarker.mapView = mapView
+        
+        locationOverlay.location = NMGLatLng(lat: location.coordinate.latitude,
+                                             lng: location.coordinate.longitude)
     }
     
     func drawPOI(tag: Int, item: PoiEntity) {
@@ -502,7 +510,7 @@ private extension MainViewController {
             .disposed(by: disposeBag)
         
         poi.position = NMGLatLng(lat: item.lat, lng: item.lon)
-        poi.mapView = self.mapView
+        poi.mapView = self.naverMapView
         poi.globalZIndex = 400000 // 네이버맵 sdk 오버레이 가이드를 참고한 zIndex 설정
         bindPOI(poi)
     }
