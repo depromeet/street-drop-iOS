@@ -13,7 +13,7 @@ import RxSwift
 
 final class MainViewModel: ViewModel {
     var location: CLLocation = CLLocation(latitude: 37.4979, longitude: 127.0275)
-    var distance: Double = 1000.0
+    var distance: Double = 200000 // 1차 앱스토어 배포 시엔, 대한민국 전체 조회를 위해 반지름 200KM로 조회
     var address: String = ""
     var musicWithinArea: Musics = []
     
@@ -33,6 +33,8 @@ final class MainViewModel: ViewModel {
 extension MainViewModel {
     struct Input {
         let locationUpdated: PublishRelay<Void>
+        let viewDidLoadEvent: PublishRelay<Void>
+        let viewWillAppearEvent: PublishRelay<Void>
     }
     
     struct Output {
@@ -48,9 +50,11 @@ extension MainViewModel {
     func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
         let output = Output()
         
-        input.locationUpdated
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
+        // TODO: viewDidLoadEvent, viewWillAppearEvent처리 더 괜찮은 RX연산자 있다면 리팩토링!
+        input.viewDidLoadEvent
+            .sample(self.locationUpdated) // 앱 실행 시, 두 이벤트 모두 들어올 경우 한번만 fetchPois
+            .take(1)
+            .bind {_ in
                 self.model.fetchPois(
                     lat: self.location.coordinate.latitude,
                     lon: self.location.coordinate.longitude,
@@ -65,7 +69,27 @@ extension MainViewModel {
                     }
                 }
                 .disposed(by: disposedBag)
-            })
+            }
+            .disposed(by: disposedBag)
+            
+        input.viewWillAppearEvent // ViewWillAppear 시, fetchPois
+            .skip(1) // 첫 ViewWillAppear땐 CLLocation 가져오지 못해 스킵
+            .bind {_ in
+                self.model.fetchPois(
+                    lat: self.location.coordinate.latitude,
+                    lon: self.location.coordinate.longitude,
+                    distance: self.distance
+                )
+                .subscribe { result in
+                    switch result {
+                    case .success(let pois):
+                        output.pois.accept(pois)
+                    case .failure:
+                        output.pois.accept([])
+                    }
+                }
+                .disposed(by: disposedBag)
+            }
             .disposed(by: disposedBag)
         
         input.locationUpdated
@@ -75,62 +99,62 @@ extension MainViewModel {
             })
             .disposed(by: disposedBag)
         
-        input.locationUpdated
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.model.fetchMusicCount(address: self.address)
-                    .subscribe { result in
-                        switch result {
-                        case .success(let musicCountEntity):
-                            output.musicCount.accept(musicCountEntity.musicCount)
-                        case .failure(_):
-                            output.musicCount.accept(0)
-                        }
-                    }
-                    .disposed(by: disposedBag)
-            })
-            .disposed(by: disposedBag)
-        
-        input.locationUpdated
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                output.address.accept(self.address)
-            })
-            .disposed(by: disposedBag)
-        
-        input.locationUpdated
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.model.fetchMusicWithinArea(
-                    lat: self.location.coordinate.latitude,
-                    lon: self.location.coordinate.longitude,
-                    distance: self.distance
-                )
-                .subscribe { result in
-                    switch result {
-                    case .success(let musicWithinArea):
-                        if musicWithinArea.isEmpty {
-                            self.musicWithinArea = []
-                            output.musicWithinArea.accept([])
-                            return
-                        }
-                        // 무한스크롤을 위한 데이터소스
-                        var musicWithinAreaForInfinite = musicWithinArea
-                        musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-1], at: 0)
-                        musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-2], at: 0)
-                        musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[2])
-                        musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[3])
-
-                        self.musicWithinArea = musicWithinAreaForInfinite
-                        output.musicWithinArea.accept(musicWithinAreaForInfinite)
-                    case .failure(let error):
-                        print(error)
-                        output.musicWithinArea.accept([])
-                    }
-                }
-                .disposed(by: disposedBag)
-            })
-            .disposed(by: disposedBag)
+//        input.locationUpdated
+//            .subscribe(onNext: { [weak self] in
+//                guard let self = self else { return }
+//                self.model.fetchMusicCount(address: self.address)
+//                    .subscribe { result in
+//                        switch result {
+//                        case .success(let musicCountEntity):
+//                            output.musicCount.accept(musicCountEntity.musicCount)
+//                        case .failure(_):
+//                            output.musicCount.accept(0)
+//                        }
+//                    }
+//                    .disposed(by: disposedBag)
+//            })
+//            .disposed(by: disposedBag)
+//
+//        input.locationUpdated
+//            .subscribe(onNext: { [weak self] in
+//                guard let self = self else { return }
+//                output.address.accept(self.address)
+//            })
+//            .disposed(by: disposedBag)
+//
+//        input.locationUpdated
+//            .subscribe(onNext: { [weak self] in
+//                guard let self = self else { return }
+//                self.model.fetchMusicWithinArea(
+//                    lat: self.location.coordinate.latitude,
+//                    lon: self.location.coordinate.longitude,
+//                    distance: self.distance
+//                )
+//                .subscribe { result in
+//                    switch result {
+//                    case .success(let musicWithinArea):
+//                        if musicWithinArea.isEmpty {
+//                            self.musicWithinArea = []
+//                            output.musicWithinArea.accept([])
+//                            return
+//                        }
+//                        // 무한스크롤을 위한 데이터소스
+//                        var musicWithinAreaForInfinite = musicWithinArea
+//                        musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-1], at: 0)
+//                        musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-2], at: 0)
+//                        musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[2])
+//                        musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[3])
+//
+//                        self.musicWithinArea = musicWithinAreaForInfinite
+//                        output.musicWithinArea.accept(musicWithinAreaForInfinite)
+//                    case .failure(let error):
+//                        print(error)
+//                        output.musicWithinArea.accept([])
+//                    }
+//                }
+//                .disposed(by: disposedBag)
+//            })
+//            .disposed(by: disposedBag)
         
         return output
     }

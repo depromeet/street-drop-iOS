@@ -10,6 +10,7 @@ import UIKit
 
 import NMapsMap
 import RxCocoa
+import RxRelay
 import RxSwift
 import SnapKit
 
@@ -18,6 +19,8 @@ final class MainViewController: UIViewController {
     private let currentLocationMarker = NMFMarker()
     private let disposeBag = DisposeBag()
     private let circleRadius: Double = 500
+    private let viewDidLoadEvent = PublishRelay<Void>()
+    private let viewWillAppearEvent = PublishRelay<Void>()
 
     init(viewModel: MainViewModel = MainViewModel()) {
         self.viewModel = viewModel
@@ -37,6 +40,12 @@ final class MainViewController: UIViewController {
         self.bindViewModel()
 
         viewModel.locationManager.viewControllerDelegate = self
+        self.viewDidLoadEvent.accept(Void())
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewWillAppearEvent.accept(Void())
     }
     
     // MARK: - UI
@@ -389,7 +398,9 @@ private extension MainViewController {
     
     private func bindViewModel() {
         let input = MainViewModel.Input(
-            locationUpdated: viewModel.locationUpdated
+            locationUpdated: viewModel.locationUpdated,
+            viewDidLoadEvent: self.viewDidLoadEvent,
+            viewWillAppearEvent: self.viewWillAppearEvent
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
         
