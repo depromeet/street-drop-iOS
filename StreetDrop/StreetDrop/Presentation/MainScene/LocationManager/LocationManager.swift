@@ -41,7 +41,7 @@ extension LocationManager: CLLocationManagerDelegate {
         case .denied, .restricted, .notDetermined:
             viewControllerDelegate?.requestLocationService()
         case .authorized, .authorizedWhenInUse, .authorizedAlways:
-            locationManager.requestLocation()
+            locationManager.startUpdatingLocation()
         default:
             return
         }
@@ -49,7 +49,6 @@ extension LocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let currentLocation = locations.last else { return }
-        locationManager.stopUpdatingLocation()
         delegate?.updateLocation(location: currentLocation)
     }
     
