@@ -394,6 +394,8 @@ private extension CommunityViewController {
     // MARK: - UI
     
     func configureUI() {
+        self.view.clipsToBounds = true
+        
         [locationImageView, locationLabel].forEach {
             locationTopView.addSubview($0)
         }
