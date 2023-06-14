@@ -72,6 +72,12 @@ final class MainViewController: UIViewController {
         return locationOverlay
     }()
     
+    private lazy var topCoverImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "topCover")
+        return imageView
+    }()
+    
     private lazy var locationStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -90,8 +96,8 @@ final class MainViewController: UIViewController {
     
     private lazy var locationLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = UIColor(red: 0.867, green: 0.902, blue: 0.942, alpha: 1)
+        label.font = .pretendard(size: 16, weight: 700)
+        label.textColor = UIColor(red: 0.902, green: 0.931, blue: 0.971, alpha: 1)
         label.text = "위치 정보 없음"
         return label
     }()
@@ -99,14 +105,14 @@ final class MainViewController: UIViewController {
     private lazy var musicDroppedCountContainerView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 16
-        view.backgroundColor = UIColor(red: 0.068, green: 0.101, blue: 0.15, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.008, green: 0.016, blue: 0.058, alpha: 0.75)
         return view
     }()
     
     private lazy var musicDroppedCountLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = UIColor(red: 0.408, green: 0.396, blue: 0.971, alpha: 1)
+        label.font = .pretendard(size: 12, weight: 600)
+        label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.6)
         label.text = "드랍된 음악 0개"
         return label
     }()
@@ -182,6 +188,15 @@ private extension MainViewController {
         
         self.view.addSubview(self.naverMapView)
         self.naverMapView.frame = self.view.frame
+        
+        // MARK: - Top Cover ImageView
+        
+        self.view.addSubview(self.topCoverImageView)
+        self.topCoverImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(self.view.frame.width).multipliedBy(146 / 375)
+        }
         
         // MARK: - Location StackView
         
