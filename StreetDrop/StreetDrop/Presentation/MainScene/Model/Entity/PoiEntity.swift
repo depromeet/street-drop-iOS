@@ -12,6 +12,7 @@ struct PoiEntity {
     let imageURL: String
     let lat: Double
     let lon: Double
+    let isWithinArea: Bool
 }
 
 typealias Pois = [PoiEntity]

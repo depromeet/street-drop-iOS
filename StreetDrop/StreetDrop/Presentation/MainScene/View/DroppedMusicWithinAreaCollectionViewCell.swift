@@ -37,9 +37,10 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         self.commentLabel.text = item.content
     }
     
-    func setComment(isPresented: Bool) {
-        self.commentContainerImageView.isHidden = !isPresented
-        self.commentLabel.isHidden = !isPresented
+    func setInitialState(isMiddle: Bool) {
+        self.commentContainerImageView.isHidden = !isMiddle
+        self.commentLabel.isHidden = !isMiddle
+        self.isUserInteractionEnabled = isMiddle
     }
     
     // MARK: - UI
@@ -98,6 +99,10 @@ private extension DroppedMusicWithinAreaCollectionViewCell {
     // MARK: - UI
     
     func configureUI() {
+        
+        // MARK: - View
+        
+        self.isUserInteractionEnabled = false
         
         // MARK: - Comment Container ImageView
         

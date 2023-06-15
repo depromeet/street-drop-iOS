@@ -330,7 +330,7 @@ private extension MainViewController {
                     
                     for i in 0..<self.viewModel.musicWithinArea.count {
                         guard let cell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { continue }
-                        cell.setComment(isPresented: false)
+                        cell.setInitialState(isMiddle: false)
                     }
                 })
             }
@@ -386,11 +386,12 @@ private extension MainViewController {
             .disposed(by: disposeBag)
     }
     
-    func bindPOI(_ poi: NMFMarker) {
+    func bindPOI(index: Int? = nil, poi: NMFMarker) {
+        guard let index = index else { return }
         poi.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
             guard let self = self else { return true }
             self.poiMarkerDidTapEvent.accept(Void())
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: 0.3, animations: {
                 self.droppedMusicWithinAreaCollectionView.isHidden = false
                 self.bottomCoverImageView.isHidden = false
                 self.backToMapButton.isHidden = false
@@ -406,18 +407,16 @@ private extension MainViewController {
                 }
                 self.view.layoutIfNeeded()
             }, completion: { _ in
-                guard let currentCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: Int(poi.tag) + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
-                currentCell.setComment(isPresented: true)
+                guard let currentCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: Int(index + 2), section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
+                currentCell.setInitialState(isMiddle: true)
             })
-            
             guard let layout = self.droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return true }
             let cellWidth = layout.itemSize.width
-            let multiplier = CGFloat(poi.tag)
+            let multiplier = CGFloat(index + 1)
             self.droppedMusicWithinAreaCollectionView.setContentOffset(
                 CGPoint(x: cellWidth * multiplier, y: .zero),
                 animated: false
             )
-        
             return true
         }
     }
@@ -449,8 +448,15 @@ private extension MainViewController {
         
         output.pois
             .bind(onNext: { [weak self] pois in
-                for (tag, poi) in pois.enumerated() {
-                    self?.drawPOI(tag: tag + 1, item: poi)
+                var index = 0
+                for poi in pois {
+                    if poi.isWithinArea {
+                        self?.drawPOI(index: index, item: poi)
+                        index += 1
+                    }
+                    else {
+                        self?.drawPOI(item: poi)
+                    }
                 }
             })
             .disposed(by: disposeBag)
@@ -483,7 +489,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
         guard let layout = droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
         let cellWidth = layout.itemSize.width
         let estimatedIndex = scrollView.contentOffset.x / cellWidth
-        let index: Int
+        var index: Int
         
         if velocity.x > 0 {
             index = Int(ceil(estimatedIndex))
@@ -496,18 +502,20 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
             x: (CGFloat(index) * cellWidth),
             y: 0
         )
-        for i in 0..<viewModel.musicWithinArea.count {
-            guard let cell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { continue }
-            cell.setComment(isPresented: false)
-        }
-        guard let currentCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
-        currentCell.setComment(isPresented: true)
+        index += 1
+        
+        guard let leftCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index - 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
+        guard let rightCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
+        leftCell.setInitialState(isMiddle: false)
+        rightCell.setInitialState(isMiddle: false)
+        
+//        guard let currentCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
+//        currentCell.setInitialState(isMiddle: true)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView != droppedMusicWithinAreaCollectionView { return }
         guard let layout = droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        let count = viewModel.musicWithinArea.count
         let cellWidth = layout.itemSize.width
         
         if scrollView.contentOffset.x < cellWidth {
@@ -564,9 +572,11 @@ private extension MainViewController {
         return combinedImage
     }
     
-    func drawPOI(tag: Int, item: PoiEntity) {
+    func drawPOI(index: Int? = nil, item: PoiEntity) {
         let poi = NMFMarker()
-        poi.tag = UInt(tag)
+        if let index = index {
+            poi.tag = UInt(index)
+        }
         
         let defaultMusicMarkerImage = UIImage(named: "musicMarker") ?? UIImage()
         poi.iconImage = NMFOverlayImage(image: defaultMusicMarkerImage)
@@ -586,7 +596,7 @@ private extension MainViewController {
         poi.position = NMGLatLng(lat: item.lat, lng: item.lon)
         poi.mapView = self.naverMapView
         poi.globalZIndex = 400000 // 네이버맵 sdk 오버레이 가이드를 참고한 zIndex 설정
-        bindPOI(poi)
+        bindPOI(index: index, poi: poi)
     }
 }
 

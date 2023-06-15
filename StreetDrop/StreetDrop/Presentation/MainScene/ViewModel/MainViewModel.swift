@@ -68,6 +68,7 @@ extension MainViewModel {
                     output: output,
                     disposedBag: disposedBag
                 )
+                self.fetchMusicWithArea(output: output, disposedBag: disposedBag)
             }
             .disposed(by: disposedBag)
             
@@ -81,6 +82,7 @@ extension MainViewModel {
                     output: output,
                     disposedBag: disposedBag
                 )
+                self.fetchMusicWithArea(output: output, disposedBag: disposedBag)
             }
             .disposed(by: disposedBag)
         
@@ -107,34 +109,7 @@ extension MainViewModel {
             .withLatestFrom(self.locationUpdated)
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.model.fetchMusicWithinArea(
-                    lat: self.location.coordinate.latitude,
-                    lon: self.location.coordinate.longitude,
-                    distance: self.detailItemsDistance
-                )
-                .subscribe { result in
-                    switch result {
-                    case .success(let musicWithinArea):
-                        if musicWithinArea.isEmpty {
-                            self.musicWithinArea = []
-                            output.musicWithinArea.accept([])
-                            return
-                        }
-                        // 무한스크롤을 위한 데이터소스
-                        var musicWithinAreaForInfinite = musicWithinArea
-                        musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-1], at: 0)
-                        musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-2], at: 0)
-                        musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[2])
-                        musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[3])
-                        
-                        self.musicWithinArea = musicWithinAreaForInfinite
-                        output.musicWithinArea.accept(musicWithinAreaForInfinite)
-                    case .failure(let error):
-                        print(error)
-                        output.musicWithinArea.accept([])
-                    }
-                }
-                .disposed(by: disposedBag)
+                self.fetchMusicWithArea(output: output, disposedBag: disposedBag)
             }
             .disposed(by: disposedBag)
         
@@ -149,6 +124,37 @@ extension MainViewModel {
 }
 
 private extension MainViewModel {
+    func fetchMusicWithArea(output: Output, disposedBag: DisposeBag) {
+        self.model.fetchMusicWithinArea(
+            lat: self.location.coordinate.latitude,
+            lon: self.location.coordinate.longitude,
+            distance: self.detailItemsDistance
+        )
+        .subscribe { result in
+            switch result {
+            case .success(let musicWithinArea):
+                if musicWithinArea.isEmpty {
+                    self.musicWithinArea = []
+                    output.musicWithinArea.accept([])
+                    return
+                }
+                // 무한스크롤을 위한 데이터소스
+                var musicWithinAreaForInfinite = musicWithinArea
+                musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-1], at: 0)
+                musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-2], at: 0)
+                musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[2])
+                musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[3])
+                
+                self.musicWithinArea = musicWithinAreaForInfinite
+                output.musicWithinArea.accept(musicWithinAreaForInfinite)
+            case .failure(let error):
+                print(error)
+                output.musicWithinArea.accept([])
+            }
+        }
+        .disposed(by: disposedBag)
+    }
+    
     func fetchPois(output: Output, disposedBag: DisposeBag) {
         self.model.fetchPois(
             lat: self.location.coordinate.latitude,

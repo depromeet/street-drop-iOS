@@ -15,10 +15,11 @@ struct PoiResponseDTO: Decodable {
         let albumCover: String
         let latitude: Double
         let longitude: Double
+        let isInnerDistance: Bool
 
         private enum CodingKeys: String, CodingKey {
             case itemID = "itemId"
-            case albumCover, latitude, longitude
+            case albumCover, latitude, longitude, isInnerDistance
         }
     }
 }
@@ -30,7 +31,9 @@ extension PoiResponseDTO {
                 .init(id: $0.itemID,
                       imageURL: $0.albumCover,
                       lat: $0.latitude,
-                      lon: $0.longitude)
+                      lon: $0.longitude,
+                      isWithinArea: $0.isInnerDistance
+                )
             }
         )
     }
