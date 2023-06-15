@@ -8,6 +8,7 @@
 import Foundation
 import CoreLocation
 
+import RxCocoa
 import RxRelay
 import RxSwift
 
@@ -38,6 +39,7 @@ extension MainViewModel {
         let viewWillAppearEvent: PublishRelay<Void>
         let poiMarkerDidTapEvent: PublishRelay<Void>
         let cameraDidStopEvent: PublishRelay<(latitude: Double, longitude: Double)>
+        let homeButtonDidTapEvent: ControlEvent<Void>
     }
     
     struct Output {
@@ -133,6 +135,12 @@ extension MainViewModel {
                     }
                 }
                 .disposed(by: disposedBag)
+            }
+            .disposed(by: disposedBag)
+        
+        input.homeButtonDidTapEvent
+            .bind { [weak self] in
+                self?.locationManager.startUpdatingLocation()
             }
             .disposed(by: disposedBag)
         
