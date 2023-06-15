@@ -48,6 +48,25 @@ final class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewWillAppearEvent.accept(Void())
+        
+        //TODO: 나중에 리팩토링
+        self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
+            make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(self.view.snp.bottom)
+            make.height.equalTo(260)
+        }
+        self.bottomCoverImageView.snp.remakeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(self.view.snp.bottom)
+            make.height.equalTo(152)
+        }
+        for i in 0..<self.viewModel.musicWithinArea.count {
+            guard let cell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { continue }
+            cell.setInitialState(isMiddle: false)
+        }
+        self.droppedMusicWithinAreaCollectionView.isHidden = true
+        self.bottomCoverImageView.isHidden = true
+        self.backToMapButton.isHidden = true
     }
     
     // MARK: - UI
