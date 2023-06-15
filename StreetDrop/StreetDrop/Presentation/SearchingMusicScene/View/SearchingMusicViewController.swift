@@ -216,6 +216,7 @@ private extension SearchingMusicViewController {
             .disposed(by: disposeBag)
         
         output.recentMusicQueries
+            .observe(on: MainScheduler.instance)
             .bind { queries in
                 self.recentMusicSearchScrollView.setData(queries: queries)
             }
