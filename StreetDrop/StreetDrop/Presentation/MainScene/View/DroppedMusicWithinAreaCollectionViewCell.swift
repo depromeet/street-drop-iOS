@@ -46,7 +46,7 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     
     private lazy var musicTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
+        label.font = .pretendard(size: 16, weight: 700)
         label.textColor = .white
         label.numberOfLines = 1
         label.textAlignment = .center
@@ -55,7 +55,7 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     
     private lazy var singerNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
+        label.font = .pretendard(size: 12, weight: 600)
         label.textColor = .white
         label.numberOfLines = 1
         label.textAlignment = .center
@@ -66,6 +66,10 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.backgroundColor = .gray
         imageView.isUserInteractionEnabled = true
+        imageView.layer.borderColor = UIColor(red: 0.9, green: 0.997, blue: 1, alpha: 1).cgColor
+        imageView.layer.borderWidth = 2
+        imageView.layer.cornerRadius = 20
+        imageView.clipsToBounds = true
         return imageView
     }()
     
