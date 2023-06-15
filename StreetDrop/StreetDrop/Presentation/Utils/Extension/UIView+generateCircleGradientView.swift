@@ -28,4 +28,23 @@ extension UIView {
         self.clipsToBounds = true
         self.layer.cornerRadius = self.frame.width/2
     }
+
+    func makeGradientView(
+        colors: [Any],
+        gradientLocations: [NSNumber],
+        viewBackgroundColor: UIColor,
+        startPoint: CGPoint,
+        endPoint: CGPoint
+    ){
+        let axialGradient = CAGradientLayer()
+        axialGradient.type = .axial
+        axialGradient.colors = colors
+        axialGradient.locations = gradientLocations
+        axialGradient.startPoint = startPoint
+        axialGradient.endPoint = endPoint
+        axialGradient.frame = self.bounds
+
+        self.backgroundColor = viewBackgroundColor
+        self.layer.addSublayer(axialGradient)
+    }
 }
