@@ -101,11 +101,14 @@ private extension MyPageViewController {
             }
             .disposed(by: disposeBag)
         
-        Observable.zip(self.backButton.rx.tap, self.cancleButton.rx.tap)
-            .bind { _ in
-                self.navigationController?.popViewController(animated: true)
-            }
-            .disposed(by: disposeBag)
+        Observable.merge(
+            self.backButton.rx.tap.asObservable(),
+            self.cancleButton.rx.tap.asObservable()
+        )
+        .bind { _ in
+            self.navigationController?.popViewController(animated: true)
+        }
+        .disposed(by: disposeBag)
     }
     
     func bindViewModel() {
