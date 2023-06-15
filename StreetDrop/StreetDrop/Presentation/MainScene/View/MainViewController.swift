@@ -326,6 +326,7 @@ private extension MainViewController {
             }
             .disposed(by: disposeBag)
         
+// TODO: 1차 앱스토어 배포때는 실시간 위치정보 갱신을 하지 않기에, 추후 드랍하기 버튼 누를 시, 실제 사용자 위치정보는 좀 더 검토 필요
         musicDropButton.rx.tap
             .bind { [weak self] in
                 guard let self = self,
