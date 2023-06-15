@@ -169,7 +169,7 @@ private extension MainViewModel {
                 switch result {
                 case .success(let musicCountEntity):
                     output.musicCount.accept(musicCountEntity.musicCount)
-                    output.address.accept(musicCountEntity.address)
+                    output.address.accept(musicCountEntity.villageName)
                 case .failure(_):
                     output.musicCount.accept(0)
                 }

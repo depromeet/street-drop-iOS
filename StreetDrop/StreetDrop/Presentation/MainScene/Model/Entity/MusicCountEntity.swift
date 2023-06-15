@@ -9,5 +9,5 @@ import Foundation
 
 struct MusicCountEntity {
     let musicCount: Int
-    let address: String
+    let villageName: String
 }

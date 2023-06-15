@@ -9,11 +9,11 @@ import Foundation
 
 struct MusicCountByDongResponseDTO: Decodable {
     let numberOfDroppedMusic: Int
-    let address: String
+    let villageName: String
 }
 
 extension MusicCountByDongResponseDTO {
     func toEntity() -> MusicCountEntity {
-        return .init(musicCount: numberOfDroppedMusic, address: address)
+        return .init(musicCount: numberOfDroppedMusic, villageName: villageName)
     }
 }
