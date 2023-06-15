@@ -21,6 +21,10 @@ final class LocationManager: NSObject {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
     }
+    
+    func startUpdatingLocation() {
+        locationManager.startUpdatingLocation()
+    }
 }
 
 // MARK: - Delegate Methods
