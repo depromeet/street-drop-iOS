@@ -198,11 +198,12 @@ final class CommunityViewController: UIViewController {
     }()
 
     // listeningGuide 요소
-    private lazy var youtubeMusicLogo: UIImageView = {
+    private lazy var youtubeMusicLogoButton: UIButton = {
+        let button: UIButton = UIButton()
         let youtubeLogo = UIImage(named: "MusicLogo")
-        let imageView = UIImageView(image: youtubeLogo)
+        button.setImage(youtubeLogo, for: .normal)
 
-        return imageView
+        return button
     }()
 
     private lazy var listeningGuideLabel: UILabel = {
@@ -278,6 +279,22 @@ private extension CommunityViewController {
             .subscribe(onNext: {
                 self.navigationController?.popViewController(animated: true)
             })
+            .disposed(by: disposeBag)
+        
+        youtubeMusicLogoButton.rx.tap
+            .observe(on: MainScheduler.instance)
+            .bind { [weak self] in
+                guard let self = self else { return }
+                let musicName = self.musicNameLabel.text ?? ""
+                let artistName = self.artistLabel.text ?? ""
+                
+                let urlString = "https://music.youtube.com/search?q=\(musicName)-\(artistName)"
+                guard let encodedurlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+                guard let url = URL(string: encodedurlString) else { return }
+                
+                UIApplication.shared.open(url)
+                
+            }
             .disposed(by: disposeBag)
     }
 
@@ -422,7 +439,7 @@ private extension CommunityViewController {
             commentStackView.addArrangedSubview($0)
         }
 
-        [youtubeMusicLogo, listeningGuideLabel].forEach {
+        [youtubeMusicLogoButton, listeningGuideLabel].forEach {
             listeningGuideStackView.addArrangedSubview($0)
         }
 
@@ -510,9 +527,9 @@ private extension CommunityViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
 
-        youtubeMusicLogo.snp.makeConstraints { make in
+        youtubeMusicLogoButton.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.3)
-            make.width.equalTo(youtubeMusicLogo.snp.height)
+            make.width.equalTo(youtubeMusicLogoButton.snp.height)
         }
 
         likeButton.snp.makeConstraints { make in
