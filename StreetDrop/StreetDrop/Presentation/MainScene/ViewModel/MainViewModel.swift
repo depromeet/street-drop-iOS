@@ -178,6 +178,7 @@ private extension MainViewModel {
                 case .success(let musicCountEntity):
                     output.musicCount.accept(musicCountEntity.musicCount)
                     output.address.accept(musicCountEntity.villageName)
+                    self.address = musicCountEntity.villageName
                 case .failure(_):
                     output.musicCount.accept(0)
                 }
