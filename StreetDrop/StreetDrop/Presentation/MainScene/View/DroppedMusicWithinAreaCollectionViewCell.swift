@@ -137,6 +137,8 @@ private extension DroppedMusicWithinAreaCollectionViewCell {
         self.musicTitleLabel.snp.makeConstraints { make in
             make.centerX.equalTo(self.safeAreaLayoutGuide)
             make.top.equalTo(self.albumCoverImageView.snp.bottom).offset(12)
+            make.leading.equalToSuperview().inset(5)
+            make.trailing.equalToSuperview().inset(5)
         }
         
         // MARK: - Singer Name Label
