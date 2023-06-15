@@ -406,7 +406,8 @@ private extension MainViewController {
             viewDidLoadEvent: self.viewDidLoadEvent,
             viewWillAppearEvent: self.viewWillAppearEvent,
             poiMarkerDidTapEvent: self.poiMarkerDidTapEvent,
-            cameraDidStopEvent: self.cameraDidStopEvent
+            cameraDidStopEvent: self.cameraDidStopEvent,
+            homeButtonDidTapEvent: self.homeButton.rx.tap
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
         
@@ -417,7 +418,6 @@ private extension MainViewController {
             .disposed(by: disposeBag)
         
         output.location
-            .take(1) // 앱 실행시에 한번만 현재위치로 카메라 이동
             .bind(onNext: { [weak self] location in
                 self?.moveCameraToCurrentLocation(location: location)
             })
