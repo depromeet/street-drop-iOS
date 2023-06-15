@@ -123,9 +123,9 @@ final class MainViewController: UIViewController {
         return button
     }()
     
-    private lazy var notificationButton: UIButton = {
+    private lazy var settingButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "notificationButton.png"), for: .normal)
+        button.setImage(UIImage(named: "settingButton.png"), for: .normal)
         return button
     }()
     
@@ -242,12 +242,12 @@ private extension MainViewController {
             make.left.equalToSuperview().inset(28)
         }
         
-        // MARK: - Notification Button
+        // MARK: - Setting Button
         
-        self.bottomBarImageView.addSubview(self.notificationButton)
-        self.notificationButton.snp.makeConstraints { make in
+        self.bottomBarImageView.addSubview(self.settingButton)
+        self.settingButton.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(8)
-            make.width.equalTo(self.notificationButton.snp.height)
+            make.width.equalTo(self.settingButton.snp.height)
             make.right.equalToSuperview().inset(28)
         }
         
