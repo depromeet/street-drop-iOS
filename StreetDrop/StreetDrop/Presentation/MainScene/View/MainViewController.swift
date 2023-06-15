@@ -360,6 +360,20 @@ private extension MainViewController {
                 )
             }
             .disposed(by: disposeBag)
+        
+        settingButton.rx.tap
+            .bind { [weak self] in
+                guard let self = self else { return }
+                
+                //FIXME: MyPage -> Setting으로 Presentaion관련 클래스및 파일 이름들 변경 필요
+                let settingViewController = MyPageViewController(viewModel: .init())
+                
+                self.navigationController?.pushViewController(
+                    settingViewController,
+                    animated: true
+                )
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindPOI(_ poi: NMFMarker) {
