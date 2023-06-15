@@ -74,9 +74,12 @@ extension NetworkService: TargetType {
                 encoding: URLEncoding.queryString)
         case .dropMusic(let dropRequestDTO):
             return .requestJSONEncodable(dropRequestDTO)
-        case .getMusicCountByDong(let address):
+        case .getMusicCountByDong(let latitude, let longitude):
             return .requestParameters(
-                parameters: ["name": address],
+                parameters: [
+                    "latitude": String(latitude),
+                    "longitude": String(longitude)
+                ],
                 encoding: URLEncoding.queryString
             )
         case .getMusicWithinArea(let lat, let lon, let distance):
