@@ -144,8 +144,8 @@ final class CommunityViewController: UIViewController {
         label.text = Constant.textDefault
         label.textColor = .gray50
         label.numberOfLines = 0
-        label.font = .pretendard(size: 14, weight: 500)
-        label.setLineHeight(lineHeight: 19.6)
+        label.font = .pretendard(size: 16, weight: 500)
+        label.setLineHeight(lineHeight: 24)
 
         return label
     }()
@@ -180,7 +180,7 @@ final class CommunityViewController: UIViewController {
     private lazy var userInfoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 5
+        stackView.spacing = 8
 
         return stackView
     }()
@@ -211,22 +211,18 @@ final class CommunityViewController: UIViewController {
         label.text = "바로 듣기"
         label.textColor = .primary500
         label.font = .pretendard(size: 14, weight: 500)
-        label.setLineHeight(lineHeight: 19.6)
+        label.setLineHeight(lineHeight: 21)
 
         return label
     }()
 
-    private lazy var listeningGuideStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.spacing = 10
-        stackView.layer.cornerRadius = 12
-        stackView.backgroundColor = .gray800
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+    private lazy var listeningGuideView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 12
+        view.backgroundColor = .gray800
+        view.layoutMargins = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
 
-        return stackView
+        return view
     }()
 
     // Like 요소
@@ -243,22 +239,18 @@ final class CommunityViewController: UIViewController {
         label.text = "31.8K"
         label.textColor = .white
         label.font = .pretendard(size: 14, weight: 500)
-        label.setLineHeight(lineHeight: 19.6)
+        label.setLineHeight(lineHeight: 21)
 
         return label
     }()
 
-    private lazy var likeStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.spacing = 10
-        stackView.layer.cornerRadius = 12
-        stackView.backgroundColor = .gray800
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+    private lazy var likeView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 12
+        view.backgroundColor = .gray800
+        view.layoutMargins = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
 
-        return stackView
+        return view
     }()
 
     private lazy var listeningAndLikeStackView: UIStackView = {
@@ -440,14 +432,14 @@ private extension CommunityViewController {
         }
 
         [youtubeMusicLogoButton, listeningGuideLabel].forEach {
-            listeningGuideStackView.addArrangedSubview($0)
+            listeningGuideView.addSubview($0)
         }
 
         [likeButton, likeCountLabel].forEach {
-            likeStackView.addArrangedSubview($0)
+            likeView.addSubview($0)
         }
 
-        [listeningGuideStackView, likeStackView].forEach {
+        [listeningGuideView, likeView].forEach {
             listeningAndLikeStackView.addArrangedSubview($0)
         }
 
@@ -493,14 +485,14 @@ private extension CommunityViewController {
         }
 
         albumCollectionView.snp.makeConstraints {
-            $0.top.equalTo(topView.snp.bottom).offset(10)
+            $0.top.equalTo(topView.snp.bottom).offset(8)
             $0.leading.trailing.equalToSuperview().inset(-self.view.frame.width/4)
             $0.height.equalTo(albumCollectionView.snp.width).multipliedBy(0.34)
         }
 
         musicInfoStackView.snp.makeConstraints {
-            $0.top.equalTo(albumCollectionView.snp.bottom)
-            $0.height.greaterThanOrEqualToSuperview().multipliedBy(0.1)
+            $0.top.lessThanOrEqualTo(albumCollectionView.snp.bottom).offset(3)
+            $0.height.equalTo(51)
             $0.centerX.equalToSuperview()
         }
 
@@ -514,31 +506,42 @@ private extension CommunityViewController {
         }
 
         commentStackView.snp.makeConstraints {
-            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(20)
+            $0.top.lessThanOrEqualTo(musicInfoStackView.snp.bottom).offset(15)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(0.9)
-            $0.height.equalToSuperview().multipliedBy(0.3)
+            $0.height.equalToSuperview().multipliedBy(0.33)
+        }
+
+        youtubeMusicLogoButton.snp.makeConstraints {
+            $0.width.height.equalTo(32)
+            $0.top.equalToSuperview().inset(16)
+            $0.centerX.equalToSuperview()
+        }
+
+        listeningGuideLabel.snp.makeConstraints {
+            $0.top.equalTo(youtubeMusicLogoButton.snp.bottom).offset(8)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(16)
+        }
+
+        likeButton.snp.makeConstraints { make in
+            make.width.height.equalTo(32)
+            make.top.equalToSuperview().inset(16)
+            make.centerX.equalToSuperview()
+        }
+
+        likeCountLabel.snp.makeConstraints {
+            $0.top.equalTo(likeButton.snp.bottom).offset(8)
+            $0.centerX.equalToSuperview()
+        }
+
+        likeView.snp.makeConstraints {
+            $0.height.equalTo(listeningGuideView)
         }
 
         listeningAndLikeStackView.snp.makeConstraints {
             $0.top.equalTo(commentStackView.snp.bottom).offset(8)
-            $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.9)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
-        }
-
-        youtubeMusicLogoButton.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.3)
-            make.width.equalTo(youtubeMusicLogoButton.snp.height)
-        }
-
-        likeButton.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.4)
-            make.width.equalTo(likeButton.snp.height)
-        }
-
-        listeningGuideStackView.snp.makeConstraints {
-            $0.width.equalTo(likeStackView.snp.width)
+            $0.width.centerX.equalTo(commentStackView)
         }
     }
 
