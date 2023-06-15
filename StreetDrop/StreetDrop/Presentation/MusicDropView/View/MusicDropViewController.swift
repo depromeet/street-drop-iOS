@@ -113,8 +113,8 @@ final class MusicDropViewController: UIViewController {
     }()
 
     private lazy var albumImageView: UIImageView = {
-        let loadingImage = UIImage(systemName: "slowmo")
-        let imageView = UIImageView(image: loadingImage)
+        let imageView = UIImageView()
+        imageView.backgroundColor = .gray700
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
@@ -170,7 +170,7 @@ final class MusicDropViewController: UIViewController {
         let textView = UITextView()
         textView.textColor = .white
         textView.font = .pretendard(size: 14, weight: 500)
-        textView.backgroundColor = UIColor(red: 0.213, green: 0.213, blue: 0.213, alpha: 1)
+        textView.backgroundColor = .gray700
         textView.layer.cornerRadius = 8
         textView.textContainerInset = .init(top: 12, left: 14, bottom: 12, right: 14)
         textView.keyboardAppearance = .dark
@@ -304,6 +304,7 @@ private extension MusicDropViewController {
             .drive(onNext: { [weak self] data in
                 let albumImage = UIImage(data: data)
                 self?.albumImageView.image = albumImage
+                self?.albumImageView.layer.cornerRadius = 10
             }).disposed(by: disposeBag)
 
         // 👉 TODO: Error팝업띄우기
