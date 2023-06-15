@@ -84,8 +84,8 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     
     private lazy var commentLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.numberOfLines = 1
+        label.font = .pretendard(size: 14, weight: 500)
+        label.numberOfLines = 2
         label.textAlignment = .center
         label.isHidden = true
         return label

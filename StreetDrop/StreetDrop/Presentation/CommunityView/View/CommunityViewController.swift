@@ -286,7 +286,7 @@ private extension CommunityViewController {
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
 
         output.albumImages
-            .bind(to: self.albumCollectionView.rx.items) { [weak self] collectionView, row, url in
+            .bind(to: self.albumCollectionView.rx.items) { collectionView, row, url in
                 guard let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: AlbumCollectionViewCell.identifier,
                     for: IndexPath(row: row, section: 0)) as? AlbumCollectionViewCell

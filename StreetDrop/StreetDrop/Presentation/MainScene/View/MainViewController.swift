@@ -505,18 +505,19 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
         index += 1
         
         guard let leftCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index - 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
-        guard let rightCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
         leftCell.setInitialState(isMiddle: false)
+        guard let rightCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
         rightCell.setInitialState(isMiddle: false)
         
-//        guard let currentCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
-//        currentCell.setInitialState(isMiddle: true)
+        guard let currentCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
+        currentCell.setInitialState(isMiddle: true)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView != droppedMusicWithinAreaCollectionView { return }
         guard let layout = droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
         let cellWidth = layout.itemSize.width
+        let count = viewModel.musicWithinArea.count
         
         if scrollView.contentOffset.x < cellWidth {
             scrollView.setContentOffset(
