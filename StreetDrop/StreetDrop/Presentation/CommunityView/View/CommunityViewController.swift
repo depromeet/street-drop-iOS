@@ -41,6 +41,7 @@ final class CommunityViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         profileImageView.makeCircleShape()
+        makeCommentViewToGradientView()
     }
 
     //MARK: - UI
@@ -525,13 +526,13 @@ private extension CommunityViewController {
         }
 
         likeButton.snp.makeConstraints { make in
-            make.width.height.equalTo(32)
+            make.width.height.equalTo(36)
             make.top.equalToSuperview().inset(16)
             make.centerX.equalToSuperview()
         }
 
         likeCountLabel.snp.makeConstraints {
-            $0.top.equalTo(likeButton.snp.bottom).offset(8)
+            $0.top.equalTo(likeButton.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
         }
 
@@ -585,6 +586,32 @@ private extension CommunityViewController {
 
         return layout
     }
+
+    func makeCommentViewToGradientView() {
+        commentStackView.makeGradientView(
+            colors: [
+                UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0.1).cgColor,
+                UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0.05).cgColor,
+                UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0).cgColor
+              ],
+            gradientLocations: [0, 0.29, 1],
+            viewBackgroundColor: .gray800,
+            startPoint: CGPoint(x: 0.5, y: 0.0),
+            endPoint: CGPoint(x: 0.5, y: 0.75)
+        )
+    }
+    /*
+     colors: [
+         UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
+         UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
+         UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0.1).cgColor
+     ],
+     gradientLocations: [0, 0.53, 1],
+     viewBackgroundColor: .black,
+     startPoint: CGPoint(x: 0.5, y: 0),
+     endPoint:  CGPoint(x: 0.5, y: 1)
+ )
+     */
 }
 
 // MARK: - 무한스크롤

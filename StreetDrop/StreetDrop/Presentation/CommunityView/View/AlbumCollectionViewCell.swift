@@ -18,7 +18,7 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
     private let albumImageView: UIImageView = {
         let imageView = UIImageView()   // TODO: 로딩이미지 추후 진행 (디자인팀과 희의O)
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 10
+        imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
 
         return imageView
@@ -26,13 +26,13 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
 
     private let gradationView: UIView = {
         let view = UIView()
-        view.layer.borderColor = UIColor.white.cgColor
-        view.layer.borderWidth = 0
-        view.layer.shadowOpacity = 1
-        view.layer.shadowColor = UIColor(red: 0.399, green: 0.375, blue: 0.833, alpha: 0.5).cgColor
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
-        view.layer.shadowRadius = 10
-        view.layer.masksToBounds = false
+//        view.layer.borderColor = UIColor.white.cgColor
+//        view.layer.borderWidth = 0
+//        view.layer.shadowOpacity = 1
+//        view.layer.shadowColor = UIColor.primary500.cgColor
+//        view.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        view.layer.shadowRadius = 10
+//        view.layer.masksToBounds = false
 
         return view
     }()
