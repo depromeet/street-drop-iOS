@@ -118,6 +118,8 @@ private extension MyPageViewController {
     }
     
     func configureUI() {
+        self.view.backgroundColor = UIColor.gray900
+        
         [
             self.backButton,
             self.navigationTitle,
