@@ -193,28 +193,20 @@ final class CommunityViewController: UIViewController {
         stackView.layer.cornerRadius = 12
         stackView.backgroundColor = UIColor(red: 0.089, green: 0.099, blue: 0.12, alpha: 1)
         stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layer.masksToBounds = true
         stackView.layoutMargins = UIEdgeInsets(top: 24, left: 24, bottom: 24, right: 24)
 
         return stackView
     }()
 
     // listeningGuide 요소
-    private lazy var youtubeMusicLogoButton: UIButton = {
+    private lazy var listenButton: UIButton = {
         let button: UIButton = UIButton()
-        let youtubeLogo = UIImage(named: "MusicLogo")
-        button.setImage(youtubeLogo, for: .normal)
+        button.setTitle("바로 듣기", for: .normal)
+        button.setTitleColor(.primary500, for: .normal)
+        button.titleLabel?.font = .pretendard(size: 16, weight: 700)
 
         return button
-    }()
-
-    private lazy var listeningGuideLabel: UILabel = {
-        let label = UILabel()
-        label.text = "바로 듣기"
-        label.textColor = .primary500
-        label.font = .pretendard(size: 14, weight: 500)
-        label.setLineHeight(lineHeight: 21)
-
-        return label
     }()
 
     private lazy var listeningGuideView: UIView = {
@@ -239,7 +231,7 @@ final class CommunityViewController: UIViewController {
         let label = UILabel()
         label.text = "31.8K"
         label.textColor = .white
-        label.font = .pretendard(size: 14, weight: 500)
+        label.font = .pretendard(size: 16, weight: 500)
         label.setLineHeight(lineHeight: 21)
 
         return label
@@ -253,15 +245,6 @@ final class CommunityViewController: UIViewController {
 
         return view
     }()
-
-    private lazy var listeningAndLikeStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 8
-
-        return stackView
-    }()
 }
 
 private extension CommunityViewController {
@@ -273,20 +256,20 @@ private extension CommunityViewController {
                 self.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
-        
-        youtubeMusicLogoButton.rx.tap
+
+        listenButton.rx.tap
             .observe(on: MainScheduler.instance)
             .bind { [weak self] in
                 guard let self = self else { return }
                 let musicName = self.musicNameLabel.text ?? ""
                 let artistName = self.artistLabel.text ?? ""
-                
+
                 let urlString = "https://music.youtube.com/search?q=\(musicName)-\(artistName)"
                 guard let encodedurlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
                 guard let url = URL(string: encodedurlString) else { return }
-                
+
                 UIApplication.shared.open(url)
-                
+
             }
             .disposed(by: disposeBag)
     }
@@ -432,7 +415,7 @@ private extension CommunityViewController {
             commentStackView.addArrangedSubview($0)
         }
 
-        [youtubeMusicLogoButton, listeningGuideLabel].forEach {
+        [listenButton].forEach {
             listeningGuideView.addSubview($0)
         }
 
@@ -440,15 +423,12 @@ private extension CommunityViewController {
             likeView.addSubview($0)
         }
 
-        [listeningGuideView, likeView].forEach {
-            listeningAndLikeStackView.addArrangedSubview($0)
-        }
-
         [topView,
          albumCollectionView,
          musicInfoStackView,
          commentStackView,
-         listeningAndLikeStackView
+         listeningGuideView,
+         likeView
         ]
             .forEach {
                 self.view.addSubview($0)
@@ -492,7 +472,7 @@ private extension CommunityViewController {
         }
 
         musicInfoStackView.snp.makeConstraints {
-            $0.top.lessThanOrEqualTo(albumCollectionView.snp.bottom).offset(3)
+            $0.top.lessThanOrEqualTo(albumCollectionView.snp.bottom).offset(8)
             $0.height.equalTo(51)
             $0.centerX.equalToSuperview()
         }
@@ -507,42 +487,38 @@ private extension CommunityViewController {
         }
 
         commentStackView.snp.makeConstraints {
-            $0.top.lessThanOrEqualTo(musicInfoStackView.snp.bottom).offset(15)
+            $0.top.lessThanOrEqualTo(musicInfoStackView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(0.9)
             $0.height.equalToSuperview().multipliedBy(0.33)
         }
 
-        youtubeMusicLogoButton.snp.makeConstraints {
-            $0.width.height.equalTo(32)
-            $0.top.equalToSuperview().inset(16)
-            $0.centerX.equalToSuperview()
+        listenButton.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
         }
 
-        listeningGuideLabel.snp.makeConstraints {
-            $0.top.equalTo(youtubeMusicLogoButton.snp.bottom).offset(8)
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(16)
+        listeningGuideView.snp.makeConstraints {
+            $0.top.equalTo(commentStackView.snp.bottom).offset(16)
+            $0.height.equalTo(56)
+            $0.leading.equalTo(commentStackView)
+            $0.trailing.equalTo(commentStackView.snp.trailing).multipliedBy(0.66)
         }
 
         likeButton.snp.makeConstraints { make in
             make.width.height.equalTo(36)
-            make.top.equalToSuperview().inset(16)
-            make.centerX.equalToSuperview()
+            make.centerX.equalToSuperview().multipliedBy(0.8)
+            make.centerY.equalToSuperview()
         }
 
         likeCountLabel.snp.makeConstraints {
-            $0.top.equalTo(likeButton.snp.bottom).offset(4)
-            $0.centerX.equalToSuperview()
+            $0.leading.equalTo(likeButton.snp.trailing).offset(2)
+            $0.centerY.equalToSuperview()
         }
 
         likeView.snp.makeConstraints {
-            $0.height.equalTo(listeningGuideView)
-        }
-
-        listeningAndLikeStackView.snp.makeConstraints {
-            $0.top.equalTo(commentStackView.snp.bottom).offset(8)
-            $0.width.centerX.equalTo(commentStackView)
+            $0.leading.equalTo(listeningGuideView.snp.trailing).offset(8)
+            $0.trailing.equalTo(commentStackView)
+            $0.top.height.equalTo(listeningGuideView)
         }
     }
 
@@ -600,18 +576,6 @@ private extension CommunityViewController {
             endPoint: CGPoint(x: 0.5, y: 0.75)
         )
     }
-    /*
-     colors: [
-         UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
-         UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
-         UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0.1).cgColor
-     ],
-     gradientLocations: [0, 0.53, 1],
-     viewBackgroundColor: .black,
-     startPoint: CGPoint(x: 0.5, y: 0),
-     endPoint:  CGPoint(x: 0.5, y: 1)
- )
-     */
 }
 
 // MARK: - 무한스크롤
