@@ -38,16 +38,11 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
     }()
 
     private func configureHierarchy() {
-        self.gradationView.addSubview(albumImageView)
-        self.contentView.addSubview(gradationView)
+        self.contentView.addSubview(albumImageView)
     }
 
     private func configureLayout() {
         albumImageView.snp.makeConstraints {
-            $0.top.leading.bottom.trailing.equalToSuperview()
-        }
-
-        gradationView.snp.makeConstraints {
             $0.width.height.equalToSuperview().multipliedBy(0.8)
             $0.centerX.centerY.equalToSuperview()
         }
