@@ -195,7 +195,6 @@ private extension MainViewController {
         self.topCoverImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(self.view.frame.width).multipliedBy(146 / 375)
         }
         
         // MARK: - Location StackView
