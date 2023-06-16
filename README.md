@@ -9,7 +9,7 @@
 ---
 
 ### 📮 Contact Info
-siyeon0209@naver.com
+depromeet5@gmail.com
 
 ---
 
