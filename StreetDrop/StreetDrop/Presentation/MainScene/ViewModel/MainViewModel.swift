@@ -121,6 +121,18 @@ extension MainViewModel {
         
         return output
     }
+    
+    func isWithin(latitude: Double, longitude: Double) -> Bool {
+        let radius: Double = 500
+        let distanceFromCurrentLocation: Double = location.distance(
+            from: CLLocation(
+                latitude: latitude,
+                longitude: longitude
+            )
+        )
+        
+        return distanceFromCurrentLocation <= radius
+    }
 }
 
 private extension MainViewModel {
