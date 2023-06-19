@@ -1300,9 +1300,9 @@
 				INFOPLIST_FILE = StreetDrop/Resource/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "스트릿드랍";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 권한 허용이 필요합니다.";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 권한 허용이 필요합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 권한 허용이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 정보를 기반으로 현재 위치, 주변 음악 검색, 음악 추천, 컨텐츠 검색을 제공합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 정보를 기반으로 현재 위치, 주변 음악 검색, 음악 추천, 컨텐츠 검색을 제공합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 정보를 기반으로 현재 위치, 주변 음악 검색, 음악 추천, 컨텐츠 검색을 제공합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
@@ -1341,9 +1341,9 @@
 				INFOPLIST_FILE = StreetDrop/Resource/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "스트릿드랍";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 권한 허용이 필요합니다.";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 권한 허용이 필요합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 권한 허용이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 정보를 기반으로 현재 위치, 주변 음악 검색, 음악 추천, 컨텐츠 검색을 제공합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 정보를 기반으로 현재 위치, 주변 음악 검색, 음악 추천, 컨텐츠 검색을 제공합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 정보를 기반으로 현재 위치, 주변 음악 검색, 음악 추천, 컨텐츠 검색을 제공합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
