@@ -175,11 +175,16 @@ final class MainViewController: UIViewController {
         layout.minimumLineSpacing = 0
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(DroppedMusicWithinAreaCollectionViewCell.self, forCellWithReuseIdentifier: DroppedMusicWithinAreaCollectionViewCell.identifier)
-        collectionView.isPagingEnabled = false
+        collectionView.isPagingEnabled = true
         collectionView.decelerationRate = .fast
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.isHidden = true
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        collectionView.addGestureRecognizer(panGesture)
+        collectionView.isScrollEnabled = false
+
         return collectionView
     }()
     
@@ -198,7 +203,6 @@ final class MainViewController: UIViewController {
 }
 
 private extension MainViewController {
-    
     // MARK: - UI
     
     func configureUI() {
@@ -419,6 +423,49 @@ private extension MainViewController {
             .disposed(by: disposeBag)
     }
     
+    func bindPOI(index: Int? = nil, poi: NMFMarker) {
+        guard let index = index else { return }
+        
+        poi.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
+            guard let self = self else { return true }
+            if self.viewModel.musicWithinArea.count > 3 {
+                self.viewModel.currentIndex = index + 2
+            } else {
+                self.viewModel.currentIndex = index
+            }
+            let currentIndex = self.viewModel.currentIndex
+            
+            guard let layout = self.droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return true }
+            let cellWidth = layout.itemSize.width
+            
+            self.droppedMusicWithinAreaCollectionView.setContentOffset(
+                CGPoint(x: cellWidth * CGFloat(currentIndex - 1), y: .zero),
+                animated: false
+            )
+            
+            self.poiMarkerDidTapEvent.accept(Void())
+            UIView.animate(withDuration: 0.3, animations: {
+                self.droppedMusicWithinAreaCollectionView.isHidden = false
+                self.bottomCoverImageView.isHidden = false
+                self.backToMapButton.isHidden = false
+                
+                self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
+                    make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+                    make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(24)
+                    make.height.equalTo(260)
+                }
+                self.bottomCoverImageView.snp.remakeConstraints { make in
+                    make.left.right.bottom.equalToSuperview()
+                    make.height.equalTo(152)
+                }
+                self.view.layoutIfNeeded()
+            }, completion: { _ in
+//                guard let currentCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: Int(index + 2), section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
+//                currentCell.setInitialState(isMiddle: true)
+            })
+            return true
+        }
+    }
     // MARK: - Data Binding
     
     private func bindViewModel() {
@@ -447,6 +494,8 @@ private extension MainViewController {
         
         output.pois
             .bind(onNext: { [weak self] pois in
+                var index = 0
+                let pois = pois.sorted { $0.id < $1.id }
                 for poi in pois {
                     self?.drawPOI(item: poi)
                 }
@@ -513,55 +562,6 @@ private extension MainViewController {
 // MARK: - CollectionView
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if scrollView != droppedMusicWithinAreaCollectionView { return }
-        guard let layout = droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        let cellWidth = layout.itemSize.width
-        let estimatedIndex = scrollView.contentOffset.x / cellWidth
-        var index: Int
-        
-        if velocity.x > 0 {
-            index = Int(ceil(estimatedIndex))
-        } else if velocity.x < 0 {
-            index = Int(floor(estimatedIndex))
-        } else {
-            index = Int(round(estimatedIndex))
-        }
-        targetContentOffset.pointee = CGPoint(
-            x: (CGFloat(index) * cellWidth),
-            y: 0
-        )
-        index += 1
-        
-        guard let leftCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index - 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
-        leftCell.setInitialState(isMiddle: false)
-        guard let rightCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
-        rightCell.setInitialState(isMiddle: false)
-        
-        guard let currentCell = droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
-        currentCell.setInitialState(isMiddle: true)
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView != droppedMusicWithinAreaCollectionView { return }
-        guard let layout = droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        let cellWidth = layout.itemSize.width
-        let count = viewModel.musicWithinArea.count
-        
-        if scrollView.contentOffset.x < cellWidth {
-            scrollView.setContentOffset(
-                .init(x: scrollView.contentSize.width - (cellWidth * 3), y: 0),
-                animated: false
-            )
-        }
-        if scrollView.contentOffset.x > cellWidth * Double(count - 3) {
-            scrollView.setContentOffset(
-                .init(x: cellWidth, y: 0),
-                animated: false
-            )
-        }
-    }
-
     func setupInitialOffset() {
         guard let layout = droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
         let cellWidth = layout.itemSize.width
@@ -569,6 +569,65 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
             CGPoint(x: cellWidth, y: .zero),
             animated: false
         )
+    }
+    
+    @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
+        switch gesture.state {
+        case .ended, .cancelled:
+            let velocity = gesture.velocity(in: droppedMusicWithinAreaCollectionView)
+            let targetIndex = (velocity.x > 0) ? viewModel.currentIndex - 1 : viewModel.currentIndex + 1
+            scrollToItem(at: targetIndex)
+        default:
+            break
+        }
+    }
+
+    func scrollToItem(at index: Int) {
+        guard let layout = self.droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        let cellWidth = layout.itemSize.width
+        // 무한스크롤 O
+        if viewModel.musicWithinArea.count > 3 {
+            if index == 1 {
+                droppedMusicWithinAreaCollectionView.setContentOffset(
+                    CGPoint(x: cellWidth * CGFloat(viewModel.musicWithinArea.count - 3), y: .zero),
+                    animated: false
+                )
+                droppedMusicWithinAreaCollectionView.setContentOffset(
+                    CGPoint(x: cellWidth * CGFloat(viewModel.musicWithinArea.count - 4), y: .zero),
+                    animated: true
+                )
+                viewModel.currentIndex = viewModel.musicWithinArea.count - 3
+            }
+            else if index == (viewModel.musicWithinArea.count - 2) {
+                droppedMusicWithinAreaCollectionView.setContentOffset(
+                    CGPoint(x: 0, y: .zero),
+                    animated: false
+                )
+                droppedMusicWithinAreaCollectionView.setContentOffset(
+                    CGPoint(x: cellWidth, y: .zero),
+                    animated: true
+                )
+                viewModel.currentIndex = 2
+            }
+            else {
+                droppedMusicWithinAreaCollectionView.setContentOffset(
+                    CGPoint(x: cellWidth * CGFloat(index - 1), y: .zero),
+                    animated: true
+                )
+                viewModel.currentIndex = index
+            }
+        }
+        // 무한스크롤 X
+        else {
+            if (index == -1) || (index  == viewModel.musicWithinArea.count) { return }
+            else {
+                droppedMusicWithinAreaCollectionView.setContentOffset(
+                    CGPoint(x: cellWidth * CGFloat(index - 1), y: .zero),
+                    animated: true
+                )
+                viewModel.currentIndex = index
+            }
+        }
     }
 }
 

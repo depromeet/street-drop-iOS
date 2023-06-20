@@ -18,6 +18,7 @@ final class MainViewModel: ViewModel {
     var detailItemsDistance: Double = 500
     var address: String = ""
     var musicWithinArea: Musics = []
+    var currentIndex: Int = 0
     
     private let model = MainModel(
         repository: DefaultMainRepository(
@@ -152,20 +153,26 @@ private extension MainViewModel {
         .subscribe { result in
             switch result {
             case .success(let musicWithinArea):
+                let musicWithinArea = musicWithinArea.sorted { $0.id < $1.id }
                 if musicWithinArea.isEmpty {
                     self.musicWithinArea = []
                     output.musicWithinArea.accept([])
                     return
                 }
-                // 무한스크롤을 위한 데이터소스
-                var musicWithinAreaForInfinite = musicWithinArea
-                musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-1], at: 0)
-                musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-2], at: 0)
-                musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[2])
-                musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[3])
                 
-                self.musicWithinArea = musicWithinAreaForInfinite
-                output.musicWithinArea.accept(musicWithinAreaForInfinite)
+                if musicWithinArea.count < 4 {
+                    self.musicWithinArea = musicWithinArea
+                }
+                else {
+                    // 무한스크롤을 위한 데이터소스
+                    var musicWithinAreaForInfinite = musicWithinArea
+                    musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-1], at: 0)
+                    musicWithinAreaForInfinite.insert(musicWithinAreaForInfinite[musicWithinAreaForInfinite.count-2], at: 0)
+                    musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[2])
+                    musicWithinAreaForInfinite.append(musicWithinAreaForInfinite[3])
+                    self.musicWithinArea = musicWithinAreaForInfinite
+                }
+                output.musicWithinArea.accept(self.musicWithinArea)
             case .failure(let error):
                 print(error)
                 output.musicWithinArea.accept([])
