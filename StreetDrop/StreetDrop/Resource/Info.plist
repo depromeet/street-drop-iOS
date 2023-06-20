@@ -4,6 +4,10 @@
 <dict>
 	<key>NMFClientId</key>
 	<string>95d477gbj5</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>youtubemusic</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Black.otf</string>

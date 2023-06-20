@@ -262,13 +262,24 @@ private extension CommunityViewController {
                 guard let self = self else { return }
                 let musicName = self.musicNameLabel.text ?? ""
                 let artistName = self.artistLabel.text ?? ""
-
-                let urlString = "https://music.youtube.com/search?q=\(musicName)-\(artistName)"
-                guard let encodedurlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
-                guard let url = URL(string: encodedurlString) else { return }
-
-                UIApplication.shared.open(url)
-
+                
+                // urlScheme을 통해 유튜브뮤직  앱으로 이동
+                let youtubeMusicAppURLString = "youtubemusic://search?q=\(musicName)-\(artistName)"
+                if let encodedYoutubeMusicAppURLString = youtubeMusicAppURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                   let encodedYoutubeMusicAppURL = URL(string: encodedYoutubeMusicAppURLString),
+                   UIApplication.shared.canOpenURL(encodedYoutubeMusicAppURL) {
+                    UIApplication.shared.open(encodedYoutubeMusicAppURL)
+                    return
+                }
+                
+                // urlScheme을 통해 유튜브뮤직 앱으로 이동 실패 시, 유튜브뮤직 웹사이트 url으로 이동
+                let youtubeMusicWebURLString = "https://music.youtube.com/search?q=\(musicName)-\(artistName)"
+                if let encodedYoutubeMusicWebURLString = youtubeMusicWebURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                   let encodedYoutubeMusicWebURL = URL(string: encodedYoutubeMusicWebURLString),
+                   UIApplication.shared.canOpenURL(encodedYoutubeMusicWebURL) {
+                    UIApplication.shared.open(encodedYoutubeMusicWebURL)
+                    return
+                }
             }
             .disposed(by: disposeBag)
     }
