@@ -68,7 +68,6 @@ extension MainViewModel {
                     output: output,
                     disposedBag: disposedBag
                 )
-                self.fetchMusicWithArea(output: output, disposedBag: disposedBag)
             }
             .disposed(by: disposedBag)
             
@@ -82,7 +81,6 @@ extension MainViewModel {
                     output: output,
                     disposedBag: disposedBag
                 )
-                self.fetchMusicWithArea(output: output, disposedBag: disposedBag)
             }
             .disposed(by: disposedBag)
         

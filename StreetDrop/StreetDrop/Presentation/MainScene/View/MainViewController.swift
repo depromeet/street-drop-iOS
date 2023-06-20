@@ -405,41 +405,6 @@ private extension MainViewController {
             .disposed(by: disposeBag)
     }
     
-    func bindPOI(index: Int? = nil, poi: NMFMarker) {
-        guard let index = index else { return }
-        poi.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
-            guard let self = self else { return true }
-            self.poiMarkerDidTapEvent.accept(Void())
-            UIView.animate(withDuration: 0.3, animations: {
-                self.droppedMusicWithinAreaCollectionView.isHidden = false
-                self.bottomCoverImageView.isHidden = false
-                self.backToMapButton.isHidden = false
-                
-                self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
-                    make.left.right.equalTo(self.view.safeAreaLayoutGuide)
-                    make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(24)
-                    make.height.equalTo(260)
-                }
-                self.bottomCoverImageView.snp.remakeConstraints { make in
-                    make.left.right.bottom.equalToSuperview()
-                    make.height.equalTo(152)
-                }
-                self.view.layoutIfNeeded()
-            }, completion: { _ in
-                guard let currentCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: Int(index + 2), section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
-                currentCell.setInitialState(isMiddle: true)
-            })
-            guard let layout = self.droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return true }
-            let cellWidth = layout.itemSize.width
-            let multiplier = CGFloat(index + 1)
-            self.droppedMusicWithinAreaCollectionView.setContentOffset(
-                CGPoint(x: cellWidth * multiplier, y: .zero),
-                animated: false
-            )
-            return true
-        }
-    }
-    
     // MARK: - Data Binding
     
     private func bindViewModel() {
@@ -467,15 +432,8 @@ private extension MainViewController {
         
         output.pois
             .bind(onNext: { [weak self] pois in
-                var index = 0
                 for poi in pois {
-                    if poi.isWithinArea {
-                        self?.drawPOI(index: index, item: poi)
-                        index += 1
-                    }
-                    else {
-                        self?.drawPOI(item: poi)
-                    }
+                    self?.drawPOI(item: poi)
                 }
             })
             .disposed(by: disposeBag)
@@ -495,6 +453,43 @@ private extension MainViewController {
         output.musicWithinArea
             .bind(to: droppedMusicWithinAreaCollectionView.rx.items(cellIdentifier: DroppedMusicWithinAreaCollectionViewCell.identifier, cellType: DroppedMusicWithinAreaCollectionViewCell.self)) { index, item, cell in
                 cell.setData(item: item)
+            }
+            .disposed(by: disposeBag)
+        
+        output.musicWithinArea
+            .bind { musicWithinAreaEntities in
+                musicWithinAreaEntities.enumerated().forEach { (index, _) in
+                    // // 무한스크롤을 위한 데이터소스 인덱스 제외
+                    if [0,1,musicWithinAreaEntities.count-2,musicWithinAreaEntities.count-1].contains(index)  {
+                        return
+                    }
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.droppedMusicWithinAreaCollectionView.isHidden = false
+                        self.bottomCoverImageView.isHidden = false
+                        self.backToMapButton.isHidden = false
+                        
+                        self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
+                            make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+                            make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(24)
+                            make.height.equalTo(260)
+                        }
+                        self.bottomCoverImageView.snp.remakeConstraints { make in
+                            make.left.right.bottom.equalToSuperview()
+                            make.height.equalTo(152)
+                        }
+                        self.view.layoutIfNeeded()
+                    }, completion: { _ in
+                        guard let currentCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: Int(index + 2), section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
+                        currentCell.setInitialState(isMiddle: true)
+                    })
+                    guard let layout = self.droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+                    let cellWidth = layout.itemSize.width
+                    let multiplier = CGFloat(index + 1)
+                    self.droppedMusicWithinAreaCollectionView.setContentOffset(
+                        CGPoint(x: cellWidth * multiplier, y: .zero),
+                        animated: false
+                    )
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -592,12 +587,8 @@ private extension MainViewController {
         return combinedImage
     }
     
-    func drawPOI(index: Int? = nil, item: PoiEntity) {
+    func drawPOI(item: PoiEntity) {
         let poi = NMFMarker()
-        if let index = index {
-            poi.tag = UInt(index)
-        }
-        
         let defaultMusicMarkerImage = UIImage(named: "musicMarker") ?? UIImage()
         poi.iconImage = NMFOverlayImage(image: defaultMusicMarkerImage)
         UIImage.load(with: item.imageURL)
@@ -616,7 +607,17 @@ private extension MainViewController {
         poi.position = NMGLatLng(lat: item.lat, lng: item.lon)
         poi.mapView = self.naverMapView
         poi.globalZIndex = 400000 // 네이버맵 sdk 오버레이 가이드를 참고한 zIndex 설정
-        bindPOI(index: index, poi: poi)
+        bindPOI(poi: poi)
+    }
+    
+    func bindPOI(poi: NMFMarker) {
+        poi.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
+            guard let self = self else { return true }
+            if viewModel.isWithin(latitude: poi.position.lat, longitude: poi.position.lng) {
+                self.poiMarkerDidTapEvent.accept(Void())
+            }
+            return true
+        }
     }
 }
 
