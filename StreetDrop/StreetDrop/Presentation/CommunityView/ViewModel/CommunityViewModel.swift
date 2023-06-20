@@ -20,6 +20,7 @@ final class CommunityViewModel: ViewModel {
 
     struct Output {
         var addressTitle: PublishRelay<String> = .init()
+        var currentIndex: PublishRelay<Int> = .init()
         var albumImages: PublishRelay<[String]> = .init()
         var musicTitle: PublishRelay<String> = .init()
         var artistTitle: PublishRelay<String> = .init()
@@ -50,8 +51,6 @@ final class CommunityViewModel: ViewModel {
         self.communityInfos = communityInfos
         self.currentIndex = index
         self.communityModel = communityModel
-
-        prepareInfiniteCarousel()
     }
 
     func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
@@ -62,6 +61,7 @@ final class CommunityViewModel: ViewModel {
                 guard let self = self else { return }
                 output.addressTitle.accept(self.communityInfos[self.currentIndex].address)
                 output.albumImages.accept(self.communityInfos.map { $0.albumImageURL })
+                output.currentIndex.accept(self.currentIndex)
                 self.changeCommunityInfoForIndex(index: self.currentIndex, output: output)
             }).disposed(by: disposedBag)
 
@@ -90,26 +90,6 @@ final class CommunityViewModel: ViewModel {
 
 //MARK: - Private
 private extension CommunityViewModel {
-
-    func prepareInfiniteCarousel() {
-        let newCommunityInfosFront = Array(communityInfos[
-            currentIndex...communityInfos.count-1
-        ])
-
-        let newCommunityInfosBack = Array(communityInfos[
-            0...(currentIndex-1)
-        ])
-
-        communityInfos = newCommunityInfosFront + newCommunityInfosBack
-        
-        // 데이터 앞 뒤2개씩 추가: origin 1,2,3,4,5 -> to be 4,5 + 1,2,3,4,5 + 1,2
-        communityInfos.insert(communityInfos[communityInfos.count-1], at: 0)
-        communityInfos.insert(communityInfos[communityInfos.count-2], at: 0)
-        communityInfos.append(communityInfos[2])
-        communityInfos.append(communityInfos[3])
-        currentIndex = 2
-    }
-
     func changeCommunityInfoForIndex(index: Int, output: Output) {
         let communityInfo = communityInfos[index]
 

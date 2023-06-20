@@ -34,7 +34,6 @@ final class CommunityViewController: UIViewController {
         configureUI()
         bindAction()
         bindViewModel()
-        setupInitialOffset()
         viewDidLoadEvent.accept(())
     }
 
@@ -305,6 +304,12 @@ private extension CommunityViewController {
             .asDriver(onErrorJustReturn: "")
             .drive { [weak self] in
                 self?.locationLabel.text = $0
+            }.disposed(by: disposeBag)
+
+        output.currentIndex
+            .asDriver(onErrorJustReturn: 0)
+            .drive {  [weak self] in
+                self?.setupInitialOffset(index: $0)
             }.disposed(by: disposeBag)
 
         output.musicTitle
@@ -631,15 +636,14 @@ extension CommunityViewController: UICollectionViewDelegate {
         changedAlbumCollectionViewIndexEvent.accept(index+1) //offset0일때, 0번 앨범이아니라 1번앨범내용이므로 index+1
     }
 
-    // 4,5 + (1...5) + 1,2 로 들어오므로 1이 가운데에오도록 처음 offset지정
-    private func setupInitialOffset() {
+    private func setupInitialOffset(index: Int) {
         guard let layout = self.albumCollectionView.collectionViewLayout
                 as? UICollectionViewFlowLayout else { return }
+        albumCollectionView.layoutIfNeeded()
 
         let cellWidth = layout.itemSize.width
-
         albumCollectionView.setContentOffset(
-            CGPoint(x: cellWidth, y: .zero),
+            CGPoint(x: (cellWidth * CGFloat(index - 1)), y: .zero),
             animated: false
         )
     }
