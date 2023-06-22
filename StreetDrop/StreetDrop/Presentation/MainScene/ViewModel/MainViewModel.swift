@@ -48,6 +48,7 @@ extension MainViewModel {
         var pois = PublishRelay<Pois>()
         var musicCount = BehaviorRelay<Int>(value: 0)
         var musicWithinArea = BehaviorRelay<Musics>(value: [])
+        var cameraShouldGoCurrentLocation = PublishRelay<CLLocation>()
     }
 }
 
@@ -68,6 +69,7 @@ extension MainViewModel {
                     output: output,
                     disposedBag: disposedBag
                 )
+                output.cameraShouldGoCurrentLocation.accept(self.location)
             }
             .disposed(by: disposedBag)
             
