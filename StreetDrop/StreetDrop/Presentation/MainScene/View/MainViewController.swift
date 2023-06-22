@@ -424,10 +424,10 @@ private extension MainViewController {
             })
             .disposed(by: disposeBag)
         
-        output.location
-            .bind(onNext: { [weak self] location in
+        output.cameraShouldGoCurrentLocation
+            .bind { [weak self] location in
                 self?.moveCameraToCurrentLocation(location: location)
-            })
+            }
             .disposed(by: disposeBag)
         
         output.pois
