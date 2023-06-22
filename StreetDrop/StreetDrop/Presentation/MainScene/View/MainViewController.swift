@@ -106,6 +106,12 @@ final class MainViewController: UIViewController {
         return stackView
     }()
     
+    private lazy var myLocationButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "myLocationButton.png"), for: .normal)
+        return button
+    }()
+    
     private lazy var locationIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "locationIcon.png")
@@ -251,6 +257,16 @@ private extension MainViewController {
         self.musicDroppedCountLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.right.equalToSuperview().inset(16)
+        }
+        
+        // MARK: - My Location Button
+        
+        self.view.addSubview(self.myLocationButton)
+        self.myLocationButton.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(53.8)
+            $0.width.equalTo(40)
+            $0.height.equalTo(40)
+            $0.trailing.equalToSuperview().inset(16)
         }
         
         // MARK: - Bottom Bar IamgeView
@@ -414,7 +430,8 @@ private extension MainViewController {
             viewWillAppearEvent: self.viewWillAppearEvent,
             poiMarkerDidTapEvent: self.poiMarkerDidTapEvent,
             cameraDidStopEvent: self.cameraDidStopEvent,
-            homeButtonDidTapEvent: self.homeButton.rx.tap
+            homeButtonDidTapEvent: self.homeButton.rx.tap,
+            myLocationButtonDidTapEvent: self.myLocationButton.rx.tap
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
         

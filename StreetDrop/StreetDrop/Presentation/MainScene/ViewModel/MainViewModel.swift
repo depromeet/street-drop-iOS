@@ -40,6 +40,7 @@ extension MainViewModel {
         let poiMarkerDidTapEvent: PublishRelay<Void>
         let cameraDidStopEvent: PublishRelay<(latitude: Double, longitude: Double)>
         let homeButtonDidTapEvent: ControlEvent<Void>
+        let myLocationButtonDidTapEvent: ControlEvent<Void>
     }
     
     struct Output {
@@ -116,6 +117,12 @@ extension MainViewModel {
         input.homeButtonDidTapEvent
             .bind { [weak self] in
                 self?.locationManager.startUpdatingLocation()
+            }
+            .disposed(by: disposedBag)
+        
+        input.myLocationButtonDidTapEvent
+            .bind {
+                output.cameraShouldGoCurrentLocation.accept(self.location)
             }
             .disposed(by: disposedBag)
         
