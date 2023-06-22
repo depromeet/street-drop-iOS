@@ -75,8 +75,6 @@ final class MainViewController: UIViewController {
         let mapView = NMFMapView()
         mapView.mapType = .navi
         mapView.isNightModeEnabled = true
-        mapView.minZoomLevel = 14.0
-        mapView.maxZoomLevel = 14.0
         mapView.addCameraDelegate(delegate: self)
         return mapView
     }()
@@ -650,5 +648,9 @@ extension MainViewController: Alertable {
 extension MainViewController: NMFMapViewCameraDelegate {
     func mapViewCameraIdle(_ mapView: NMFMapView) {
         self.cameraDidStopEvent.accept((mapView.latitude, mapView.longitude))
+    }
+    
+    func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
+        self.locationOverlay.circleRadius = circleRadius / naverMapView.projection.metersPerPixel()
     }
 }
