@@ -54,6 +54,10 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
     }
 
     func setData(_ albumImageURL: String) {
+        guard !albumImageURL.isEmpty  else {
+            return
+        }
+
         self.albumImageView.setImage(with: albumImageURL, disposeBag: disposeBag)
     }
 

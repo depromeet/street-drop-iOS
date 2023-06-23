@@ -34,14 +34,10 @@ final class CommunityViewModel: ViewModel {
         var errorDescription: BehaviorRelay<String?> = .init(value: nil)
     }
 
-    private var communityInfos: [MusicWithinAreaEntity]
-    private var currentIndex: Int
+    private(set) var communityInfos: [MusicWithinAreaEntity]
+    private(set) var currentIndex: Int
     private var communityModel: CommunityModel
     private let disposeBag: DisposeBag = DisposeBag()
-
-    var communityInfoCount: Int {
-        return communityInfos.count
-    }
     
     init(
         communityInfos: [MusicWithinAreaEntity],
@@ -60,9 +56,19 @@ final class CommunityViewModel: ViewModel {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 output.addressTitle.accept(self.communityInfos[self.currentIndex].address)
-                output.albumImages.accept(self.communityInfos.map { $0.albumImageURL })
-                output.currentIndex.accept(self.currentIndex)
                 self.changeCommunityInfoForIndex(index: self.currentIndex, output: output)
+
+                var albumImagesURL = self.communityInfos.map { $0.albumImageURL }
+
+                // 데이터가 2, 3개 일때는 무한스크롤없이 -> 0번 쎌/마지막 쎌이 가운데로 스크롤 되도록 맨앞과 맨끝에 빈쎌을 넣어줌.
+                if (2...3).contains(self.communityInfos.count) {
+                    albumImagesURL.insert("", at: 0)
+                    albumImagesURL.append("")
+                    self.currentIndex += 1
+                }
+
+                output.albumImages.accept(albumImagesURL)
+                output.currentIndex.accept(self.currentIndex)
             }).disposed(by: disposedBag)
 
         input.changedIndex
@@ -91,6 +97,8 @@ final class CommunityViewModel: ViewModel {
 //MARK: - Private
 private extension CommunityViewModel {
     func changeCommunityInfoForIndex(index: Int, output: Output) {
+        guard (0..<communityInfos.count).contains(index) else { return }
+
         let communityInfo = communityInfos[index]
 
         output.musicTitle.accept(communityInfo.musicTitle)
