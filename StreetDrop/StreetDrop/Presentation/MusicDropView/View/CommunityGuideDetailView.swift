@@ -42,7 +42,7 @@ class CommunityGuideDetailView: UIView {
         let button = UIButton()
         button.setImage(linkIcon, for: .normal)
         button.setTitle(Constant.detailGuideLinkButtonText, for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.systemBlueDark, for: .normal)
         button.titleLabel?.font = .pretendard(size: 12, weightName: .semiBold)
 
         return button

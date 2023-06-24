@@ -167,4 +167,8 @@ public extension UIColor {
     static var darkPrimary_25: UIColor {
         UIColor(red: 0.41, green: 0.86, blue: 0.97, alpha: 0.25)
     }
+
+    static var systemBlueDark: UIColor {
+        UIColor(hexString: "#608CFF")
+    }
 }

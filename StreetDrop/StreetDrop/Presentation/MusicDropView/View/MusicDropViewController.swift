@@ -74,6 +74,7 @@ final class MusicDropViewController: UIViewController {
     private lazy var cancelButton: UIButton = {
         let button: UIButton = UIButton()
         button.setTitle("나가기", for: .normal)
+        button.setTitleColor(.gray300, for: .normal)
         button.titleLabel?.font = .pretendard(size: 14, weight: 600)
 
         return button
@@ -307,14 +308,14 @@ private extension MusicDropViewController {
             }.disposed(by: disposeBag)
 
         backButton.rx.tap
-            .bind {
-                self.navigationController?.popViewController(animated: true)
+            .bind { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
 
         cancelButton.rx.tap
-            .bind {
-                self.navigationController?.popToRootViewController(animated: true)
+            .bind { [weak self] in
+                self?.navigationController?.popToRootViewController(animated: true)
             }
             .disposed(by: disposeBag)
     }
