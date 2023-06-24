@@ -19,6 +19,7 @@ final class MusicDropViewController: UIViewController {
         static let commentPlaceHolder: String = "음악에 대해 하고싶은 말이 있나요?"
         static let dropButtonTitle: String = "드랍하기"
         static let communityButtonTitle: String = "커뮤니티 가이드"
+        static let defaultCommentCount: String = "0/40"
     }
 
     private var viewModel: MusicDropViewModel
@@ -197,7 +198,11 @@ final class MusicDropViewController: UIViewController {
 
     private lazy var commentCountLabel: UILabel = {
         let label = UILabel()
-        label.text = Constant.textDefault
+        label.text = Constant.defaultCommentCount
+        label.textColor = .gray300
+        label.font = .pretendard(size: 14, weightName: .medium)
+
+        return label
     }()
 
     private lazy var dropButton: UIButton = {
@@ -245,9 +250,15 @@ private extension MusicDropViewController {
 
         commentTextView.rx.didChange
             .subscribe { [weak self] _ in
-                self?.checkMaxNumberOfLines(max: 4)
                 self?.checkMaxCount(max: 40)
                 self?.checkAvailableToDrop()
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.text.orEmpty
+            .asObservable()
+            .bind { [weak self] text in
+                guard text != Constant.commentPlaceHolder else { return }
+                self?.commentCountLabel.text = "\(text.count)/40"
             }.disposed(by: disposeBag)
 
         backButton.rx.tap
@@ -434,15 +445,6 @@ private extension MusicDropViewController {
         if(commentTextView.text == placeHolder) {
             commentTextView.text = nil
             commentTextView.textColor = .gray100
-        }
-    }
-
-    func checkMaxNumberOfLines(max: Int) {
-        let lineBreakCharacter = "\n"
-        let lines = commentTextView.text.components(separatedBy: lineBreakCharacter).count
-
-        if lines > max {
-            commentTextView.text = String(commentTextView.text.dropLast())
         }
     }
 
