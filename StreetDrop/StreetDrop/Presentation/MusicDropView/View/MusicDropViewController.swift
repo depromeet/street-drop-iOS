@@ -188,6 +188,16 @@ final class MusicDropViewController: UIViewController {
         return button
     }()
 
+    private lazy var commentClearButton: UIButton = {
+        let icon = UIImage(named: "cancleButton")
+        let button = UIButton()
+        button.setImage(icon, for: .normal)
+        button.isHidden = true
+        button.isEnabled = false
+
+        return button
+    }()
+
     private lazy var commentCountLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.defaultCommentCount
@@ -234,11 +244,15 @@ private extension MusicDropViewController {
             .subscribe { [weak self] element in
                 self?.removePlaceHolder()
                 self?.commentCountLabel.isHidden = false
+                self?.commentClearButton.isHidden = false
+                self?.commentClearButton.isEnabled = true
             }.disposed(by: disposeBag)
 
         commentTextView.rx.didEndEditing
             .subscribe { [weak self] element in
                 self?.setupPlaceHolder()
+                self?.commentClearButton.isHidden = true
+                self?.commentClearButton.isEnabled = false
             }.disposed(by: disposeBag)
 
         commentTextView.rx.didChange
@@ -252,6 +266,11 @@ private extension MusicDropViewController {
             .bind { [weak self] text in
                 guard text != Constant.commentPlaceHolder else { return }
                 self?.commentCountLabel.text = "\(text.count)/40"
+            }.disposed(by: disposeBag)
+
+        commentClearButton.rx.tap
+            .bind {
+                self.commentTextView.text = nil
             }.disposed(by: disposeBag)
 
         backButton.rx.tap
@@ -332,7 +351,7 @@ private extension MusicDropViewController {
                 musicInfoStackView.addArrangedSubview($0)
             }
 
-        [commentTextView, commentCountLabel]
+        [commentTextView, commentCountLabel, commentClearButton]
             .forEach {
                 commentView.addSubview($0)
             }
@@ -402,6 +421,11 @@ private extension MusicDropViewController {
         commentTextView.snp.makeConstraints {
             $0.top.leading.bottom.equalToSuperview().inset(16)
             $0.trailing.equalToSuperview().inset(16+40+10) // inset+countLabel+spacing
+        }
+
+        commentClearButton.snp.makeConstraints {
+            $0.top.trailing.equalToSuperview().inset(16)
+            $0.width.height.equalTo(20)
         }
 
         commentCountLabel.snp.makeConstraints {
