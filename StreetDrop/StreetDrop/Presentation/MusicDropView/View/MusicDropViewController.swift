@@ -50,7 +50,6 @@ final class MusicDropViewController: UIViewController {
         super.viewDidAppear(animated)
 
         setupPlaceHolder()
-        makeViewIntoGradientCircle()
     }
 
     //MARK: - UI
@@ -343,11 +342,7 @@ private extension MusicDropViewController {
 
         scrollView.addSubview(contentView)
 
-        // 디자인요소인 GradientCircleView들 먼저 add합니다. 순서 변경 불가능합니다.
         [
-            largerCenterGradientCircleView,
-            smallerCenterGradientCircleView,
-            topGradientCircleView,
             topView,
             scrollView
         ]
@@ -374,27 +369,6 @@ private extension MusicDropViewController {
         cancelButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(19.5)
             $0.centerY.equalToSuperview()
-        }
-
-        topGradientCircleView.snp.makeConstraints {
-            $0.width.equalToSuperview().multipliedBy(1.1)
-            $0.height.equalTo(topGradientCircleView.snp.width)
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().multipliedBy(0.2)
-        }
-
-        smallerCenterGradientCircleView.snp.makeConstraints {
-            $0.width.equalToSuperview().multipliedBy(1.1)
-            $0.height.equalTo(smallerCenterGradientCircleView.snp.width)
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().multipliedBy(0.9)
-        }
-
-        largerCenterGradientCircleView.snp.makeConstraints {
-            $0.width.equalToSuperview().multipliedBy(1.4)
-            $0.height.equalTo(largerCenterGradientCircleView.snp.width)
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().multipliedBy(0.92)
         }
 
         scrollView.snp.makeConstraints {
@@ -502,13 +476,11 @@ private extension MusicDropViewController {
 
     //MARK: - 드랍 액션
     func showDropAnimation() {
-        removeViewItemComponents()
+        let animationView = DropAnimationView()
+        self.view.addSubview(animationView)
 
-        self.view.addSubview(dropAnimationImageView)
-        dropAnimationImageView.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.5)
-            $0.height.equalToSuperview().multipliedBy(0.5)
+        animationView.snp.makeConstraints {
+            $0.width.height.centerY.centerX.equalToSuperview()
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
@@ -519,45 +491,6 @@ private extension MusicDropViewController {
     func removeViewItemComponents() {
         topView.removeFromSuperview()
         scrollView.removeFromSuperview()
-    }
-
-    //MARK: - 그라데이션 뷰
-
-    func makeViewIntoGradientCircle() {
-        topGradientCircleView.makeGradientCircleView(
-            colors: [
-                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
-                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0.1).cgColor
-            ],
-            gradientLocations: [0.53, 1],
-            viewBackgroundColor: .black,
-            startPoint: CGPoint(x: 0.5, y: 0.25),
-            endPoint: CGPoint(x: 0.5, y: 0.75)
-        )
-
-        smallerCenterGradientCircleView.makeGradientCircleView(
-            colors: [
-                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
-                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
-                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0.1).cgColor
-            ],
-            gradientLocations: [0, 0.53, 1],
-            viewBackgroundColor: .black,
-            startPoint: CGPoint(x: 0.5, y: 0),
-            endPoint:  CGPoint(x: 0.5, y: 1)
-        )
-
-        largerCenterGradientCircleView.makeGradientCircleView(
-            colors: [
-                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
-                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0).cgColor,
-                UIColor(red: 0.188, green: 0.949, blue: 0.765, alpha: 0.08).cgColor
-            ],
-            gradientLocations: [0, 0.53, 1],
-            viewBackgroundColor: .black,
-            startPoint: CGPoint(x: 0.5, y: 0),
-            endPoint:  CGPoint(x: 0.5, y: 1)
-        )
     }
 
     //MARK: - 키보드
