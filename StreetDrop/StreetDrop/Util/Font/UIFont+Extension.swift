@@ -17,6 +17,16 @@ extension UIFont {
             size: size
         ) ?? UIFont.boldSystemFont(ofSize: 30)
     }
+
+    static func pretendard(
+        size: CGFloat,
+        weightName: PretendardFontWeight
+    ) -> UIFont {
+        return UIFont(
+            name: "Pretendard-\(weightName.style)",
+            size: size
+        ) ?? UIFont.boldSystemFont(ofSize: 30)
+    }
 }
 
 enum PretendardFontWeight: Int {
