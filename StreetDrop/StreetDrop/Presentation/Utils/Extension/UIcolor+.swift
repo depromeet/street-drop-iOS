@@ -163,4 +163,8 @@ public extension UIColor {
     static var darkGradient_2: UIColor {
         UIColor(hexString: "#17191F")
     }
+
+    static var darkPrimary_25: UIColor {
+        UIColor(red: 0.41, green: 0.86, blue: 0.97, alpha: 0.25)
+    }
 }
