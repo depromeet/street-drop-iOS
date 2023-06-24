@@ -157,6 +157,8 @@ final class MusicDropViewController: UIViewController {
         let view = UIView()
         view.backgroundColor = .gray700
         view.layer.cornerRadius = 12
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.gray700.cgColor
         view.clipsToBounds = true
         return view
     }()
@@ -246,6 +248,7 @@ private extension MusicDropViewController {
                 self?.commentCountLabel.isHidden = false
                 self?.commentClearButton.isHidden = false
                 self?.commentClearButton.isEnabled = true
+                self?.commentView.layer.borderColor = UIColor.darkPrimary_25.cgColor
             }.disposed(by: disposeBag)
 
         commentTextView.rx.didEndEditing
@@ -253,12 +256,23 @@ private extension MusicDropViewController {
                 self?.setupPlaceHolder()
                 self?.commentClearButton.isHidden = true
                 self?.commentClearButton.isEnabled = false
+                self?.commentView.layer.borderColor = UIColor.gray700.cgColor
             }.disposed(by: disposeBag)
 
         commentTextView.rx.didChange
             .subscribe { [weak self] _ in
                 self?.checkMaxCount(max: 40)
                 self?.checkAvailableToDrop()
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.willBeginDragging
+            .subscribe { [weak self] _ in
+                self?.commentView.layer.borderColor = UIColor.darkPrimary_25.cgColor
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.didEndDragging
+            .subscribe { [weak self] _ in
+                self?.commentView.layer.borderColor = UIColor.gray700.cgColor
             }.disposed(by: disposeBag)
 
         commentTextView.rx.text.orEmpty
