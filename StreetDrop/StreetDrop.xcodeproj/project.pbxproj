@@ -64,6 +64,7 @@
 		4143452E2A373550003FEE2A /* AddressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4143452D2A373550003FEE2A /* AddressManager.swift */; };
 		415113272A165DC50051F809 /* MusicDropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415113262A165DC50051F809 /* MusicDropViewController.swift */; };
 		41589AB82A46D82F0029A2EE /* DropAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41589AB72A46D82F0029A2EE /* DropAnimationView.swift */; };
+		41589ABA2A474B3D0029A2EE /* CommunityGuideDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41589AB92A474B3D0029A2EE /* CommunityGuideDetailView.swift */; };
 		41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO+Mapping.swift */; };
 		41B953692A10E5B800BEC0AB /* SearchedMusicResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO+Mapping.swift */; };
 		41BCFD452A38C099001D3E5F /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BCFD442A38C099001D3E5F /* Alertable.swift */; };
@@ -200,6 +201,7 @@
 		4143452D2A373550003FEE2A /* AddressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressManager.swift; sourceTree = "<group>"; };
 		415113262A165DC50051F809 /* MusicDropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDropViewController.swift; sourceTree = "<group>"; };
 		41589AB72A46D82F0029A2EE /* DropAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropAnimationView.swift; sourceTree = "<group>"; };
+		41589AB92A474B3D0029A2EE /* CommunityGuideDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityGuideDetailView.swift; sourceTree = "<group>"; };
 		41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchedMusicResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		41BCFD442A38C099001D3E5F /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
 		41D0974E2A19065B00C011A0 /* UIView+generateCircleGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+generateCircleGradientView.swift"; sourceTree = "<group>"; };
@@ -605,6 +607,7 @@
 			children = (
 				415113262A165DC50051F809 /* MusicDropViewController.swift */,
 				41589AB72A46D82F0029A2EE /* DropAnimationView.swift */,
+				41589AB92A474B3D0029A2EE /* CommunityGuideDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1049,6 +1052,7 @@
 				188F90C72A39FD7D003A1B4A /* UIImage+cornerRadius.swift in Sources */,
 				C41BD2EC2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */,
 				C47F022A2A3869DC00F48884 /* MyPageInfo.swift in Sources */,
+				41589ABA2A474B3D0029A2EE /* CommunityGuideDetailView.swift in Sources */,
 				414345282A35BA3C003FEE2A /* CommunityModel.swift in Sources */,
 				41F23B4E2A1B6EE80083D2EC /* DropMusicRepository.swift in Sources */,
 				18683FE12A349109005A94AC /* PoiEntity.swift in Sources */,
