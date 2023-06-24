@@ -86,6 +86,13 @@ final class MusicDropViewController: UIViewController {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.keyboardDismissMode = .onDrag
 
+        // 여백 터치시 키보드 내려가게 하기위해 TapGestureRecognizer추가 (추가하지 않으면 짧은 터치 제스처가 스크롤하는 제스처로 인정됌)
+        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(endEditing))
+        singleTapGestureRecognizer.numberOfTapsRequired = 1
+        singleTapGestureRecognizer.isEnabled = true
+        singleTapGestureRecognizer.cancelsTouchesInView = false
+        scrollView.addGestureRecognizer(singleTapGestureRecognizer)
+
         return scrollView
     }()
 
@@ -589,14 +596,14 @@ private extension MusicDropViewController {
             title: "완료",
             style: .plain,
             target: self,
-            action: #selector(self.touchedDoneFromKeyboardToolbar)
+            action: #selector(self.endEditing)
         )
         toolbar.items = [doneButtonOnKeyboard]
         toolbar.sizeToFit()
         commentTextView.inputAccessoryView = toolbar
     }
 
-    @objc func touchedDoneFromKeyboardToolbar(sender: Any) {
+    @objc func endEditing(sender: Any) {
         self.view.endEditing(true)
     }
 }
