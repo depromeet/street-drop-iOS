@@ -14,7 +14,7 @@ import SnapKit
 final class MusicDropViewController: UIViewController {
 
     enum Constant {
-        static let textDefault = ""
+        static let textDefault = " "
         static let dropGuideTitle: String = "음악을 드랍할게요"
         static let commentPlaceHolder: String = "음악에 대해 하고싶은 말이 있나요?"
         static let dropButtonTitle: String = "드랍하기"
@@ -116,23 +116,10 @@ final class MusicDropViewController: UIViewController {
         let imageView = UIImageView()
         imageView.backgroundColor = .gray700
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 10
+        imageView.layer.cornerRadius = 24
         imageView.clipsToBounds = true
 
         return imageView
-    }()
-
-    private lazy var albumImageGradationView: UIView = {
-        let view = UIView()
-        view.layer.borderColor = UIColor.white.cgColor
-        view.layer.borderWidth = 0
-        view.layer.shadowOpacity = 1
-        view.layer.shadowColor = UIColor(red: 0.399, green: 0.375, blue: 0.833, alpha: 0.5).cgColor
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
-        view.layer.shadowRadius = 10
-        view.layer.masksToBounds = true // true로 지정 후, 코멘트 작성시 false로 바뀜
-
-        return view
     }()
 
     private lazy var musicNameLabel: UILabel = {
@@ -161,7 +148,7 @@ final class MusicDropViewController: UIViewController {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 5
+        stackView.spacing = 16
 
         return stackView
     }()
@@ -195,7 +182,7 @@ final class MusicDropViewController: UIViewController {
         button.setTitleColor(.gray200, for: .normal)
         button.titleLabel?.font = .pretendard(size: 12, weightName: .semiBold)
         button.backgroundColor = .gray700
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 15
         button.clipsToBounds = false
 
         return button
@@ -291,7 +278,6 @@ private extension MusicDropViewController {
 
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
 
-        // locationTitle
         output.locationTitle
             .asDriver(onErrorJustReturn: (address: "", text: ""))
             .drive(onNext: { [weak self] locationTitle in
@@ -341,9 +327,7 @@ private extension MusicDropViewController {
             topView.addSubview($0)
         }
 
-        albumImageGradationView.addSubview(albumImageView)
-
-        [locationLabel, dropGuideLabel, albumImageGradationView, musicNameLabel, artistLabel]
+        [locationLabel, dropGuideLabel, albumImageView, musicNameLabel, artistLabel]
             .forEach {
                 musicInfoStackView.addArrangedSubview($0)
             }
@@ -360,10 +344,7 @@ private extension MusicDropViewController {
 
         scrollView.addSubview(contentView)
 
-        [
-            topView,
-            scrollView
-        ]
+        [topView, scrollView]
             .forEach {
                 self.view.addSubview($0)
             }
@@ -400,16 +381,12 @@ private extension MusicDropViewController {
         }
 
         albumImageView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalToSuperview()
-        }
-
-        albumImageGradationView.snp.makeConstraints {
             $0.width.equalTo(contentView).multipliedBy(0.30)
             $0.height.equalTo(albumImageView.snp.width)
         }
 
-        musicInfoStackView.setCustomSpacing(32, after: dropGuideLabel)
-        musicInfoStackView.setCustomSpacing(16, after: albumImageView)
+        musicInfoStackView.setCustomSpacing(0, after: locationLabel)
+        musicInfoStackView.setCustomSpacing(0, after: musicNameLabel)
 
         musicInfoStackView.snp.makeConstraints {
             $0.top.trailing.leading.equalTo(contentView).inset(20)
@@ -440,7 +417,7 @@ private extension MusicDropViewController {
         }
 
         dropButton.snp.makeConstraints {
-            $0.width.equalTo(commentTextView)
+            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(24)
             $0.bottom.equalTo(contentView.snp.bottom).inset(30)
             $0.height.equalTo(54)
             $0.centerX.equalTo(contentView)
@@ -484,12 +461,10 @@ private extension MusicDropViewController {
            && commentTextView.text != ""
            && commentTextView.text != placeHolder
         ) {
-            albumImageGradationView.layer.masksToBounds = false
             dropButton.isEnabled = true
             dropButton.backgroundColor = .primary500
             dropButton.setTitleColor(.gray900, for: .normal)
         } else {
-            albumImageGradationView.layer.masksToBounds = true
             dropButton.isEnabled = false
             dropButton.setTitleColor(
                 .gray400,
