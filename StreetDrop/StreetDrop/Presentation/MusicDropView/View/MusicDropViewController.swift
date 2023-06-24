@@ -166,17 +166,22 @@ final class MusicDropViewController: UIViewController {
         return stackView
     }()
 
+    private lazy var commentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray700
+        view.layer.cornerRadius = 12
+        view.clipsToBounds = true
+        return view
+    }()
+
     private lazy var commentTextView: UITextView = {
         let textView = UITextView()
         textView.textColor = .white
         textView.font = .pretendard(size: 14, weight: 500)
         textView.backgroundColor = .gray700
-        textView.layer.cornerRadius = 8
-        textView.textContainerInset = .init(top: 12, left: 14, bottom: 12, right: 14)
         textView.keyboardAppearance = .dark
         textView.showsVerticalScrollIndicator = false
         textView.sizeToFit()
-        textView.isScrollEnabled = false
 
         return textView
     }()
@@ -201,6 +206,7 @@ final class MusicDropViewController: UIViewController {
         label.text = Constant.defaultCommentCount
         label.textColor = .gray300
         label.font = .pretendard(size: 14, weightName: .medium)
+        label.isHidden = true
 
         return label
     }()
@@ -240,7 +246,7 @@ private extension MusicDropViewController {
         commentTextView.rx.didBeginEditing
             .subscribe { [weak self] element in
                 self?.removePlaceHolder()
-                self?.setupCommentCountLabel()
+                self?.commentCountLabel.isHidden = false
             }.disposed(by: disposeBag)
 
         commentTextView.rx.didEndEditing
@@ -342,7 +348,12 @@ private extension MusicDropViewController {
                 musicInfoStackView.addArrangedSubview($0)
             }
 
-        [musicInfoStackView, commentTextView, communityGuideButton, dropButton]
+        [commentTextView, commentCountLabel]
+            .forEach {
+                commentView.addSubview($0)
+            }
+
+        [musicInfoStackView, commentView, communityGuideButton, dropButton]
             .forEach {
                 self.contentView.addSubview($0)
             }
@@ -405,15 +416,25 @@ private extension MusicDropViewController {
             $0.centerX.equalTo(contentView)
         }
 
-        commentTextView.snp.makeConstraints {
+        commentView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(24)
             $0.height.equalTo(112)
             $0.top.equalTo(musicInfoStackView.snp.bottom).offset(32)
         }
 
+        commentTextView.snp.makeConstraints {
+            $0.top.leading.bottom.equalToSuperview().inset(16)
+            $0.trailing.equalToSuperview().inset(16+40+10) // inset+countLabel+spacing
+        }
+
+        commentCountLabel.snp.makeConstraints {
+            $0.trailing.equalTo(commentView.snp.trailing).inset(16)
+            $0.bottom.equalTo(commentView.snp.bottom).inset(16)
+        }
+
         communityGuideButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(24)
-            $0.top.equalTo(commentTextView.snp.bottom).offset(16)
+            $0.top.equalTo(commentView.snp.bottom).offset(16)
             $0.width.equalTo(120)
             $0.height.equalTo(32)
         }
@@ -453,15 +474,6 @@ private extension MusicDropViewController {
 
         if count > max {
             commentTextView.text = String(commentTextView.text.dropLast())
-        }
-    }
-
-    func setupCommentCountLabel() {
-        self.contentView.addSubview(commentCountLabel)
-
-        commentCountLabel.snp.makeConstraints {
-            $0.trailing.equalTo(commentTextView.snp.trailing).inset(16)
-            $0.bottom.equalTo(commentTextView.snp.bottom).inset(16)
         }
     }
 
