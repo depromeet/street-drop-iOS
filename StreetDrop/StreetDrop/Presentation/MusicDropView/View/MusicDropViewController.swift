@@ -17,8 +17,8 @@ final class MusicDropViewController: UIViewController {
         static let textDefault = ""
         static let dropGuideTitle: String = "음악을 드랍할게요"
         static let commentPlaceHolder: String = "음악에 대해 하고싶은 말이 있나요?"
-        static let commentGuidanceText: String = "• 5자부터 40자까지 입력 가능합니다.\n• 욕설, 성희롱, 비방과 같은 내용은 삭제됩니다."
         static let dropButtonTitle: String = "드랍하기"
+        static let communityButtonTitle: String = "커뮤니티 가이드"
     }
 
     private var viewModel: MusicDropViewModel
@@ -180,23 +180,24 @@ final class MusicDropViewController: UIViewController {
         return textView
     }()
 
-    private lazy var CommentGuidanceLabel: UILabel = {
-        let label: UILabel = UILabel()
-        label.text = Constant.commentGuidanceText
-        label.numberOfLines = 2
-        label.textColor = .white
-        label.font = .pretendard(size: 12, weight: 400)
-        label.setLineHeight(lineHeight: 17)
+    private lazy var communityGuideButton: UIButton = {
+        let icon = UIImage(named: "infoIcon")
+        let button = UIButton(frame: .zero)
+        button.setImage(icon, for: .normal)
+        button.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 4)
+        button.setTitle(Constant.communityButtonTitle, for: .normal)
+        button.setTitleColor(.gray200, for: .normal)
+        button.titleLabel?.font = .pretendard(size: 12, weightName: .semiBold)
+        button.backgroundColor = .gray700
+        button.layer.cornerRadius = 20
+        button.clipsToBounds = false
 
-        return label
+        return button
     }()
 
-    private lazy var commentStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 5
-
-        return stackView
+    private lazy var commentCountLabel: UILabel = {
+        let label = UILabel()
+        label.text = Constant.textDefault
     }()
 
     private lazy var dropButton: UIButton = {
@@ -330,12 +331,7 @@ private extension MusicDropViewController {
                 musicInfoStackView.addArrangedSubview($0)
             }
 
-        [commentTextView, CommentGuidanceLabel]
-            .forEach {
-                commentStackView.addArrangedSubview($0)
-            }
-
-        [musicInfoStackView, commentStackView, dropButton]
+        [musicInfoStackView, commentTextView, communityGuideButton, dropButton]
             .forEach {
                 self.contentView.addSubview($0)
             }
@@ -367,7 +363,7 @@ private extension MusicDropViewController {
         }
 
         cancelButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(19.5)
+            $0.trailing.equalToSuperview().inset(24)
             $0.centerY.equalToSuperview()
         }
 
@@ -398,11 +394,17 @@ private extension MusicDropViewController {
             $0.centerX.equalTo(contentView)
         }
 
-        commentStackView.snp.makeConstraints {
-            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(20)
-            $0.leading.trailing.equalTo(contentView).inset(24)
-            $0.height.greaterThanOrEqualTo(contentView).multipliedBy(0.1)
-            $0.centerX.equalTo(contentView)
+        commentTextView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(112)
+            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(32)
+        }
+
+        communityGuideButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(24)
+            $0.top.equalTo(commentTextView.snp.bottom).offset(16)
+            $0.width.equalTo(120)
+            $0.height.equalTo(32)
         }
 
         dropButton.snp.makeConstraints {
@@ -517,7 +519,7 @@ private extension MusicDropViewController {
 
         scrollView.contentInset.bottom = keyboardFrame.size.height
 
-        let activeRect = CommentGuidanceLabel.convert(CommentGuidanceLabel.bounds, to: scrollView)
+        let activeRect = commentTextView.convert(commentTextView.bounds, to: scrollView)
         scrollView.scrollRectToVisible(activeRect, animated: true)
     }
 
