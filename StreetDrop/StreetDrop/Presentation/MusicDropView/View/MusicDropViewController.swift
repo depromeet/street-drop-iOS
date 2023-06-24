@@ -190,6 +190,8 @@ final class MusicDropViewController: UIViewController {
         return button
     }()
 
+    private lazy var communityGuideDetailView: UIView = CommunityGuideDetailView()
+
     private lazy var commentClearButton: UIButton = {
         let icon = UIImage(named: "cancleButton")
         let button = UIButton()
@@ -283,8 +285,17 @@ private extension MusicDropViewController {
             }.disposed(by: disposeBag)
 
         commentClearButton.rx.tap
-            .bind {
-                self.commentTextView.text = nil
+            .bind { [weak self] in
+                self?.commentTextView.text = nil
+            }.disposed(by: disposeBag)
+
+        communityGuideButton.rx.tap
+            .bind { [weak self] in
+                guard let self = self else { return }
+                self.communityGuideDetailView.isHidden = !self.communityGuideDetailView.isHidden
+
+                let isHidden = self.communityGuideDetailView.isHidden
+                self.communityGuideDetailView.isUserInteractionEnabled = isHidden ? false : true
             }.disposed(by: disposeBag)
 
         backButton.rx.tap
@@ -370,7 +381,7 @@ private extension MusicDropViewController {
                 commentView.addSubview($0)
             }
 
-        [musicInfoStackView, commentView, communityGuideButton, dropButton]
+        [musicInfoStackView, commentView, communityGuideButton, dropButton, communityGuideDetailView]
             .forEach {
                 self.contentView.addSubview($0)
             }
@@ -452,6 +463,11 @@ private extension MusicDropViewController {
             $0.top.equalTo(commentView.snp.bottom).offset(16)
             $0.width.equalTo(120)
             $0.height.equalTo(32)
+        }
+
+        communityGuideDetailView.snp.makeConstraints {
+            $0.leading.equalTo(communityGuideButton)
+            $0.top.equalTo(communityGuideButton.snp.bottom).offset(8+8) // spacing + 말풍선꼬리높이
         }
 
         dropButton.snp.makeConstraints {
