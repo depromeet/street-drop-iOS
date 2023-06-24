@@ -44,6 +44,7 @@ final class MusicDropViewController: UIViewController {
         bindAction()
         bindViewModel()
         registerKeyboardNotification()
+        addDoneButtonToKeyboard()
         viewDidLoadEvent.accept(())
     }
 
@@ -169,8 +170,8 @@ final class MusicDropViewController: UIViewController {
         textView.font = .pretendard(size: 14, weight: 500)
         textView.backgroundColor = .gray700
         textView.keyboardAppearance = .dark
+        textView.keyboardDismissMode = .interactive
         textView.showsVerticalScrollIndicator = false
-        textView.sizeToFit()
 
         return textView
     }()
@@ -571,7 +572,7 @@ private extension MusicDropViewController {
 
         scrollView.contentInset.bottom = keyboardFrame.size.height
 
-        let activeRect = commentTextView.convert(commentTextView.bounds, to: scrollView)
+        let activeRect = communityGuideButton.convert(communityGuideButton.bounds, to: scrollView)
         scrollView.scrollRectToVisible(activeRect, animated: true)
     }
 
@@ -579,5 +580,23 @@ private extension MusicDropViewController {
         let contentInset = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
         scrollView.setContentOffset(.zero, animated: true)
+    }
+
+    // 키보드상단 완료 버튼 추가하기
+    func addDoneButtonToKeyboard() {
+        let toolbar = UIToolbar()
+        let doneButtonOnKeyboard = UIBarButtonItem(
+            title: "완료",
+            style: .plain,
+            target: self,
+            action: #selector(self.touchedDoneFromKeyboardToolbar)
+        )
+        toolbar.items = [doneButtonOnKeyboard]
+        toolbar.sizeToFit()
+        commentTextView.inputAccessoryView = toolbar
+    }
+
+    @objc func touchedDoneFromKeyboardToolbar(sender: Any) {
+        self.view.endEditing(true)
     }
 }
