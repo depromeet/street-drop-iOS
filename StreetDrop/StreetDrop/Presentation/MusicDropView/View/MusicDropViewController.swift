@@ -231,11 +231,11 @@ private extension MusicDropViewController {
                 self.showDropAnimation()
             }.disposed(by: disposeBag)
 
-        // 코멘트 플레이스홀더, 텍스트 줄 수에 맞게 변하는 다이나믹 TextView, 줄 수 제한, 커멘트있을때만 드랍가능
+        // 코멘트 플레이스홀더, 글자수라벨 설치, 줄 수 제한, 커멘트있을때만 드랍가능
         commentTextView.rx.didBeginEditing
             .subscribe { [weak self] element in
                 self?.removePlaceHolder()
-                self?.commentTextView.sizeToFit()
+                self?.setupCommentCountLabel()
             }.disposed(by: disposeBag)
 
         commentTextView.rx.didEndEditing
@@ -451,6 +451,15 @@ private extension MusicDropViewController {
 
         if count > max {
             commentTextView.text = String(commentTextView.text.dropLast())
+        }
+    }
+
+    func setupCommentCountLabel() {
+        self.contentView.addSubview(commentCountLabel)
+
+        commentCountLabel.snp.makeConstraints {
+            $0.trailing.equalTo(commentTextView.snp.trailing).inset(16)
+            $0.bottom.equalTo(commentTextView.snp.bottom).inset(16)
         }
     }
 
