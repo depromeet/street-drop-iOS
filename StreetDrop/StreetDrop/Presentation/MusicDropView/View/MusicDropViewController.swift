@@ -92,9 +92,6 @@ final class MusicDropViewController: UIViewController, Toastable {
             target: self,
             action: #selector(endEditing)
         )
-        singleTapGestureRecognizer.numberOfTapsRequired = 1
-        singleTapGestureRecognizer.isEnabled = true
-        singleTapGestureRecognizer.cancelsTouchesInView = false
         scrollView.addGestureRecognizer(singleTapGestureRecognizer)
 
         return scrollView
