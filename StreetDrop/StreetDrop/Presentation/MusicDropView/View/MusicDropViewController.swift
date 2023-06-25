@@ -137,13 +137,14 @@ final class MusicDropViewController: UIViewController {
         label.numberOfLines = 1
         label.textColor = .gray300
         label.font = .pretendard(size: 12, weight: 500)
-        label.setLineHeight(lineHeight: 18)
+        label.setLineHeight(lineHeight: 16)
 
         return label
     }()
 
     private lazy var musicInfoStackView: UIStackView = {
         let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 16
@@ -355,7 +356,6 @@ private extension MusicDropViewController {
             .drive(onNext: { [weak self] data in
                 let albumImage = UIImage(data: data)
                 self?.albumImageView.image = albumImage
-                self?.albumImageView.layer.cornerRadius = 10
             }).disposed(by: disposeBag)
 
         // 👉 TODO: Error팝업띄우기
@@ -375,7 +375,7 @@ private extension MusicDropViewController {
             topView.addSubview($0)
         }
 
-        [locationLabel, dropGuideLabel, albumImageView, musicNameLabel, artistLabel]
+        [locationLabel, albumImageView, musicNameLabel, artistLabel]
             .forEach {
                 musicInfoStackView.addArrangedSubview($0)
             }
@@ -429,12 +429,10 @@ private extension MusicDropViewController {
         }
 
         albumImageView.snp.makeConstraints {
-            $0.width.equalTo(contentView).multipliedBy(0.30)
-            $0.height.equalTo(albumImageView.snp.width)
+            $0.width.height.equalTo(120)
         }
 
-        musicInfoStackView.setCustomSpacing(0, after: locationLabel)
-        musicInfoStackView.setCustomSpacing(0, after: musicNameLabel)
+        musicInfoStackView.setCustomSpacing(2, after: musicNameLabel)
 
         musicInfoStackView.snp.makeConstraints {
             $0.top.trailing.leading.equalTo(contentView).inset(20)
@@ -448,7 +446,8 @@ private extension MusicDropViewController {
         }
 
         commentTextView.snp.makeConstraints {
-            $0.top.leading.bottom.equalToSuperview().inset(16)
+            $0.top.bottom.equalToSuperview().inset(12)
+            $0.leading.equalToSuperview().inset(16)
             $0.trailing.equalToSuperview().inset(16+40+10) // inset+countLabel+spacing
         }
 
