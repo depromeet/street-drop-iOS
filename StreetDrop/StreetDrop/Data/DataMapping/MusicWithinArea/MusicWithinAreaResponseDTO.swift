@@ -28,6 +28,7 @@ struct MusicWithinAreaResponseDTO: Decodable {
     }
     
     struct User: Decodable {
+        let userId: Int
         let nickname, profileImage, musicApp: String
     }
     
@@ -47,6 +48,7 @@ extension MusicWithinAreaResponseDTO {
         return items.map {
             .init(
                 id: $0.itemID,
+                userId: $0.user.userId,
                 userName: $0.user.nickname,
                 userProfileImageURL: $0.user.profileImage,
                 musicApp: $0.user.musicApp,
