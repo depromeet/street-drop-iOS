@@ -26,6 +26,7 @@ final class MusicDropViewModel: ViewModel {
         var musicTitle: PublishRelay<String> = .init()
         var artistTitle: PublishRelay<String> = .init()
         var albumImage: PublishRelay<Data> = .init()
+        var isSuccessDrop: PublishRelay<Bool> = .init()
         let errorDescription: BehaviorRelay<String?> = .init(value: nil)
     }
 
@@ -88,10 +89,14 @@ final class MusicDropViewModel: ViewModel {
                     .subscribe(onSuccess: { response in
                         if !(200...299).contains(response) {
                             output.errorDescription.accept("저장에 실패했습니다")
+                            output.isSuccessDrop.accept(false)
+                            return
                         }
+                        output.isSuccessDrop.accept(true)
                     }, onFailure: { error in
                         output.errorDescription.accept("저장에 실패했습니다")
                         print(error.localizedDescription)
+                        output.isSuccessDrop.accept(false)
                     }).disposed(by: disposedBag)
             }).disposed(by: disposedBag)
 
