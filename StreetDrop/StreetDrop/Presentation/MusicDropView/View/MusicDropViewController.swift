@@ -85,7 +85,6 @@ final class MusicDropViewController: UIViewController {
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.keyboardDismissMode = .onDrag
 
         // 여백 터치시 키보드 내려가게 하기위해 TapGestureRecognizer추가 (추가하지 않으면 짧은 터치 제스처가 스크롤하는 제스처로 인정됌)
         let singleTapGestureRecognizer = UITapGestureRecognizer(
@@ -574,7 +573,7 @@ private extension MusicDropViewController {
         changeLayoutWhenKeyboardShowAndHide(isKeyboardShow: true)
         scrollView.contentInset.bottom = keyboardFrame.size.height
 
-        let activeRect = communityGuideButton.convert(communityGuideButton.bounds, to: scrollView)
+        let activeRect = commentTextView.convert(commentTextView.bounds, to: scrollView)
         scrollView.scrollRectToVisible(activeRect, animated: true)
     }
 
