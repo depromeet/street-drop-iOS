@@ -9,6 +9,7 @@ import Foundation
 
 struct MusicWithinAreaEntity {
     let id: Int
+    let userId: Int
     let userName: String
     let userProfileImageURL: String
     let musicApp: String
