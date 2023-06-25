@@ -24,6 +24,8 @@ final class MusicDropViewController: UIViewController {
     private var viewModel: MusicDropViewModel
     private let disposeBag: DisposeBag = DisposeBag()
     private let viewDidLoadEvent = PublishRelay<Void>()
+    private let keyboardShowEvent = PublishRelay<Void>()
+    private let keyboardHideEvent = PublishRelay<Void>()
 
     init(viewModel: MusicDropViewModel) {
         self.viewModel = viewModel
@@ -315,8 +317,8 @@ private extension MusicDropViewController {
     func bindViewModel() {
         let input = MusicDropViewModel.Input(
             viewDidLoadEvent: self.viewDidLoadEvent.asObservable(),
-            keyboardShowEvnet: self.commentTextView.rx.didBeginEditing.asObservable(),
-            keyboardHideEvnet: self.commentTextView.rx.didEndEditing.asObservable(),
+            keyboardShowEvnet: self.keyboardShowEvent.asObservable(),
+            keyboardHideEvnet: self.keyboardHideEvent.asObservable(),
             tapDropButton: self.dropButton.rx.tap.asObservable(),
             comment: self.commentTextView.rx.text.orEmpty.asObservable()
         )
@@ -326,6 +328,7 @@ private extension MusicDropViewController {
         output.locationTitle
             .asDriver(onErrorJustReturn: (address: "", text: ""))
             .drive(onNext: { [weak self] locationTitle in
+                self?.locationLabel.attributedText = nil
                 self?.locationLabel.text = locationTitle.text
                 self?.locationLabel.changeColorPartially(
                     lineHeight: 28,
@@ -375,17 +378,17 @@ private extension MusicDropViewController {
             topView.addSubview($0)
         }
 
-        [locationLabel, albumImageView, musicNameLabel, artistLabel]
-            .forEach {
-                musicInfoStackView.addArrangedSubview($0)
-            }
-
         [commentTextView, commentCountLabel, commentClearButton]
             .forEach {
                 commentView.addSubview($0)
             }
 
-        [musicInfoStackView, commentView, communityGuideButton, dropButton, communityGuideDetailView]
+        [locationLabel, albumImageView, musicNameLabel, artistLabel, commentView]
+            .forEach {
+                musicInfoStackView.addArrangedSubview($0)
+            }
+
+        [musicInfoStackView, communityGuideButton, dropButton, communityGuideDetailView]
             .forEach {
                 self.contentView.addSubview($0)
             }
@@ -428,21 +431,17 @@ private extension MusicDropViewController {
             $0.height.greaterThanOrEqualTo(scrollView)
         }
 
-        albumImageView.snp.makeConstraints {
-            $0.width.height.equalTo(120)
-        }
-
+        self.changeLayoutWhenKeyboardShowAndHide(isKeyboardShow: false)
         musicInfoStackView.setCustomSpacing(2, after: musicNameLabel)
 
         musicInfoStackView.snp.makeConstraints {
-            $0.top.trailing.leading.equalTo(contentView).inset(20)
-            $0.centerX.equalTo(contentView)
+            $0.top.equalTo(contentView).inset(16)
+            $0.leading.trailing.equalToSuperview()
         }
 
         commentView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(24)
             $0.height.equalTo(112)
-            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(32)
         }
 
         commentTextView.snp.makeConstraints {
@@ -463,7 +462,7 @@ private extension MusicDropViewController {
 
         communityGuideButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(24)
-            $0.top.equalTo(commentView.snp.bottom).offset(16)
+            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(16)
             $0.width.equalTo(120)
             $0.height.equalTo(32)
         }
@@ -571,7 +570,8 @@ private extension MusicDropViewController {
         else {
             return
         }
-
+        keyboardShowEvent.accept(())
+        changeLayoutWhenKeyboardShowAndHide(isKeyboardShow: true)
         scrollView.contentInset.bottom = keyboardFrame.size.height
 
         let activeRect = communityGuideButton.convert(communityGuideButton.bounds, to: scrollView)
@@ -579,6 +579,9 @@ private extension MusicDropViewController {
     }
 
     @objc func keyboardWillHide() {
+        keyboardHideEvent.accept(())
+        changeLayoutWhenKeyboardShowAndHide(isKeyboardShow: false)
+
         let contentInset = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
         scrollView.setContentOffset(.zero, animated: true)
@@ -586,5 +589,25 @@ private extension MusicDropViewController {
 
     @objc func endEditing() {
         self.view.endEditing(true)
+    }
+
+    //MARK: - 레이아웃 변경
+    func changeLayoutWhenKeyboardShowAndHide(isKeyboardShow: Bool) {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            guard let self = self else { return }
+
+            let topSpacing: CGFloat = isKeyboardShow ? 12 : 16
+            let centerSpacing: CGFloat = isKeyboardShow ? 24 : 36
+            let albumImageSize: CGFloat = isKeyboardShow ? 88 : 120
+
+            self.musicInfoStackView.setCustomSpacing(topSpacing, after: self.albumImageView)
+            self.musicInfoStackView.setCustomSpacing(centerSpacing, after: self.artistLabel)
+            
+            self.albumImageView.snp.remakeConstraints {
+                $0.width.height.equalTo(albumImageSize)
+            }
+
+            self.musicInfoStackView.layoutIfNeeded()
+        }
     }
 }
