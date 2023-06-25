@@ -139,15 +139,14 @@ final class CommunityViewController: UIViewController {
 
     private lazy var voidView: UIView = UIView()
 
-    private lazy var commentLabel: UILabel = {
-        let label = UILabel()
-        label.text = Constant.textDefault
-        label.textColor = .gray50
-        label.numberOfLines = 0
-        label.font = .pretendard(size: 16, weight: 500)
-        label.setLineHeight(lineHeight: 24)
+    private lazy var commentTextView: UITextView = {
+        let textView = UITextView()
+        textView.backgroundColor = .clear
+        textView.text = Constant.textDefault
+        textView.isEditable = false
+        textView.showsVerticalScrollIndicator = false
 
-        return label
+        return textView
     }()
 
     private lazy var profileImageView: UIImageView = {
@@ -338,7 +337,12 @@ private extension CommunityViewController {
         output.commentText
             .asDriver(onErrorJustReturn: "")
             .drive { [weak self] in
-                self?.commentLabel.text = $0
+                self?.commentTextView.text = $0
+                self?.commentTextView.setAttributedString(
+                    font: .pretendard(size: 14, weightName: .medium),
+                    lineSpacing: 4,
+                    color: .gray50
+                )
             }.disposed(by: disposeBag)
 
         output.profileImageURL
@@ -416,7 +420,7 @@ private extension CommunityViewController {
             userInfoStackView.addArrangedSubview($0)
         }
 
-        [genreLabelStackView, commentLabel, userInfoStackView].forEach {
+        [genreLabelStackView, commentTextView, userInfoStackView].forEach {
             commentStackView.addArrangedSubview($0)
         }
 
@@ -482,7 +486,7 @@ private extension CommunityViewController {
             $0.centerX.equalToSuperview()
         }
 
-        commentLabel.setContentHuggingPriority(.init(1), for: .vertical)
+        commentTextView.setContentHuggingPriority(.init(1), for: .vertical)
         nicknameLabel.setContentHuggingPriority(.init(1), for: .horizontal)
         voidView.setContentHuggingPriority(.init(1), for: .horizontal)
 
