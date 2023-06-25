@@ -44,7 +44,6 @@ final class MusicDropViewController: UIViewController {
         bindAction()
         bindViewModel()
         registerKeyboardNotification()
-        addDoneButtonToKeyboard()
         viewDidLoadEvent.accept(())
     }
 
@@ -88,7 +87,10 @@ final class MusicDropViewController: UIViewController {
         scrollView.keyboardDismissMode = .onDrag
 
         // 여백 터치시 키보드 내려가게 하기위해 TapGestureRecognizer추가 (추가하지 않으면 짧은 터치 제스처가 스크롤하는 제스처로 인정됌)
-        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(endEditing))
+        let singleTapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(endEditing)
+        )
         singleTapGestureRecognizer.numberOfTapsRequired = 1
         singleTapGestureRecognizer.isEnabled = true
         singleTapGestureRecognizer.cancelsTouchesInView = false
@@ -590,21 +592,7 @@ private extension MusicDropViewController {
         scrollView.setContentOffset(.zero, animated: true)
     }
 
-    // 키보드상단 완료 버튼 추가하기
-    func addDoneButtonToKeyboard() {
-        let toolbar = UIToolbar()
-        let doneButtonOnKeyboard = UIBarButtonItem(
-            title: "완료",
-            style: .plain,
-            target: self,
-            action: #selector(self.endEditing)
-        )
-        toolbar.items = [doneButtonOnKeyboard]
-        toolbar.sizeToFit()
-        commentTextView.inputAccessoryView = toolbar
-    }
-
-    @objc func endEditing(sender: Any) {
+    @objc func endEditing() {
         self.view.endEditing(true)
     }
 }
