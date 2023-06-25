@@ -85,6 +85,7 @@ private extension CommunityGuideDetailView {
         backgroundColor = .gray600
         layer.cornerRadius = 12
         isHidden = true
+        translatesAutoresizingMaskIntoConstraints = false
 
         [speechBubblePointImageView, guideLabel, detailGuideLinkButton]
             .forEach {
@@ -100,7 +101,7 @@ private extension CommunityGuideDetailView {
 
         guideLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(16)
-            $0.top.trailing.equalToSuperview().inset(12)
+            $0.top.equalToSuperview().inset(12)
         }
 
         detailGuideLinkButton.imageView?.snp.makeConstraints {
