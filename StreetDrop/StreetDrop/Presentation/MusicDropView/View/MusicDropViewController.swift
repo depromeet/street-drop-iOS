@@ -314,6 +314,8 @@ private extension MusicDropViewController {
     func bindViewModel() {
         let input = MusicDropViewModel.Input(
             viewDidLoadEvent: self.viewDidLoadEvent.asObservable(),
+            keyboardShowEvnet: self.commentTextView.rx.didBeginEditing.asObservable(),
+            keyboardHideEvnet: self.commentTextView.rx.didEndEditing.asObservable(),
             tapDropButton: self.dropButton.rx.tap.asObservable(),
             comment: self.commentTextView.rx.text.orEmpty.asObservable()
         )

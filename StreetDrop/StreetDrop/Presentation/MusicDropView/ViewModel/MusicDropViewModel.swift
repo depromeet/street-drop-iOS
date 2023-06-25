@@ -15,6 +15,8 @@ final class MusicDropViewModel: ViewModel {
 
     struct Input {
         let viewDidLoadEvent: Observable<Void>
+        let keyboardShowEvnet: Observable<Void>
+        let keyboardHideEvnet: Observable<Void>
         let tapDropButton: Observable<Void>
         let comment: Observable<String>
     }
@@ -46,17 +48,7 @@ final class MusicDropViewModel: ViewModel {
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
 
-                // 주소(00동)
-                let address = self.droppingInfo.location.address
-                if !address.isEmpty {
-                    output.locationTitle.accept(
-                        (address: address, text: "'\(address)' 위치에\n음악을 드랍할게요")
-                    )
-                } else {
-                    output.locationTitle.accept(
-                        (address: "지금", text: "'지금' 위치에\n음악을 드랍할게요")
-                    )
-                }
+                self.outputLocationTitle(isKeyboardShow: false, output: output)
 
                 // 앨범 커버
                 if let albumImageUrl = URL(string: self.droppingInfo.music.albumImage) {
@@ -72,6 +64,17 @@ final class MusicDropViewModel: ViewModel {
                 //음악제목, 가수이름
                 output.musicTitle.accept(self.droppingInfo.music.songName)
                 output.artistTitle.accept(self.droppingInfo.music.artistName)
+            }).disposed(by: disposedBag)
+
+        input.keyboardShowEvnet
+            .subscribe(onNext:  { [weak self] in
+                self?.outputLocationTitle(isKeyboardShow: true, output: output)
+            }).disposed(by: disposedBag)
+
+
+        input.keyboardHideEvnet
+            .subscribe(onNext:  { [weak self] in
+                self?.outputLocationTitle(isKeyboardShow: false, output: output)
             }).disposed(by: disposedBag)
 
         input.tapDropButton
@@ -93,5 +96,27 @@ final class MusicDropViewModel: ViewModel {
             }).disposed(by: disposedBag)
 
         return output
+    }
+}
+
+//MARK: - Private
+private extension MusicDropViewModel {
+    func outputLocationTitle(isKeyboardShow: Bool, output: Output) {
+        // 주소(00동)
+        let address = self.droppingInfo.location.address
+        var locationTitle: (address: String, text: String) = (address: "", text: "")
+
+        // 키보드 없을때와 있을때 라벨 내용 변경
+        if !isKeyboardShow {
+            locationTitle = address.isEmpty
+            ? (address: "지금", text: "지금 위치에\n음악을 드랍할게요")
+            : (address: address, text: "\(address) 위치에\n음악을 드랍할게요")
+        } else if isKeyboardShow {
+            locationTitle = address.isEmpty
+            ? (address: "지금위치", text: "지금 위치")
+            : (address: address, text: address)
+        }
+
+        output.locationTitle.accept(locationTitle)
     }
 }
