@@ -31,6 +31,7 @@ final class MainViewController: UIViewController {
         self.viewModel.locationManager.viewControllerDelegate = self
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -48,25 +49,11 @@ final class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewWillAppearEvent.accept(Void())
-        
-        //TODO: 나중에 리팩토링
-        self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
-            make.left.right.equalTo(self.view.safeAreaLayoutGuide)
-            make.top.equalTo(self.view.snp.bottom)
-            make.height.equalTo(260)
-        }
-        self.bottomCoverImageView.snp.remakeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.top.equalTo(self.view.snp.bottom)
-            make.height.equalTo(152)
-        }
-        for i in 0..<self.viewModel.musicWithinArea.count {
-            guard let cell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { continue }
-            cell.setInitialState(isMiddle: false)
-        }
-        self.droppedMusicWithinAreaCollectionView.isHidden = true
-        self.bottomCoverImageView.isHidden = true
-        self.backToMapButton.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.dismissDial()
     }
     
     // MARK: - UI
@@ -336,8 +323,7 @@ private extension MainViewController {
             make.top.equalTo(self.view.snp.bottom)
             make.height.equalTo(260)
         }
-        self.droppedMusicWithinAreaCollectionView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
+        self.droppedMusicWithinAreaCollectionView.delegate = self
         self.setupInitialOffset()
     }
     
@@ -347,29 +333,8 @@ private extension MainViewController {
         backToMapButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
-                        make.left.right.equalTo(self.view.safeAreaLayoutGuide)
-                        make.top.equalTo(self.view.snp.bottom)
-                        make.height.equalTo(260)
-                    }
-                    self.bottomCoverImageView.snp.remakeConstraints { make in
-                        make.left.right.equalToSuperview()
-                        make.top.equalTo(self.view.snp.bottom)
-                        make.height.equalTo(152)
-                    }
-                    
-                    self.view.layoutIfNeeded()
-                }, completion: { _ in
-                    self.droppedMusicWithinAreaCollectionView.isHidden = true
-                    self.bottomCoverImageView.isHidden = true
-                    self.backToMapButton.isHidden = true
-                    
-                    for i in 0..<self.viewModel.musicWithinArea.count {
-                        guard let cell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { continue }
-                        cell.setInitialState(isMiddle: false)
-                    }
-                })
+                // 다이얼이 내려가는 경우
+                self.dismissDial()
             }
             .disposed(by: disposeBag)
         
@@ -444,25 +409,10 @@ private extension MainViewController {
             )
             
             self.poiMarkerDidTapEvent.accept(Void())
-            UIView.animate(withDuration: 0.3, animations: {
-                self.droppedMusicWithinAreaCollectionView.isHidden = false
-                self.bottomCoverImageView.isHidden = false
-                self.backToMapButton.isHidden = false
-                
-                self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
-                    make.left.right.equalTo(self.view.safeAreaLayoutGuide)
-                    make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(24)
-                    make.height.equalTo(260)
-                }
-                self.bottomCoverImageView.snp.remakeConstraints { make in
-                    make.left.right.bottom.equalToSuperview()
-                    make.height.equalTo(152)
-                }
-                self.view.layoutIfNeeded()
-            }, completion: { _ in
-//                guard let currentCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: Int(index + 2), section: 0)) as? DroppedMusicWithinAreaCollectionViewCell else { return }
-//                currentCell.setInitialState(isMiddle: true)
-            })
+            
+            //  다이얼이 올라오는 경우
+            self.presentDial(currentIndex: currentIndex)
+            
             return true
         }
     }
@@ -571,6 +521,58 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
         )
     }
     
+    func presentDial(currentIndex: Int) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.droppedMusicWithinAreaCollectionView.isHidden = false
+            self.bottomCoverImageView.isHidden = false
+            self.backToMapButton.isHidden = false
+            
+            self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
+                make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(24)
+                make.height.equalTo(260)
+            }
+            self.bottomCoverImageView.snp.remakeConstraints { make in
+                make.left.right.bottom.equalToSuperview()
+                make.height.equalTo(152)
+            }
+            
+            self.view.layoutIfNeeded()
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.1, animations: {
+                if let middleCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: currentIndex, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                    middleCell.middleCell()
+                }
+                self.view.layoutIfNeeded()
+            })
+        })
+    }
+    
+    func dismissDial() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.droppedMusicWithinAreaCollectionView.snp.remakeConstraints { make in
+                make.left.right.equalTo(self.view.safeAreaLayoutGuide)
+                make.top.equalTo(self.view.snp.bottom)
+                make.height.equalTo(260)
+            }
+            self.bottomCoverImageView.snp.remakeConstraints { make in
+                make.left.right.equalToSuperview()
+                make.top.equalTo(self.view.snp.bottom)
+                make.height.equalTo(152)
+            }
+            
+            if let middleCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: self.viewModel.currentIndex, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                middleCell.sideCell()
+            }
+            
+            self.view.layoutIfNeeded()
+        }, completion: { _ in
+            self.droppedMusicWithinAreaCollectionView.isHidden = true
+            self.bottomCoverImageView.isHidden = true
+            self.backToMapButton.isHidden = true
+        })
+    }
+    
     @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
         switch gesture.state {
         case .ended, .cancelled:
@@ -587,7 +589,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
         let cellWidth = layout.itemSize.width
         // 무한스크롤 O
         if viewModel.musicWithinArea.count > 3 {
-            if index == 1 {
+            if index == 1 { // 맨 왼쪽 도달
+                if let preRightCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                    preRightCell.sideCell()
+                }
+                
                 droppedMusicWithinAreaCollectionView.setContentOffset(
                     CGPoint(x: cellWidth * CGFloat(viewModel.musicWithinArea.count - 3), y: .zero),
                     animated: false
@@ -596,9 +602,30 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
                     CGPoint(x: cellWidth * CGFloat(viewModel.musicWithinArea.count - 4), y: .zero),
                     animated: true
                 )
+                self.view.layoutIfNeeded()
                 viewModel.currentIndex = viewModel.musicWithinArea.count - 3
+                
+                if let curRightCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: viewModel.currentIndex + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                    curRightCell.middleCell()
+                }
+                self.view.layoutIfNeeded()
+                
+                UIView.animate(withDuration: 0.2) {
+                    if let rightCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: self.viewModel.currentIndex + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                        rightCell.sideCell()
+                    }
+                    
+                    if let middleCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: self.viewModel.currentIndex, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                        middleCell.middleCell()
+                    }
+                    self.view.layoutIfNeeded()
+                }
             }
-            else if index == (viewModel.musicWithinArea.count - 2) {
+            else if index == (viewModel.musicWithinArea.count - 2) { // 맨 오른쪽 도달
+                if let preLeftCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index - 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                    preLeftCell.sideCell()
+                }
+                
                 droppedMusicWithinAreaCollectionView.setContentOffset(
                     CGPoint(x: 0, y: .zero),
                     animated: false
@@ -607,9 +634,41 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
                     CGPoint(x: cellWidth, y: .zero),
                     animated: true
                 )
+                self.view.layoutIfNeeded()
                 viewModel.currentIndex = 2
+                
+                if let curLeftCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                    curLeftCell.middleCell()
+                }
+                self.view.layoutIfNeeded()
+                
+                UIView.animate(withDuration: 0.2) {
+                    if let leftCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                        leftCell.sideCell()
+                    }
+                    if let middleCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: self.viewModel.currentIndex, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                        middleCell.middleCell()
+                    }
+                    self.view.layoutIfNeeded()
+                }
             }
-            else {
+            else { // 중간
+                UIView.animate(withDuration: 0.2) {
+                    if let middleCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                        middleCell.middleCell()
+                    }
+                    
+                    if let leftCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index - 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                        leftCell.sideCell()
+                    }
+                    
+                    if let rightCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                        rightCell.sideCell()
+                    }
+                    
+                    self.view.layoutIfNeeded()
+                }
+                
                 droppedMusicWithinAreaCollectionView.setContentOffset(
                     CGPoint(x: cellWidth * CGFloat(index - 1), y: .zero),
                     animated: true
@@ -619,8 +678,26 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
         }
         // 무한스크롤 X
         else {
-            if (index == -1) || (index  == viewModel.musicWithinArea.count) { return }
-            else {
+            if (index == -1) || (index  == viewModel.musicWithinArea.count) { // 양 끝
+                return
+            }
+            else { // 중간
+                UIView.animate(withDuration: 0.2) {
+                    if let middleCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                        middleCell.middleCell()
+                    }
+                    
+                    if let leftCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index - 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                        leftCell.sideCell()
+                    }
+                    
+                    if let rightCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: index + 1, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
+                        rightCell.sideCell()
+                    }
+                    
+                    self.view.layoutIfNeeded()
+                }
+                
                 droppedMusicWithinAreaCollectionView.setContentOffset(
                     CGPoint(x: cellWidth * CGFloat(index - 1), y: .zero),
                     animated: true

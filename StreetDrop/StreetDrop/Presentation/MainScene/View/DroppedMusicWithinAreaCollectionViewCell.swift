@@ -18,8 +18,10 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configureUI()
+        self.sideCell()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -35,12 +37,6 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         self.singerNameLabel.text = item.artist
         self.albumCoverImageView.setImage(with: item.albumImageURL, disposeBag: disposeBag)
         self.commentLabel.text = item.content
-    }
-    
-    func setInitialState(isMiddle: Bool) {
-        self.commentContainerImageView.isHidden = !isMiddle
-        self.commentLabel.isHidden = !isMiddle
-        self.isUserInteractionEnabled = isMiddle
     }
     
     // MARK: - UI
@@ -92,9 +88,55 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     }()
 }
 
-// MARK: - Private Functions
-
-private extension DroppedMusicWithinAreaCollectionViewCell {
+extension DroppedMusicWithinAreaCollectionViewCell {
+    
+    func middleCell() {
+        self.albumCoverImageView.snp.updateConstraints { make in
+            make.centerX.equalTo(self.safeAreaLayoutGuide)
+            make.top.equalTo(self.commentContainerImageView.snp.bottom).offset(12)
+            make.width.height.equalTo(84)
+        }
+        
+        albumCoverImageView.layer.borderWidth = 2
+        musicTitleLabel.font = .pretendard(size: 16, weight: 700)
+        
+        albumCoverImageView.alpha = 1
+        musicTitleLabel.alpha = 1
+        singerNameLabel.alpha = 1
+        
+        self.isUserInteractionEnabled = true
+        
+        middleComment()
+    }
+    
+    func sideCell() {
+        self.albumCoverImageView.snp.updateConstraints { make in
+            make.centerX.equalTo(self.safeAreaLayoutGuide)
+            make.top.equalTo(self.commentContainerImageView.snp.bottom).offset(66)
+            make.width.height.equalTo(56)
+        }
+        
+        albumCoverImageView.layer.borderWidth = 0
+        musicTitleLabel.font = .pretendard(size: 14, weight: 700)
+        
+        albumCoverImageView.alpha = 0.5
+        musicTitleLabel.alpha = 0.5
+        singerNameLabel.alpha = 0.5
+        
+        self.isUserInteractionEnabled = false
+        
+        sideComment()
+    }
+    
+    func middleComment() {
+        commentLabel.isHidden = false
+        commentContainerImageView.isHidden = false
+    }
+    
+    func sideComment() {
+        commentLabel.isHidden = true
+        commentContainerImageView.isHidden = true
+    }
     
     // MARK: - UI
     
