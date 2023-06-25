@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import SnapKit
 
-final class MusicDropViewController: UIViewController {
+final class MusicDropViewController: UIViewController, Toastable {
 
     enum Constant {
         static let textDefault = " "
@@ -26,6 +26,7 @@ final class MusicDropViewController: UIViewController {
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let keyboardShowEvent = PublishRelay<Void>()
     private let keyboardHideEvent = PublishRelay<Void>()
+    private lazy var animationView = DropAnimationView()
 
     init(viewModel: MusicDropViewModel) {
         self.viewModel = viewModel
@@ -360,6 +361,21 @@ private extension MusicDropViewController {
                 self?.albumImageView.image = albumImage
             }).disposed(by: disposeBag)
 
+        // 드랍 성공여부
+        output.isSuccessDrop
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] isSuccess in
+                guard isSuccess else {
+                    self?.removeDropAnimation()
+                    self?.showFailDropToast()
+                    return
+                }
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    self?.navigationController?.popToRootViewController(animated: true)
+                })
+            }).disposed(by: disposeBag)
+
         // 👉 TODO: Error팝업띄우기
         output.errorDescription
             .asDriver()
@@ -531,16 +547,16 @@ private extension MusicDropViewController {
 
     //MARK: - 드랍 액션
     func showDropAnimation() {
-        let animationView = DropAnimationView()
         self.view.addSubview(animationView)
 
         animationView.snp.makeConstraints {
             $0.width.height.centerY.centerX.equalToSuperview()
         }
+    }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.navigationController?.popToRootViewController(animated: true)
-        })
+    func removeDropAnimation() {
+        animationView.snp.removeConstraints()
+        self.animationView.removeFromSuperview()
     }
 
     func removeViewItemComponents() {
