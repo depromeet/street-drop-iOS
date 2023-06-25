@@ -48,7 +48,15 @@ final class MusicDropViewModel: ViewModel {
 
                 // 주소(00동)
                 let address = self.droppingInfo.location.address
-                output.locationTitle.accept((address: address, text: "'\(address)' 위치에"))
+                if !address.isEmpty {
+                    output.locationTitle.accept(
+                        (address: address, text: "'\(address)' 위치에\n음악을 드랍할게요")
+                    )
+                } else {
+                    output.locationTitle.accept(
+                        (address: "지금", text: "'지금' 위치에\n음악을 드랍할게요")
+                    )
+                }
 
                 // 앨범 커버
                 if let albumImageUrl = URL(string: self.droppingInfo.music.albumImage) {

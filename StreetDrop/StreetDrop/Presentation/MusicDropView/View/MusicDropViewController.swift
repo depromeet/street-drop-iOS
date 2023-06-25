@@ -15,7 +15,6 @@ final class MusicDropViewController: UIViewController {
 
     enum Constant {
         static let textDefault = " "
-        static let dropGuideTitle: String = "음악을 드랍할게요"
         static let commentPlaceHolder: String = "음악에 대해 하고싶은 말이 있나요?"
         static let dropButtonTitle: String = "드랍하기"
         static let communityButtonTitle: String = "커뮤니티 가이드"
@@ -105,20 +104,8 @@ final class MusicDropViewController: UIViewController {
         let label = UILabel()
         label.text = Constant.textDefault
         label.textColor = .white
-        label.textAlignment = .center
+        label.numberOfLines = 2
         label.font = .pretendard(size: 20, weight: 700)
-        label.setLineHeight(lineHeight: 29.5)
-
-        return label
-    }()
-
-    private lazy var dropGuideLabel: UILabel = {
-        let label = UILabel()
-        label.text = Constant.dropGuideTitle
-        label.textColor = .white
-        label.textAlignment = .center
-        label.font = .pretendard(size: 20, weight: 700)
-        label.setLineHeight(lineHeight: 32)
 
         return label
     }()
@@ -336,10 +323,14 @@ private extension MusicDropViewController {
         output.locationTitle
             .asDriver(onErrorJustReturn: (address: "", text: ""))
             .drive(onNext: { [weak self] locationTitle in
-                self?.locationLabel.attributedText = locationTitle.text.changeColorPartially(
-                    locationTitle.address,
+                self?.locationLabel.text = locationTitle.text
+                self?.locationLabel.changeColorPartially(
+                    lineHeight: 28,
+                    part: locationTitle.address,
                     to: .primary400
                 )
+                //NSMutableAttributedString속성을 덮어씌우면서 무시되는 textAlignment 설정
+                self?.locationLabel.textAlignment = .center
             }).disposed(by: disposeBag)
 
         // musicTitle
