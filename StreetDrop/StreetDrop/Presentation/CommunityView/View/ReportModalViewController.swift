@@ -12,6 +12,25 @@ import RxSwift
 
 final class ReportModalViewController: UIViewController {
 
+    private enum Report: CaseIterable {
+        case slander, disgust, violent, falseInformation, etc
+
+        var title: String {
+            switch self {
+            case .slander:
+                return "욕설/비방"
+            case .disgust:
+                return "혐오 발언 또는 상징"
+            case .violent:
+                return "폭력 또는 위험한 단체"
+            case .falseInformation:
+                return "거짓 정보"
+            case .etc:
+                return "기타"
+            }
+        }
+    }
+
     private enum Constant {
         static let title: String = "신고하기"
         static let reportGuideText: String = "신고 사유를 선택해 주세요"
@@ -86,6 +105,8 @@ final class ReportModalViewController: UIViewController {
         return label
     }()
 
+    private lazy var reportOptionViews: [UIView] = generateReportOptionViews()
+
     private lazy var optionStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -106,4 +127,45 @@ final class ReportModalViewController: UIViewController {
 
         return button
     }()
+//MARK: - Private
+private extension ReportModalViewController {
+    func generateReportOptionViews() -> [UIView] {
+        var views: [UIView] = []
+
+        Self.Report.allCases.forEach {
+            // UI
+            let icon = UIImage(named: "checkIcon")
+            let iconView = UIImageView(image: icon)
+            iconView.isHidden = false
+
+            let label = UILabel()
+            label.textColor = .gray100
+            label.text = $0.title
+            label.font = .pretendard(size: 16, weightName: .medium)
+
+            let view = UIView()
+            view.layer.cornerRadius = 8
+            view.clipsToBounds = true
+            view.backgroundColor = .gray700
+
+            // configure Layout
+            view.addSubview(iconView)
+            view.addSubview(label)
+
+            iconView.snp.makeConstraints {
+                $0.width.height.equalTo(24)
+                $0.centerY.equalToSuperview()
+                $0.trailing.equalToSuperview().inset(16)
+            }
+
+            label.snp.makeConstraints {
+                $0.top.bottom.equalToSuperview().inset(12)
+                $0.leading.equalToSuperview().inset(16)
+            }
+
+            views.append(view)
+        }
+
+        return views
+    }
 }
