@@ -149,6 +149,15 @@ final class CommunityViewController: UIViewController {
         return textView
     }()
 
+    private lazy var optionButton: UIButton = {
+        let icon = UIImage(named: "optionIcon")
+        let button = UIButton()
+        button.setImage(icon, for: .normal)
+        button.backgroundColor = .clear
+
+        return button
+    }()
+
     private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -435,6 +444,8 @@ private extension CommunityViewController {
             commentStackView.addArrangedSubview($0)
         }
 
+        commentStackView.addSubview(optionButton)
+
         [listenButton].forEach {
             listeningGuideView.addSubview($0)
         }
@@ -500,6 +511,12 @@ private extension CommunityViewController {
         commentTextView.setContentHuggingPriority(.init(1), for: .vertical)
         nicknameLabel.setContentHuggingPriority(.init(1), for: .horizontal)
         voidView.setContentHuggingPriority(.init(1), for: .horizontal)
+
+        optionButton.snp.makeConstraints {
+            $0.width.height.equalTo(20)
+            $0.top.equalToSuperview().inset(30)
+            $0.trailing.equalToSuperview().inset(24)
+        }
 
         profileImageView.snp.makeConstraints {
             $0.width.equalToSuperview().multipliedBy(0.1)
