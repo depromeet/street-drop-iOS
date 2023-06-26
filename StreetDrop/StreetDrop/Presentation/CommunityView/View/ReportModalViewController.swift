@@ -37,6 +37,10 @@ final class ReportModalViewController: UIViewController {
         static let sendButtonTitle: String = "전송"
     }
 
+    // modal 애니메이션을 위한 제약조건
+    private var containerViewHeightConstraint: NSLayoutConstraint?
+    private var containerViewBottomConstraint: NSLayoutConstraint?
+
     //MARK: - UI
 
     private lazy var dimmedView: UIView = {
@@ -127,6 +131,96 @@ final class ReportModalViewController: UIViewController {
 
         return button
     }()
+
+    //MARK: - Life Cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        configureUI()
+    }
+}
+
+private extension ReportModalViewController {
+
+    // MARK: - UI
+
+    func configureUI() {
+        let defaultHeight: CGFloat = 476
+
+        reportOptionViews
+            .forEach {
+            optionStackView.addArrangedSubview($0)
+        }
+
+        [titleView, closeButton, dividingLineView, reportGuideLabel, optionStackView, sendButton]
+            .forEach {
+                containerView.addSubview($0)
+            }
+
+        [dimmedView, containerView]
+            .forEach {
+                view.addSubview($0)
+            }
+
+        titleView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(24)
+        }
+
+        reportGuideLabel.setContentHuggingPriority(.required, for: .vertical)
+
+        closeButton.snp.makeConstraints {
+            $0.width.height.equalTo(28)
+            $0.centerY.equalTo(titleView)
+            $0.trailing.equalToSuperview().inset(28)
+        }
+
+        dividingLineView.snp.makeConstraints {
+            $0.height.equalTo(2)
+            $0.leading.trailing.equalToSuperview().inset(12)
+            $0.top.equalTo(titleView.snp.bottom).offset(20)
+        }
+
+        reportGuideLabel.snp.makeConstraints {
+            $0.top.equalTo(dividingLineView).offset(12)
+            $0.leading.equalToSuperview().inset(28)
+        }
+
+        optionStackView.snp.makeConstraints {
+            $0.top.equalTo(reportGuideLabel.snp.bottom).offset(4)
+            $0.leading.trailing.equalToSuperview().inset(12)
+            $0.bottom.equalTo(sendButton.snp.top).offset(-12)
+        }
+
+        sendButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(12)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(56)
+        }
+
+        dimmedView.snp.makeConstraints {
+            $0.bottom.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().offset(-defaultHeight)
+        }
+
+        containerView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+        }
+
+        containerViewHeightConstraint = containerView.heightAnchor.constraint(
+            equalToConstant: defaultHeight
+        )
+        containerViewBottomConstraint = containerView.bottomAnchor.constraint(
+            equalTo: view.bottomAnchor
+        )
+
+        containerViewHeightConstraint?.isActive = true
+        containerViewBottomConstraint?.isActive = true
+
+    }
+}
+
 //MARK: - Private
 private extension ReportModalViewController {
     func generateReportOptionViews() -> [UIView] {
