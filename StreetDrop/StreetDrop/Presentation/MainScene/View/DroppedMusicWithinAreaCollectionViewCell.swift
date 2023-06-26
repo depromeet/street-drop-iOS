@@ -70,10 +70,18 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var commentContainerImageView: UIImageView = {
+    private lazy var commentContainerView: UIView = {
+        let view = UIView()
+        view.layer.backgroundColor = UIColor(red: 0.64, green: 0.979, blue: 1, alpha: 1).cgColor
+        view.layer.cornerRadius = 12
+        view.isUserInteractionEnabled = true
+        view.isHidden = true
+        return view
+    }()
+    
+    private lazy var commentContainerTailImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "comment")
-        imageView.isUserInteractionEnabled = true
+        imageView.image = UIImage(named: "commentTail")
         imageView.isHidden = true
         return imageView
     }()
@@ -84,6 +92,7 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 2
         label.textAlignment = .center
         label.isHidden = true
+        label.preferredMaxLayoutWidth = UIScreen.main.bounds.width / 3
         return label
     }()
 }
@@ -91,9 +100,11 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
 extension DroppedMusicWithinAreaCollectionViewCell {
     
     func middleCell() {
+        self.singerNameLabel.snp.updateConstraints { make in
+            make.bottom.equalToSuperview().inset(20)
+        }
+        
         self.albumCoverImageView.snp.updateConstraints { make in
-            make.centerX.equalTo(self.safeAreaLayoutGuide)
-            make.top.equalTo(self.commentContainerImageView.snp.bottom).offset(12)
             make.width.height.equalTo(84)
         }
         
@@ -110,9 +121,11 @@ extension DroppedMusicWithinAreaCollectionViewCell {
     }
     
     func sideCell() {
+        self.singerNameLabel.snp.updateConstraints { make in
+            make.bottom.equalToSuperview()
+        }
+        
         self.albumCoverImageView.snp.updateConstraints { make in
-            make.centerX.equalTo(self.safeAreaLayoutGuide)
-            make.top.equalTo(self.commentContainerImageView.snp.bottom).offset(66)
             make.width.height.equalTo(56)
         }
         
@@ -130,12 +143,14 @@ extension DroppedMusicWithinAreaCollectionViewCell {
     
     func middleComment() {
         commentLabel.isHidden = false
-        commentContainerImageView.isHidden = false
+        commentContainerView.isHidden = false
+        commentContainerTailImageView.isHidden = false
     }
     
     func sideComment() {
         commentLabel.isHidden = true
-        commentContainerImageView.isHidden = true
+        commentContainerView.isHidden = true
+        commentContainerTailImageView.isHidden = true
     }
     
     // MARK: - UI
@@ -146,49 +161,60 @@ extension DroppedMusicWithinAreaCollectionViewCell {
         
         self.isUserInteractionEnabled = false
         
-        // MARK: - Comment Container ImageView
+        // MARK: - Singer Name Label
         
-        self.addSubview(self.commentContainerImageView)
-        self.commentContainerImageView.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide).offset(20)
-            make.left.right.equalTo(self.safeAreaLayoutGuide)
-            make.height.equalTo(64)
-        }
-        
-        // MARK: - Comment Label
-        
-        self.addSubview(self.commentLabel)
-        self.commentLabel.snp.makeConstraints { make in
-            make.left.right.equalTo(commentContainerImageView).inset(16)
-            make.top.equalTo(commentContainerImageView).inset(12)
-            make.bottom.equalTo(commentContainerImageView).inset(18)
-        }
-        
-        // MARK: - Album Cover ImageView
-        
-        self.addSubview(self.albumCoverImageView)
-        self.albumCoverImageView.snp.makeConstraints { make in
+        self.addSubview(self.singerNameLabel)
+        self.singerNameLabel.snp.makeConstraints { make in
             make.centerX.equalTo(self.safeAreaLayoutGuide)
-            make.top.equalTo(self.commentContainerImageView.snp.bottom).offset(12)
-            make.width.height.equalTo(84)
+            make.bottom.equalToSuperview().offset(20)
         }
         
         // MARK: - Music Title Label
         
         self.addSubview(self.musicTitleLabel)
         self.musicTitleLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(self.safeAreaLayoutGuide)
-            make.top.equalTo(self.albumCoverImageView.snp.bottom).offset(12)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(self.singerNameLabel.snp.top)
             make.leading.equalToSuperview().inset(5)
             make.trailing.equalToSuperview().inset(5)
         }
         
-        // MARK: - Singer Name Label
+        // MARK: - Album Cover ImageView
         
-        self.addSubview(self.singerNameLabel)
-        self.singerNameLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(self.safeAreaLayoutGuide)
-            make.top.equalTo(self.musicTitleLabel.snp.bottom)
+        self.addSubview(self.albumCoverImageView)
+        self.albumCoverImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(self.musicTitleLabel.snp.top).offset(-12)
+            make.width.height.equalTo(84)
+        }
+        
+        // MARK: - Comment Label
+        
+        self.addSubview(self.commentLabel)
+        self.commentLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(self.albumCoverImageView.snp.top).offset(-30)
+        }
+        
+        // MARK: - Comment Container View
+        
+        self.addSubview(self.commentContainerView)
+        self.commentContainerView.snp.makeConstraints { make in
+            make.top.equalTo(self.commentLabel.snp.top).inset(-12)
+            make.bottom.equalTo(self.albumCoverImageView.snp.top).offset(-18)
+            make.left.equalTo(self.commentLabel.snp.left).inset(-16)
+            make.right.equalTo(self.commentLabel.snp.right).inset(-16)
+        }
+        self.sendSubviewToBack(commentContainerView)
+        
+        // MARK: - Comment Container Tail ImageView
+        
+        self.addSubview(self.commentContainerTailImageView)
+        self.commentContainerTailImageView.snp.makeConstraints { make in
+            make.width.equalTo(10)
+            make.height.equalTo(8)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(self.commentContainerView.snp.bottom).offset(6)
         }
     }
 }
