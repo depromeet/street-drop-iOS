@@ -10,26 +10,26 @@ import UIKit
 import SnapKit
 import RxSwift
 
-final class ReportModalViewController: UIViewController {
+enum Report: CaseIterable {
+    case slander, disgust, violent, falseInformation, etc
 
-    private enum Report: CaseIterable {
-        case slander, disgust, violent, falseInformation, etc
-
-        var title: String {
-            switch self {
-            case .slander:
-                return "욕설/비방"
-            case .disgust:
-                return "혐오 발언 또는 상징"
-            case .violent:
-                return "폭력 또는 위험한 단체"
-            case .falseInformation:
-                return "거짓 정보"
-            case .etc:
-                return "기타"
-            }
+    var title: String {
+        switch self {
+        case .slander:
+            return "욕설/비방"
+        case .disgust:
+            return "혐오 발언 또는 상징"
+        case .violent:
+            return "폭력 또는 위험한 단체"
+        case .falseInformation:
+            return "거짓 정보"
+        case .etc:
+            return "기타"
         }
     }
+}
+
+final class ReportModalViewController: UIViewController {
 
     private enum Constant {
         static let title: String = "신고하기"
@@ -124,7 +124,8 @@ final class ReportModalViewController: UIViewController {
     private lazy var sendButton: UIButton = {
         let button = UIButton()
         button.setTitle(Constant.sendButtonTitle, for: .normal)
-        button.setTitleColor(.gray400, for: .normal)
+        button.setTitleColor(.gray400, for: .disabled)
+        button.setTitleColor(.white , for: .normal)
         button.backgroundColor = .gray700
         button.isEnabled = false
         button.layer.cornerRadius = 12
@@ -241,11 +242,11 @@ private extension ReportModalViewController {
     func generateReportOptionViews() -> [UIView] {
         var views: [UIView] = []
 
-        Self.Report.allCases.forEach {
+        Report.allCases.forEach {
             // UI
             let icon = UIImage(named: "checkIcon")
             let iconView = UIImageView(image: icon)
-            iconView.isHidden = false
+            iconView.isHidden = true
 
             let label = UILabel()
             label.textColor = .gray100
@@ -255,7 +256,6 @@ private extension ReportModalViewController {
             let view = UIView()
             view.layer.cornerRadius = 8
             view.clipsToBounds = true
-            view.backgroundColor = .gray700
 
             // configure Layout
             view.addSubview(iconView)
@@ -272,9 +272,49 @@ private extension ReportModalViewController {
                 $0.leading.equalToSuperview().inset(16)
             }
 
+            // Action binding
+            let tapGesture = ReportOptionTapGesture(
+                target: self,
+                action: #selector(tappedReportOption(_:))
+            )
+
+            tapGesture.tappedView = view
+            tapGesture.iconView = iconView
+            tapGesture.tappedReportOption = $0
+
+            view.addGestureRecognizer(tapGesture)
             views.append(view)
         }
 
         return views
     }
+
+    @objc func tappedReportOption(_ sender: ReportOptionTapGesture) {
+        guard let tappedView = sender.tappedView,
+              let iconView = sender.iconView,
+              let reportOption = sender.tappedReportOption else { return }
+
+        resetAllOptionView()
+        tappedView.backgroundColor = .gray700
+        iconView.isHidden = false
+        sendButton.isEnabled = true
+        sendButton.backgroundColor = .gray600
+    }
+
+    func resetAllOptionView() {
+        for view in reportOptionViews {
+            view.backgroundColor = .clear
+            view.subviews
+                .compactMap{ $0 as? UIImageView }
+                .forEach { $0.isHidden = true }
+        }
+    }
+}
+
+// MARK: - TapGesture
+// objc 메서드로 파라미터 전달위해 UITapGestureRecognizer 상속사용
+class ReportOptionTapGesture: UITapGestureRecognizer {
+    var tappedView: UIView?
+    var iconView: UIImageView?
+    var tappedReportOption: Report?
 }
