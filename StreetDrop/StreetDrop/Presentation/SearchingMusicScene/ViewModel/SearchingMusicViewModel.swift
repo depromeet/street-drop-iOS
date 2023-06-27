@@ -21,12 +21,11 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     let location: CLLocation
     let address: String
     private let disposeBag: DisposeBag = DisposeBag()
-    let searchedMusicList: PublishRelay = PublishRelay<[Music]>()
     private var musicList: [Music] = []
     
     struct Input {
         let viewDidAppearEvent: Observable<Void>
-        let searchTextFieldDidEditEvent: ControlProperty<String>
+        let searchTextFieldEmptyEvent: Observable<Void>
         let keyBoardDidPressSearchEventWithKeyword: Observable<String>
         let recentQueryDidPressEvent: PublishRelay<String>
         let tableViewCellDidPressedEvent: Observable<Int>
@@ -66,12 +65,9 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
             })
             .disposed(by: disposedBag)
         
-        input.searchTextFieldDidEditEvent
-            .bind { [weak self] keyword in
-                // 검색어가 공백일 경우, 뮤직리스트 빈값으로 설정
-                if keyword.isEmpty {
-                    self?.searchedMusicList.accept([])
-                }
+        input.searchTextFieldEmptyEvent
+            .bind {
+                output.searchedMusicList.accept([])
             }
             .disposed(by: disposedBag)
         

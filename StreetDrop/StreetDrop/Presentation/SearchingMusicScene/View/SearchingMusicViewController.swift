@@ -195,9 +195,13 @@ private extension SearchingMusicViewController {
         
         let selectedTableViewCellEvent = self.tableView.rx.itemSelected.map { $0.row }
         
+        let searchTextFieldEmptyEvent = self.searchTextField.rx.text.orEmpty.filter{
+            $0.isEmpty
+        }.map { _ in }
+        
         let input = DefaultSearchingMusicViewModel.Input(
             viewDidAppearEvent: .just(()),
-            searchTextFieldDidEditEvent: self.searchTextField.rx.text.orEmpty,
+            searchTextFieldEmptyEvent: searchTextFieldEmptyEvent,
             keyBoardDidPressSearchEventWithKeyword: keyBoardDidPressSearchEventWithKeyword,
             recentQueryDidPressEvent: self.recentMusicSearchScrollView.queryButtonDidTappedEvent,
             tableViewCellDidPressedEvent: selectedTableViewCellEvent
