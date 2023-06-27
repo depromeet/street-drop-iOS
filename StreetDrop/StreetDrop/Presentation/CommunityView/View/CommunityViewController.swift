@@ -259,6 +259,7 @@ private extension CommunityViewController {
 
     func bindAction() {
         backButton.rx.tap
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
                 self.navigationController?.popViewController(animated: true)
             })
@@ -278,6 +279,16 @@ private extension CommunityViewController {
                 UIApplication.shared.open(url)
 
             }
+            .disposed(by: disposeBag)
+
+        optionButton.rx.tap
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                let reportModalViewController = ReportModalViewController()
+                reportModalViewController.modalPresentationStyle = .overCurrentContext
+
+                self.present(reportModalViewController, animated: true)
+            })
             .disposed(by: disposeBag)
     }
 
