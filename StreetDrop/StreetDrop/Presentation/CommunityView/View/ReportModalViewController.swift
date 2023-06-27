@@ -40,6 +40,7 @@ final class ReportModalViewController: UIViewController {
     // modal 애니메이션을 위한 제약조건
     private var containerViewHeightConstraint: NSLayoutConstraint?
     private var containerViewBottomConstraint: NSLayoutConstraint?
+    private let disposeBag: DisposeBag = DisposeBag()
 
     //MARK: - UI
 
@@ -137,11 +138,25 @@ final class ReportModalViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        bindAction()
         configureUI()
     }
 }
 
 private extension ReportModalViewController {
+
+    // MARK: - Action Binding
+    func bindAction() {
+        closeButton.rx.tap
+            .observe(on: MainScheduler.instance)
+            .bind { [weak self] in
+                UIView.animate(withDuration: 0.3) {
+                    self?.dimmedView.alpha = 0
+                }
+                self?.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+    }
 
     // MARK: - UI
 
