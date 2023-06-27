@@ -19,6 +19,7 @@ final class MainViewModel: ViewModel {
     var address: String = ""
     var musicWithinArea: Musics = []
     var currentIndex: Int = 0
+    var tappedPOIID: Int?
     
     private let model = MainModel(
         repository: DefaultMainRepository(
@@ -51,6 +52,7 @@ extension MainViewModel {
         var musicCount = BehaviorRelay<Int>(value: 0)
         var musicWithinArea = BehaviorRelay<Musics>(value: [])
         var cameraShouldGoCurrentLocation = PublishRelay<CLLocation>()
+        var tappedPOIIndex = PublishRelay<Int>()
     }
 }
 
@@ -160,6 +162,8 @@ private extension MainViewModel {
                     return
                 }
                 
+                guard let index = musicWithinArea.enumerated().filter({ $0.element.id == self.tappedPOIID}).first?.offset else { return }
+                
                 if musicWithinArea.count < 4 {
                     self.musicWithinArea = musicWithinArea
                 }
@@ -173,6 +177,7 @@ private extension MainViewModel {
                     self.musicWithinArea = musicWithinAreaForInfinite
                 }
                 output.musicWithinArea.accept(self.musicWithinArea)
+                output.tappedPOIIndex.accept(index)
             case .failure(let error):
                 print(error)
                 output.musicWithinArea.accept([])
