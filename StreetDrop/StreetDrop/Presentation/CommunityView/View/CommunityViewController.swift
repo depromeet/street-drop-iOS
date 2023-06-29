@@ -295,7 +295,12 @@ private extension CommunityViewController {
         optionButton.rx.tap
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
-                let reportModalViewController = ReportModalViewController()
+                // 신고 모달 띄우기
+                let itemID = self.viewModel.communityInfos[self.viewModel.currentIndex].id
+                let reportModalViewModel = ReportModalViewModel(itemID: itemID)
+                let reportModalViewController = ReportModalViewController(
+                    viewModel: reportModalViewModel
+                )
                 reportModalViewController.modalPresentationStyle = .overCurrentContext
 
                 self.present(reportModalViewController, animated: true)
@@ -629,8 +634,10 @@ private extension CommunityViewController {
 // MARK: - 무한스크롤
 extension CommunityViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // 데이터가 4개이상일 때만 무한스크롤
-        guard viewModel.communityInfos.count > 3,
+        // 실제 데이터가 4개이상일 때만 무한스크롤(2,3개 일때는 X)
+        // 2,3개일 때 앞뒤로 빈데이터를 넣어줬기 때문에 맨 앞이 빈데이터가 아닌지 확인
+        guard let firstInfo = viewModel.communityInfos.first,
+              !firstInfo.albumImageURL.isEmpty,
               let layout = self.albumCollectionView.collectionViewLayout
                 as? UICollectionViewFlowLayout else { return }
 
@@ -678,15 +685,8 @@ extension CommunityViewController: UICollectionViewDelegate {
             y: 0
         )
 
-        // 스크롤뷰 offset 0일때, 0번 앨범이아니라 1번 앨범이 가운데이므로 기본으로 index+1 과 씽크를 맞춰야 하지만,
-        // 데이터가 2,3개일 때는 무한스크롤없이 첫번째/마지막쎌이 가운데로 스크롤되게하기위해 처음/마지막에 빈쎌을 넣어준상태
-        // 즉 데이터가 3개면 Cell은 빈쎌+3개+빈쎌 = 5개로 만져놓은상태로 스크롤뷰 offset0일 때 == 데이터 인덱스는 0이 가운데
-        if (2...3).contains(viewModel.communityInfos.count) {
-            changedAlbumCollectionViewIndexEvent.accept(index)
-        } else {
-            changedAlbumCollectionViewIndexEvent.accept(index+1)
-        }
-
+        // 스크롤뷰 offset 0일때, 0번 앨범이아니라 1번 앨범이 가운데이므로 기본으로 index+1 과 씽크를 맞춰야 함
+        changedAlbumCollectionViewIndexEvent.accept(index+1)
     }
 
     private func setupInitialOffset(index: Int) {
