@@ -12,8 +12,14 @@ protocol RecentMusicQueriesStorage {
         maxCount: Int,
         completion: @escaping (Result<[RecentMusicQueryDTO], Error>) -> Void
     )
+    
     func saveRecentQuery(
         query: RecentMusicQueryDTO,
         completion: @escaping (Result<RecentMusicQueryDTO, Error>) -> Void
+    )
+    
+    func deleteRecentQuery(
+        query: RecentMusicQueryDTO,
+        completion: @escaping (Result<Void, Error>) -> Void
     )
 }

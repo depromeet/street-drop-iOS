@@ -14,4 +14,5 @@ protocol SearchingMusicRepository {
     func saveMusic(keyword: String)
     func fetchRecentMusicQueries() -> Single<[String]>
     func fetchVillageName(latitude: Double, longitude: Double) -> Single<String>
+    func deleteRecentQuery(query: String) -> Single<Void>
 }

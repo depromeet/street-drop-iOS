@@ -63,6 +63,24 @@ final class DefaultSearchingMusicRepository: SearchingMusicRepository {
         }
     }
     
+    func deleteRecentQuery(query: String) -> Single<Void> {
+        return Single<Void>.create { observer in
+            self.recentMusicQueriesPersistentStorage.deleteRecentQuery(
+                query: RecentMusicQueryDTO(
+                    query: query
+                )
+            ) { result in
+                switch result {
+                case .success(_):
+                    observer(.success(Void()))
+                case .failure(let error):
+                    observer(.failure(error))
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
     func fetchVillageName(latitude: Double, longitude: Double) -> Single<String> {
         networkManager.getVillageName(latitude: latitude, longitude: longitude)
             .map { data in

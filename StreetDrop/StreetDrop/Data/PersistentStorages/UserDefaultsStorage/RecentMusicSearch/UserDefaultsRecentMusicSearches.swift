@@ -68,22 +68,36 @@ extension UserDefaultsRecentMusicQueriesStorage: RecentMusicQueriesStorage {
             completion(.success(query))
         }
     }
+    
+    func deleteRecentQuery(
+        query: RecentMusicQueryDTO,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        backgroundQueue.async { [weak self] in
+            guard let self = self else { return }
+
+            var queries = self.fetchRecentMusicQueries().list
+            queries.removeAll { $0 == query }
+            self.persist(recentMusicQueries: queries)
+            completion(.success(Void()))
+        }
+    }
 }
 
 
 // MARK: - Private
-extension UserDefaultsRecentMusicQueriesStorage {
+private extension UserDefaultsRecentMusicQueriesStorage {
 
-    private func cleanUpQueries(for query: RecentMusicQueryDTO, in queries: inout [RecentMusicQueryDTO]) {
+    func cleanUpQueries(for query: RecentMusicQueryDTO, in queries: inout [RecentMusicQueryDTO]) {
         removeDuplicates(for: query, in: &queries)
         removeQueries(limit: maxStorageLimit - 1, in: &queries)
     }
 
-    private func removeDuplicates(for query: RecentMusicQueryDTO, in queries: inout [RecentMusicQueryDTO]) {
+    func removeDuplicates(for query: RecentMusicQueryDTO, in queries: inout [RecentMusicQueryDTO]) {
         queries = queries.filter { $0 != query }
     }
 
-    private func removeQueries(limit: Int, in queries: inout [RecentMusicQueryDTO]) {
+    func removeQueries(limit: Int, in queries: inout [RecentMusicQueryDTO]) {
         queries = queries.count <= limit ? queries : Array(queries[0..<limit])
     }
 }
