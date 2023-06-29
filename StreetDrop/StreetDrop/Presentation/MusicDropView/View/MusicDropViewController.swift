@@ -117,7 +117,7 @@ final class MusicDropViewController: UIViewController, Toastable {
         let imageView = UIImageView()
         imageView.backgroundColor = .gray700
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 24
+        imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
 
         return imageView
@@ -458,9 +458,11 @@ private extension MusicDropViewController {
 
         self.changeLayoutWhenKeyboardShowAndHide(isKeyboardShow: false)
         musicInfoStackView.setCustomSpacing(2, after: musicNameLabel)
+        musicInfoStackView.setCustomSpacing(16, after: albumImageView)
+        musicInfoStackView.setCustomSpacing(24, after: artistLabel)
 
         musicInfoStackView.snp.makeConstraints {
-            $0.top.equalTo(contentView).inset(16)
+            $0.top.equalTo(contentView).inset(8)
             $0.leading.trailing.equalToSuperview()
         }
 
@@ -506,7 +508,7 @@ private extension MusicDropViewController {
 
         dataSharingPermissionGuideLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(dropButton.snp.top).offset(-20)
+            $0.bottom.equalTo(dropButton.snp.top).offset(-16)
         }
     }
 }
@@ -624,20 +626,13 @@ private extension MusicDropViewController {
     //MARK: - 레이아웃 변경
     func changeLayoutWhenKeyboardShowAndHide(isKeyboardShow: Bool) {
         UIView.animate(withDuration: 0.3) { [weak self] in
-            guard let self = self else { return }
-
-            let topSpacing: CGFloat = isKeyboardShow ? 12 : 16
-            let centerSpacing: CGFloat = isKeyboardShow ? 24 : 36
-            let albumImageSize: CGFloat = isKeyboardShow ? 88 : 120
-
-            self.musicInfoStackView.setCustomSpacing(topSpacing, after: self.albumImageView)
-            self.musicInfoStackView.setCustomSpacing(centerSpacing, after: self.artistLabel)
+            let albumImageSize: CGFloat = isKeyboardShow ? 84 : 96
             
-            self.albumImageView.snp.remakeConstraints {
+            self?.albumImageView.snp.remakeConstraints {
                 $0.width.height.equalTo(albumImageSize)
             }
 
-            self.musicInfoStackView.layoutIfNeeded()
+            self?.musicInfoStackView.layoutIfNeeded()
         }
     }
 }
