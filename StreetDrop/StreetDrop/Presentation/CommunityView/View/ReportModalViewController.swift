@@ -163,10 +163,7 @@ private extension ReportModalViewController {
         closeButton.rx.tap
             .observe(on: MainScheduler.instance)
             .bind { [weak self] in
-                UIView.animate(withDuration: 0.3) {
-                    self?.dimmedView.alpha = 0
-                }
-                self?.dismiss(animated: true)
+                self?.dismiss()
             }
             .disposed(by: disposeBag)
     }
@@ -183,8 +180,9 @@ private extension ReportModalViewController {
 
         output.reportStatusResults
             .asDriver(onErrorJustReturn: "")
-            .drive(onNext: { result in
+            .drive(onNext: { [weak self] result in
                // 신고 결과 토스트 띄어주기
+                self?.dismiss()
             }).disposed(by: disposeBag)
     }
 
@@ -328,6 +326,13 @@ private extension ReportModalViewController {
                 .compactMap{ $0 as? UIImageView }
                 .forEach { $0.isHidden = true }
         }
+    }
+
+    func dismiss() {
+        UIView.animate(withDuration: 0.3) {
+            self.dimmedView.alpha = 0
+        }
+        self.dismiss(animated: true)
     }
 }
 
