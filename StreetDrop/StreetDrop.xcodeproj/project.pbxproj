@@ -47,7 +47,7 @@
 		18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
 		18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
 		41008EB82A48891000FD4ABE /* UITextView+setLineSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41008EB72A48891000FD4ABE /* UITextView+setLineSpacing.swift */; };
-		41008EBA2A49B56F00FD4ABE /* ReportModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41008EB92A49B56E00FD4ABE /* ReportModalViewController.swift */; };
+		41008EBA2A49B56F00FD4ABE /* ClaimModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41008EB92A49B56E00FD4ABE /* ClaimModalViewController.swift */; };
 		412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412D66892A1E14B600BA4A1B /* CommunityViewController.swift */; };
 		412D668C2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412D668B2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift */; };
 		413ABEE82A39BBA500EA1010 /* Toastable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEE72A39BBA500EA1010 /* Toastable.swift */; };
@@ -66,7 +66,7 @@
 		415113272A165DC50051F809 /* MusicDropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415113262A165DC50051F809 /* MusicDropViewController.swift */; };
 		41589AB82A46D82F0029A2EE /* DropAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41589AB72A46D82F0029A2EE /* DropAnimationView.swift */; };
 		41589ABA2A474B3D0029A2EE /* CommunityGuideDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41589AB92A474B3D0029A2EE /* CommunityGuideDetailView.swift */; };
-		41A9BEB02A4AF45300F3605C /* ReportModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEAF2A4AF45300F3605C /* ReportModalViewModel.swift */; };
+		41A9BEB02A4AF45300F3605C /* ClaimModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEAF2A4AF45300F3605C /* ClaimModalViewModel.swift */; };
 		41A9BEB72A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEB62A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift */; };
 		41A9BEB92A4DCA4A00F3605C /* ClaimCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */; };
 		41A9BEBB2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEBA2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift */; };
@@ -189,7 +189,7 @@
 		2611E7411DB7C5436A272A27 /* Pods-StreetDrop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetDrop.release.xcconfig"; path = "Target Support Files/Pods-StreetDrop/Pods-StreetDrop.release.xcconfig"; sourceTree = "<group>"; };
 		33C6E9256EDABFB58F83B1C8 /* Pods-StreetDrop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetDrop.debug.xcconfig"; path = "Target Support Files/Pods-StreetDrop/Pods-StreetDrop.debug.xcconfig"; sourceTree = "<group>"; };
 		41008EB72A48891000FD4ABE /* UITextView+setLineSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+setLineSpacing.swift"; sourceTree = "<group>"; };
-		41008EB92A49B56E00FD4ABE /* ReportModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportModalViewController.swift; sourceTree = "<group>"; };
+		41008EB92A49B56E00FD4ABE /* ClaimModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimModalViewController.swift; sourceTree = "<group>"; };
 		412D66892A1E14B600BA4A1B /* CommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewController.swift; sourceTree = "<group>"; };
 		412D668B2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		413ABEE72A39BBA500EA1010 /* Toastable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toastable.swift; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 		415113262A165DC50051F809 /* MusicDropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDropViewController.swift; sourceTree = "<group>"; };
 		41589AB72A46D82F0029A2EE /* DropAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropAnimationView.swift; sourceTree = "<group>"; };
 		41589AB92A474B3D0029A2EE /* CommunityGuideDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityGuideDetailView.swift; sourceTree = "<group>"; };
-		41A9BEAF2A4AF45300F3605C /* ReportModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportModalViewModel.swift; sourceTree = "<group>"; };
+		41A9BEAF2A4AF45300F3605C /* ClaimModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimModalViewModel.swift; sourceTree = "<group>"; };
 		41A9BEB62A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimCommentRequestDTO+Mapping.swift"; sourceTree = "<group>"; };
 		41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimCommentRepository.swift; sourceTree = "<group>"; };
 		41A9BEBA2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultClaimCommentRepository.swift; sourceTree = "<group>"; };
@@ -560,7 +560,7 @@
 			children = (
 				412D66892A1E14B600BA4A1B /* CommunityViewController.swift */,
 				412D668B2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift */,
-				41008EB92A49B56E00FD4ABE /* ReportModalViewController.swift */,
+				41008EB92A49B56E00FD4ABE /* ClaimModalViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -569,7 +569,7 @@
 			isa = PBXGroup;
 			children = (
 				414139912A20506D005418A1 /* CommunityViewModel.swift */,
-				41A9BEAF2A4AF45300F3605C /* ReportModalViewModel.swift */,
+				41A9BEAF2A4AF45300F3605C /* ClaimModalViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1083,7 +1083,7 @@
 				18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */,
 				C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */,
 				C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */,
-				41008EBA2A49B56F00FD4ABE /* ReportModalViewController.swift in Sources */,
+				41008EBA2A49B56F00FD4ABE /* ClaimModalViewController.swift in Sources */,
 				C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */,
 				C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */,
 				C47F02222A38633500F48884 /* MyPageViewController.swift in Sources */,
@@ -1115,7 +1115,7 @@
 				414345022A31F17B003FEE2A /* UIViewController+Constant.swift in Sources */,
 				040685022A01539800377094 /* SceneDelegate.swift in Sources */,
 				C4D16FC92A1B9338008B076F /* UIFont+Extension.swift in Sources */,
-				41A9BEB02A4AF45300F3605C /* ReportModalViewModel.swift in Sources */,
+				41A9BEB02A4AF45300F3605C /* ClaimModalViewModel.swift in Sources */,
 				04FB1F322A021C330064B3C8 /* TestError.swift in Sources */,
 				188D2C772A1BA74E0088F49C /* LocationManager.swift in Sources */,
 				4143452E2A373550003FEE2A /* AddressManager.swift in Sources */,
