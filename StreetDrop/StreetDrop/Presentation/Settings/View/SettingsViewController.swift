@@ -1,5 +1,5 @@
 //
-//  MyPageViewController.swift
+//  SettingsViewController.swift
 //  StreetDrop
 //
 //  Created by 차요셉 on 2023/06/13.
@@ -11,11 +11,11 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-final class MyPageViewController: UIViewController {
-    private let viewModel: DefaultMyPageViewModel
+final class SettingsViewController: UIViewController {
+    private let viewModel: DefaultSettingsViewModel
     private let disposeBag = DisposeBag()
     
-    init(viewModel: DefaultMyPageViewModel) {
+    init(viewModel: DefaultSettingsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -76,9 +76,9 @@ final class MyPageViewController: UIViewController {
     }
 }
 
-private extension MyPageViewController {
+private extension SettingsViewController {
     func bindUI() {
-        let infos = MyPageInfo.allCases
+        let infos = SettingsInfo.allCases
         Observable.of(infos).bind(
             to: self.tableView.rx.items(
                 cellIdentifier: InfoTableViewCell.identifier,
@@ -93,7 +93,7 @@ private extension MyPageViewController {
     func bindAction() {
         self.tableView.rx.itemSelected
             .bind { indexPath in
-                guard let url = URL(string: MyPageInfo.allCases[indexPath.row].urlAddress) else {
+                guard let url = URL(string: SettingsInfo.allCases[indexPath.row].urlAddress) else {
                     return
                 }
                 
@@ -112,7 +112,7 @@ private extension MyPageViewController {
     }
     
     func bindViewModel() {
-        let input = DefaultMyPageViewModel.Input()
+        let input = DefaultSettingsViewModel.Input()
         
         let _ = viewModel.convert(
             input: input,
