@@ -69,4 +69,11 @@ struct NetworkManager {
             .retry(3)
             .map { $0.statusCode }
     }
+
+    func claimComment(requestDTO: ClaimCommentRequestDTO) -> Single<Int> {
+        return provider.rx.request(.claimComment(requestDTO: requestDTO))
+            .retry(3)
+            .map { $0.statusCode }
+
+    }
 }

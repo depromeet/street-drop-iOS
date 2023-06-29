@@ -18,6 +18,7 @@ enum NetworkService {
     case postLikeUp(itemID: Int)
     case postLikeDown(itemID: Int)
     case getPoi(latitude: Double, longitude: Double, distance: Double)
+    case claimComment(requestDTO: ClaimCommentRequestDTO)
 }
 
 extension NetworkService: TargetType {
@@ -55,6 +56,8 @@ extension NetworkService: TargetType {
             return "/items/\(itemID)/unlikes"
         case .getPoi:
             return "/items/points"
+        case .claimComment:
+            return "/items/claim"
         }
     }
     
@@ -68,7 +71,8 @@ extension NetworkService: TargetType {
             return .get
         case .dropMusic,
                 .postLikeUp,
-                .postLikeDown:
+                .postLikeDown,
+                .claimComment:
             return .post
         }
     }
@@ -114,6 +118,8 @@ extension NetworkService: TargetType {
                              "distance": distance],
                 encoding: URLEncoding.queryString
             )
+        case .claimComment(let claimCommentRequestDTO):
+            return .requestJSONEncodable(claimCommentRequestDTO)
         }
     }
     
