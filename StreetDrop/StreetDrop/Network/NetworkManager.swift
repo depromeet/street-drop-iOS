@@ -91,6 +91,12 @@ struct NetworkManager {
     func deleteMusic(itemID: Int) -> Single<Int> {
         return provider.rx.request(.deleteMusic(itemID: itemID))
             .retry(3)
-            .map { $0.statusCode }
+        .map { $0.statusCode }
+    }
+    
+    func getVillageName(latitude: Double, longitude: Double) -> Single<Data> {
+        return provider.rx.request(.getVillageName(latitude: latitude, longitude: longitude))
+            .retry(3)
+            .map { $0.data }
     }
 }
