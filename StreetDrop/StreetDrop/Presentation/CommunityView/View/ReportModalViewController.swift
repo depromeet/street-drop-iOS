@@ -8,7 +8,9 @@
 import UIKit
 
 import SnapKit
+
 import RxSwift
+import RxRelay
 
 enum Report: CaseIterable {
     case slander, disgust, violent, falseInformation, etc
@@ -135,10 +137,21 @@ final class ReportModalViewController: UIViewController {
 
     //MARK: - Life Cycle
 
+    init(viewModel: ReportModalViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         bindAction()
+        bindViewModel()
         configureUI()
     }
 }
@@ -156,6 +169,23 @@ private extension ReportModalViewController {
                 self?.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
+    }
+
+    // MARK: - Data Binding
+
+    func bindViewModel() {
+        let input = ReportModalViewModel.Input(
+            tapReportOption: self.tapReportOption.asObservable(),
+            tapSendButton: self.sendButton.rx.tap.asObservable()
+        )
+
+        let output = viewModel.convert(input: input, disposedBag: disposeBag)
+
+        output.reportStatusResults
+            .asDriver(onErrorJustReturn: "")
+            .drive(onNext: { result in
+               // 신고 결과 토스트 띄어주기
+            }).disposed(by: disposeBag)
     }
 
     // MARK: - UI
@@ -283,6 +313,7 @@ private extension ReportModalViewController {
               let iconView = sender.iconView,
               let reportOption = sender.tappedReportOption else { return }
 
+        tapReportOption.accept(reportOption)
         resetAllOptionView()
         tappedView.backgroundColor = .gray700
         iconView.isHidden = false
