@@ -58,15 +58,15 @@ final class CommunityViewModel: ViewModel {
                 output.addressTitle.accept(self.communityInfos[self.currentIndex].address)
                 self.changeCommunityInfoForIndex(index: self.currentIndex, output: output)
 
-                var albumImagesURL = self.communityInfos.map { $0.albumImageURL }
-
-                // 데이터가 2, 3개 일때는 무한스크롤없이 -> 0번 쎌/마지막 쎌이 가운데로 스크롤 되도록 맨앞과 맨끝에 빈쎌을 넣어줌.
+                // 데이터가 2,3개일 때는 무한스크롤없이 첫번째/마지막쎌이 가운데로 스크롤되게하기위해 처음/마지막에 빈쎌을 넣어준상태
+                // 즉 데이터가 3개면 빈데이터+3개+빈데이터 = 5개
                 if (2...3).contains(self.communityInfos.count) {
-                    albumImagesURL.insert("", at: 0)
-                    albumImagesURL.append("")
+                    self.communityInfos.insert(MusicWithinAreaEntity.generateEmptyData(), at: 0)
+                    self.communityInfos.append(MusicWithinAreaEntity.generateEmptyData())
                     self.currentIndex += 1
                 }
 
+                let albumImagesURL = self.communityInfos.map { $0.albumImageURL }
                 output.albumImages.accept(albumImagesURL)
                 output.currentIndex.accept(self.currentIndex)
             }).disposed(by: disposedBag)
@@ -122,7 +122,7 @@ private extension CommunityViewModel {
                     output.errorDescription.accept("좋아요취소에 실패했습니다")
                     return
                 }
-                print(response)
+                
                 let likeCount = self.communityInfos[self.currentIndex].likeCount
 
                 output.isLiked.accept(false)
