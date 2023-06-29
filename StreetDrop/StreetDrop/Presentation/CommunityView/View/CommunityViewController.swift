@@ -296,7 +296,12 @@ private extension CommunityViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {
                 // 신고 모달 띄우기
-                let itemID = self.viewModel.communityInfos[self.viewModel.currentIndex].id
+                let currentIndex = self.viewModel.currentIndex
+                let dataCount = self.viewModel.communityInfos.count
+
+                guard (0..<dataCount).contains(currentIndex) else { return }
+
+                let itemID = self.viewModel.communityInfos[currentIndex].id
                 let reportModalViewModel = ReportModalViewModel(itemID: itemID)
                 let reportModalViewController = ReportModalViewController(
                     viewModel: reportModalViewModel
