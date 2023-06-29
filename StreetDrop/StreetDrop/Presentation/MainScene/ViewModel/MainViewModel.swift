@@ -27,7 +27,7 @@ final class MainViewModel: ViewModel {
         )
     )
     var locationManager = LocationManager()
-    let locationUpdated = PublishRelay<Void>()
+    private let locationUpdated = PublishRelay<Void>()
     
     init() {
         self.locationManager.delegate = self
@@ -36,7 +36,6 @@ final class MainViewModel: ViewModel {
 
 extension MainViewModel {
     struct Input {
-        let locationUpdated: PublishRelay<Void>
         let viewDidLoadEvent: PublishRelay<Void>
         let viewWillAppearEvent: PublishRelay<Void>
         let poiMarkerDidTapEvent: PublishRelay<Void>
@@ -104,7 +103,7 @@ extension MainViewModel {
             }
             .disposed(by: disposedBag)
         
-        input.locationUpdated
+        self.locationUpdated
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
                 output.location.accept(self.location)
@@ -237,12 +236,6 @@ private extension MainViewModel {
 extension MainViewModel: LocationManagerDelegate {
     func updateLocation(location: CLLocation) {
         self.location = location
-//        let geocoder = CLGeocoder()
-//        geocoder.reverseGeocodeLocation(location, preferredLocale: nil) { (placemarks, error) in
-//            guard let address = placemarks?.first else { return }
-//            // 차후 서버 포맷에 맞게 수정 필요
-////             self.address = address.name ?? ""
-//            self.address = "종로구 사직동"
-            self.locationUpdated.accept(())
+        self.locationUpdated.accept(())
     }
 }
