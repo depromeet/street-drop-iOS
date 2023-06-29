@@ -392,7 +392,6 @@ private extension MainViewController {
     
     private func bindViewModel() {
         let input = MainViewModel.Input(
-            locationUpdated: viewModel.locationUpdated,
             viewDidLoadEvent: self.viewDidLoadEvent,
             viewWillAppearEvent: self.viewWillAppearEvent,
             poiMarkerDidTapEvent: self.poiMarkerDidTapEvent,
