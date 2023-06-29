@@ -62,4 +62,12 @@ final class DefaultSearchingMusicRepository: SearchingMusicRepository {
             return Disposables.create()
         }
     }
+    
+    func fetchVillageName(latitude: Double, longitude: Double) -> Single<String> {
+        networkManager.getVillageName(latitude: latitude, longitude: longitude)
+            .map { data in
+                let dto = try JSONDecoder().decode(VillageNameResponseDTO.self, from: data)
+                return dto.villageName
+            }
+    }
 }

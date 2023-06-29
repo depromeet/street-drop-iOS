@@ -146,6 +146,7 @@
 		C4D16FC42A1B917B008B076F /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FBB2A1B917B008B076F /* Pretendard-Bold.otf */; };
 		C4D16FC92A1B9338008B076F /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */; };
 		C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */; };
+		C4E0943B2A4DF002000B4513 /* VillageNameResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
 /* End PBXBuildFile section */
 
@@ -286,6 +287,7 @@
 		C4D16FBB2A1B917B008B076F /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+LineHeight.swift"; sourceTree = "<group>"; };
+		C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VillageNameResponseDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -579,6 +581,7 @@
 				18AAF83C2A13731A002EF441 /* Community */,
 				18AAF8362A136D9E002EF441 /* MusicWithinArea */,
 				C45BF39F2A1D12EF00CEDE74 /* RecentMusicSearch */,
+				C4E094392A4DEFC5000B4513 /* VillageName */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -991,6 +994,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		C4E094392A4DEFC5000B4513 /* VillageName */ = {
+			isa = PBXGroup;
+			children = (
+				C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */,
+			);
+			path = VillageName;
+			sourceTree = "<group>";
+		};
 		DD24191EB8D98350CCDA3174 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1259,6 +1270,7 @@
 				41008EB82A48891000FD4ABE /* UITextView+setLineSpacing.swift in Sources */,
 				C434A4CC2A1796F300C63526 /* SearchingMusicViewModel.swift in Sources */,
 				41396D9D2A4F329200B69341 /* OptionModalViewModel.swift in Sources */,
+				C4E0943B2A4DF002000B4513 /* VillageNameResponseDTO.swift in Sources */,
 				41F23B4B2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift in Sources */,
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO+Mapping.swift in Sources */,
 				C434A4CA2A1796E400C63526 /* SearchingMusicViewController.swift in Sources */,
