@@ -22,6 +22,7 @@ enum NetworkService {
     case claimComment(requestDTO: ClaimCommentRequestDTO)
     case editComment(itemID: Int, requestDTO: EditCommentRequestDTO)
     case deleteMusic(itemID: Int)
+    case getVillageName(latitude: Double, longitude: Double)
 }
 
 extension NetworkService: TargetType {
@@ -67,6 +68,8 @@ extension NetworkService: TargetType {
             return "/items/\(itemID)"
         case .deleteMusic(let itemID):
             return "/items/\(itemID)"
+        case .getVillageName:
+            return "/geo/reverse-geocode"
         }
     }
     
@@ -77,7 +80,8 @@ extension NetworkService: TargetType {
                 .getMusicCountByDong,
                 .getPoi,
                 .getMusicWithinArea,
-                .getCommunity:
+                .getCommunity,
+                .getVillageName:
             return .get
         case .dropMusic,
                 .postLikeUp,
@@ -141,6 +145,14 @@ extension NetworkService: TargetType {
         case .deleteMusic(let itemID):
             return .requestParameters(
                 parameters: ["itemId": itemID],
+                encoding: URLEncoding.queryString
+            )
+        case .getVillageName(let latitude, let longitude):
+            return .requestParameters(
+                parameters: [
+                    "latitude": String(latitude),
+                    "longitude": String(longitude)
+                ],
                 encoding: URLEncoding.queryString
             )
         }
