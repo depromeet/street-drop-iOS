@@ -16,7 +16,7 @@ final class MainViewModel: ViewModel {
     var location: CLLocation = CLLocation(latitude: 37.4979, longitude: 127.0275)
     var poisDistance: Double = 200000 // 1차 앱스토어 배포 시엔, 대한민국 전체 조회를 위해 반지름 200KM로 조회
     var detailItemsDistance: Double = 500
-    var address: String = ""
+    var currentLocationAddress: String = ""
     var musicWithinArea: Musics = []
     var currentIndex: Int = 0
     var tappedPOIID: Int?
@@ -46,7 +46,7 @@ extension MainViewModel {
     
     struct Output {
         var location = PublishRelay<CLLocation>()
-        var address = PublishRelay<String>()
+        var cameraAddress = PublishRelay<String>()
         var pois = PublishRelay<Pois>()
         var musicCount = BehaviorRelay<Int>(value: 0)
         var musicWithinArea = BehaviorRelay<Musics>(value: [])
@@ -223,8 +223,7 @@ private extension MainViewModel {
                 switch result {
                 case .success(let musicCountEntity):
                     output.musicCount.accept(musicCountEntity.musicCount)
-                    output.address.accept(musicCountEntity.villageName)
-                    self.address = musicCountEntity.villageName
+                    output.cameraAddress.accept(musicCountEntity.villageName)
                 case .failure(_):
                     output.musicCount.accept(0)
                 }
