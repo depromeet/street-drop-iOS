@@ -29,6 +29,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         let keyBoardDidPressSearchEventWithKeyword: Observable<String>
         let recentQueryDidPressEvent: PublishRelay<String>
         let tableViewCellDidPressedEvent: Observable<Int>
+        let queryDeletingButtonDidTappedEvent: PublishRelay<String>
     }
     
     struct Output {
@@ -90,6 +91,21 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
             .bind { [weak self] indexPathRow in
                 guard let self = self else { return }
                 output.selectedMusic.accept(self.musicList[indexPathRow])
+            }
+            .disposed(by: disposedBag)
+        
+        input.queryDeletingButtonDidTappedEvent
+            .bind { [weak self] query in
+                self?.model.deleteRecentQuery(query: query)
+                    .subscribe { result in
+                        switch result {
+                        case .success():
+                            print("최근 검색어 삭제 성공")
+                        case .failure(let error):
+                            print("최근 검색어 삭제 실패: \(error.localizedDescription)")
+                        }
+                    }
+                    .disposed(by: disposedBag)
             }
             .disposed(by: disposedBag)
         

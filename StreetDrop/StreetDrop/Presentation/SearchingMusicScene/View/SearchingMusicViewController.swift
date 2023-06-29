@@ -204,7 +204,8 @@ private extension SearchingMusicViewController {
             searchTextFieldEmptyEvent: searchTextFieldEmptyEvent,
             keyBoardDidPressSearchEventWithKeyword: keyBoardDidPressSearchEventWithKeyword,
             recentQueryDidPressEvent: self.recentMusicSearchScrollView.queryButtonDidTappedEvent,
-            tableViewCellDidPressedEvent: selectedTableViewCellEvent
+            tableViewCellDidPressedEvent: selectedTableViewCellEvent,
+            queryDeletingButtonDidTappedEvent: self.recentMusicSearchScrollView.queryDeletingButtonDidTappedEvent
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
         
