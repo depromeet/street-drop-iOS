@@ -37,9 +37,8 @@ final class ReportModalViewController: UIViewController {
         static let sendButtonTitle: String = "전송"
     }
 
-    // modal 애니메이션을 위한 제약조건
-    private var containerViewHeightConstraint: NSLayoutConstraint?
-    private var containerViewBottomConstraint: NSLayoutConstraint?
+    private let viewModel: ReportModalViewModel
+    private let tapReportOption = PublishRelay<Report>()
     private let disposeBag: DisposeBag = DisposeBag()
 
     //MARK: - UI
@@ -221,19 +220,9 @@ private extension ReportModalViewController {
         }
 
         containerView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(defaultHeight)
         }
-
-        containerViewHeightConstraint = containerView.heightAnchor.constraint(
-            equalToConstant: defaultHeight
-        )
-        containerViewBottomConstraint = containerView.bottomAnchor.constraint(
-            equalTo: view.bottomAnchor
-        )
-
-        containerViewHeightConstraint?.isActive = true
-        containerViewBottomConstraint?.isActive = true
-
     }
 }
 
