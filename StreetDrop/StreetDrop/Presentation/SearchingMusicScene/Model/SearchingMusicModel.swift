@@ -14,6 +14,7 @@ protocol SearchingMusicModel {
     func saveRecentSearch(keyword: String)
     func fetchRecentSearch() -> Single<[String]>
     func fetchVillageName(latitude: Double, longitude: Double) -> Single<String>
+    func deleteRecentQuery(query: String) -> Single<Void>
 }
 
 final class DefaultSearchingMusicModel: SearchingMusicModel {
@@ -38,5 +39,9 @@ final class DefaultSearchingMusicModel: SearchingMusicModel {
     
     func fetchVillageName(latitude: Double, longitude: Double) -> Single<String> {
         return self.searchingMusicRepository.fetchVillageName(latitude: latitude, longitude: longitude)
+    }
+    
+    func deleteRecentQuery(query: String) -> Single<Void> {
+        return self.searchingMusicRepository.deleteRecentQuery(query: query)
     }
 }
