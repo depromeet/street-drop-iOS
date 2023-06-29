@@ -345,9 +345,10 @@ private extension MainViewController {
                       self.viewModel.locationManager.checkAuthorizationStatus()
                 else { return }
                 
-                let searchingMusicViewController = SearchingMusicViewController(viewModel: DefaultSearchingMusicViewModel(
-                    location: self.viewModel.location,
-                    address: self.viewModel.currentLocationAddress)
+                let searchingMusicViewController = SearchingMusicViewController(
+                    viewModel: DefaultSearchingMusicViewModel(
+                        location: self.viewModel.location
+                    )
                 )
                 self.navigationController?.pushViewController(
                     searchingMusicViewController,

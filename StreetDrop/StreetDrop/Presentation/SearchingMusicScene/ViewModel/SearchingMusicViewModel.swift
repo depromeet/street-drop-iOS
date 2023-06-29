@@ -19,7 +19,7 @@ protocol SearchingMusicViewModel: ViewModel {
 final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     private let model: SearchingMusicModel
     let location: CLLocation
-    let address: String
+    var address: String = ""
     private let disposeBag: DisposeBag = DisposeBag()
     private var musicList: [Music] = []
     
@@ -39,12 +39,10 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     
     init(
         model: SearchingMusicModel = DefaultSearchingMusicModel(),
-        location: CLLocation,
-        address: String
+        location: CLLocation
     ) {
         self.model = model
         self.location = location
-        self.address = address
     }
     
     func convert(input: Input, disposedBag: DisposeBag) -> Output {
@@ -62,6 +60,8 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
                         }
                     }
                     .disposed(by: disposedBag)
+                
+                self?.fetchCurrentLocationVillageName()
             })
             .disposed(by: disposedBag)
         
@@ -110,5 +110,21 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
                 }
             }
             .disposed(by: disposeBag)
+    }
+    
+    func fetchCurrentLocationVillageName() {
+        self.model.fetchVillageName(
+            latitude: self.location.coordinate.latitude,
+            longitude: self.location.coordinate.longitude
+        )
+        .subscribe { result in
+            switch result {
+            case .success(let villageName):
+                self.address = villageName
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        .disposed(by: disposeBag)
     }
 }

@@ -13,6 +13,7 @@ protocol SearchingMusicModel {
     func fetchMusic(keyword: String) -> Single<[Music]>
     func saveRecentSearch(keyword: String)
     func fetchRecentSearch() -> Single<[String]>
+    func fetchVillageName(latitude: Double, longitude: Double) -> Single<String>
 }
 
 final class DefaultSearchingMusicModel: SearchingMusicModel {
@@ -33,5 +34,9 @@ final class DefaultSearchingMusicModel: SearchingMusicModel {
     
     func fetchRecentSearch() -> Single<[String]> {
         return self.searchingMusicRepository.fetchRecentMusicQueries()
+    }
+    
+    func fetchVillageName(latitude: Double, longitude: Double) -> Single<String> {
+        return self.searchingMusicRepository.fetchVillageName(latitude: latitude, longitude: longitude)
     }
 }
