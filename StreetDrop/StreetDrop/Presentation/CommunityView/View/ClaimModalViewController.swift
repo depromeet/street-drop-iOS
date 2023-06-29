@@ -1,5 +1,5 @@
 //
-//  ReportModalViewController.swift
+//  ClaimModalViewController.swift
 //  StreetDrop
 //
 //  Created by 맹선아 on 2023/06/26.
@@ -12,7 +12,7 @@ import SnapKit
 import RxSwift
 import RxRelay
 
-enum Report: CaseIterable {
+enum Claim: CaseIterable {
     case slander, disgust, violent, falseInformation, etc
 
     var title: String {
@@ -31,16 +31,16 @@ enum Report: CaseIterable {
     }
 }
 
-final class ReportModalViewController: UIViewController {
+final class ClaimModalViewController: UIViewController {
 
     private enum Constant {
         static let title: String = "신고하기"
-        static let reportGuideText: String = "신고 사유를 선택해 주세요"
+        static let claimGuideText: String = "신고 사유를 선택해 주세요"
         static let sendButtonTitle: String = "전송"
     }
 
-    private let viewModel: ReportModalViewModel
-    private let tapReportOption = PublishRelay<Report>()
+    private let viewModel: ClaimModalViewModel
+    private let tapClaimOption = PublishRelay<Claim>()
     private let disposeBag: DisposeBag = DisposeBag()
 
     //MARK: - UI
@@ -102,16 +102,16 @@ final class ReportModalViewController: UIViewController {
         return view
     }()
 
-    private lazy var reportGuideLabel: UILabel = {
+    private lazy var claimGuideLabel: UILabel = {
         let label = UILabel()
-        label.text = Constant.reportGuideText
+        label.text = Constant.claimGuideText
         label.textColor = .gray300
         label.font = .pretendard(size: 12, weightName: .semiBold)
 
         return label
     }()
 
-    private lazy var reportOptionViews: [UIView] = generateReportOptionViews()
+    private lazy var claimOptionViews: [UIView] = generateClaimOptionViews()
 
     private lazy var optionStackView: UIStackView = {
         let stackView = UIStackView()
@@ -137,7 +137,7 @@ final class ReportModalViewController: UIViewController {
 
     //MARK: - Life Cycle
 
-    init(viewModel: ReportModalViewModel) {
+    init(viewModel: ClaimModalViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -156,7 +156,7 @@ final class ReportModalViewController: UIViewController {
     }
 }
 
-private extension ReportModalViewController {
+private extension ClaimModalViewController {
 
     // MARK: - Action Binding
     func bindAction() {
@@ -171,16 +171,16 @@ private extension ReportModalViewController {
     // MARK: - Data Binding
 
     func bindViewModel() {
-        let input = ReportModalViewModel.Input(
-            tapReportOption: self.tapReportOption.asObservable(),
+        let input = ClaimModalViewModel.Input(
+            tapClaimOption: self.tapClaimOption.asObservable(),
             tapSendButton: self.sendButton.rx.tap.asObservable()
         )
 
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
 
-        output.reportStatusResults
+        output.claimStatusResults
             .asDriver(onErrorJustReturn: "")
-            .drive(onNext: { [weak self] result in
+            .drive(onNext: { [weak self] claim in
                // 신고 결과 토스트 띄어주기
                 self?.dismiss()
             }).disposed(by: disposeBag)
@@ -191,12 +191,12 @@ private extension ReportModalViewController {
     func configureUI() {
         let defaultHeight: CGFloat = 476
 
-        reportOptionViews
+        claimOptionViews
             .forEach {
             optionStackView.addArrangedSubview($0)
         }
 
-        [titleView, closeButton, dividingLineView, reportGuideLabel, optionStackView, sendButton]
+        [titleView, closeButton, dividingLineView, claimGuideLabel, optionStackView, sendButton]
             .forEach {
                 containerView.addSubview($0)
             }
@@ -211,7 +211,7 @@ private extension ReportModalViewController {
             $0.top.equalToSuperview().inset(24)
         }
 
-        reportGuideLabel.setContentHuggingPriority(.required, for: .vertical)
+        claimGuideLabel.setContentHuggingPriority(.required, for: .vertical)
 
         closeButton.snp.makeConstraints {
             $0.width.height.equalTo(28)
@@ -225,13 +225,13 @@ private extension ReportModalViewController {
             $0.top.equalTo(titleView.snp.bottom).offset(20)
         }
 
-        reportGuideLabel.snp.makeConstraints {
+        claimGuideLabel.snp.makeConstraints {
             $0.top.equalTo(dividingLineView).offset(12)
             $0.leading.equalToSuperview().inset(28)
         }
 
         optionStackView.snp.makeConstraints {
-            $0.top.equalTo(reportGuideLabel.snp.bottom).offset(4)
+            $0.top.equalTo(claimGuideLabel.snp.bottom).offset(4)
             $0.leading.trailing.equalToSuperview().inset(12)
             $0.bottom.equalTo(sendButton.snp.top).offset(-12)
         }
@@ -255,11 +255,11 @@ private extension ReportModalViewController {
 }
 
 //MARK: - Private
-private extension ReportModalViewController {
-    func generateReportOptionViews() -> [UIView] {
+private extension ClaimModalViewController {
+    func generateClaimOptionViews() -> [UIView] {
         var views: [UIView] = []
 
-        Report.allCases.forEach {
+        Claim.allCases.forEach {
             // UI
             let icon = UIImage(named: "checkIcon")
             let iconView = UIImageView(image: icon)
@@ -290,14 +290,14 @@ private extension ReportModalViewController {
             }
 
             // Action binding
-            let tapGesture = ReportOptionTapGesture(
+            let tapGesture = ClaimOptionTapGesture(
                 target: self,
-                action: #selector(tappedReportOption(_:))
+                action: #selector(tappedClaimOption(_:))
             )
 
             tapGesture.tappedView = view
             tapGesture.iconView = iconView
-            tapGesture.tappedReportOption = $0
+            tapGesture.tappedClaimOption = $0
 
             view.addGestureRecognizer(tapGesture)
             views.append(view)
@@ -306,12 +306,12 @@ private extension ReportModalViewController {
         return views
     }
 
-    @objc func tappedReportOption(_ sender: ReportOptionTapGesture) {
+    @objc func tappedClaimOption(_ sender: ClaimOptionTapGesture) {
         guard let tappedView = sender.tappedView,
               let iconView = sender.iconView,
-              let reportOption = sender.tappedReportOption else { return }
+              let claimOption = sender.tappedClaimOption else { return }
 
-        tapReportOption.accept(reportOption)
+        tapClaimOption.accept(claimOption)
         resetAllOptionView()
         tappedView.backgroundColor = .gray700
         iconView.isHidden = false
@@ -320,7 +320,7 @@ private extension ReportModalViewController {
     }
 
     func resetAllOptionView() {
-        for view in reportOptionViews {
+        for view in claimOptionViews {
             view.backgroundColor = .clear
             view.subviews
                 .compactMap{ $0 as? UIImageView }
@@ -338,8 +338,8 @@ private extension ReportModalViewController {
 
 // MARK: - TapGesture
 // objc 메서드로 파라미터 전달위해 UITapGestureRecognizer 상속사용
-class ReportOptionTapGesture: UITapGestureRecognizer {
+class ClaimOptionTapGesture: UITapGestureRecognizer {
     var tappedView: UIView?
     var iconView: UIImageView?
-    var tappedReportOption: Report?
+    var tappedClaimOption: Claim?
 }
