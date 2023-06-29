@@ -302,13 +302,13 @@ private extension CommunityViewController {
                 guard (0..<dataCount).contains(currentIndex) else { return }
 
                 let itemID = self.viewModel.communityInfos[currentIndex].id
-                let reportModalViewModel = ReportModalViewModel(itemID: itemID)
-                let reportModalViewController = ReportModalViewController(
-                    viewModel: reportModalViewModel
+                let claimModalViewModel = ClaimModalViewModel(itemID: itemID)
+                let claimModalViewController = ClaimModalViewController(
+                    viewModel: claimModalViewModel
                 )
-                reportModalViewController.modalPresentationStyle = .overCurrentContext
+                claimModalViewController.modalPresentationStyle = .overCurrentContext
 
-                self.present(reportModalViewController, animated: true)
+                self.present(claimModalViewController, animated: true)
             })
             .disposed(by: disposeBag)
     }
