@@ -347,7 +347,7 @@ private extension MainViewController {
                 
                 let searchingMusicViewController = SearchingMusicViewController(viewModel: DefaultSearchingMusicViewModel(
                     location: self.viewModel.location,
-                    address: self.viewModel.address)
+                    address: self.viewModel.currentLocationAddress)
                 )
                 self.navigationController?.pushViewController(
                     searchingMusicViewController,
@@ -428,7 +428,7 @@ private extension MainViewController {
             })
             .disposed(by: disposeBag)
         
-        output.address
+        output.cameraAddress
             .bind(onNext: { [weak self] address in
                 self?.locationLabel.text = address
             })
