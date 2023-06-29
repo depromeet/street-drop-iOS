@@ -42,7 +42,7 @@ final class RecentQueryButton: UIControl {
         return label
     }()
     
-    private lazy var deletingButton: UIButton = {
+    lazy var deletingButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "deletingQuery"), for: .normal)
         return button

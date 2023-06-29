@@ -12,6 +12,7 @@ import RxSwift
 
 final class RecentMusicSearchScrollView: UIView {
     let queryButtonDidTappedEvent: PublishRelay = PublishRelay<String>()
+    let queryDeletingButtonDidTappedEvent: PublishRelay = PublishRelay<String>()
     private let disposeBag: DisposeBag = DisposeBag()
     
     override init(frame: CGRect) {
@@ -27,16 +28,29 @@ final class RecentMusicSearchScrollView: UIView {
     func setData(queries: [String]) {
         queries.enumerated().forEach { (index, query) in
             let recentQueryButton = RecentQueryButton()
+            recentQueryButton.tag = index
             recentQueryButton.query = query
             recentQueryButton.rx.controlEvent(.touchUpInside)
                 .bind { [weak self] in
                     self?.queryButtonDidTappedEvent.accept(query)
                 }
                 .disposed(by: disposeBag)
+            
             self.stackView.addArrangedSubview(recentQueryButton)
             recentQueryButton.snp.makeConstraints {
                 $0.top.bottom.equalToSuperview()
             }
+            
+            recentQueryButton.deletingButton.rx.tap
+                .bind { [weak self] in
+                    self?.stackView.subviews.forEach {
+                        if $0.tag == recentQueryButton.tag {
+                            recentQueryButton.removeFromSuperview()
+                        }
+                    }
+                    self?.queryDeletingButtonDidTappedEvent.accept(query)
+                }
+                .disposed(by: disposeBag)
         }
     }
     
