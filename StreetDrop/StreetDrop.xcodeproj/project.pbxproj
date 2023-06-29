@@ -66,6 +66,7 @@
 		415113272A165DC50051F809 /* MusicDropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415113262A165DC50051F809 /* MusicDropViewController.swift */; };
 		41589AB82A46D82F0029A2EE /* DropAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41589AB72A46D82F0029A2EE /* DropAnimationView.swift */; };
 		41589ABA2A474B3D0029A2EE /* CommunityGuideDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41589AB92A474B3D0029A2EE /* CommunityGuideDetailView.swift */; };
+		41A9BEB02A4AF45300F3605C /* ReportModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEAF2A4AF45300F3605C /* ReportModalViewModel.swift */; };
 		41A9BEB72A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEB62A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift */; };
 		41A9BEB92A4DCA4A00F3605C /* ClaimCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */; };
 		41A9BEBB2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEBA2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift */; };
@@ -207,6 +208,7 @@
 		415113262A165DC50051F809 /* MusicDropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDropViewController.swift; sourceTree = "<group>"; };
 		41589AB72A46D82F0029A2EE /* DropAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropAnimationView.swift; sourceTree = "<group>"; };
 		41589AB92A474B3D0029A2EE /* CommunityGuideDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityGuideDetailView.swift; sourceTree = "<group>"; };
+		41A9BEAF2A4AF45300F3605C /* ReportModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportModalViewModel.swift; sourceTree = "<group>"; };
 		41A9BEB62A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimCommentRequestDTO+Mapping.swift"; sourceTree = "<group>"; };
 		41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimCommentRepository.swift; sourceTree = "<group>"; };
 		41A9BEBA2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultClaimCommentRepository.swift; sourceTree = "<group>"; };
@@ -531,6 +533,7 @@
 		18F76FAE2A050110006CF9EF /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				41A9BEB52A4DC6B200F3605C /* ClaimComment */,
 				049F50242A122C8F001528CB /* DropMusic */,
 				41E008CC2A14427300F5D99C /* Poi */,
 				041038952A126D1400BC5532 /* MusicCountByDong */,
@@ -566,6 +569,7 @@
 			isa = PBXGroup;
 			children = (
 				414139912A20506D005418A1 /* CommunityViewModel.swift */,
+				41A9BEAF2A4AF45300F3605C /* ReportModalViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1111,6 +1115,7 @@
 				414345022A31F17B003FEE2A /* UIViewController+Constant.swift in Sources */,
 				040685022A01539800377094 /* SceneDelegate.swift in Sources */,
 				C4D16FC92A1B9338008B076F /* UIFont+Extension.swift in Sources */,
+				41A9BEB02A4AF45300F3605C /* ReportModalViewModel.swift in Sources */,
 				04FB1F322A021C330064B3C8 /* TestError.swift in Sources */,
 				188D2C772A1BA74E0088F49C /* LocationManager.swift in Sources */,
 				4143452E2A373550003FEE2A /* AddressManager.swift in Sources */,
