@@ -12,13 +12,17 @@ import RxSwift
 protocol CommunityModel {
     func likeUp(itemID: Int) -> Single<Int>
     func likeDown(itemID: Int) -> Single<Int>
+    func claimComment(itemID: Int, reason: String) -> Single<Int>
 }
 
 final class DefaultCommunityModel: CommunityModel {
     private let likeMusicRepository: LikeMusicRepository
+    private let claimCommentRepository: ClaimCommentRepository
 
-    init(likeMusicRepository: LikeMusicRepository = DefaultLikeMusicRepository()) {
+    init(likeMusicRepository: LikeMusicRepository = DefaultLikeMusicRepository(),
+         claimCommentRepository: ClaimCommentRepository = DefaultClaimCommentRepository()) {
         self.likeMusicRepository = likeMusicRepository
+        self.claimCommentRepository = claimCommentRepository
     }
 }
 
@@ -29,5 +33,9 @@ extension DefaultCommunityModel {
 
     func likeDown(itemID: Int) -> Single<Int> {
         return likeMusicRepository.likeDown(itemID: itemID)
+    }
+
+    func claimComment(itemID: Int, reason: String) -> Single<Int> {
+        return claimCommentRepository.claimComment(itemID: itemID, reason: reason)
     }
 }
