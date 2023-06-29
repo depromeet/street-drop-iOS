@@ -25,3 +25,25 @@ struct MusicWithinAreaEntity {
 }
 
 typealias Musics = [MusicWithinAreaEntity]
+
+extension MusicWithinAreaEntity {
+    static func generateEmptyData() -> Self {
+        let empty: String = ""
+        return MusicWithinAreaEntity(
+            id: 0,
+            userId: 0,
+            userName: empty,
+            userProfileImageURL: empty,
+            musicApp: empty,
+            address: empty,
+            musicTitle: empty,
+            artist: empty,
+            albumImageURL: empty,
+            genre: [],
+            content: empty,
+            createdAt: empty,
+            isLiked: false,
+            likeCount: 0
+        )
+    }
+}
