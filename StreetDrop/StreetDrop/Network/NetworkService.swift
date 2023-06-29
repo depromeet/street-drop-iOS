@@ -18,6 +18,7 @@ enum NetworkService {
     case postLikeUp(itemID: Int)
     case postLikeDown(itemID: Int)
     case getPoi(latitude: Double, longitude: Double, distance: Double)
+    case getVillageName(latitude: Double, longitude: Double)
 }
 
 extension NetworkService: TargetType {
@@ -55,6 +56,8 @@ extension NetworkService: TargetType {
             return "/items/\(itemID)/unlikes"
         case .getPoi:
             return "/items/points"
+        case .getVillageName:
+            return "/geo/reverse-geocode"
         }
     }
     
@@ -64,7 +67,8 @@ extension NetworkService: TargetType {
                 .getMusicCountByDong,
                 .getPoi,
                 .getMusicWithinArea,
-                .getCommunity:
+                .getCommunity,
+                .getVillageName:
             return .get
         case .dropMusic,
                 .postLikeUp,
@@ -112,6 +116,14 @@ extension NetworkService: TargetType {
                 parameters: ["latitude": lat,
                              "longitude": lon,
                              "distance": distance],
+                encoding: URLEncoding.queryString
+            )
+        case .getVillageName(let latitude, let longitude):
+            return .requestParameters(
+                parameters: [
+                    "latitude": String(latitude),
+                    "longitude": String(longitude)
+                ],
                 encoding: URLEncoding.queryString
             )
         }
