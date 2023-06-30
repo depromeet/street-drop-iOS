@@ -18,6 +18,12 @@ struct NetworkManager {
     init(provider: MoyaProvider<NetworkService> = MoyaProvider()) {
         self.provider = provider
     }
+
+    func getMyInfo() -> Single<Data> {
+        return provider.rx.request(.getMyInfo)
+            .retry(3)
+            .map { $0.data }
+    }
     
     func searchMusic(keyword: String) -> Single<Data> {
         return provider.rx.request(.searchMusic(keyword: keyword))
@@ -74,6 +80,17 @@ struct NetworkManager {
         return provider.rx.request(.claimComment(requestDTO: requestDTO))
             .retry(3)
             .map { $0.statusCode }
+    }
 
+    func reviseComment(itemID: Int, requestDTO: ReviseCommentRequestDTO) -> Single<Int> {
+        return provider.rx.request(.reviseComment(itemID: itemID, requestDTO: requestDTO))
+            .retry(3)
+            .map { $0.statusCode }
+    }
+
+    func deleteMusic(itemID: Int) -> Single<Int> {
+        return provider.rx.request(.deleteMusic(itemID: itemID))
+            .retry(3)
+            .map { $0.statusCode }
     }
 }

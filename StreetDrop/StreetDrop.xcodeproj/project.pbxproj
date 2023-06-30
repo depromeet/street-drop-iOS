@@ -50,6 +50,15 @@
 		41008EBA2A49B56F00FD4ABE /* ClaimModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41008EB92A49B56E00FD4ABE /* ClaimModalViewController.swift */; };
 		412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412D66892A1E14B600BA4A1B /* CommunityViewController.swift */; };
 		412D668C2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412D668B2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift */; };
+		41396D822A4EF65B00B69341 /* ReviseCommentRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D812A4EF65B00B69341 /* ReviseCommentRequestDTO.swift */; };
+		41396D872A4EFA2900B69341 /* MyInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D862A4EFA2900B69341 /* MyInfoResponseDTO.swift */; };
+		41396D892A4EFB1300B69341 /* MyInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D882A4EFB1300B69341 /* MyInfoRepository.swift */; };
+		41396D8B2A4EFB2500B69341 /* ReviseCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8A2A4EFB2500B69341 /* ReviseCommentRepository.swift */; };
+		41396D8D2A4EFB3300B69341 /* DeleteMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */; };
+		41396D8F2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */; };
+		41396D912A4EFBF700B69341 /* DefaultReviseCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D902A4EFBF700B69341 /* DefaultReviseCommentRepository.swift */; };
+		41396D932A4EFC0400B69341 /* DefaultMyInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D922A4EFC0400B69341 /* DefaultMyInfoRepository.swift */; };
+		41396D952A4EFF7B00B69341 /* MyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D942A4EFF7B00B69341 /* MyInfo.swift */; };
 		413ABEE82A39BBA500EA1010 /* Toastable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEE72A39BBA500EA1010 /* Toastable.swift */; };
 		413ABEEC2A39D1E900EA1010 /* UIcolor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEEB2A39D1E900EA1010 /* UIcolor+.swift */; };
 		4141398F2A1FA252005418A1 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4141398E2A1FA252005418A1 /* PaddingLabel.swift */; };
@@ -192,6 +201,15 @@
 		41008EB92A49B56E00FD4ABE /* ClaimModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimModalViewController.swift; sourceTree = "<group>"; };
 		412D66892A1E14B600BA4A1B /* CommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewController.swift; sourceTree = "<group>"; };
 		412D668B2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
+		41396D812A4EF65B00B69341 /* ReviseCommentRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviseCommentRequestDTO.swift; sourceTree = "<group>"; };
+		41396D862A4EFA2900B69341 /* MyInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoResponseDTO.swift; sourceTree = "<group>"; };
+		41396D882A4EFB1300B69341 /* MyInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoRepository.swift; sourceTree = "<group>"; };
+		41396D8A2A4EFB2500B69341 /* ReviseCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviseCommentRepository.swift; sourceTree = "<group>"; };
+		41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMusicRepository.swift; sourceTree = "<group>"; };
+		41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDeleteMusicRepository.swift; sourceTree = "<group>"; };
+		41396D902A4EFBF700B69341 /* DefaultReviseCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReviseCommentRepository.swift; sourceTree = "<group>"; };
+		41396D922A4EFC0400B69341 /* DefaultMyInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyInfoRepository.swift; sourceTree = "<group>"; };
+		41396D942A4EFF7B00B69341 /* MyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfo.swift; sourceTree = "<group>"; };
 		413ABEE72A39BBA500EA1010 /* Toastable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toastable.swift; sourceTree = "<group>"; };
 		413ABEEB2A39D1E900EA1010 /* UIcolor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIcolor+.swift"; sourceTree = "<group>"; };
 		4141398E2A1FA252005418A1 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -362,6 +380,9 @@
 				41F23B4A2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift */,
 				414345242A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift */,
 				41A9BEBA2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift */,
+				41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */,
+				41396D902A4EFBF700B69341 /* DefaultReviseCommentRepository.swift */,
+				41396D922A4EFC0400B69341 /* DefaultMyInfoRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -458,6 +479,9 @@
 				41F23B4D2A1B6EE80083D2EC /* DropMusicRepository.swift */,
 				414345222A35B9A3003FEE2A /* LikeMusicRepository.swift */,
 				41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */,
+				41396D882A4EFB1300B69341 /* MyInfoRepository.swift */,
+				41396D8A2A4EFB2500B69341 /* ReviseCommentRepository.swift */,
+				41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -474,6 +498,7 @@
 		1824F1352A349DFC00A10320 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				41396D942A4EFF7B00B69341 /* MyInfo.swift */,
 				18683FE02A349109005A94AC /* PoiEntity.swift */,
 				1824F1362A349F3700A10320 /* MusicCountEntity.swift */,
 				18CB7BEC2A359F53002B31FB /* MusicWithinAreaEntity.swift */,
@@ -533,6 +558,8 @@
 		18F76FAE2A050110006CF9EF /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				41396D852A4EFA0400B69341 /* MyInfo */,
+				41396D802A4EF64700B69341 /* Comment */,
 				41A9BEB52A4DC6B200F3605C /* ClaimComment */,
 				049F50242A122C8F001528CB /* DropMusic */,
 				41E008CC2A14427300F5D99C /* Poi */,
@@ -563,6 +590,22 @@
 				41008EB92A49B56E00FD4ABE /* ClaimModalViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		41396D802A4EF64700B69341 /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				41396D812A4EF65B00B69341 /* ReviseCommentRequestDTO.swift */,
+			);
+			path = Comment;
+			sourceTree = "<group>";
+		};
+		41396D852A4EFA0400B69341 /* MyInfo */ = {
+			isa = PBXGroup;
+			children = (
+				41396D862A4EFA2900B69341 /* MyInfoResponseDTO.swift */,
+			);
+			path = MyInfo;
 			sourceTree = "<group>";
 		};
 		414139902A20504E005418A1 /* ViewModel */ = {
@@ -1070,15 +1113,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				18AAF83E2A137349002EF441 /* CommunityResponseDTO.swift in Sources */,
+				41396D952A4EFF7B00B69341 /* MyInfo.swift in Sources */,
 				4141399A2A20D04B005418A1 /* Color.swift in Sources */,
 				188F90C72A39FD7D003A1B4A /* UIImage+cornerRadius.swift in Sources */,
 				C41BD2EC2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */,
 				C47F022A2A3869DC00F48884 /* MyPageInfo.swift in Sources */,
 				41589ABA2A474B3D0029A2EE /* CommunityGuideDetailView.swift in Sources */,
+				41396D892A4EFB1300B69341 /* MyInfoRepository.swift in Sources */,
 				414345282A35BA3C003FEE2A /* CommunityModel.swift in Sources */,
 				41F23B4E2A1B6EE80083D2EC /* DropMusicRepository.swift in Sources */,
 				18683FE12A349109005A94AC /* PoiEntity.swift in Sources */,
 				41D097512A191D6700C011A0 /* MusicDropViewModel.swift in Sources */,
+				41396D872A4EFA2900B69341 /* MyInfoResponseDTO.swift in Sources */,
 				412D668C2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift in Sources */,
 				18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */,
 				C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */,
@@ -1093,6 +1139,8 @@
 				414345232A35B9A3003FEE2A /* LikeMusicRepository.swift in Sources */,
 				040685042A01539800377094 /* MainViewController.swift in Sources */,
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
+				41396D8F2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift in Sources */,
+				41396D822A4EF65B00B69341 /* ReviseCommentRequestDTO.swift in Sources */,
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
 				C47F02242A38633C00F48884 /* MyPageViewModel.swift in Sources */,
 				C40008EA2A32012B00EA7FA9 /* Music.swift in Sources */,
@@ -1105,8 +1153,10 @@
 				C45BF3A12A1D133000CEDE74 /* RecentMusicQueryDTO.swift in Sources */,
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
 				18CB7BED2A359F53002B31FB /* MusicWithinAreaEntity.swift in Sources */,
+				41396D912A4EFBF700B69341 /* DefaultReviseCommentRepository.swift in Sources */,
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
 				C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */,
+				41396D8B2A4EFB2500B69341 /* ReviseCommentRepository.swift in Sources */,
 				414345212A35B92A003FEE2A /* ResponseSampleData.swift in Sources */,
 				41589AB82A46D82F0029A2EE /* DropAnimationView.swift in Sources */,
 				18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */,
@@ -1141,11 +1191,13 @@
 				18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */,
 				41D097532A19BE6C00C011A0 /* DroppingInfo.swift in Sources */,
 				412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */,
+				41396D8D2A4EFB3300B69341 /* DeleteMusicRepository.swift in Sources */,
 				41E008CE2A1442A000F5D99C /* PoiResponseDTO+Mapping.swift in Sources */,
 				41008EB82A48891000FD4ABE /* UITextView+setLineSpacing.swift in Sources */,
 				C434A4CC2A1796F300C63526 /* SearchingMusicViewModel.swift in Sources */,
 				41F23B4B2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift in Sources */,
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO+Mapping.swift in Sources */,
+				41396D932A4EFC0400B69341 /* DefaultMyInfoRepository.swift in Sources */,
 				C434A4CA2A1796E400C63526 /* SearchingMusicViewController.swift in Sources */,
 				C45BF3AA2A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift in Sources */,
 				188D2C7B2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift in Sources */,

@@ -10,6 +10,7 @@ import UIKit
 import Moya
 
 enum NetworkService {
+    case getMyInfo
     case searchMusic(keyword: String)
     case dropMusic(requestDTO: DropMusicRequestDTO)
     case getMusicCountByDong(latitude: Double, longitude: Double)
@@ -19,6 +20,8 @@ enum NetworkService {
     case postLikeDown(itemID: Int)
     case getPoi(latitude: Double, longitude: Double, distance: Double)
     case claimComment(requestDTO: ClaimCommentRequestDTO)
+    case reviseComment(itemID: Int, requestDTO: ReviseCommentRequestDTO)
+    case deleteMusic(itemID: Int)
 }
 
 extension NetworkService: TargetType {
@@ -40,6 +43,8 @@ extension NetworkService: TargetType {
     
     var path: String {
         switch self {
+        case .getMyInfo:
+            return "users/me"
         case .getMusicWithinArea:
             return "/items"
         case .getCommunity:
@@ -58,12 +63,17 @@ extension NetworkService: TargetType {
             return "/items/points"
         case .claimComment:
             return "/items/claim"
+        case .reviseComment(let itemID, _):
+            return "/items/\(itemID)"
+        case .deleteMusic(let itemID):
+            return "/items/\(itemID)"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .searchMusic,
+        case .getMyInfo,
+                .searchMusic,
                 .getMusicCountByDong,
                 .getPoi,
                 .getMusicWithinArea,
@@ -74,11 +84,17 @@ extension NetworkService: TargetType {
                 .postLikeDown,
                 .claimComment:
             return .post
+        case .reviseComment:
+            return .patch
+        case .deleteMusic:
+            return .delete
         }
     }
     
     var task: Moya.Task {
         switch self {
+        case .getMyInfo:
+            return .requestPlain
         case .searchMusic(let keyword):
             return .requestParameters(
                 parameters: ["keyword": keyword],
@@ -120,6 +136,13 @@ extension NetworkService: TargetType {
             )
         case .claimComment(let claimCommentRequestDTO):
             return .requestJSONEncodable(claimCommentRequestDTO)
+        case .reviseComment(_, let reviseCommentRequestDTO):
+            return .requestJSONEncodable(reviseCommentRequestDTO)
+        case .deleteMusic(let itemID):
+            return .requestParameters(
+                parameters: ["itemId": itemID],
+                encoding: URLEncoding.queryString
+            )
         }
     }
     
