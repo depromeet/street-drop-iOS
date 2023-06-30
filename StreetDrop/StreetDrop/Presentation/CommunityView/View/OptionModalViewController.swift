@@ -58,6 +58,54 @@ final class OptionModalViewController: UIViewController {
         icon: UIImage(named: "deleteIcon"),
         title: Constant.deleteTitle
     )
+
+    //MARK: - Life Cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        configureUI()
+    }
+}
+
+private extension OptionModalViewController {
+    // MARK: - UI
+
+    func configureUI() {
+        let defaultHeigh: CGFloat = 176
+        [reviseView, dividingLineView, deleteView].forEach {
+            optionStackView.addArrangedSubview($0)
+        }
+
+        containerView.addSubview(optionStackView)
+
+        [dimmedView, containerView].forEach {
+            view.addSubview($0)
+        }
+
+        dimmedView.snp.makeConstraints {
+            $0.leading.top.trailing.bottom.equalToSuperview()
+        }
+
+        containerView.snp.makeConstraints {
+            $0.leading.bottom.trailing.equalToSuperview()
+            $0.height.equalTo(defaultHeigh)
+        }
+
+        optionStackView.snp.makeConstraints {
+            $0.leading.top.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
+        }
+
+        dividingLineView.snp.makeConstraints {
+            $0.height.equalTo(2)
+            $0.leading.trailing.equalToSuperview()
+        }
+
+        reviseView.snp.makeConstraints {
+            $0.height.equalTo(deleteView.snp.height)
+        }
+    }
 }
 
 //MARK: - Private
