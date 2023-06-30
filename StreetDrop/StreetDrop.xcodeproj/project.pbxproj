@@ -52,12 +52,10 @@
 		412D668C2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412D668B2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift */; };
 		41396D822A4EF65B00B69341 /* ReviseCommentRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D812A4EF65B00B69341 /* ReviseCommentRequestDTO.swift */; };
 		41396D872A4EFA2900B69341 /* MyInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D862A4EFA2900B69341 /* MyInfoResponseDTO.swift */; };
-		41396D892A4EFB1300B69341 /* MyInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D882A4EFB1300B69341 /* MyInfoRepository.swift */; };
 		41396D8B2A4EFB2500B69341 /* ReviseCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8A2A4EFB2500B69341 /* ReviseCommentRepository.swift */; };
 		41396D8D2A4EFB3300B69341 /* DeleteMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */; };
 		41396D8F2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */; };
 		41396D912A4EFBF700B69341 /* DefaultReviseCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D902A4EFBF700B69341 /* DefaultReviseCommentRepository.swift */; };
-		41396D932A4EFC0400B69341 /* DefaultMyInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D922A4EFC0400B69341 /* DefaultMyInfoRepository.swift */; };
 		41396D952A4EFF7B00B69341 /* MyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D942A4EFF7B00B69341 /* MyInfo.swift */; };
 		41396D972A4F04CB00B69341 /* MyInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D962A4F04CB00B69341 /* MyInfoStorage.swift */; };
 		41396D992A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D982A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift */; };
@@ -205,12 +203,10 @@
 		412D668B2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		41396D812A4EF65B00B69341 /* ReviseCommentRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviseCommentRequestDTO.swift; sourceTree = "<group>"; };
 		41396D862A4EFA2900B69341 /* MyInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoResponseDTO.swift; sourceTree = "<group>"; };
-		41396D882A4EFB1300B69341 /* MyInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoRepository.swift; sourceTree = "<group>"; };
 		41396D8A2A4EFB2500B69341 /* ReviseCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviseCommentRepository.swift; sourceTree = "<group>"; };
 		41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMusicRepository.swift; sourceTree = "<group>"; };
 		41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDeleteMusicRepository.swift; sourceTree = "<group>"; };
 		41396D902A4EFBF700B69341 /* DefaultReviseCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReviseCommentRepository.swift; sourceTree = "<group>"; };
-		41396D922A4EFC0400B69341 /* DefaultMyInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyInfoRepository.swift; sourceTree = "<group>"; };
 		41396D942A4EFF7B00B69341 /* MyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfo.swift; sourceTree = "<group>"; };
 		41396D962A4F04CB00B69341 /* MyInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoStorage.swift; sourceTree = "<group>"; };
 		41396D982A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsMyInfoStorage.swift; sourceTree = "<group>"; };
@@ -386,7 +382,6 @@
 				41A9BEBA2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift */,
 				41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */,
 				41396D902A4EFBF700B69341 /* DefaultReviseCommentRepository.swift */,
-				41396D922A4EFC0400B69341 /* DefaultMyInfoRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -483,7 +478,6 @@
 				41F23B4D2A1B6EE80083D2EC /* DropMusicRepository.swift */,
 				414345222A35B9A3003FEE2A /* LikeMusicRepository.swift */,
 				41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */,
-				41396D882A4EFB1300B69341 /* MyInfoRepository.swift */,
 				41396D8A2A4EFB2500B69341 /* ReviseCommentRepository.swift */,
 				41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */,
 			);
@@ -1125,7 +1119,6 @@
 				C41BD2EC2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */,
 				C47F022A2A3869DC00F48884 /* MyPageInfo.swift in Sources */,
 				41589ABA2A474B3D0029A2EE /* CommunityGuideDetailView.swift in Sources */,
-				41396D892A4EFB1300B69341 /* MyInfoRepository.swift in Sources */,
 				414345282A35BA3C003FEE2A /* CommunityModel.swift in Sources */,
 				41F23B4E2A1B6EE80083D2EC /* DropMusicRepository.swift in Sources */,
 				18683FE12A349109005A94AC /* PoiEntity.swift in Sources */,
@@ -1205,7 +1198,6 @@
 				C434A4CC2A1796F300C63526 /* SearchingMusicViewModel.swift in Sources */,
 				41F23B4B2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift in Sources */,
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO+Mapping.swift in Sources */,
-				41396D932A4EFC0400B69341 /* DefaultMyInfoRepository.swift in Sources */,
 				C434A4CA2A1796E400C63526 /* SearchingMusicViewController.swift in Sources */,
 				C45BF3AA2A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift in Sources */,
 				188D2C7B2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift in Sources */,

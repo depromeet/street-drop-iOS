@@ -74,6 +74,8 @@ extension MainViewModel {
                     disposedBag: disposedBag
                 )
                 output.cameraShouldGoCurrentLocation.accept(self.location)
+                self.fetchMusicWithArea(output: output, disposedBag: disposedBag)
+                self.fetchMyInfoAndSave(disposedBag: disposedBag)
             }
             .disposed(by: disposedBag)
             
@@ -146,6 +148,14 @@ extension MainViewModel {
 }
 
 private extension MainViewModel {
+    func fetchMyInfoAndSave(disposedBag: DisposeBag) {
+        self.model.fetchMyInfo()
+            .subscribe { [weak self] myInfo in
+                self?.model.saveMyInfo(myInfo)
+            }
+            .disposed(by: disposedBag)
+    }
+
     func fetchMusicWithArea(output: Output, disposedBag: DisposeBag) {
         self.model.fetchMusicWithinArea(
             lat: self.location.coordinate.latitude,
