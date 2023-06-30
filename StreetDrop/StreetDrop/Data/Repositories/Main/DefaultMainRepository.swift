@@ -18,6 +18,14 @@ final class DefaultMainRepository: MainRepository {
 }
 
 extension DefaultMainRepository {
+    func fetchMyInfo() -> Single<MyInfo> {
+        return networkManager.getMyInfo()
+            .map({ data in
+                let dto = try JSONDecoder().decode(MyInfoResponseDTO.self, from: data)
+                return dto.toEntity()
+            })
+    }
+    
     func fetchPoi(lat: Double, lon: Double, distacne: Double) -> Single<Pois> {
         networkManager.getPoi(latitude: lat, longitude: lon, distance: distacne)
             .map({ data in
