@@ -21,7 +21,7 @@ final class OptionModalViewController: UIViewController {
     private lazy var dimmedView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
-        view.alpha = 0.25
+        view.alpha = 0
 
         return view
     }()
@@ -64,11 +64,33 @@ final class OptionModalViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        bindAction()
         configureUI()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        //나타날때 모달 뒤 화면 뿌옇게
+        UIView.animate(withDuration: 0.4) {
+            self.dimmedView.alpha = 0.25
+        }
     }
 }
 
 private extension OptionModalViewController {
+
+    // MARK: - Action Binding
+
+    func bindAction() {
+        let tapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismiss(_:))
+        )
+        dimmedView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+
     // MARK: - UI
 
     func configureUI() {
@@ -137,5 +159,12 @@ private extension OptionModalViewController {
         }
 
         return view
+    }
+
+    @objc func dismiss(_ sender: UITapGestureRecognizer) {
+        UIView.animate(withDuration: 0.1) {
+            self.dimmedView.alpha = 0
+        }
+        self.dismiss(animated: true)
     }
 }
