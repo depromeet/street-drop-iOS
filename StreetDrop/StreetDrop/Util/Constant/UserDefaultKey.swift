@@ -7,4 +7,5 @@
 
 enum UserDefaultKey {
     static let recentsMusicSearchesKey = "recentsMusicSearches"
+    static let myUserInfo = "myUserInfo"
 }

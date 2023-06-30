@@ -59,6 +59,8 @@
 		41396D912A4EFBF700B69341 /* DefaultReviseCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D902A4EFBF700B69341 /* DefaultReviseCommentRepository.swift */; };
 		41396D932A4EFC0400B69341 /* DefaultMyInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D922A4EFC0400B69341 /* DefaultMyInfoRepository.swift */; };
 		41396D952A4EFF7B00B69341 /* MyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D942A4EFF7B00B69341 /* MyInfo.swift */; };
+		41396D972A4F04CB00B69341 /* MyInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D962A4F04CB00B69341 /* MyInfoStorage.swift */; };
+		41396D992A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D982A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift */; };
 		413ABEE82A39BBA500EA1010 /* Toastable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEE72A39BBA500EA1010 /* Toastable.swift */; };
 		413ABEEC2A39D1E900EA1010 /* UIcolor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEEB2A39D1E900EA1010 /* UIcolor+.swift */; };
 		4141398F2A1FA252005418A1 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4141398E2A1FA252005418A1 /* PaddingLabel.swift */; };
@@ -210,6 +212,8 @@
 		41396D902A4EFBF700B69341 /* DefaultReviseCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReviseCommentRepository.swift; sourceTree = "<group>"; };
 		41396D922A4EFC0400B69341 /* DefaultMyInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyInfoRepository.swift; sourceTree = "<group>"; };
 		41396D942A4EFF7B00B69341 /* MyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfo.swift; sourceTree = "<group>"; };
+		41396D962A4F04CB00B69341 /* MyInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoStorage.swift; sourceTree = "<group>"; };
+		41396D982A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsMyInfoStorage.swift; sourceTree = "<group>"; };
 		413ABEE72A39BBA500EA1010 /* Toastable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toastable.swift; sourceTree = "<group>"; };
 		413ABEEB2A39D1E900EA1010 /* UIcolor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIcolor+.swift"; sourceTree = "<group>"; };
 		4141398E2A1FA252005418A1 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -842,6 +846,7 @@
 			isa = PBXGroup;
 			children = (
 				C45BF3A22A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift */,
+				41396D962A4F04CB00B69341 /* MyInfoStorage.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -850,6 +855,7 @@
 			isa = PBXGroup;
 			children = (
 				C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */,
+				41396D982A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift */,
 			);
 			path = RecentMusicSearch;
 			sourceTree = "<group>";
@@ -1185,6 +1191,8 @@
 				41A9BEB92A4DCA4A00F3605C /* ClaimCommentRepository.swift in Sources */,
 				C45BF3A32A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */,
 				041038972A126E7B00BC5532 /* MusicCountByDongResponseDTO+Mapping.swift in Sources */,
+				41396D992A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift in Sources */,
+				41396D972A4F04CB00B69341 /* MyInfoStorage.swift in Sources */,
 				1824F1372A349F3700A10320 /* MusicCountEntity.swift in Sources */,
 				4141398F2A1FA252005418A1 /* PaddingLabel.swift in Sources */,
 				4143450B2A34603B003FEE2A /* MusicDropModel.swift in Sources */,
