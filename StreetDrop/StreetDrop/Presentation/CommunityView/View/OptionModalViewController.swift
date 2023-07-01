@@ -8,6 +8,8 @@
 import UIKit
 
 import SnapKit
+import RxSwift
+import RxRelay
 
 final class OptionModalViewController: UIViewController {
 
@@ -15,6 +17,9 @@ final class OptionModalViewController: UIViewController {
         static let reviseTitle: String = "수정하기"
         static let deleteTitle: String = "삭제하기"
     }
+
+    private let viewModel: OptionModalViewModel
+    private let disposeBag = DisposeBag()
 
     //MARK: - UI
 
@@ -61,10 +66,21 @@ final class OptionModalViewController: UIViewController {
 
     //MARK: - Life Cycle
 
+    init(viewModel: OptionModalViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         bindAction()
+        bindViewModel()
         configureUI()
     }
 
@@ -90,6 +106,32 @@ private extension OptionModalViewController {
         dimmedView.addGestureRecognizer(tapGestureRecognizer)
     }
 
+    // MARK: - Data Binding
+
+    func bindViewModel() {
+        let input = OptionModalViewModel.Input(
+            tapReviseOption: reviseButton.rx.tap.asObservable(),
+            tapDeleteOption: deleteButton.rx.tap.asObservable()
+        )
+
+        let output = viewModel.convert(input: input, disposedBag: disposeBag)
+
+        output.musicIndex
+            .asDriver(onErrorJustReturn: 0)
+            .drive(onNext: { [weak self] musicIndex in
+                guard let self = self else { return }
+                // ToDo - 수정화면 띄우기
+                self.dismiss()
+            }).disposed(by: disposeBag)
+
+        output.deleteStatusResults
+            .asDriver(onErrorJustReturn: (isSuccess: false, toastTitle: "알수 없는 오류입니다."))
+            .drive(onNext: { [weak self] (status: (isSuccess: Bool, toastTitle: String)) in
+                guard let self = self else { return }
+                // ToDo - delegate로 토스트 띄우기
+                self.dismiss()
+            }).disposed(by: disposeBag)
+    }
 
     // MARK: - UI
 
@@ -150,7 +192,7 @@ private extension OptionModalViewController {
         return button
     }
 
-    @objc func dismiss(_ sender: UITapGestureRecognizer) {
+    @objc func dismiss(_ sender: UITapGestureRecognizer? = nil) {
         UIView.animate(withDuration: 0.1) {
             self.dimmedView.alpha = 0
         }
