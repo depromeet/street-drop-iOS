@@ -60,6 +60,7 @@
 		41396D972A4F04CB00B69341 /* MyInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D962A4F04CB00B69341 /* MyInfoStorage.swift */; };
 		41396D992A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D982A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift */; };
 		41396D9B2A4F1C5600B69341 /* OptionModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D9A2A4F1C5600B69341 /* OptionModalViewController.swift */; };
+		41396D9D2A4F329200B69341 /* OptionModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D9C2A4F329200B69341 /* OptionModalViewModel.swift */; };
 		413ABEE82A39BBA500EA1010 /* Toastable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEE72A39BBA500EA1010 /* Toastable.swift */; };
 		413ABEEC2A39D1E900EA1010 /* UIcolor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEEB2A39D1E900EA1010 /* UIcolor+.swift */; };
 		4141398F2A1FA252005418A1 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4141398E2A1FA252005418A1 /* PaddingLabel.swift */; };
@@ -212,6 +213,7 @@
 		41396D962A4F04CB00B69341 /* MyInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoStorage.swift; sourceTree = "<group>"; };
 		41396D982A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsMyInfoStorage.swift; sourceTree = "<group>"; };
 		41396D9A2A4F1C5600B69341 /* OptionModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionModalViewController.swift; sourceTree = "<group>"; };
+		41396D9C2A4F329200B69341 /* OptionModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionModalViewModel.swift; sourceTree = "<group>"; };
 		413ABEE72A39BBA500EA1010 /* Toastable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toastable.swift; sourceTree = "<group>"; };
 		413ABEEB2A39D1E900EA1010 /* UIcolor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIcolor+.swift"; sourceTree = "<group>"; };
 		4141398E2A1FA252005418A1 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 			children = (
 				414139912A20506D005418A1 /* CommunityViewModel.swift */,
 				41A9BEAF2A4AF45300F3605C /* ClaimModalViewModel.swift */,
+				41396D9C2A4F329200B69341 /* OptionModalViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1199,6 +1202,7 @@
 				41E008CE2A1442A000F5D99C /* PoiResponseDTO+Mapping.swift in Sources */,
 				41008EB82A48891000FD4ABE /* UITextView+setLineSpacing.swift in Sources */,
 				C434A4CC2A1796F300C63526 /* SearchingMusicViewModel.swift in Sources */,
+				41396D9D2A4F329200B69341 /* OptionModalViewModel.swift in Sources */,
 				41F23B4B2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift in Sources */,
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO+Mapping.swift in Sources */,
 				C434A4CA2A1796E400C63526 /* SearchingMusicViewController.swift in Sources */,
