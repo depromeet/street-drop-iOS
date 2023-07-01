@@ -49,12 +49,12 @@ final class OptionModalViewController: UIViewController {
         return view
     }()
 
-    private lazy var reviseView: UIView = generateOptionView(
+    private lazy var reviseButton: UIButton = generateOptionButton(
         icon: UIImage(named: "reviseIcon"),
         title: Constant.reviseTitle
     )
 
-    private lazy var deleteView: UIView = generateOptionView(
+    private lazy var deleteButton: UIButton = generateOptionButton(
         icon: UIImage(named: "deleteIcon"),
         title: Constant.deleteTitle
     )
@@ -95,7 +95,7 @@ private extension OptionModalViewController {
 
     func configureUI() {
         let defaultHeigh: CGFloat = 176
-        [reviseView, dividingLineView, deleteView].forEach {
+        [reviseButton, dividingLineView, deleteButton].forEach {
             optionStackView.addArrangedSubview($0)
         }
 
@@ -124,41 +124,30 @@ private extension OptionModalViewController {
             $0.leading.trailing.equalToSuperview()
         }
 
-        reviseView.snp.makeConstraints {
-            $0.height.equalTo(deleteView.snp.height)
+        reviseButton.snp.makeConstraints {
+            $0.height.equalTo(deleteButton.snp.height)
         }
     }
 }
 
 //MARK: - Private
 private extension OptionModalViewController {
-    func generateOptionView(icon: UIImage?, title: String) -> UIView {
+    func generateOptionButton(icon: UIImage?, title: String) -> UIButton {
         //ui
-        let view = UIView()
-        let iconView = UIImageView(image: icon)
+        let button = UIButton()
+        button.setImage(icon, for: .normal)
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(.gray100, for: .normal)
+        button.titleLabel?.font = .pretendard(size: 16, weightName: .medium)
 
-        let label = UILabel()
-        label.textColor = .gray100
-        label.text = title
-        label.font = .pretendard(size: 16, weightName: .medium)
-
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 4
-
-        // configure Layout
-        [iconView, label].forEach { stackView.addArrangedSubview($0) }
-        view.addSubview(stackView)
-
-        iconView.snp.makeConstraints {
-            $0.width.height.equalTo(20)
+        if let titleLabel = button.titleLabel {
+            button.imageView?.snp.makeConstraints {
+                $0.width.height.equalTo(20)
+                $0.trailing.equalTo(titleLabel.snp.leading).offset(-4)
+            }
         }
 
-        stackView.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-        }
-
-        return view
+        return button
     }
 
     @objc func dismiss(_ sender: UITapGestureRecognizer) {
