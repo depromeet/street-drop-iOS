@@ -10,6 +10,9 @@ import Foundation
 import RxSwift
 import RxRelay
 
+protocol OptionModalViewModelDelegate {
+    func deleteMusic(_ isSuccess: Bool, toastTitle: String, musicIndex: Int)
+}
 
 final class OptionModalViewModel {
     struct Input {
@@ -18,13 +21,13 @@ final class OptionModalViewModel {
     }
 
     struct Output {
-        var musicIndex: PublishRelay<Int> = .init()
-        var deleteStatusResults: PublishRelay<(isSuccess: Bool, toastTitle: String)> = .init()
+        // 없음
     }
 
     private let itemID: Int
     private let musicIndex: Int
     private let communityModel: CommunityModel
+    var delegate: OptionModalViewModelDelegate?
 
     init(itemID: Int,
          musicIndex: Int,
@@ -42,7 +45,7 @@ final class OptionModalViewModel {
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
 
-                output.musicIndex.accept(self.musicIndex)
+                // 수정 액션
             }).disposed(by: disposedBag)
 
         input.tapDeleteOption
@@ -52,24 +55,25 @@ final class OptionModalViewModel {
                 self.communityModel.deleteMusic(itemID: self.itemID)
                     .subscribe(onSuccess: { response in
                         if (200...299).contains(response) {
-                            // ✅ TODO: 토스트 문구 변경하기
-                            print("\(response), 삭제완료 토스트 문구")
-                            output.deleteStatusResults.accept(
-                                (isSuccess: true, toastTitle: "삭제완료 토스트 문구")
-                            )
+                            self.deleteMusic(isSuccess: true)
                         } else {
-                            output.deleteStatusResults.accept(
-                                (isSuccess: false, toastTitle: "네트워크 확인 토스트 문구")
-                            )
+                            self.deleteMusic(isSuccess: false)
                         }
                     }, onFailure: { error in
-                        output.deleteStatusResults.accept(
-                            (isSuccess: false, toastTitle: "네트워크 확인 토스트 문구")
-                        )
+                        self.deleteMusic(isSuccess: false)
                         print(error.localizedDescription)
                     }).disposed(by: disposedBag)
             }).disposed(by: disposedBag)
 
         return output
+    }
+}
+
+//MARK: - Private
+private extension OptionModalViewModel {
+    func deleteMusic(isSuccess: Bool) {
+        // ✅ TODO: 토스트 문구 변경하기
+        let toastTitle: String = isSuccess ? "삭제완료 토스트 문구" : "네트워크 확인 토스트 문구"
+        delegate?.deleteMusic(isSuccess, toastTitle: toastTitle, musicIndex: self.musicIndex)
     }
 }
