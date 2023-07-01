@@ -104,6 +104,16 @@ private extension OptionModalViewController {
             action: #selector(dismiss(_:))
         )
         dimmedView.addGestureRecognizer(tapGestureRecognizer)
+
+        reviseButton.rx.tap
+            .bind(onNext: { [weak self] in
+                self?.dismiss()
+            }).disposed(by: disposeBag)
+
+        deleteButton.rx.tap
+            .bind(onNext: {[weak self] in
+                self?.dismiss()
+            }).disposed(by: disposeBag)
     }
 
     // MARK: - Data Binding
@@ -115,22 +125,6 @@ private extension OptionModalViewController {
         )
 
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
-
-        output.musicIndex
-            .asDriver(onErrorJustReturn: 0)
-            .drive(onNext: { [weak self] musicIndex in
-                guard let self = self else { return }
-                // ToDo - 수정화면 띄우기
-                self.dismiss()
-            }).disposed(by: disposeBag)
-
-        output.deleteStatusResults
-            .asDriver(onErrorJustReturn: (isSuccess: false, toastTitle: "알수 없는 오류입니다."))
-            .drive(onNext: { [weak self] (status: (isSuccess: Bool, toastTitle: String)) in
-                guard let self = self else { return }
-                // ToDo - delegate로 토스트 띄우기
-                self.dismiss()
-            }).disposed(by: disposeBag)
     }
 
     // MARK: - UI
