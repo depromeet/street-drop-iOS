@@ -626,13 +626,16 @@ private extension MusicDropViewController {
     //MARK: - 레이아웃 변경
     func changeLayoutWhenKeyboardShowAndHide(isKeyboardShow: Bool) {
         UIView.animate(withDuration: 0.3) { [weak self] in
-            let albumImageSize: CGFloat = isKeyboardShow ? 84 : 96
-            
-            self?.albumImageView.snp.remakeConstraints {
-                $0.width.height.equalTo(albumImageSize)
+            guard let self = self else { return }
+
+            let albumImageLeadingAndTrailing: CGFloat = isKeyboardShow ? 145 : 140
+
+            self.albumImageView.snp.remakeConstraints {
+                $0.leading.trailing.equalToSuperview().inset(albumImageLeadingAndTrailing)
+                $0.height.equalTo(self.albumImageView.snp.width)
             }
 
-            self?.musicInfoStackView.layoutIfNeeded()
+            self.musicInfoStackView.layoutIfNeeded()
         }
     }
 }
