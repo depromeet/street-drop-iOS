@@ -17,6 +17,7 @@ final class CommunityViewController: UIViewController {
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let changedAlbumCollectionViewIndexEvent = PublishRelay<Int>()
     private let deleteEvent = PublishRelay<Int>()
+    private let editEvent = PublishRelay<(editedComment: String, index: Int)>()
 
     init(viewModel: CommunityViewModel) {
         self.viewModel = viewModel
@@ -318,7 +319,8 @@ private extension CommunityViewController {
             viewDidLoadEvent: self.viewDidLoadEvent.asObservable(),
             changedIndex: self.changedAlbumCollectionViewIndexEvent.asObservable(),
             tapLikeButtonEvent: self.likeButton.rx.tap.asObservable(),
-            deleteEvent: self.deleteEvent.asObservable()
+            deleteEvent: self.deleteEvent.asObservable(),
+            editEvent: self.editEvent.asObservable()
         )
 
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
@@ -716,6 +718,7 @@ extension CommunityViewController: OptionModalViewModelDelegate {
     func editComment(musicIndex: Int) {
         let editInfo = self.viewModel.communityInfos[musicIndex].convertToEditInfo()
         let editViewModel = EditViewModel(editInfo: editInfo, musicIndex: musicIndex)
+        editViewModel.delegate = self
         let editViewController = EditViewController(viewModel: editViewModel)
 
         self.navigationController?.present(editViewController, animated: true)
@@ -730,5 +733,12 @@ extension CommunityViewController: OptionModalViewModelDelegate {
         self.albumCollectionView.performBatchUpdates { [weak self] in
             self?.deleteEvent.accept(musicIndex)
         }
+    }
+}
+
+extension CommunityViewController: EditViewModelDelegate {
+    func editComment(editedComment: String, musicIndex: Int) {
+        self.commentTextView.text = editedComment
+        self.editEvent.accept((editedComment: editedComment, index: musicIndex))
     }
 }

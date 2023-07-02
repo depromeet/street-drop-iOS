@@ -10,8 +10,11 @@ import Foundation
 import RxSwift
 import RxRelay
 
-// 드랍뷰모델 재사용 (상속)
+protocol EditViewModelDelegate {
+    func editComment(editedComment: String, musicIndex: Int)
+}
 
+// 드랍뷰모델 재사용 (상속)
 final class EditViewModel: MusicDropViewModel {
 
     struct Input {
@@ -21,13 +24,17 @@ final class EditViewModel: MusicDropViewModel {
 
     struct Output {
         var comment: PublishRelay<String> = .init()
+        let dismiss: PublishRelay<Void> = .init()
     }
 
     private let editInfo: EditInfo
     private let editModel: EditModel
+    private let musicIndex: Int
+    var delegate: EditViewModelDelegate?
 
-    init (editInfo: EditInfo, editModel: EditModel = EditModel()) {
+    init (editInfo: EditInfo, musicIndex: Int, editModel: EditModel = EditModel()) {
         self.editInfo = editInfo
+        self.musicIndex = musicIndex
         self.editModel = editModel
 
         let droppingInfo = DroppingInfo(
@@ -58,7 +65,8 @@ final class EditViewModel: MusicDropViewModel {
 
         input.tapEditButtonEvent
             .subscribe(onNext: { [weak self] editedComment in
-                guard let self = self else { return }
+                guard let self = self,
+                      self.state == .edit else { return }
 
                 self.editModel.edit(itemId: self.editInfo.id, content: editedComment)
                     .subscribe(onSuccess: { response in
@@ -66,7 +74,13 @@ final class EditViewModel: MusicDropViewModel {
                             //TODO: - 실패 토스트 띄워주기
                             return
                         }
-                        //TODO: - 수정 반영하기
+                        
+                        self.delegate?.editComment(
+                            editedComment: editedComment,
+                            musicIndex: self.musicIndex
+                        )
+
+                        output.dismiss.accept(())
                     }, onFailure: { error in
                         //TODO: - 실패 토스트 띄워주기
                         print(error.localizedDescription)

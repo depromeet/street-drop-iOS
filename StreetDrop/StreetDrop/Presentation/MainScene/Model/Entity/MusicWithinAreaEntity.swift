@@ -18,7 +18,7 @@ struct MusicWithinAreaEntity {
     let artist: String
     let albumImageURL: String
     let genre: [String]
-    let content: String
+    var content: String
     let createdAt: String
     var isLiked: Bool
     var likeCount: Int
