@@ -64,6 +64,7 @@
 		41396DA12A51B0DF00B69341 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396DA02A51B0DF00B69341 /* EditViewController.swift */; };
 		41396DA42A51B61000B69341 /* EditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396DA32A51B61000B69341 /* EditViewModel.swift */; };
 		41396DA92A51B8F700B69341 /* EditInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396DA82A51B8F700B69341 /* EditInfo.swift */; };
+		41396DAB2A51C4D200B69341 /* EditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396DAA2A51C4D200B69341 /* EditModel.swift */; };
 		413ABEE82A39BBA500EA1010 /* Toastable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEE72A39BBA500EA1010 /* Toastable.swift */; };
 		413ABEEC2A39D1E900EA1010 /* UIcolor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEEB2A39D1E900EA1010 /* UIcolor+.swift */; };
 		4141398F2A1FA252005418A1 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4141398E2A1FA252005418A1 /* PaddingLabel.swift */; };
@@ -220,6 +221,7 @@
 		41396DA02A51B0DF00B69341 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		41396DA32A51B61000B69341 /* EditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModel.swift; sourceTree = "<group>"; };
 		41396DA82A51B8F700B69341 /* EditInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInfo.swift; sourceTree = "<group>"; };
+		41396DAA2A51C4D200B69341 /* EditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModel.swift; sourceTree = "<group>"; };
 		413ABEE72A39BBA500EA1010 /* Toastable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toastable.swift; sourceTree = "<group>"; };
 		413ABEEB2A39D1E900EA1010 /* UIcolor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIcolor+.swift"; sourceTree = "<group>"; };
 		4141398E2A1FA252005418A1 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -648,6 +650,7 @@
 			isa = PBXGroup;
 			children = (
 				41396DA72A51B8E600B69341 /* Entity */,
+				41396DAA2A51C4D200B69341 /* EditModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1230,6 +1233,7 @@
 				C434A4CE2A17970A00C63526 /* SearchingMusicModel.swift in Sources */,
 				414345252A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift in Sources */,
 				04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */,
+				41396DAB2A51C4D200B69341 /* EditModel.swift in Sources */,
 				18D671EF2A35A1CB003B1A71 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				41BCFD452A38C099001D3E5F /* Alertable.swift in Sources */,
 				C47F02282A3864A500F48884 /* InfoTableViewCell.swift in Sources */,
