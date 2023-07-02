@@ -11,6 +11,7 @@ import RxSwift
 import RxRelay
 
 protocol OptionModalViewModelDelegate {
+    func editComment(musicIndex: Int)
     func deleteMusic(_ isSuccess: Bool, toastTitle: String, musicIndex: Int)
 }
 
@@ -24,16 +25,16 @@ final class OptionModalViewModel {
         let dismiss: PublishRelay<Void> = .init()
     }
 
-    let communityInfo: MusicWithinAreaEntity
+    let itemId: Int
     private let musicIndex: Int
     private let communityModel: CommunityModel
     var delegate: OptionModalViewModelDelegate?
 
-    init(communityInfo: MusicWithinAreaEntity,
+    init(itemId: Int,
          musicIndex: Int,
          communityModel: CommunityModel = DefaultCommunityModel()
     ) {
-        self.communityInfo = communityInfo
+        self.itemId = itemId
         self.musicIndex = musicIndex
         self.communityModel = communityModel
     }
@@ -41,11 +42,19 @@ final class OptionModalViewModel {
     func convert(input: Input, disposedBag: DisposeBag) -> Output {
         let output = Output()
 
+        input.tapEditOption
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+
+                output.dismiss.accept(())
+                self.delegate?.editComment(musicIndex: self.musicIndex)
+            }).disposed(by: disposedBag)
+
         input.tapDeleteOption
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
 
-                self.communityModel.deleteMusic(itemID: self.communityInfo.id)
+                self.communityModel.deleteMusic(itemID: self.itemId)
                     .subscribe(onSuccess: { response in
                         if (200...299).contains(response) {
                             self.deleteMusic(isSuccess: true, output: output)
