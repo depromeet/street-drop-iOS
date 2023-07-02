@@ -66,6 +66,12 @@ private extension EditViewController {
 
                 self.tapEditButtonEvent.accept(self.commentTextView.text)
             }).disposed(by: disposeBag)
+
+        backButton.rx.tap
+            .bind(onNext: { [weak self] in
+                guard self?.viewModel.state == .edit else { return }
+                self?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
     }
 
     // MARK: - Data Binding
