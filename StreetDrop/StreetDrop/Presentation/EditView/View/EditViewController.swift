@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
 import SnapKit
 
 // 드랍화면 재사용 (상속)
@@ -20,6 +22,9 @@ class EditViewController: MusicDropViewController {
     }
 
     private let viewModel: EditViewModel
+    private let viewDidLoadEvent = PublishRelay<Void>()
+    private let tapEditButtonEvent = PublishRelay<String>()
+    private let disposeBag = DisposeBag()
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -43,16 +48,56 @@ class EditViewController: MusicDropViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //ui
+        configureUI()
+        bindAction()
+        bindViewModel()
+        viewDidLoadEvent.accept(())
+    }
+}
+
+private extension EditViewController {
+    
+    // MARK: - Action Binding
+
+    func bindAction() {
+        
+        self.dropButton.rx.tap
+            .bind(onNext: { [weak self] in
+                guard let self = self else { return }
+
+                self.tapEditButtonEvent.accept(self.commentTextView.text)
+            }).disposed(by: disposeBag)
+    }
+
+    // MARK: - Data Binding
+
+    func bindViewModel() {
+        let input = EditViewModel.Input(
+            viewDidLoadEvent: self.viewDidLoadEvent.asObservable(),
+            tapEditButtonEvent: self.tapEditButtonEvent.asObservable()
+        )
+
+        let output = viewModel.convert(input: input, disposedBag: disposeBag)
+
+        output.comment
+            .asDriver(onErrorJustReturn: "")
+            .drive(onNext: { [weak self] comment in
+                self?.commentTextView.text = comment
+            }).disposed(by: disposeBag)
+
+    }
+
+    //MARK: - UI
+
+    func configureUI() {
+        self.cancelButton.setTitle(Constant.empty, for: .normal)
         self.dropButton.setTitle(Constant.editButtonDisabledTitle, for: .disabled)
         self.dropButton.setTitle(Constant.editButtonNormalTitle, for: .normal)
         self.backButton.setTitle(Constant.empty, for: .normal)
         self.dataSharingPermissionGuideLabel.isHidden = true
         self.locationLabel.isHidden = true
-        self.commentTextView.text = viewModel.editInfo.content
         self.cancelButton.setTitle(Constant.empty, for: .normal)
 
-        //configureLayout
         self.topView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
