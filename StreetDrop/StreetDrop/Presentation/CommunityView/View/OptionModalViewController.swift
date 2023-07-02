@@ -104,17 +104,6 @@ private extension OptionModalViewController {
             action: #selector(dismiss(_:))
         )
         dimmedView.addGestureRecognizer(tapGestureRecognizer)
-
-        editButton.rx.tap
-            .bind { [weak self] in
-                guard let self = self else { return }
-
-                let editInfo = self.viewModel.communityInfo.convertToEditInfo()
-                let editViewModel = EditViewModel(editInfo: editInfo)
-                let editViewController = EditViewController(viewModel: editViewModel)
-
-                self.present(editViewController, animated: true)
-            }.disposed(by: disposeBag)
     }
 
     // MARK: - Data Binding

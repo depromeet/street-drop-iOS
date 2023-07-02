@@ -299,14 +299,14 @@ private extension CommunityViewController {
                 guard let self = self else { return }
 
                 let optionModalViewModel = OptionModalViewModel(
-                    communityInfo: self.viewModel.communityInfos[self.viewModel.currentIndex],
+                    itemId: self.viewModel.communityInfos[self.viewModel.currentIndex].id,
                     musicIndex: self.viewModel.currentIndex
                 )
                 optionModalViewModel.delegate = self
 
                 let modalView = OptionModalViewController(viewModel: optionModalViewModel)
                 modalView.modalPresentationStyle = .overCurrentContext
-                self.present(modalView, animated: true)
+                self.navigationController?.present(modalView, animated: true)
             })
             .disposed(by: disposeBag)
     }
@@ -713,6 +713,14 @@ extension CommunityViewController: UICollectionViewDelegate {
 }
 
 extension CommunityViewController: OptionModalViewModelDelegate {
+    func editComment(musicIndex: Int) {
+        let editInfo = self.viewModel.communityInfos[musicIndex].convertToEditInfo()
+        let editViewModel = EditViewModel(editInfo: editInfo, musicIndex: musicIndex)
+        let editViewController = EditViewController(viewModel: editViewModel)
+
+        self.navigationController?.present(editViewController, animated: true)
+    }
+
     func deleteMusic(_ isSuccess: Bool, toastTitle: String, musicIndex: Int) {
         guard isSuccess else {
             //TODO: - 토스트띄워주기 (toastTitle)
