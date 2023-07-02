@@ -97,7 +97,7 @@ final class CommunityViewModel: ViewModel {
 //MARK: - Private
 private extension CommunityViewModel {
     func changeCommunityInfoForIndex(index: Int, output: Output) {
-        guard (0..<communityInfos.count).contains(index) else { return }
+        guard (1..<communityInfos.count-1).contains(index) else { return }
 
         let communityInfo = communityInfos[index]
 
