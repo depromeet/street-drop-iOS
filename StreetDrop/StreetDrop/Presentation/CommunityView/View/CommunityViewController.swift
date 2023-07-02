@@ -16,6 +16,7 @@ final class CommunityViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let changedAlbumCollectionViewIndexEvent = PublishRelay<Int>()
+    private let deleteEvent = PublishRelay<Int>()
 
     init(viewModel: CommunityViewModel) {
         self.viewModel = viewModel
@@ -294,21 +295,18 @@ private extension CommunityViewController {
 
         optionButton.rx.tap
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {
-                // 신고 모달 띄우기
-                let currentIndex = self.viewModel.currentIndex
-                let dataCount = self.viewModel.communityInfos.count
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
 
-                guard (0..<dataCount).contains(currentIndex) else { return }
-
-                let itemID = self.viewModel.communityInfos[currentIndex].id
-                let claimModalViewModel = ClaimModalViewModel(itemID: itemID)
-                let claimModalViewController = ClaimModalViewController(
-                    viewModel: claimModalViewModel
+                let optionModalViewModel = OptionModalViewModel(
+                    itemID: self.viewModel.communityInfos[self.viewModel.currentIndex].id,
+                    musicIndex: self.viewModel.currentIndex
                 )
-                claimModalViewController.modalPresentationStyle = .overCurrentContext
+                optionModalViewModel.delegate = self
 
-                self.present(claimModalViewController, animated: true)
+                let modalView = OptionModalViewController(viewModel: optionModalViewModel)
+                modalView.modalPresentationStyle = .overCurrentContext
+                self.present(modalView, animated: true)
             })
             .disposed(by: disposeBag)
     }
@@ -319,7 +317,8 @@ private extension CommunityViewController {
         let input = CommunityViewModel.Input(
             viewDidLoadEvent: self.viewDidLoadEvent.asObservable(),
             changedIndex: self.changedAlbumCollectionViewIndexEvent.asObservable(),
-            tapLikeButtonEvent: self.likeButton.rx.tap.asObservable()
+            tapLikeButtonEvent: self.likeButton.rx.tap.asObservable(),
+            deleteEvent: self.deleteEvent.asObservable()
         )
 
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
@@ -425,6 +424,12 @@ private extension CommunityViewController {
             .drive { [weak self] likeCount in
                 self?.likeCountLabel.text = likeCount
             }.disposed(by: disposeBag)
+
+        output.infoIsEmpty
+            .asDriver(onErrorJustReturn: ())
+            .drive (onNext: { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            }).disposed(by: disposeBag)
 
         // 👉 TODO: Error팝업띄우기
         output.errorDescription
@@ -704,5 +709,18 @@ extension CommunityViewController: UICollectionViewDelegate {
             CGPoint(x: (cellWidth * CGFloat(index - 1)), y: .zero),
             animated: false
         )
+    }
+}
+
+extension CommunityViewController: OptionModalViewModelDelegate {
+    func deleteMusic(_ isSuccess: Bool, toastTitle: String, musicIndex: Int) {
+        guard isSuccess else {
+            //TODO: - 토스트띄워주기 (toastTitle)
+            return
+        }
+
+        self.albumCollectionView.performBatchUpdates { [weak self] in
+            self?.deleteEvent.accept(musicIndex)
+        }
     }
 }
