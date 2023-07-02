@@ -14,6 +14,7 @@ protocol CommunityModel {
     func likeDown(itemID: Int) -> Single<Int>
     func claimComment(itemID: Int, reason: String) -> Single<Int>
     func deleteMusic(itemID: Int) -> Single<Int>
+    func fetchMyUserID() -> Int?
 }
 
 final class DefaultCommunityModel: CommunityModel {
@@ -50,5 +51,9 @@ extension DefaultCommunityModel {
 
     func deleteMusic(itemID: Int) -> Single<Int> {
         return deleteMusicRepository.deleteMusic(itemID: itemID)
+    }
+
+    func fetchMyUserID() -> Int? {
+        return myInfoStorage.fetchMyInfo()?.userID
     }
 }

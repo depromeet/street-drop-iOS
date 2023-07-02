@@ -16,6 +16,7 @@ final class CommunityViewModel: ViewModel {
         let viewDidLoadEvent: Observable<Void>
         let changedIndex: Observable<Int>
         let tapLikeButtonEvent: Observable<Void>
+        let tapOptionButtonEvent: Observable<Void>
         let deleteEvent: Observable<Int>
         let editEvent: Observable<(editedComment: String, index: Int)>
     }
@@ -33,6 +34,7 @@ final class CommunityViewModel: ViewModel {
         var dateText: PublishRelay<String> = .init()
         var isLiked: PublishRelay<Bool> = .init()
         var likeCount: PublishRelay<String> = .init()
+        var isMyDrop: PublishRelay<Bool> = .init()
         var infoIsEmpty: PublishRelay<Void> = .init()
         var errorDescription: BehaviorRelay<String?> = .init(value: nil)
     }
@@ -90,6 +92,34 @@ final class CommunityViewModel: ViewModel {
                 ? self.likeDown(itemID: id, output: output)
                 : self.likeUp(itemID: id, output: output)
             }).disposed(by: disposedBag)
+        
+        input.tapOptionButtonEvent
+            .subscribe(onNext: { [weak self] index in
+                guard let self = self else { return }
+
+                let myUserID = self.communityModel.fetchMyUserID()
+                let MusicInfoUserID = self.communityInfos[self.currentIndex].userId
+                output.isMyDrop.accept(myUserID == MusicInfoUserID)
+
+            }).disposed(by: disposedBag)
+    /*
+     optionButton.rx.tap
+         .observe(on: MainScheduler.instance)
+         .subscribe(onNext: { [weak self] in
+             guard let self = self else { return }
+
+             let optionModalViewModel = OptionModalViewModel(
+                 itemId: self.viewModel.communityInfos[self.viewModel.currentIndex].id,
+                 musicIndex: self.viewModel.currentIndex
+             )
+             optionModalViewModel.delegate = self
+
+             let modalView = OptionModalViewController(viewModel: optionModalViewModel)
+             modalView.modalPresentationStyle = .overCurrentContext
+             self.navigationController?.present(modalView, animated: true)
+         })
+         .disposed(by: disposeBag)
+     */
 
         input.deleteEvent
             .subscribe(onNext: { [weak self] index in

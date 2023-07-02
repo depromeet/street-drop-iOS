@@ -293,23 +293,6 @@ private extension CommunityViewController {
                 }
             }
             .disposed(by: disposeBag)
-
-        optionButton.rx.tap
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-
-                let optionModalViewModel = OptionModalViewModel(
-                    itemId: self.viewModel.communityInfos[self.viewModel.currentIndex].id,
-                    musicIndex: self.viewModel.currentIndex
-                )
-                optionModalViewModel.delegate = self
-
-                let modalView = OptionModalViewController(viewModel: optionModalViewModel)
-                modalView.modalPresentationStyle = .overCurrentContext
-                self.navigationController?.present(modalView, animated: true)
-            })
-            .disposed(by: disposeBag)
     }
 
     // MARK: - Data Binding
@@ -319,6 +302,7 @@ private extension CommunityViewController {
             viewDidLoadEvent: self.viewDidLoadEvent.asObservable(),
             changedIndex: self.changedAlbumCollectionViewIndexEvent.asObservable(),
             tapLikeButtonEvent: self.likeButton.rx.tap.asObservable(),
+            tapOptionButtonEvent: self.optionButton.rx.tap.asObservable(),
             deleteEvent: self.deleteEvent.asObservable(),
             editEvent: self.editEvent.asObservable()
         )
@@ -426,6 +410,32 @@ private extension CommunityViewController {
             .drive { [weak self] likeCount in
                 self?.likeCountLabel.text = likeCount
             }.disposed(by: disposeBag)
+
+        output.isMyDrop
+            .asDriver(onErrorJustReturn: false)
+            .drive { [weak self] isMyDrop in
+                guard let self = self else { return }
+                let itemID = self.viewModel.communityInfos[self.viewModel.currentIndex].id
+                //내가 드랍한 음악이면 수정/삭제 모달
+                if isMyDrop {
+                    let optionModalViewModel = OptionModalViewModel(
+                        itemId: itemID,
+                        musicIndex: self.viewModel.currentIndex
+                    )
+                    optionModalViewModel.delegate = self
+
+                    let modalView = OptionModalViewController(viewModel: optionModalViewModel)
+                    modalView.modalPresentationStyle = .overCurrentContext
+                    self.navigationController?.present(modalView, animated: true)
+                //남이 드랍한 음악이면 신고 모달
+                } else {
+                    let claimModalViewModel = ClaimModalViewModel(itemID: itemID)
+                    let modalView = ClaimModalViewController(viewModel: claimModalViewModel)
+                    modalView.modalPresentationStyle = .overCurrentContext
+                    self.navigationController?.present(modalView, animated: true)
+                }
+            }
+            .disposed(by: disposeBag)
 
         output.infoIsEmpty
             .asDriver(onErrorJustReturn: ())
