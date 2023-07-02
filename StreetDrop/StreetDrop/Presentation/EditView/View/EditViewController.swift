@@ -60,7 +60,6 @@ private extension EditViewController {
     // MARK: - Action Binding
 
     func bindAction() {
-        
         self.dropButton.rx.tap
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
@@ -85,6 +84,11 @@ private extension EditViewController {
                 self?.commentTextView.text = comment
             }).disposed(by: disposeBag)
 
+        output.dismiss
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
     }
 
     //MARK: - UI

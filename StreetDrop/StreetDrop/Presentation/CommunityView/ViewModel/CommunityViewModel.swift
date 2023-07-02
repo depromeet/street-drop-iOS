@@ -17,6 +17,7 @@ final class CommunityViewModel: ViewModel {
         let changedIndex: Observable<Int>
         let tapLikeButtonEvent: Observable<Void>
         let deleteEvent: Observable<Int>
+        let editEvent: Observable<(editedComment: String, index: Int)>
     }
 
     struct Output {
@@ -98,6 +99,11 @@ final class CommunityViewModel: ViewModel {
                 let albumImagesURL = self.communityInfos.map { $0.albumImageURL }
                 output.albumImages.accept(albumImagesURL)
                 output.currentIndex.accept(self.currentIndex)
+            }).disposed(by: disposedBag)
+
+        input.editEvent
+            .subscribe(onNext: { [weak self] (editedComment, index) in
+                self?.communityInfos[index].content = editedComment
             }).disposed(by: disposedBag)
 
         return output
