@@ -20,7 +20,7 @@ enum NetworkService {
     case postLikeDown(itemID: Int)
     case getPoi(latitude: Double, longitude: Double, distance: Double)
     case claimComment(requestDTO: ClaimCommentRequestDTO)
-    case reviseComment(itemID: Int, requestDTO: ReviseCommentRequestDTO)
+    case editComment(itemID: Int, requestDTO: EditCommentRequestDTO)
     case deleteMusic(itemID: Int)
 }
 
@@ -63,7 +63,7 @@ extension NetworkService: TargetType {
             return "/items/points"
         case .claimComment:
             return "/items/claim"
-        case .reviseComment(let itemID, _):
+        case .editComment(let itemID, _):
             return "/items/\(itemID)"
         case .deleteMusic(let itemID):
             return "/items/\(itemID)"
@@ -84,7 +84,7 @@ extension NetworkService: TargetType {
                 .postLikeDown,
                 .claimComment:
             return .post
-        case .reviseComment:
+        case .editComment:
             return .patch
         case .deleteMusic:
             return .delete
@@ -136,8 +136,8 @@ extension NetworkService: TargetType {
             )
         case .claimComment(let claimCommentRequestDTO):
             return .requestJSONEncodable(claimCommentRequestDTO)
-        case .reviseComment(_, let reviseCommentRequestDTO):
-            return .requestJSONEncodable(reviseCommentRequestDTO)
+        case .editComment(_, let editCommentRequestDTO):
+            return .requestJSONEncodable(editCommentRequestDTO)
         case .deleteMusic(let itemID):
             return .requestParameters(
                 parameters: ["itemId": itemID],

@@ -14,7 +14,7 @@ import RxRelay
 final class OptionModalViewController: UIViewController {
 
     enum Constant {
-        static let reviseTitle: String = "수정하기"
+        static let editTitle: String = "수정하기"
         static let deleteTitle: String = "삭제하기"
     }
 
@@ -54,9 +54,9 @@ final class OptionModalViewController: UIViewController {
         return view
     }()
 
-    private lazy var reviseButton: UIButton = generateOptionButton(
-        icon: UIImage(named: "reviseIcon"),
-        title: Constant.reviseTitle
+    private lazy var editButton: UIButton = generateOptionButton(
+        icon: UIImage(named: "editIcon"),
+        title: Constant.editTitle
     )
 
     private lazy var deleteButton: UIButton = generateOptionButton(
@@ -110,7 +110,7 @@ private extension OptionModalViewController {
 
     func bindViewModel() {
         let input = OptionModalViewModel.Input(
-            tapReviseOption: reviseButton.rx.tap.asObservable(),
+            tapEditOption: editButton.rx.tap.asObservable(),
             tapDeleteOption: deleteButton.rx.tap.asObservable()
         )
 
@@ -127,7 +127,7 @@ private extension OptionModalViewController {
 
     func configureUI() {
         let defaultHeigh: CGFloat = 176
-        [reviseButton, dividingLineView, deleteButton].forEach {
+        [editButton, dividingLineView, deleteButton].forEach {
             optionStackView.addArrangedSubview($0)
         }
 
@@ -156,7 +156,7 @@ private extension OptionModalViewController {
             $0.leading.trailing.equalToSuperview()
         }
 
-        reviseButton.snp.makeConstraints {
+        editButton.snp.makeConstraints {
             $0.height.equalTo(deleteButton.snp.height)
         }
     }

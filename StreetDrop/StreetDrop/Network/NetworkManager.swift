@@ -82,8 +82,8 @@ struct NetworkManager {
             .map { $0.statusCode }
     }
 
-    func reviseComment(itemID: Int, requestDTO: ReviseCommentRequestDTO) -> Single<Int> {
-        return provider.rx.request(.reviseComment(itemID: itemID, requestDTO: requestDTO))
+    func editComment(itemID: Int, requestDTO: EditCommentRequestDTO) -> Single<Int> {
+        return provider.rx.request(.editComment(itemID: itemID, requestDTO: requestDTO))
             .retry(3)
             .map { $0.statusCode }
     }
