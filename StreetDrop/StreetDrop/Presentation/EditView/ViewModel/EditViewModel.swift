@@ -29,5 +29,9 @@ final class EditViewModel: MusicDropViewModel {
         )
 
         super.init(droppingInfo: droppingInfo)
+        self.state = .edit
+    }
+
+    func convert(input: Input, disposedBag: DisposeBag) -> Output {
     }
 }

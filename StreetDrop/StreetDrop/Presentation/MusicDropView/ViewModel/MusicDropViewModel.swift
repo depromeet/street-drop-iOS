@@ -30,6 +30,12 @@ class MusicDropViewModel: ViewModel {
         let errorDescription: BehaviorRelay<String?> = .init(value: nil)
     }
 
+    enum State {
+        case drop
+        case edit
+    }
+
+    var state: State = .drop
     private let droppingInfo: DroppingInfo
     private let musicDropModel: MusicDropModel
     private let disposeBag: DisposeBag = DisposeBag()
@@ -80,7 +86,10 @@ class MusicDropViewModel: ViewModel {
 
         input.tapDropButton
             .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
+                guard let self = self,
+                      self.state == .drop else {
+                    return
+                }
 
                 var comment = ""
                 input.comment.bind { comment = $0 }.disposed(by: DisposeBag())

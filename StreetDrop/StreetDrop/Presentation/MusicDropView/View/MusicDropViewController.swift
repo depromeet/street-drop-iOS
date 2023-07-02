@@ -244,8 +244,9 @@ private extension MusicDropViewController {
 
     func bindAction() {
         dropButton.rx.tap
-            .bind {
-                self.showDropAnimation()
+            .bind { [weak self] in
+                guard self?.viewModel.state == .drop else { return }
+                self?.showDropAnimation()
             }.disposed(by: disposeBag)
 
         // 코멘트 플레이스홀더, 글자수라벨 설치, 줄 수 제한, 커멘트있을때만 드랍가능
