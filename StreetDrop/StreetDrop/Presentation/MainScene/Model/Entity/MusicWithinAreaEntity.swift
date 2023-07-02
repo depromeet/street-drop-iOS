@@ -46,4 +46,14 @@ extension MusicWithinAreaEntity {
             likeCount: 0
         )
     }
+
+    func convertToEditInfo() -> EditInfo {
+        return EditInfo(
+            id: self.id,
+            musicTitle: self.musicTitle,
+            artist: self.artist,
+            albumImageURL: self.albumImageURL,
+            content: self.content
+        )
+    }
 }

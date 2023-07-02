@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import SnapKit
 
-final class MusicDropViewController: UIViewController, Toastable {
+class MusicDropViewController: UIViewController, Toastable {
 
     enum Constant {
         static let textDefault = " "
@@ -66,7 +66,7 @@ final class MusicDropViewController: UIViewController, Toastable {
     private lazy var smallerCenterGradientCircleView: UIView = UIView()
     private lazy var largerCenterGradientCircleView: UIView = UIView()
 
-    private lazy var backButton: UIButton = {
+    lazy var backButton: UIButton = {
         let button: UIButton = UIButton()
         button.setImage(UIImage(named: "backButton"), for: .normal)
         button.setTitle("음악검색", for: .normal)
@@ -76,7 +76,7 @@ final class MusicDropViewController: UIViewController, Toastable {
         return button
     }()
 
-    private lazy var cancelButton: UIButton = {
+    lazy var cancelButton: UIButton = {
         let button: UIButton = UIButton()
         button.setTitle("나가기", for: .normal)
         button.setTitleColor(.gray300, for: .normal)
@@ -85,7 +85,7 @@ final class MusicDropViewController: UIViewController, Toastable {
         return button
     }()
 
-    private lazy var topView: UIView = UIView()
+    lazy var topView: UIView = UIView()
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -101,9 +101,9 @@ final class MusicDropViewController: UIViewController, Toastable {
         return scrollView
     }()
 
-    private lazy var contentView: UIView = UIView()
+    lazy var contentView: UIView = UIView()
 
-    private lazy var locationLabel: UILabel = {
+    lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
         label.textColor = .white
@@ -145,7 +145,7 @@ final class MusicDropViewController: UIViewController, Toastable {
         return label
     }()
 
-    private lazy var musicInfoStackView: UIStackView = {
+    lazy var musicInfoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -165,7 +165,7 @@ final class MusicDropViewController: UIViewController, Toastable {
         return view
     }()
 
-    private lazy var commentTextView: UITextView = {
+    lazy var commentTextView: UITextView = {
         let textView = UITextView()
         textView.textColor = .white
         textView.font = .pretendard(size: 14, weight: 500)
@@ -214,7 +214,7 @@ final class MusicDropViewController: UIViewController, Toastable {
         return label
     }()
 
-    private lazy var dataSharingPermissionGuideLabel: UILabel = {
+    lazy var dataSharingPermissionGuideLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.dataSharingPermissionText
         label.font = .pretendard(size: 12, weightName: .regular)
@@ -226,7 +226,7 @@ final class MusicDropViewController: UIViewController, Toastable {
         return label
     }()
 
-    private lazy var dropButton: UIButton = {
+    lazy var dropButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(Constant.dropButtonTitle, for: .normal)
         button.setTitleColor(.gray400, for: .normal)

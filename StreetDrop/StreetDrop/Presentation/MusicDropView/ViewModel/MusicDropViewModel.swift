@@ -11,7 +11,7 @@ import Foundation
 import RxSwift
 import RxRelay
 
-final class MusicDropViewModel: ViewModel {
+class MusicDropViewModel: ViewModel {
 
     struct Input {
         let viewDidLoadEvent: Observable<Void>
