@@ -24,7 +24,7 @@ final class OptionModalViewModel {
         let dismiss: PublishRelay<Void> = .init()
     }
 
-    private let communityInfo: MusicWithinAreaEntity
+    let communityInfo: MusicWithinAreaEntity
     private let musicIndex: Int
     private let communityModel: CommunityModel
     var delegate: OptionModalViewModelDelegate?
