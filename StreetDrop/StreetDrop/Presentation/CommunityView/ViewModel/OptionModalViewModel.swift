@@ -12,11 +12,12 @@ import RxRelay
 
 protocol OptionModalViewModelDelegate {
     func deleteMusic(_ isSuccess: Bool, toastTitle: String, musicIndex: Int)
+    func editComment(to: String)
 }
 
 final class OptionModalViewModel {
     struct Input {
-        let tapReviseOption: Observable<Void>
+        let tapEditOption: Observable<Void>
         let tapDeleteOption: Observable<Void>
     }
 
@@ -41,7 +42,7 @@ final class OptionModalViewModel {
     func convert(input: Input, disposedBag: DisposeBag) -> Output {
         let output = Output()
 
-        input.tapReviseOption
+        input.tapEditOption
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
 

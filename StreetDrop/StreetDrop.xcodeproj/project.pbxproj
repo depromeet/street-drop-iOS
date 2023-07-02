@@ -50,12 +50,12 @@
 		41008EBA2A49B56F00FD4ABE /* ClaimModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41008EB92A49B56E00FD4ABE /* ClaimModalViewController.swift */; };
 		412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412D66892A1E14B600BA4A1B /* CommunityViewController.swift */; };
 		412D668C2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412D668B2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift */; };
-		41396D822A4EF65B00B69341 /* ReviseCommentRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D812A4EF65B00B69341 /* ReviseCommentRequestDTO.swift */; };
+		41396D822A4EF65B00B69341 /* EditCommentRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D812A4EF65B00B69341 /* EditCommentRequestDTO.swift */; };
 		41396D872A4EFA2900B69341 /* MyInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D862A4EFA2900B69341 /* MyInfoResponseDTO.swift */; };
-		41396D8B2A4EFB2500B69341 /* ReviseCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8A2A4EFB2500B69341 /* ReviseCommentRepository.swift */; };
+		41396D8B2A4EFB2500B69341 /* EditCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8A2A4EFB2500B69341 /* EditCommentRepository.swift */; };
 		41396D8D2A4EFB3300B69341 /* DeleteMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */; };
 		41396D8F2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */; };
-		41396D912A4EFBF700B69341 /* DefaultReviseCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D902A4EFBF700B69341 /* DefaultReviseCommentRepository.swift */; };
+		41396D912A4EFBF700B69341 /* DefaultEditCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D902A4EFBF700B69341 /* DefaultEditCommentRepository.swift */; };
 		41396D952A4EFF7B00B69341 /* MyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D942A4EFF7B00B69341 /* MyInfo.swift */; };
 		41396D972A4F04CB00B69341 /* MyInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D962A4F04CB00B69341 /* MyInfoStorage.swift */; };
 		41396D992A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D982A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift */; };
@@ -203,12 +203,12 @@
 		41008EB92A49B56E00FD4ABE /* ClaimModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimModalViewController.swift; sourceTree = "<group>"; };
 		412D66892A1E14B600BA4A1B /* CommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewController.swift; sourceTree = "<group>"; };
 		412D668B2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
-		41396D812A4EF65B00B69341 /* ReviseCommentRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviseCommentRequestDTO.swift; sourceTree = "<group>"; };
+		41396D812A4EF65B00B69341 /* EditCommentRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentRequestDTO.swift; sourceTree = "<group>"; };
 		41396D862A4EFA2900B69341 /* MyInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoResponseDTO.swift; sourceTree = "<group>"; };
-		41396D8A2A4EFB2500B69341 /* ReviseCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviseCommentRepository.swift; sourceTree = "<group>"; };
+		41396D8A2A4EFB2500B69341 /* EditCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentRepository.swift; sourceTree = "<group>"; };
 		41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMusicRepository.swift; sourceTree = "<group>"; };
 		41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDeleteMusicRepository.swift; sourceTree = "<group>"; };
-		41396D902A4EFBF700B69341 /* DefaultReviseCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReviseCommentRepository.swift; sourceTree = "<group>"; };
+		41396D902A4EFBF700B69341 /* DefaultEditCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEditCommentRepository.swift; sourceTree = "<group>"; };
 		41396D942A4EFF7B00B69341 /* MyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfo.swift; sourceTree = "<group>"; };
 		41396D962A4F04CB00B69341 /* MyInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoStorage.swift; sourceTree = "<group>"; };
 		41396D982A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsMyInfoStorage.swift; sourceTree = "<group>"; };
@@ -385,7 +385,7 @@
 				414345242A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift */,
 				41A9BEBA2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift */,
 				41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */,
-				41396D902A4EFBF700B69341 /* DefaultReviseCommentRepository.swift */,
+				41396D902A4EFBF700B69341 /* DefaultEditCommentRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -482,7 +482,7 @@
 				41F23B4D2A1B6EE80083D2EC /* DropMusicRepository.swift */,
 				414345222A35B9A3003FEE2A /* LikeMusicRepository.swift */,
 				41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */,
-				41396D8A2A4EFB2500B69341 /* ReviseCommentRepository.swift */,
+				41396D8A2A4EFB2500B69341 /* EditCommentRepository.swift */,
 				41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */,
 			);
 			path = Protocol;
@@ -598,7 +598,7 @@
 		41396D802A4EF64700B69341 /* Comment */ = {
 			isa = PBXGroup;
 			children = (
-				41396D812A4EF65B00B69341 /* ReviseCommentRequestDTO.swift */,
+				41396D812A4EF65B00B69341 /* EditCommentRequestDTO.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -1145,7 +1145,7 @@
 				040685042A01539800377094 /* MainViewController.swift in Sources */,
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
 				41396D8F2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift in Sources */,
-				41396D822A4EF65B00B69341 /* ReviseCommentRequestDTO.swift in Sources */,
+				41396D822A4EF65B00B69341 /* EditCommentRequestDTO.swift in Sources */,
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
 				C47F02242A38633C00F48884 /* MyPageViewModel.swift in Sources */,
 				C40008EA2A32012B00EA7FA9 /* Music.swift in Sources */,
@@ -1158,10 +1158,10 @@
 				C45BF3A12A1D133000CEDE74 /* RecentMusicQueryDTO.swift in Sources */,
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
 				18CB7BED2A359F53002B31FB /* MusicWithinAreaEntity.swift in Sources */,
-				41396D912A4EFBF700B69341 /* DefaultReviseCommentRepository.swift in Sources */,
+				41396D912A4EFBF700B69341 /* DefaultEditCommentRepository.swift in Sources */,
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
 				C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */,
-				41396D8B2A4EFB2500B69341 /* ReviseCommentRepository.swift in Sources */,
+				41396D8B2A4EFB2500B69341 /* EditCommentRepository.swift in Sources */,
 				414345212A35B92A003FEE2A /* ResponseSampleData.swift in Sources */,
 				41589AB82A46D82F0029A2EE /* DropAnimationView.swift in Sources */,
 				18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */,
