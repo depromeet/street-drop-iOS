@@ -299,7 +299,7 @@ private extension CommunityViewController {
                 guard let self = self else { return }
 
                 let optionModalViewModel = OptionModalViewModel(
-                    itemID: self.viewModel.communityInfos[self.viewModel.currentIndex].id,
+                    communityInfo: self.viewModel.communityInfos[self.viewModel.currentIndex],
                     musicIndex: self.viewModel.currentIndex
                 )
                 optionModalViewModel.delegate = self
