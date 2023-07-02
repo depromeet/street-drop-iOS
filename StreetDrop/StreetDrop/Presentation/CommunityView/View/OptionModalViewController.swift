@@ -104,16 +104,6 @@ private extension OptionModalViewController {
             action: #selector(dismiss(_:))
         )
         dimmedView.addGestureRecognizer(tapGestureRecognizer)
-
-        reviseButton.rx.tap
-            .bind(onNext: { [weak self] in
-                self?.dismiss()
-            }).disposed(by: disposeBag)
-
-        deleteButton.rx.tap
-            .bind(onNext: {[weak self] in
-                self?.dismiss()
-            }).disposed(by: disposeBag)
     }
 
     // MARK: - Data Binding
@@ -125,6 +115,12 @@ private extension OptionModalViewController {
         )
 
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
+
+        output.dismiss
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.dismiss()
+            }).disposed(by: disposeBag)
     }
 
     // MARK: - UI

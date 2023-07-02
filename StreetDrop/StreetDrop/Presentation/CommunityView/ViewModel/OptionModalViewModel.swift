@@ -21,7 +21,7 @@ final class OptionModalViewModel {
     }
 
     struct Output {
-        // 없음
+        let dismiss: PublishRelay<Void> = .init()
     }
 
     private let itemID: Int
@@ -46,6 +46,7 @@ final class OptionModalViewModel {
                 guard let self = self else { return }
 
                 // 수정 액션
+                output.dismiss.accept(())
             }).disposed(by: disposedBag)
 
         input.tapDeleteOption
@@ -55,12 +56,12 @@ final class OptionModalViewModel {
                 self.communityModel.deleteMusic(itemID: self.itemID)
                     .subscribe(onSuccess: { response in
                         if (200...299).contains(response) {
-                            self.deleteMusic(isSuccess: true)
+                            self.deleteMusic(isSuccess: true, output: output)
                         } else {
-                            self.deleteMusic(isSuccess: false)
+                            self.deleteMusic(isSuccess: false, output: output)
                         }
                     }, onFailure: { error in
-                        self.deleteMusic(isSuccess: false)
+                        self.deleteMusic(isSuccess: false, output: output)
                         print(error.localizedDescription)
                     }).disposed(by: disposedBag)
             }).disposed(by: disposedBag)
@@ -71,8 +72,9 @@ final class OptionModalViewModel {
 
 //MARK: - Private
 private extension OptionModalViewModel {
-    func deleteMusic(isSuccess: Bool) {
+    func deleteMusic(isSuccess: Bool, output: Output) {
         // ✅ TODO: 토스트 문구 변경하기
+        output.dismiss.accept(())
         let toastTitle: String = isSuccess ? "삭제완료 토스트 문구" : "네트워크 확인 토스트 문구"
         delegate?.deleteMusic(isSuccess, toastTitle: toastTitle, musicIndex: self.musicIndex)
     }
