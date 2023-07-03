@@ -87,6 +87,7 @@ final class CommunityViewController: UIViewController {
             collectionViewLayout: createCollectionViewLayout()
         )
         collectionView.isPagingEnabled = false
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.decelerationRate = .fast
         collectionView.backgroundColor = .primaryBackground
         collectionView.clipsToBounds = false

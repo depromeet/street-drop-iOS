@@ -721,8 +721,8 @@ private extension MainViewController {
     func bindPOI(poi: NMFMarker) {
         poi.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
             guard let self = self else { return true }
-            if viewModel.isWithin(latitude: poi.position.lat, longitude: poi.position.lng) {
-                viewModel.tappedPOIID = Int(poi.tag)
+            if self.viewModel.isWithin(latitude: poi.position.lat, longitude: poi.position.lng) {
+                self.viewModel.tappedPOIID = Int(poi.tag)
                 self.poiMarkerDidTapEvent.accept(Void())
             }
             return true

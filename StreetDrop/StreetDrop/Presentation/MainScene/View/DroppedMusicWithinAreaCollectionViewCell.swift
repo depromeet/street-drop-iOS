@@ -91,6 +91,7 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         label.font = .pretendard(size: 14, weight: 500)
         label.numberOfLines = 2
         label.textAlignment = .center
+        label.textColor = .black
         label.isHidden = true
         label.preferredMaxLayoutWidth = UIScreen.main.bounds.width / 3
         return label
