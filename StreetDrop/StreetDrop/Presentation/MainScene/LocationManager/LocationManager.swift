@@ -14,7 +14,7 @@ final class LocationManager: NSObject {
     private let locationManager = CLLocationManager()
     var delegate: MainViewModel?
     var viewControllerDelegate: MainViewController?
-    private let defaultLocation = CLLocation(latitude: 37.4979, longitude: 127.0275)
+    private let defaultLocation = CLLocation()
     
     override init() {
         super.init()
