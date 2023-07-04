@@ -60,15 +60,16 @@ final class CommunityViewModel: ViewModel {
         input.viewDidLoadEvent
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                output.addressTitle.accept(self.communityInfos[self.currentIndex].address)
-                self.changeCommunityInfoForIndex(index: self.currentIndex, output: output)
 
                 // 데이터가 2,3개일 때는 무한스크롤없이 첫번째/마지막쎌이 가운데로 스크롤되게하기위해 처음/마지막에 빈쎌을 넣어준상태
                 // ex [1, 2, 3]  ===>>> [ ] + [1, 2, 3] + [ ]
                 if (2...3).contains(self.communityInfos.count) {
                     self.addEmptyInfoAtEachEnd()
+                    self.currentIndex += 1
                 }
-
+                
+                output.addressTitle.accept(self.communityInfos[self.currentIndex].address)
+                self.changeCommunityInfoForIndex(index: self.currentIndex, output: output)
                 let albumImagesURL = self.communityInfos.map { $0.albumImageURL }
                 output.albumImages.accept(albumImagesURL)
                 output.currentIndex.accept(self.currentIndex)
