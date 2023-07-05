@@ -61,9 +61,9 @@ final class CommunityViewModel: ViewModel {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
 
-                // 데이터가 2,3개일 때는 무한스크롤없이 첫번째/마지막쎌이 가운데로 스크롤되게하기위해 처음/마지막에 빈쎌을 넣어준상태
+                // 데이터가 1~3개일 때는 무한스크롤없이 첫번째/마지막쎌이 가운데로 스크롤되게하기위해 처음/마지막에 빈쎌을 넣어준상태
                 // ex [1, 2, 3]  ===>>> [ ] + [1, 2, 3] + [ ]
-                if (2...3).contains(self.communityInfos.count) {
+                if (1...3).contains(self.communityInfos.count) {
                     self.addEmptyInfoAtEachEnd()
                     self.currentIndex += 1
                 }
@@ -103,24 +103,6 @@ final class CommunityViewModel: ViewModel {
                 output.isMyDrop.accept(myUserID == MusicInfoUserID)
 
             }).disposed(by: disposedBag)
-    /*
-     optionButton.rx.tap
-         .observe(on: MainScheduler.instance)
-         .subscribe(onNext: { [weak self] in
-             guard let self = self else { return }
-
-             let optionModalViewModel = OptionModalViewModel(
-                 itemId: self.viewModel.communityInfos[self.viewModel.currentIndex].id,
-                 musicIndex: self.viewModel.currentIndex
-             )
-             optionModalViewModel.delegate = self
-
-             let modalView = OptionModalViewController(viewModel: optionModalViewModel)
-             modalView.modalPresentationStyle = .overCurrentContext
-             self.navigationController?.present(modalView, animated: true)
-         })
-         .disposed(by: disposeBag)
-     */
 
         input.deleteEvent
             .subscribe(onNext: { [weak self] index in
@@ -144,7 +126,8 @@ final class CommunityViewModel: ViewModel {
 //MARK: - Private
 private extension CommunityViewModel {
     func changeCommunityInfoForIndex(index: Int, output: Output) {
-        guard (1..<communityInfos.count-1).contains(index) else { return }
+        guard (0..<communityInfos.count).contains(index),
+              communityInfos[index].albumImageURL != "" else { return }
 
         let communityInfo = communityInfos[index]
 
