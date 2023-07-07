@@ -27,9 +27,16 @@ extension Toastable {
         text: String,
         bottomInset: CGFloat,
         buttonTitle: String,
+        buttonAction: UIAction,
         duration: DispatchTime
     ) {
-        let toastView = ToastView(state: .success, text: text, buttonTitle: buttonTitle)
+        let toastView = ToastView(
+            state: .success,
+            text: text,
+            buttonTitle: buttonTitle,
+            buttonAction: buttonAction
+        )
+        
         showToast(toastView, bottomInset: bottomInset, duration: duration)
     }
 
@@ -37,9 +44,16 @@ extension Toastable {
         text: String,
         bottomInset: CGFloat,
         buttonTitle: String,
+        buttonAction: UIAction,
         duration: DispatchTime
     ) {
-        let toastView = ToastView(state: .fail, text: text, buttonTitle: buttonTitle)
+        let toastView = ToastView(
+            state: .fail,
+            text: text,
+            buttonTitle: buttonTitle,
+            buttonAction: buttonAction
+        )
+
         showToast(toastView, bottomInset: bottomInset, duration: duration)
     }
 }
