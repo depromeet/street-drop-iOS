@@ -32,10 +32,10 @@ final class ToastView: UIView {
         configureUI()
     }
 
-    convenience init(state: State, text: String, buttonTitle: String) {
+    convenience init(state: State, text: String, buttonTitle: String, buttonAction: UIAction) {
         self.init(state: state, text: text)
         button.setTitle(buttonTitle, for: .normal)
-        addButton()
+        addButton(action: buttonAction)
     }
 
     @available(*, unavailable)
@@ -101,8 +101,9 @@ private extension ToastView {
         }
     }
 
-    func addButton() {
+    func addButton(action: UIAction) {
         containerStackView.addArrangedSubview(button)
+        button.addAction(action, for: .touchUpInside)
 
         button.snp.makeConstraints {
             $0.top.trailing.bottom.equalToSuperview().inset(-4)
