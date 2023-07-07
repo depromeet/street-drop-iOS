@@ -151,6 +151,7 @@
 		C4E0943B2A4DF002000B4513 /* VillageNameResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */; };
 		C4E25A8A2A57D42C00E6A236 /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4E25A892A57D42C00E6A236 /* GoogleService-Info-Prod.plist */; };
 		C4E25A8C2A57DC1700E6A236 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4E25A8B2A57DC1700E6A236 /* GoogleService-Info-Dev.plist */; };
+		C4E25A972A57EF6E00E6A236 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C4E25A962A57EF6E00E6A236 /* FirebaseMessaging */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
 /* End PBXBuildFile section */
 
@@ -296,6 +297,7 @@
 		C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VillageNameResponseDTO.swift; sourceTree = "<group>"; };
 		C4E25A892A57D42C00E6A236 /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
 		C4E25A8B2A57DC1700E6A236 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
+		C4E25A9A2A57F8FF00E6A236 /* StreetDropDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StreetDropDebug.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,6 +305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4E25A972A57EF6E00E6A236 /* FirebaseMessaging in Frameworks */,
 				049BC4382A02845900071A12 /* RxMoya in Frameworks */,
 				049BC42A2A02826400071A12 /* RxSwift in Frameworks */,
 				049BC4282A02826400071A12 /* RxRelay in Frameworks */,
@@ -347,6 +350,7 @@
 		040684FE2A01539800377094 /* StreetDrop */ = {
 			isa = PBXGroup;
 			children = (
+				C4E25A9A2A57F8FF00E6A236 /* StreetDropDebug.entitlements */,
 				04FB1F1A2A0213780064B3C8 /* Application */,
 				04FB1F242A0214FA0064B3C8 /* Resource */,
 				04FB1F222A0214A20064B3C8 /* Util */,
@@ -1049,6 +1053,7 @@
 				049BC4352A02845900071A12 /* Moya */,
 				049BC4372A02845900071A12 /* RxMoya */,
 				049BC43A2A0284E900071A12 /* SnapKit */,
+				C4E25A962A57EF6E00E6A236 /* FirebaseMessaging */,
 			);
 			productName = StreetDrop;
 			productReference = 040684FC2A01539800377094 /* StreetDrop.app */;
@@ -1108,6 +1113,7 @@
 				049BC4242A02826400071A12 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				049BC4342A02845900071A12 /* XCRemoteSwiftPackageReference "Moya" */,
 				049BC4392A0284E900071A12 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				C4E25A952A57EF6E00E6A236 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 040684FD2A01539800377094 /* Products */;
 			projectDirPath = "";
@@ -1491,6 +1497,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StreetDrop/StreetDropDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
@@ -1668,6 +1675,14 @@
 				kind = branch;
 			};
 		};
+		C4E25A952A57EF6E00E6A236 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1705,6 +1720,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 049BC4242A02826400071A12 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = "RxCocoa-Dynamic";
+		};
+		C4E25A962A57EF6E00E6A236 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C4E25A952A57EF6E00E6A236 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
