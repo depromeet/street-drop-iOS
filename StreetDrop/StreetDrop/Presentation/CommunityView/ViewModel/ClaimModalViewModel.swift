@@ -10,6 +10,10 @@ import Foundation
 import RxSwift
 import RxRelay
 
+protocol ClaimModalViewModelDelegate {
+    func showToast(state: ToastView.State, text: String)
+}
+
 final class ClaimModalViewModel {
     struct Input {
         let tapClaimOption: Observable<Claim>
@@ -17,12 +21,13 @@ final class ClaimModalViewModel {
     }
 
     struct Output {
-        var claimStatusResults: PublishRelay<String> = .init()
+        var dismiss: PublishRelay<Void> = .init()
     }
 
     private let itemID: Int
     private var claimOption: Claim?
     private let communityModel: CommunityModel
+    var delegate: ClaimModalViewModelDelegate?
 
     init(itemID: Int,
          claimOption: Claim? = nil,
@@ -44,7 +49,8 @@ final class ClaimModalViewModel {
         input.tapSendButton
             .subscribe(onNext: { [weak self] in
                 guard let self = self,
-                      let claimOption = self.claimOption else { return }
+                      let claimOption = self.claimOption,
+                      let delegate = self.delegate else { return }
 
                 self.communityModel.claimComment(
                     itemID: self.itemID,
@@ -52,17 +58,16 @@ final class ClaimModalViewModel {
                 )
                     .subscribe(onSuccess: { response in
                         if (200...299).contains(response) {
-                            // ✅ TODO: 토스트 문구 변경하기
-                            print("\(response), 신고 성공 토스트 문구")
-                            output.claimStatusResults.accept("신고 성공 토스트 문구")
+                            delegate.showToast(state: .success, text: "정상적으로 신고가 접수되었습니다")
                         } else if response == 409 {
-                            print("\(response), 이미 신고했습니다. 토스트 문구")
-                            output.claimStatusResults.accept("이미 신고했습니다. 토스트 문구")
+                            delegate.showToast(state: .success, text: "이미 신고한 게시글입니다")
                         } else {
-                            output.claimStatusResults.accept("네트워크 확인 토스트 문구")
+                            delegate.showToast(state: .fail, text: "네트워크를 확인해주세요")
                         }
+                        output.dismiss.accept(())
                     }, onFailure: { error in
-                        output.claimStatusResults.accept("네트워크 확인 토스트 문구")
+                        delegate.showToast(state: .fail, text: "네트워크를 확인해주세요")
+                        output.dismiss.accept(())
                         print(error.localizedDescription)
                     }).disposed(by: disposedBag)
             }).disposed(by: disposedBag)

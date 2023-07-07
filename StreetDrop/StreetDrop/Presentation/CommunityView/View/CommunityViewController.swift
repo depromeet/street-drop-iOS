@@ -423,15 +423,17 @@ private extension CommunityViewController {
                         itemId: itemID,
                         musicIndex: self.viewModel.currentIndex
                     )
-                    optionModalViewModel.delegate = self
-
                     let modalView = OptionModalViewController(viewModel: optionModalViewModel)
+
+                    optionModalViewModel.delegate = self
                     modalView.modalPresentationStyle = .overCurrentContext
                     self.navigationController?.present(modalView, animated: true)
                 //남이 드랍한 음악이면 신고 모달
                 } else {
                     let claimModalViewModel = ClaimModalViewModel(itemID: itemID)
                     let modalView = ClaimModalViewController(viewModel: claimModalViewModel)
+
+                    claimModalViewModel.delegate = self
                     modalView.modalPresentationStyle = .overCurrentContext
                     self.navigationController?.present(modalView, animated: true)
                 }
@@ -565,7 +567,7 @@ private extension CommunityViewController {
         commentStackView.snp.makeConstraints {
             $0.top.lessThanOrEqualTo(musicInfoStackView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.9)
+            $0.leading.trailing.equalToSuperview().inset(24)
             $0.height.equalToSuperview().multipliedBy(0.33)
         }
 
@@ -751,5 +753,16 @@ extension CommunityViewController: EditViewModelDelegate {
     func editComment(editedComment: String, musicIndex: Int) {
         self.commentTextView.text = editedComment
         self.editEvent.accept((editedComment: editedComment, index: musicIndex))
+    }
+}
+
+extension CommunityViewController: ClaimModalViewModelDelegate, Toastable {
+    func showToast(state: ToastView.State, text: String) {
+        switch state {
+        case .success:
+            showSuccessNormalToast(text: text, bottomInset: 16, duration: .now() + 3)
+        case .fail:
+            showFailNormalToast(text: text, bottomInset: 16, duration: .now() + 3)
+        }
     }
 }
