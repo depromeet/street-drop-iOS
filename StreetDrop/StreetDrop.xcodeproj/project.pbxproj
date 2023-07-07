@@ -149,6 +149,8 @@
 		C4D16FC92A1B9338008B076F /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */; };
 		C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */; };
 		C4E0943B2A4DF002000B4513 /* VillageNameResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */; };
+		C4E25A8A2A57D42C00E6A236 /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4E25A892A57D42C00E6A236 /* GoogleService-Info-Prod.plist */; };
+		C4E25A8C2A57DC1700E6A236 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4E25A8B2A57DC1700E6A236 /* GoogleService-Info-Dev.plist */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
 /* End PBXBuildFile section */
 
@@ -292,6 +294,8 @@
 		C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+LineHeight.swift"; sourceTree = "<group>"; };
 		C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VillageNameResponseDTO.swift; sourceTree = "<group>"; };
+		C4E25A892A57D42C00E6A236 /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
+		C4E25A8B2A57DC1700E6A236 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -485,6 +489,7 @@
 				040685082A01539800377094 /* Assets.xcassets */,
 				C4D16FC52A1B9184008B076F /* Font */,
 				0406850D2A01539800377094 /* Info.plist */,
+				C4E25A942A57EC4300E6A236 /* Firebase */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -1000,6 +1005,15 @@
 			path = VillageName;
 			sourceTree = "<group>";
 		};
+		C4E25A942A57EC4300E6A236 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				C4E25A8B2A57DC1700E6A236 /* GoogleService-Info-Dev.plist */,
+				C4E25A892A57D42C00E6A236 /* GoogleService-Info-Prod.plist */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 		DD24191EB8D98350CCDA3174 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1021,6 +1035,7 @@
 				040684F92A01539800377094 /* Frameworks */,
 				040684FA2A01539800377094 /* Resources */,
 				D7AAC29D93F6B0DD182BBCE1 /* [CP] Embed Pods Frameworks */,
+				C4E25A8D2A57DD1E00E6A236 /* Firebase plist */,
 			);
 			buildRules = (
 			);
@@ -1113,7 +1128,9 @@
 				C4D16FC02A1B917B008B076F /* Pretendard-Medium.otf in Resources */,
 				0406850C2A01539800377094 /* LaunchScreen.storyboard in Resources */,
 				C4D16FC32A1B917B008B076F /* Pretendard-ExtraLight.otf in Resources */,
+				C4E25A8C2A57DC1700E6A236 /* GoogleService-Info-Dev.plist in Resources */,
 				C4D16FBC2A1B917B008B076F /* Pretendard-Regular.otf in Resources */,
+				C4E25A8A2A57D42C00E6A236 /* GoogleService-Info-Prod.plist in Resources */,
 				C4D16FBE2A1B917B008B076F /* Pretendard-SemiBold.otf in Resources */,
 				C4D16FBF2A1B917B008B076F /* Pretendard-Thin.otf in Resources */,
 				C4D16FBD2A1B917B008B076F /* Pretendard-ExtraBold.otf in Resources */,
@@ -1154,6 +1171,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		C4E25A8D2A57DD1E00E6A236 /* Firebase plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Firebase plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "case \"${CONFIGURATION}\" in\n  \"Debug\" )\ncp -r \"$SRCROOT/StreetDrop/Resource/Firebase/GoogleService-Info-Dev.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n  \"Release\" )\ncp -r \"$SRCROOT/StreetDrop/Resource/Firebase/GoogleService-Info-Prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n*)\n;;\nesac\n";
 		};
 		D7AAC29D93F6B0DD182BBCE1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

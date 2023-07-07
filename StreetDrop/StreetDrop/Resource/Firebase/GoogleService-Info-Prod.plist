@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>551650109166-orotdhv5uocdsdj4an3flog42dho7qur.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.551650109166-orotdhv5uocdsdj4an3flog42dho7qur</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBc4-kcXA5HGORAmn3gAUMxgJ4ASm9zUhM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>551650109166</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.depromeet.StreetDropRelease</string>
+	<key>PROJECT_ID</key>
+	<string>street-drop</string>
+	<key>STORAGE_BUCKET</key>
+	<string>street-drop.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:551650109166:ios:0ab9f4af2b9fac7e1a35ff</string>
+</dict>
+</plist>
