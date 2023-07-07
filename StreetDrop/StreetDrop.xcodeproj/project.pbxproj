@@ -81,6 +81,7 @@
 		415113272A165DC50051F809 /* MusicDropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415113262A165DC50051F809 /* MusicDropViewController.swift */; };
 		41589AB82A46D82F0029A2EE /* DropAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41589AB72A46D82F0029A2EE /* DropAnimationView.swift */; };
 		41589ABA2A474B3D0029A2EE /* CommunityGuideDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41589AB92A474B3D0029A2EE /* CommunityGuideDetailView.swift */; };
+		41A3DDEB2A58428F004CFA2F /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A3DDEA2A58428F004CFA2F /* ToastView.swift */; };
 		41A9BEB02A4AF45300F3605C /* ClaimModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEAF2A4AF45300F3605C /* ClaimModalViewModel.swift */; };
 		41A9BEB72A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEB62A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift */; };
 		41A9BEB92A4DCA4A00F3605C /* ClaimCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */; };
@@ -239,6 +240,7 @@
 		415113262A165DC50051F809 /* MusicDropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDropViewController.swift; sourceTree = "<group>"; };
 		41589AB72A46D82F0029A2EE /* DropAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropAnimationView.swift; sourceTree = "<group>"; };
 		41589AB92A474B3D0029A2EE /* CommunityGuideDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityGuideDetailView.swift; sourceTree = "<group>"; };
+		41A3DDEA2A58428F004CFA2F /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		41A9BEAF2A4AF45300F3605C /* ClaimModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimModalViewModel.swift; sourceTree = "<group>"; };
 		41A9BEB62A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimCommentRequestDTO+Mapping.swift"; sourceTree = "<group>"; };
 		41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimCommentRepository.swift; sourceTree = "<group>"; };
@@ -750,6 +752,7 @@
 			isa = PBXGroup;
 			children = (
 				415113292A16635D0051F809 /* Extension */,
+				41A3DDEA2A58428F004CFA2F /* ToastView.swift */,
 				4141398E2A1FA252005418A1 /* PaddingLabel.swift */,
 				41BCFD442A38C099001D3E5F /* Alertable.swift */,
 				413ABEE72A39BBA500EA1010 /* Toastable.swift */,
@@ -1196,6 +1199,7 @@
 				412D668C2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift in Sources */,
 				41396DA92A51B8F700B69341 /* EditInfo.swift in Sources */,
 				18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */,
+				41A3DDEB2A58428F004CFA2F /* ToastView.swift in Sources */,
 				C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */,
 				C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */,
 				41396DA12A51B0DF00B69341 /* EditViewController.swift in Sources */,
