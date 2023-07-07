@@ -368,24 +368,31 @@ private extension MusicDropViewController {
 
         // 드랍 성공여부
         output.isSuccessDrop
-            .asDriver(onErrorJustReturn: false)
-            .drive(onNext: { [weak self] isSuccess in
-                guard isSuccess else {
-                    self?.removeDropAnimation()
-                    self?.showFailDropToast()
+            .asDriver(onErrorJustReturn: (isSuccess: false, toastTitle: nil))
+            .drive(onNext: { [weak self] (isSuccess, toastTitle) in
+                guard let self = self else { return }
+
+                if isSuccess {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    })
+
                     return
                 }
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                    self?.navigationController?.popToRootViewController(animated: true)
-                })
-            }).disposed(by: disposeBag)
+                if !isSuccess {
+                    self.removeDropAnimation()
 
-        // 👉 TODO: Error팝업띄우기
-        output.errorDescription
-            .asDriver()
-            .drive(onNext: { errorDescription in
-                // 팝업띄우기 로직
+                    guard let toastTitle = toastTitle else { return }
+
+                    self.showFailNormalToast(
+                        text: toastTitle,
+                        bottomInset: 8 + self.dropButton.frame.height + 24,
+                        duration: .now() + 5
+                    )
+
+                    return
+                }
             }).disposed(by: disposeBag)
     }
 
@@ -502,7 +509,7 @@ private extension MusicDropViewController {
 
         dropButton.snp.makeConstraints {
             $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(24)
-            $0.bottom.equalTo(contentView.snp.bottom).inset(30)
+            $0.bottom.equalTo(contentView.snp.bottom).inset(8)
             $0.height.equalTo(54)
             $0.centerX.equalTo(contentView)
         }

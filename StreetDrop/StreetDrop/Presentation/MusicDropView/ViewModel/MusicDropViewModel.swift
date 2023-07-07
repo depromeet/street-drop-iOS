@@ -26,8 +26,7 @@ class MusicDropViewModel: ViewModel {
         var musicTitle: PublishRelay<String> = .init()
         var artistTitle: PublishRelay<String> = .init()
         var albumImage: PublishRelay<Data> = .init()
-        var isSuccessDrop: PublishRelay<Bool> = .init()
-        let errorDescription: BehaviorRelay<String?> = .init(value: nil)
+        var isSuccessDrop: PublishRelay<(isSuccess: Bool, toastTitle: String?)> = .init()
     }
 
     enum State {
@@ -63,7 +62,7 @@ class MusicDropViewModel: ViewModel {
                         do {
                             output.albumImage.accept(try Data(contentsOf: albumImageUrl))
                         } catch {
-                            output.errorDescription.accept("albumImage 불러오기에 실패했습니다")
+                            print(error.localizedDescription)
                         }
                     }
                 }
@@ -97,15 +96,18 @@ class MusicDropViewModel: ViewModel {
                 self.musicDropModel.drop(droppingInfo: self.droppingInfo, content: comment)
                     .subscribe(onSuccess: { response in
                         if !(200...299).contains(response) {
-                            output.errorDescription.accept("저장에 실패했습니다")
-                            output.isSuccessDrop.accept(false)
+                            output.isSuccessDrop.accept(
+                                (isSuccess: false, toastTitle: "음악 드랍에 실패하였습니다. 다시 시도해주세요")
+                            )
                             return
                         }
-                        output.isSuccessDrop.accept(true)
+
+                        output.isSuccessDrop.accept((isSuccess: true, toastTitle: nil))
                     }, onFailure: { error in
-                        output.errorDescription.accept("저장에 실패했습니다")
                         print(error.localizedDescription)
-                        output.isSuccessDrop.accept(false)
+                        output.isSuccessDrop.accept(
+                            (isSuccess: false, toastTitle: "음악 드랍에 실패하였습니다. 다시 시도해주세요")
+                        )
                     }).disposed(by: disposedBag)
             }).disposed(by: disposedBag)
 
