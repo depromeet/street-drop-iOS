@@ -178,10 +178,9 @@ private extension ClaimModalViewController {
 
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
 
-        output.claimStatusResults
-            .asDriver(onErrorJustReturn: "")
-            .drive(onNext: { [weak self] claim in
-               // 신고 결과 토스트 띄어주기
+        output.dismiss
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
                 self?.dismiss()
             }).disposed(by: disposeBag)
     }
