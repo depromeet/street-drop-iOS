@@ -9,58 +9,54 @@ import UIKit
 
 import SnapKit
 
-// 1차 베타 버전에만 사용예정
-protocol Toastable { }
+protocol Toastable where Self: UIViewController { }
 
-extension Toastable where Self: UIViewController {
-    func showFailDropToast() {
-        let toast = UIImage(named: "toast_failDrop")
-        let toastImageView = UIImageView(image: toast)
-        toastImageView.contentMode = .scaleAspectFit
+extension Toastable {
 
-        self.view.addSubview(toastImageView)
-        toastImageView.snp.makeConstraints {
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(96.4)
-            $0.left.right.equalTo(self.view.safeAreaLayoutGuide).inset(15)
-            $0.height.equalTo(toastImageView.snp.width).multipliedBy(0.28)
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
-            toastImageView.removeFromSuperview()
-        })
+    func showSuccessNormalToast(text: String, bottomInset: CGFloat, duration: DispatchTime) {
+        let toastView = ToastView(state: .success, text: text)
+        showToast(toastView, bottomInset: bottomInset, duration: duration)
     }
 
-    func showSuccessDropToast() {
-        let toast = UIImage(named: "toast_successDrop")
-        let toastImageView = UIImageView(image: toast)
-        toastImageView.contentMode = .scaleAspectFit
-
-        self.view.addSubview(toastImageView)
-        toastImageView.snp.makeConstraints {
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(96.4)
-            $0.left.right.equalTo(self.view.safeAreaLayoutGuide).inset(15)
-            $0.height.equalTo(toastImageView.snp.width).multipliedBy(0.28)
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
-            toastImageView.removeFromSuperview()
-        })
+    func showFailNormalToast(text: String, bottomInset: CGFloat, duration: DispatchTime) {
+        let toastView = ToastView(state: .fail, text: text)
+        showToast(toastView, bottomInset: bottomInset, duration: duration)
     }
 
-    func showWaitingOpenToast() {
-        let toast = UIImage(named: "toast_waitingOpen")
-        let toastImageView = UIImageView(image: toast)
-        toastImageView.contentMode = .scaleAspectFit
+    func showSuccessButtonToast(
+        text: String,
+        bottomInset: CGFloat,
+        buttonTitle: String,
+        duration: DispatchTime
+    ) {
+        let toastView = ToastView(state: .success, text: text, buttonTitle: buttonTitle)
+        showToast(toastView, bottomInset: bottomInset, duration: duration)
+    }
 
-        self.view.addSubview(toastImageView)
-        toastImageView.snp.makeConstraints {
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(96.4)
-            $0.left.right.equalTo(self.view.safeAreaLayoutGuide).inset(15)
-            $0.height.equalTo(toastImageView.snp.width).multipliedBy(0.28)
+    func showFailButtonToast(
+        text: String,
+        bottomInset: CGFloat,
+        buttonTitle: String,
+        duration: DispatchTime
+    ) {
+        let toastView = ToastView(state: .fail, text: text, buttonTitle: buttonTitle)
+        showToast(toastView, bottomInset: bottomInset, duration: duration)
+    }
+}
+
+// MARK: - Private
+
+private extension Toastable {
+    func showToast(_ toastView: ToastView, bottomInset: CGFloat, duration: DispatchTime) {
+        self.view.addSubview(toastView)
+
+        toastView.snp.makeConstraints {
+            $0.left.right.equalTo(self.view.safeAreaLayoutGuide).inset(24)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(bottomInset)
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
-            toastImageView.removeFromSuperview()
+        DispatchQueue.main.asyncAfter(deadline: duration, execute: {
+            toastView.removeFromSuperview()
         })
     }
 }
