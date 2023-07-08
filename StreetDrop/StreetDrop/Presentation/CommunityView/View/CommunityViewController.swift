@@ -613,7 +613,13 @@ private extension CommunityViewController {
 
 private extension CommunityViewController {
     func generateGenreLabels(genres: [String]) -> [PaddingLabel] {
+        var genres = genres
         var labels: [PaddingLabel] = []
+
+        if genres.count > 3 {
+            genres = Array(genres[0..<3])
+        }
+
         genres.forEach { genreTitle in
             let label = PaddingLabel(padding: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12))
             label.text = genreTitle
