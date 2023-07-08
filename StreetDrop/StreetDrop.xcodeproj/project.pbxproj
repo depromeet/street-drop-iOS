@@ -29,6 +29,8 @@
 		1824F1392A34A4AE00A10320 /* MusicCountByDongResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041038962A126E7B00BC5532 /* MusicCountByDongResponseDTO+Mapping.swift */; };
 		1824F13A2A34A4B700A10320 /* MusicCountEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1824F1362A349F3700A10320 /* MusicCountEntity.swift */; };
 		1824F13B2A34A4C900A10320 /* PoiEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18683FE02A349109005A94AC /* PoiEntity.swift */; };
+		1867C8202A4DDB8C00F8EC48 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1867C81F2A4DDB8C00F8EC48 /* MyPageViewController.swift */; };
+		1867C8242A4FFCDF00F8EC48 /* MusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1867C8232A4FFCDF00F8EC48 /* MusicTableViewCell.swift */; };
 		18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18683FD82A2A251E005A94AC /* ViewModel.swift */; };
 		18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18683FDB2A348B15005A94AC /* DefaultMainRepository.swift */; };
 		18683FDF2A348B25005A94AC /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18683FDE2A348B25005A94AC /* MainRepository.swift */; };
@@ -207,6 +209,8 @@
 		04FB1F272A021B0A0064B3C8 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		04FB1F312A021C330064B3C8 /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		1824F1362A349F3700A10320 /* MusicCountEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCountEntity.swift; sourceTree = "<group>"; };
+		1867C81F2A4DDB8C00F8EC48 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		1867C8232A4FFCDF00F8EC48 /* MusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTableViewCell.swift; sourceTree = "<group>"; };
 		18683FD82A2A251E005A94AC /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		18683FDB2A348B15005A94AC /* DefaultMainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMainRepository.swift; sourceTree = "<group>"; };
 		18683FDE2A348B25005A94AC /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
@@ -449,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				C47C1D1C2A643BBF007317EA /* Splash */,
+				1867C81D2A4DDAB700F8EC48 /* MyPage */,
 				18683FD72A2A2510005A94AC /* Protocol */,
 				415113282A1663190051F809 /* Utils */,
 				415113222A165D940051F809 /* MusicDropView */,
@@ -569,6 +574,23 @@
 				18CB7BEC2A359F53002B31FB /* MusicWithinAreaEntity.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		1867C81D2A4DDAB700F8EC48 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				1867C81E2A4DDB7C00F8EC48 /* View */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		1867C81E2A4DDB7C00F8EC48 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1867C81F2A4DDB8C00F8EC48 /* MyPageViewController.swift */,
+				1867C8232A4FFCDF00F8EC48 /* MusicTableViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		18683FD72A2A2510005A94AC /* Protocol */ = {
@@ -1370,6 +1392,7 @@
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
 				41A3DDF82A5AD222004CFA2F /* DefaultBlockUserRepository.swift in Sources */,
 				C47F02242A38633C00F48884 /* SettingsViewModel.swift in Sources */,
+				1867C8202A4DDB8C00F8EC48 /* MyPageViewController.swift in Sources */,
 				C40008EA2A32012B00EA7FA9 /* Music.swift in Sources */,
 				413ABEEC2A39D1E900EA1010 /* UIcolor+.swift in Sources */,
 				41A9BEBB2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift in Sources */,
@@ -1377,6 +1400,7 @@
 				414139922A20506D005418A1 /* CommunityViewModel.swift in Sources */,
 				41A9BEB72A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift in Sources */,
 				415113272A165DC50051F809 /* MusicDropViewController.swift in Sources */,
+				1867C8242A4FFCDF00F8EC48 /* MusicTableViewCell.swift in Sources */,
 				C45BF3A12A1D133000CEDE74 /* RecentMusicQueryDTO.swift in Sources */,
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
 				18CB7BED2A359F53002B31FB /* MusicWithinAreaEntity.swift in Sources */,
