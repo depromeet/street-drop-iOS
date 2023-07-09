@@ -13,6 +13,9 @@ import RxSwift
 import SnapKit
 
 final class MyPageViewController: UIViewController {
+    private var stickyTapListStackView: UIStackView?
+    private var stickyDimmedView: UIView?
+    
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -175,6 +178,7 @@ private extension MyPageViewController {
     func configureUI() {
         
         // MARK: - ViewController
+        
         self.view.backgroundColor = UIColor.gray900
         
         // MARK: - ScrollView
@@ -396,15 +400,102 @@ private extension MyPageViewController {
 
 extension MyPageViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 맨 위로 스크롤하기 버튼 활성화
         if scrollView == self.scrollView {
             let offsetY = scrollView.contentOffset.y
-            print(offsetY)
             if offsetY > 400 {
                 scrollToTopButton.isHidden = false
             } else {
                 scrollToTopButton.isHidden = true
             }
         }
+        
+        // 드랍, 좋아요 탭 상단에 고정시키기
+        if scrollView.contentOffset.y > 343 {
+            if self.stickyTapListStackView == nil {
+                self.stickyTapListStackView = createTapListStackView()
+                self.stickyDimmedView = createDimmedView()
+                
+                guard let stickyTapListStackView = stickyTapListStackView else { return }
+                guard let stickyDimmedView = stickyDimmedView else { return }
+                
+                self.view.addSubview(stickyTapListStackView)
+                stickyTapListStackView.snp.makeConstraints { make in
+                    make.top.equalTo(self.view.safeAreaLayoutGuide)
+                    make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(24)
+                }
+                
+                self.view.addSubview(stickyDimmedView)
+                stickyDimmedView.snp.makeConstraints { make in
+                    make.top.equalTo(stickyTapListStackView.snp.bottom)
+                    make.height.equalTo(24)
+                    make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+                }
+            }
+        } else {
+            if let stickyTapListStackView = self.stickyTapListStackView,
+               let stickyDimmedView = self.stickyDimmedView {
+                stickyTapListStackView.removeFromSuperview()
+                stickyDimmedView.removeFromSuperview()
+            }
+            self.stickyTapListStackView = nil
+            self.stickyDimmedView = nil
+        }
+    }
+    
+    private func createDimmedView() -> UIView {
+        let dimmedView = UIView()
+        dimmedView.backgroundColor = UIColor.gray900
+        let gradientLayer = CAGradientLayer()
+
+        let startColor = UIColor.gray900.cgColor
+        let endColor = UIColor.black.withAlphaComponent(0).cgColor
+        gradientLayer.colors = [startColor, endColor]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
+        dimmedView.layer.mask = gradientLayer
+        gradientLayer.frame = CGRect(origin: .zero, size: .init(width: self.view.frame.width, height: 24))
+        return dimmedView
+    }
+    
+    private func createTapListStackView() -> UIStackView {
+        let newStackView = UIStackView()
+        newStackView.axis = .horizontal
+        newStackView.spacing = 8
+        newStackView.alignment = .bottom
+        newStackView.backgroundColor = UIColor.gray900
+
+        let newDropButton = UIButton()
+        newDropButton.setTitle("드랍", for: .normal)
+        newDropButton.setTitleColor(.white, for: .normal)
+        newDropButton.setTitleColor(.lightGray, for: .highlighted)
+        newDropButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
+
+        let newLikeButton = UIButton()
+        newLikeButton.setTitle("좋아요", for: .normal)
+        newLikeButton.setTitleColor(UIColor.gray400, for: .normal)
+        newLikeButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+        newLikeButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
+
+        let newLabel = UILabel()
+        newLabel.text = "전체 0개"
+        newLabel.textColor = UIColor.gray400
+        newLabel.font = .pretendard(size: 14, weightName: .regular)
+
+        newStackView.addArrangedSubview(newDropButton)
+        newStackView.addArrangedSubview(newLikeButton)
+        newStackView.addArrangedSubview(
+            {
+                let spacerView = UIView()
+                spacerView.translatesAutoresizingMaskIntoConstraints = false
+                spacerView.backgroundColor = UIColor.clear
+                spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+                return spacerView
+            }()
+        )
+        newStackView.addArrangedSubview(newLabel)
+
+        return newStackView
     }
 }
 
