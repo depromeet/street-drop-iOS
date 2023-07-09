@@ -30,4 +30,25 @@ extension Alertable where Self: UIViewController {
         requestLocationServiceAlert.addAction(cancel)
         present(requestLocationServiceAlert, animated: true)
     }
+
+    func showAlert(
+        state: AlertViewController.State,
+        title: String,
+        subText: String,
+        confirmButtonTitle: String,
+        confirmButtonAction: UIAction
+    ){
+        let alertViewController = AlertViewController(
+            state: state,
+            title: title,
+            subText: subText,
+            confirmButtonTitle: confirmButtonTitle,
+            confirmButtonAction: confirmButtonAction
+        )
+
+        alertViewController.modalPresentationStyle = .overFullScreen
+        alertViewController.modalTransitionStyle = .crossDissolve
+
+        self.navigationController?.present(alertViewController, animated: true)
+    }
 }
