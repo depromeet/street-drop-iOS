@@ -23,12 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Messaging.messaging().delegate = self
         
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions
-        ) { granted, _ in
-            if granted {
-                print("알림 등록이 완료되었습니다.")
-            }
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, _ in
+            granted ? print("알림 등록이 완료되었습니다.") : Void()
         }
         application.registerForRemoteNotifications()
         
@@ -73,6 +69,11 @@ extension AppDelegate: MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         guard let fcmToken = fcmToken else { return }
-        
+        guard fcmToken == UserDefaults.standard.string(forKey: UserDefaultKey.fcmToken) ?? "" else {
+            //TODO: 푸시 등록 API 추가
+            
+            UserDefaults.standard.set(fcmToken, forKey: UserDefaultKey.fcmToken)
+            return
+        }
     }
 }
