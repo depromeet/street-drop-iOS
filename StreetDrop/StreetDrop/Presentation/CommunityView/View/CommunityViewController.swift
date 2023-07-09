@@ -794,7 +794,7 @@ private extension CommunityViewController {
             firstOptionActon: presentClaimModalView(),
             secondOptionIcon: UIImage(named: "blockIcon"),
             secondOptionTitle: "차단하기",
-            secondOptionAction: blockUser()
+            secondOptionAction: showBlockAlert()
         )
 
         modalView.modalPresentationStyle = .overCurrentContext
@@ -813,6 +813,22 @@ private extension CommunityViewController {
             modalView.modalPresentationStyle = .overCurrentContext
             self.navigationController?.dismiss(animated: true)
             self.navigationController?.present(modalView, animated: true)
+        }
+    }
+
+    func showBlockAlert() -> UIAction {
+        return UIAction { [weak self] _ in
+            guard let self = self else { return }
+
+            self.navigationController?.dismiss(animated: true)
+
+            self.showAlert(
+                state: .gray,
+                title: "사용자를 차단하시겠어요?",
+                subText: "차단하는 사용자가 드랍하는\n모든 음악을 숨깁니다.",
+                confirmButtonTitle: "차단하기",
+                confirmButtonAction: self.blockUser()
+            )
         }
     }
 
