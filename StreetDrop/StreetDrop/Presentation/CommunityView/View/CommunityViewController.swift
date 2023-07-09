@@ -423,14 +423,9 @@ private extension CommunityViewController {
                     return
                 }
 
-                //남이 드랍한 음악이면 신고 모달
+                //남이 드랍한 음악이면 신고/차단 모달
                 if !isMyDrop {
-                    let claimModalViewModel = ClaimModalViewModel(itemID: itemID)
-                    let modalView = ClaimModalViewController(viewModel: claimModalViewModel)
-
-                    claimModalViewModel.delegate = self
-                    modalView.modalPresentationStyle = .overCurrentContext
-                    self.navigationController?.present(modalView, animated: true)
+                    self.showClaimAndBlockOptionModal()
                 }
             }
             .disposed(by: disposeBag)
@@ -779,13 +774,38 @@ private extension CommunityViewController {
     }
 
     func showClaimAndBlockOptionModal() {
-        let itemID = self.viewModel.communityInfos[self.viewModel.currentIndex].id
+        let modalView = OptionModalViewController(
+            firstOptionIcon: UIImage(named: "sirenIcon"),
+            firstOptionTitle: "신고하기",
+            firstOptionActon: presentClaimModalView(),
+            secondOptionIcon: UIImage(named: "blockIcon"),
+            secondOptionTitle: "차단하기",
+            secondOptionAction: blockUser()
+        )
 
-        let claimModalViewModel = ClaimModalViewModel(itemID: itemID)
-        let modalView = ClaimModalViewController(viewModel: claimModalViewModel)
-
-        claimModalViewModel.delegate = self
         modalView.modalPresentationStyle = .overCurrentContext
         self.navigationController?.present(modalView, animated: true)
+    }
+
+    func presentClaimModalView() -> UIAction {
+        return UIAction { _ in
+            let itemID = self.viewModel.communityInfos[self.viewModel.currentIndex].id
+
+            let claimModalViewModel = ClaimModalViewModel(itemID: itemID)
+            let modalView = ClaimModalViewController(viewModel: claimModalViewModel)
+
+            claimModalViewModel.delegate = self
+            modalView.modalPresentationStyle = .overCurrentContext
+            self.navigationController?.dismiss(animated: true)
+            self.navigationController?.present(modalView, animated: true)
+        }
+    }
+
+    func blockUser() -> UIAction {
+        return UIAction { _ in
+            print("차단하기API연결하기")
+            self.navigationController?.dismiss(animated: true)
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
 }
