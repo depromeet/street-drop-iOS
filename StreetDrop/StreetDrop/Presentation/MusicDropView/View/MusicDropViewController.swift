@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import SnapKit
 
-class MusicDropViewController: UIViewController, Toastable {
+class MusicDropViewController: UIViewController, Toastable, Alertable {
 
     enum Constant {
         static let textDefault = " "
@@ -312,7 +312,18 @@ private extension MusicDropViewController {
 
         cancelButton.rx.tap
             .bind { [weak self] in
-                self?.navigationController?.popToRootViewController(animated: true)
+                let dismissAction = UIAction {_ in
+                    self?.navigationController?.dismiss(animated: true)
+                    self?.navigationController?.popToRootViewController(animated: true)
+                }
+
+                self?.showAlert(
+                    state: .gray,
+                    title: "정말 나가시겠어요? 🥺",
+                    subText: "음악과 코멘트 내역은\n자동으로 저장되지 않아요.",
+                    confirmButtonTitle: "나가기",
+                    confirmButtonAction: dismissAction
+                )
             }
             .disposed(by: disposeBag)
     }
