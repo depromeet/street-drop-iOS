@@ -13,15 +13,40 @@ import RxRelay
 
 final class OptionModalViewController: UIViewController {
 
-    enum Constant {
-        static let editTitle: String = "수정하기"
-        static let deleteTitle: String = "삭제하기"
+    //MARK: - Life Cycle
+
+    init(
+        firstOptionIcon: UIImage?,
+        firstOptionTitle: String,
+        firstOptionActon: UIAction,
+        secondOptionIcon: UIImage?,
+        secondOptionTitle: String,
+        secondOptionAction: UIAction
+    ) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.firstOptionButton = self.generateOptionButton(
+            icon: firstOptionIcon,
+            title: firstOptionTitle
+        )
+
+        self.secondOptionButton = self.generateOptionButton(
+            icon: secondOptionIcon,
+            title: secondOptionTitle
+        )
+
+        firstOptionButton.addAction(firstOptionActon, for: .touchUpInside)
+        secondOptionButton.addAction(secondOptionAction, for: .touchUpInside)
     }
 
-    private let viewModel: OptionModalViewModel
-    private let disposeBag = DisposeBag()
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     //MARK: - UI
+    private var firstOptionButton: UIButton = UIButton()
+    private var secondOptionButton: UIButton = UIButton()
 
     private lazy var dimmedView: UIView = {
         let view = UIView()
@@ -54,33 +79,10 @@ final class OptionModalViewController: UIViewController {
         return view
     }()
 
-    private lazy var editButton: UIButton = generateOptionButton(
-        icon: UIImage(named: "editIcon"),
-        title: Constant.editTitle
-    )
-
-    private lazy var deleteButton: UIButton = generateOptionButton(
-        icon: UIImage(named: "deleteIcon"),
-        title: Constant.deleteTitle
-    )
-
-    //MARK: - Life Cycle
-
-    init(viewModel: OptionModalViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         bindAction()
-        bindViewModel()
         configureUI()
     }
 
@@ -106,28 +108,11 @@ private extension OptionModalViewController {
         dimmedView.addGestureRecognizer(tapGestureRecognizer)
     }
 
-    // MARK: - Data Binding
-
-    func bindViewModel() {
-        let input = OptionModalViewModel.Input(
-            tapEditOption: editButton.rx.tap.asObservable(),
-            tapDeleteOption: deleteButton.rx.tap.asObservable()
-        )
-
-        let output = viewModel.convert(input: input, disposedBag: disposeBag)
-
-        output.dismiss
-            .asDriver(onErrorJustReturn: ())
-            .drive(onNext: { [weak self] in
-                self?.dismiss()
-            }).disposed(by: disposeBag)
-    }
-
     // MARK: - UI
 
     func configureUI() {
         let defaultHeigh: CGFloat = 176
-        [editButton, dividingLineView, deleteButton].forEach {
+        [firstOptionButton, dividingLineView, secondOptionButton].forEach {
             optionStackView.addArrangedSubview($0)
         }
 
@@ -156,8 +141,8 @@ private extension OptionModalViewController {
             $0.leading.trailing.equalToSuperview()
         }
 
-        editButton.snp.makeConstraints {
-            $0.height.equalTo(deleteButton.snp.height)
+        firstOptionButton.snp.makeConstraints {
+            $0.height.equalTo(secondOptionButton.snp.height)
         }
     }
 }
