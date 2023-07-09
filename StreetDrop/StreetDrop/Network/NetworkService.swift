@@ -23,6 +23,7 @@ enum NetworkService {
     case editComment(itemID: Int, requestDTO: EditCommentRequestDTO)
     case deleteMusic(itemID: Int)
     case getVillageName(latitude: Double, longitude: Double)
+    case blockUser(blockUserID: Int)
 }
 
 extension NetworkService: TargetType {
@@ -70,6 +71,8 @@ extension NetworkService: TargetType {
             return "/items/\(itemID)"
         case .getVillageName:
             return "/geo/reverse-geocode"
+        case .blockUser:
+            return "/users/block"
         }
     }
     
@@ -86,7 +89,8 @@ extension NetworkService: TargetType {
         case .dropMusic,
                 .postLikeUp,
                 .postLikeDown,
-                .claimComment:
+                .claimComment,
+                .blockUser:
             return .post
         case .editComment:
             return .patch
@@ -153,6 +157,11 @@ extension NetworkService: TargetType {
                     "latitude": String(latitude),
                     "longitude": String(longitude)
                 ],
+                encoding: URLEncoding.queryString
+            )
+        case .blockUser(let blockUserID):
+            return .requestParameters(
+                parameters: ["blockUserID": blockUserID],
                 encoding: URLEncoding.queryString
             )
         }

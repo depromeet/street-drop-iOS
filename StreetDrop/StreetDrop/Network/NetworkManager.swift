@@ -99,4 +99,10 @@ struct NetworkManager {
             .retry(3)
             .map { $0.data }
     }
+
+    func blockUser(_ blockUserID: Int) -> Single<Int> {
+        return provider.rx.request(.blockUser(blockUserID: blockUserID))
+            .retry(3)
+            .map { $0.statusCode }
+    }
 }
