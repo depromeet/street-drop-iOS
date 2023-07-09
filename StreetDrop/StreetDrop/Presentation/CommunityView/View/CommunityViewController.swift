@@ -415,17 +415,15 @@ private extension CommunityViewController {
         output.isMyDrop
             .asDriver(onErrorJustReturn: false)
             .drive { [weak self] isMyDrop in
-                guard let self = self else { return }
-                let itemID = self.viewModel.communityInfos[self.viewModel.currentIndex].id
                 //내가 드랍한 음악이면 수정/삭제 모달
                 if isMyDrop {
-                    self.showEditAndDeleteOptionModalView()
+                    self?.showEditAndDeleteOptionModalView()
                     return
                 }
 
                 //남이 드랍한 음악이면 신고/차단 모달
                 if !isMyDrop {
-                    self.showClaimAndBlockOptionModal()
+                    self?.showClaimAndBlockOptionModal()
                 }
             }
             .disposed(by: disposeBag)
@@ -751,7 +749,9 @@ private extension CommunityViewController {
     }
 
     func presentEditView() -> UIAction {
-        return UIAction { _ in
+        return UIAction { [weak self] _ in
+            guard let self = self else { return }
+
             let musicIndex = self.viewModel.currentIndex
             let editInfo = self.viewModel.communityInfos[musicIndex].convertToEditInfo()
             let editViewModel = EditViewModel(editInfo: editInfo, musicIndex: musicIndex)
@@ -764,10 +764,10 @@ private extension CommunityViewController {
     }
 
     func deleteComment() -> UIAction {
-        return UIAction { _ in
-            self.navigationController?.dismiss(animated: true)
+        return UIAction { [weak self] _ in
+            self?.navigationController?.dismiss(animated: true)
 
-            self.albumCollectionView.performBatchUpdates { [weak self] in
+            self?.albumCollectionView.performBatchUpdates {
                 self?.deleteEvent.accept(())
             }
         }
@@ -788,9 +788,10 @@ private extension CommunityViewController {
     }
 
     func presentClaimModalView() -> UIAction {
-        return UIAction { _ in
-            let itemID = self.viewModel.communityInfos[self.viewModel.currentIndex].id
+        return UIAction {  [weak self] _ in
+            guard let self = self else { return }
 
+            let itemID = self.viewModel.communityInfos[self.viewModel.currentIndex].id
             let claimModalViewModel = ClaimModalViewModel(itemID: itemID)
             let modalView = ClaimModalViewController(viewModel: claimModalViewModel)
 
@@ -802,10 +803,10 @@ private extension CommunityViewController {
     }
 
     func blockUser() -> UIAction {
-        return UIAction { _ in
+        return UIAction { [weak self] _ in
             print("차단하기API연결하기")
-            self.navigationController?.dismiss(animated: true)
-            self.navigationController?.popToRootViewController(animated: true)
+            self?.navigationController?.dismiss(animated: true)
+            self?.navigationController?.popToRootViewController(animated: true)
         }
     }
 }
