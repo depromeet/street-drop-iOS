@@ -11,7 +11,7 @@ import RxRelay
 import RxSwift
 import SnapKit
 
-final class CommunityViewController: UIViewController {
+final class CommunityViewController: UIViewController, Toastable, Alertable {
     private let viewModel: CommunityViewModel
     private let disposeBag = DisposeBag()
     private let viewDidLoadEvent = PublishRelay<Void>()
@@ -433,6 +433,20 @@ private extension CommunityViewController {
             .drive (onNext: { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
+
+        output.toast
+            .asDriver(onErrorJustReturn: (isSuccess: false, title: ""))
+            .drive(onNext: { [weak self] (isSuccess, title) in
+                if isSuccess {
+                    self?.showSuccessNormalToast(text: title, bottomInset: 16, duration: .now()+3)
+                    return
+                }
+
+                if !isSuccess {
+                    self?.showFailNormalToast(text: title, bottomInset: 16, duration: .now()+3)
+                    return
+                }
+            }).disposed(by: disposeBag)
     }
 
     // MARK: - UI
@@ -721,7 +735,7 @@ extension CommunityViewController: EditViewModelDelegate {
     }
 }
 
-extension CommunityViewController: ClaimModalViewModelDelegate, Toastable {
+extension CommunityViewController: ClaimModalViewModelDelegate {
     func showToast(state: ToastView.State, text: String) {
         switch state {
         case .success:
