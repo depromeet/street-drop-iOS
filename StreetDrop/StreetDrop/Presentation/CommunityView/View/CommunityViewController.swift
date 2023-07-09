@@ -18,6 +18,7 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
     private let changedAlbumCollectionViewIndexEvent = PublishRelay<Int>()
     private let deleteEvent = PublishRelay<Void>()
     private let editEvent = PublishRelay<(editedComment: String, index: Int)>()
+    private let blockEvent = PublishRelay<Void>()
 
     init(viewModel: CommunityViewModel) {
         self.viewModel = viewModel
@@ -305,7 +306,8 @@ private extension CommunityViewController {
             tapLikeButtonEvent: self.likeButton.rx.tap.asObservable(),
             tapOptionButtonEvent: self.optionButton.rx.tap.asObservable(),
             deleteEvent: self.deleteEvent.asObservable(),
-            editEvent: self.editEvent.asObservable()
+            editEvent: self.editEvent.asObservable(),
+            blockEvent: self.blockEvent.asObservable()
         )
 
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
@@ -834,9 +836,8 @@ private extension CommunityViewController {
 
     func blockUser() -> UIAction {
         return UIAction { [weak self] _ in
-            print("차단하기API연결하기")
             self?.navigationController?.dismiss(animated: true)
-            self?.navigationController?.popToRootViewController(animated: true)
+            self?.blockEvent.accept(())
         }
     }
 }
