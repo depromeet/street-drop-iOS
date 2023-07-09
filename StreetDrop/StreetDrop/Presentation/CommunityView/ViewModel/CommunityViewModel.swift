@@ -19,6 +19,7 @@ final class CommunityViewModel: ViewModel {
         let tapOptionButtonEvent: Observable<Void>
         let deleteEvent: Observable<Void>
         let editEvent: Observable<(editedComment: String, index: Int)>
+        let blockEvent: Observable<Void>
     }
 
     struct Output {
@@ -133,6 +134,33 @@ final class CommunityViewModel: ViewModel {
             .subscribe(onNext: { [weak self] (editedComment, index) in
                 self?.communityInfos[index].content = editedComment
             }).disposed(by: disposedBag)
+
+        input.blockEvent
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+
+                let index = self.currentIndex
+                let blockUserID = self.communityInfos[index].userId
+
+                self.communityModel.blockUser(blockUserID)
+                    .subscribe(onSuccess: { response in
+                        if (200...299).contains(response) {
+                            self.handleBlockedUserComment()
+                            self.changeCommunityInfoForIndex(index: index, output: output)
+                            output.toast.accept((isSuccess: true, title: "차단이 완료되었습니다"))
+                        } else {
+                            output.toast.accept(
+                                (isSuccess: false, title: "차단에 실패했습니다. 네트워크를 확인해주세요")
+                            )
+                        }
+                    }, onFailure: { error in
+                        output.toast.accept(
+                            (isSuccess: false, title: "차단에 실패했습니다. 네트워크를 확인해주세요")
+                        )
+                        print(error.localizedDescription)
+                    }).disposed(by: disposedBag)
+            }).disposed(by: disposedBag)
+
 
         return output
     }
@@ -315,5 +343,16 @@ private extension CommunityViewModel {
     private func removeOtherSideTwoInfoAtEachEnd() {
         //ex [4,5] + [1,2,3,4,5] + [1,2] ===>>> [1,2,3,4,5]
         self.communityInfos = Array(communityInfos[2...(communityInfos.count-3)])
+    }
+
+    private func handleBlockedUserComment() {
+        let blockUserID = communityInfos[currentIndex].userId
+
+        for (index, user) in communityInfos.enumerated() {
+            if user.userId == blockUserID {
+                communityInfos[index].content = "차단된 게시글입니다."
+                communityInfos[index].userName = "차단된 사용자"
+            }
+        }
     }
 }
