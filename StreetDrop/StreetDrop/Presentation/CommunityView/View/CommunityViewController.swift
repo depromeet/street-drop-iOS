@@ -16,7 +16,7 @@ final class CommunityViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let changedAlbumCollectionViewIndexEvent = PublishRelay<Int>()
-    private let deleteEvent = PublishRelay<Int>()
+    private let deleteEvent = PublishRelay<Void>()
     private let editEvent = PublishRelay<(editedComment: String, index: Int)>()
 
     init(viewModel: CommunityViewModel) {
@@ -419,17 +419,12 @@ private extension CommunityViewController {
                 let itemID = self.viewModel.communityInfos[self.viewModel.currentIndex].id
                 //내가 드랍한 음악이면 수정/삭제 모달
                 if isMyDrop {
-                    let optionModalViewModel = OptionModalViewModel(
-                        itemId: itemID,
-                        musicIndex: self.viewModel.currentIndex
-                    )
-                    let modalView = OptionModalViewController(viewModel: optionModalViewModel)
+                    self.showEditAndDeleteOptionModalView()
+                    return
+                }
 
-                    optionModalViewModel.delegate = self
-                    modalView.modalPresentationStyle = .overCurrentContext
-                    self.navigationController?.present(modalView, animated: true)
                 //남이 드랍한 음악이면 신고 모달
-                } else {
+                if !isMyDrop {
                     let claimModalViewModel = ClaimModalViewModel(itemID: itemID)
                     let modalView = ClaimModalViewController(viewModel: claimModalViewModel)
 
@@ -444,13 +439,6 @@ private extension CommunityViewController {
             .asDriver(onErrorJustReturn: ())
             .drive (onNext: { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
-            }).disposed(by: disposeBag)
-
-        // 👉 TODO: Error팝업띄우기
-        output.errorDescription
-            .asDriver()
-            .drive(onNext: { errorDescription in
-                // 팝업띄우기 로직
             }).disposed(by: disposeBag)
     }
 
@@ -733,28 +721,6 @@ extension CommunityViewController: UICollectionViewDelegate {
     }
 }
 
-extension CommunityViewController: OptionModalViewModelDelegate {
-    func editComment(musicIndex: Int) {
-        let editInfo = self.viewModel.communityInfos[musicIndex].convertToEditInfo()
-        let editViewModel = EditViewModel(editInfo: editInfo, musicIndex: musicIndex)
-        editViewModel.delegate = self
-        let editViewController = EditViewController(viewModel: editViewModel)
-
-        self.navigationController?.present(editViewController, animated: true)
-    }
-
-    func deleteMusic(_ isSuccess: Bool, toastTitle: String, musicIndex: Int) {
-        guard isSuccess else {
-            //TODO: - 토스트띄워주기 (toastTitle)
-            return
-        }
-
-        self.albumCollectionView.performBatchUpdates { [weak self] in
-            self?.deleteEvent.accept(musicIndex)
-        }
-    }
-}
-
 extension CommunityViewController: EditViewModelDelegate {
     func editComment(editedComment: String, musicIndex: Int) {
         self.commentTextView.text = editedComment
@@ -770,5 +736,56 @@ extension CommunityViewController: ClaimModalViewModelDelegate, Toastable {
         case .fail:
             showFailNormalToast(text: text, bottomInset: 16, duration: .now() + 3)
         }
+    }
+}
+
+//MARK: - Modal
+private extension CommunityViewController {
+    func showEditAndDeleteOptionModalView() {
+        let modalView = OptionModalViewController(
+            firstOptionIcon: UIImage(named: "editIcon"),
+            firstOptionTitle: "수정하기",
+            firstOptionActon: presentEditView(),
+            secondOptionIcon: UIImage(named: "deleteIcon"),
+            secondOptionTitle: "삭제하기",
+            secondOptionAction: deleteComment()
+        )
+
+        modalView.modalPresentationStyle = .overCurrentContext
+        self.navigationController?.present(modalView, animated: true)
+    }
+
+    func presentEditView() -> UIAction {
+        return UIAction { _ in
+            let musicIndex = self.viewModel.currentIndex
+            let editInfo = self.viewModel.communityInfos[musicIndex].convertToEditInfo()
+            let editViewModel = EditViewModel(editInfo: editInfo, musicIndex: musicIndex)
+            editViewModel.delegate = self
+            let editViewController = EditViewController(viewModel: editViewModel)
+
+            self.navigationController?.dismiss(animated: true)
+            self.navigationController?.present(editViewController, animated: true)
+        }
+    }
+
+    func deleteComment() -> UIAction {
+        return UIAction { _ in
+            self.navigationController?.dismiss(animated: true)
+
+            self.albumCollectionView.performBatchUpdates { [weak self] in
+                self?.deleteEvent.accept(())
+            }
+        }
+    }
+
+    func showClaimAndBlockOptionModal() {
+        let itemID = self.viewModel.communityInfos[self.viewModel.currentIndex].id
+
+        let claimModalViewModel = ClaimModalViewModel(itemID: itemID)
+        let modalView = ClaimModalViewController(viewModel: claimModalViewModel)
+
+        claimModalViewModel.delegate = self
+        modalView.modalPresentationStyle = .overCurrentContext
+        self.navigationController?.present(modalView, animated: true)
     }
 }

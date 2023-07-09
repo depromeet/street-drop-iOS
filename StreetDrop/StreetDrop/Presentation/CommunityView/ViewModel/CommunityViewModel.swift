@@ -17,7 +17,7 @@ final class CommunityViewModel: ViewModel {
         let changedIndex: Observable<Int>
         let tapLikeButtonEvent: Observable<Void>
         let tapOptionButtonEvent: Observable<Void>
-        let deleteEvent: Observable<Int>
+        let deleteEvent: Observable<Void>
         let editEvent: Observable<(editedComment: String, index: Int)>
     }
 
@@ -36,7 +36,7 @@ final class CommunityViewModel: ViewModel {
         var likeCount: PublishRelay<String> = .init()
         var isMyDrop: PublishRelay<Bool> = .init()
         var infoIsEmpty: PublishRelay<Void> = .init()
-        var errorDescription: BehaviorRelay<String?> = .init(value: nil)
+        var toast: PublishRelay<(isSuccess: Bool, title: String)> = .init()
     }
 
     private(set) var communityInfos: [MusicWithinAreaEntity]
@@ -106,12 +106,27 @@ final class CommunityViewModel: ViewModel {
 
         input.deleteEvent
             .subscribe(onNext: { [weak self] index in
-                guard let self = self else { return}
-                self.deleteMusic(musicIndex: index, output: output)
+                guard let self = self else { return }
 
-                let albumImagesURL = self.communityInfos.map { $0.albumImageURL }
-                output.albumImages.accept(albumImagesURL)
-                output.currentIndex.accept(self.currentIndex)
+                self.communityModel.deleteMusic(itemID: self.communityInfos[self.currentIndex].id)
+                    .subscribe(onSuccess: { response in
+                        if (200...299).contains(response) {
+                            self.deleteMusic(output: output)
+
+                            let albumImagesURL = self.communityInfos.map { $0.albumImageURL }
+                            output.albumImages.accept(albumImagesURL)
+                            output.currentIndex.accept(self.currentIndex)
+                        } else {
+                            output.toast.accept(
+                                (isSuccess: false, title: "삭제에 실패했습니다. 네트워크를 확인해주세요")
+                            )
+                        }
+                    }, onFailure: { error in
+                        output.toast.accept(
+                            (isSuccess: false, title: "삭제에 실패했습니다. 네트워크를 확인해주세요")
+                        )
+                        print(error.localizedDescription)
+                    }).disposed(by: disposedBag)
             }).disposed(by: disposedBag)
 
         input.editEvent
@@ -149,7 +164,7 @@ private extension CommunityViewModel {
         self.communityModel.likeDown(itemID: itemID)
             .subscribe(onSuccess: { response in
                 guard (200...299).contains(response) else {
-                    output.errorDescription.accept("좋아요취소에 실패했습니다")
+                    output.toast.accept((isSuccess: false, title: "네트워크를 확인해 주세요"))
                     return
                 }
                 
@@ -160,7 +175,7 @@ private extension CommunityViewModel {
                 self.communityInfos[self.currentIndex].isLiked = false
                 self.communityInfos[self.currentIndex].likeCount -= 1
             }, onFailure: { error in
-                output.errorDescription.accept("좋아요취소에 실패했습니다")
+                output.toast.accept((isSuccess: false, title: "네트워크를 확인해 주세요"))
                 print(error.localizedDescription)
             }).disposed(by: disposeBag)
     }
@@ -169,7 +184,7 @@ private extension CommunityViewModel {
         self.communityModel.likeUp(itemID: itemID)
             .subscribe(onSuccess: { response in
                 guard (200...299).contains(response) else {
-                    output.errorDescription.accept("좋아요에 실패했습니다")
+                    output.toast.accept((isSuccess: false, title: "네트워크를 확인해 주세요"))
                     return
                 }
                 let likeCount = self.communityInfos[self.currentIndex].likeCount
@@ -179,7 +194,7 @@ private extension CommunityViewModel {
                 self.communityInfos[self.currentIndex].isLiked = true
                 self.communityInfos[self.currentIndex].likeCount += 1
             }, onFailure: { error in
-                output.errorDescription.accept("좋아요에 실패했습니다")
+                output.toast.accept((isSuccess: false, title: "네트워크를 확인해 주세요"))
                 print(error.localizedDescription)
             }).disposed(by: disposeBag)
     }
@@ -198,9 +213,11 @@ private extension CommunityViewModel {
         return myDateFormatter.string(from: convertDate)
     }
 
-    func deleteMusic(musicIndex: Int, output: Output) {
+    func deleteMusic(output: Output) {
         // 기존데이터 갯수 3개이하 / 4개이상 분기 처리 (왜냐하면 무한스크롤로 데이터 셋팅 방법이 달랐음)
         // 1️⃣ 3개이하였던 데이터라면 배열 앞뒤로 넣어줬던 빈쎌 제거하고 시작
+        let musicIndex = currentIndex
+
         if self.communityInfos.first?.albumImageURL.isEmpty == true {
             self.removeEmptyInfoAtEachEnd()
 
