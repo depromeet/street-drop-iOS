@@ -7,8 +7,22 @@
 
 import UIKit
 
-final class NicknameEditViewController: UIViewController {
+import RxCocoa
+import RxRelay
+import RxSwift
+import SnapKit
 
+final class NicknameEditViewController: UIViewController {
+    
+    private let disposeBag = DisposeBag()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        configureUI()
+        bindAction()
+    }
+    
     // MARK: - UI
     
     private lazy var topView: UIView = {
@@ -68,19 +82,13 @@ final class NicknameEditViewController: UIViewController {
     private lazy var confirmButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 12
-        button.backgroundColor = UIColor.gray400
         button.setTitle("변경하기", for: .normal)
         button.titleLabel?.font = .pretendard(size: 16, weightName: .bold)
+        button.backgroundColor = UIColor.gray400
         button.setTitleColor(UIColor.gray300, for: .normal)
         button.isEnabled = false
         return button
     }()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        configureUI()
-    }
 }
 
 private extension NicknameEditViewController {
@@ -155,5 +163,45 @@ private extension NicknameEditViewController {
             make.height.equalTo(56)
             make.leading.trailing.equalToSuperview()
         }
+    }
+    
+    func enableConfirmButton() {
+        confirmButton.backgroundColor = UIColor.gray400
+        confirmButton.setTitleColor(UIColor.gray300, for: .normal)
+        confirmButton.isEnabled = false
+    }
+    
+    func validateNickname(_ nickname: String) {
+        if nickname.count >= 1 && nickname.count <= 10 {
+            nicknameTextField.layer.borderColor = UIColor.darkPrimary_25.cgColor
+            guideLabel.textColor = UIColor.gray300
+            
+            confirmButton.backgroundColor = UIColor.primary500
+            confirmButton.setTitleColor(UIColor.gray900, for: .normal)
+            confirmButton.isEnabled = true
+        } else {
+            nicknameTextField.layer.borderColor = UIColor(red: 0.96, green: 0.44, blue: 0.41, alpha: 0.5).cgColor
+            guideLabel.textColor = UIColor(red: 0.96, green: 0.44, blue: 0.41, alpha: 1)
+            
+            confirmButton.backgroundColor = UIColor.gray400
+            confirmButton.setTitleColor(UIColor.gray300, for: .normal)
+            confirmButton.isEnabled = false
+        }
+    }
+    
+    func disableConfirmButton() {
+        confirmButton.backgroundColor = UIColor.gray400
+        confirmButton.setTitleColor(UIColor.gray300, for: .normal)
+        confirmButton.isEnabled = false
+    }
+    
+    // MARK: - Bind Action
+    
+    func bindAction() {
+        nicknameTextField.rx.text.orEmpty
+            .subscribe(onNext: { [weak self] nickname in
+                self?.validateNickname(nickname)
+            })
+            .disposed(by: disposeBag)
     }
 }
