@@ -143,8 +143,8 @@ private extension AlertViewController {
         containerStackView.setCustomSpacing(20, after: subTextLabel)
 
         containerView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(48)
-            $0.centerY.equalToSuperview()
+            $0.width.equalTo(278)
+            $0.centerX.centerY.equalToSuperview()
         }
 
         containerStackView.snp.makeConstraints {
