@@ -14,7 +14,7 @@ import SnapKit
 
 final class MyPageViewController: UIViewController {
     private var stickyTapListStackView: UIStackView?
-    private var stickyDimmedView: UIView?
+    private var stickyTopDimmedView: UIView?
     
     private let disposeBag = DisposeBag()
     
@@ -170,6 +170,8 @@ final class MyPageViewController: UIViewController {
         button.isHidden = true
         return button
     }()
+    
+    private lazy var bottomDimmedView: UIView = self.createDimmedView(isFromTop: false)
 }
 
 private extension MyPageViewController {
@@ -342,6 +344,13 @@ private extension MyPageViewController {
             make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(24)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(16)
         }
+        
+        // MARK: - Bottom Dimmed View
+        self.view.addSubview(bottomDimmedView)
+        self.bottomDimmedView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.height.equalTo(24)
+        }
     }
     
     // MARK: - Action Binding
@@ -414,10 +423,10 @@ extension MyPageViewController: UIScrollViewDelegate {
         if scrollView.contentOffset.y > 343 {
             if self.stickyTapListStackView == nil {
                 self.stickyTapListStackView = createTapListStackView()
-                self.stickyDimmedView = createDimmedView()
+                self.stickyTopDimmedView = createDimmedView(isFromTop: true)
                 
                 guard let stickyTapListStackView = stickyTapListStackView else { return }
-                guard let stickyDimmedView = stickyDimmedView else { return }
+                guard let stickyDimmedView = stickyTopDimmedView else { return }
                 
                 self.view.addSubview(stickyTapListStackView)
                 stickyTapListStackView.snp.makeConstraints { make in
@@ -434,16 +443,16 @@ extension MyPageViewController: UIScrollViewDelegate {
             }
         } else {
             if let stickyTapListStackView = self.stickyTapListStackView,
-               let stickyDimmedView = self.stickyDimmedView {
+               let stickyDimmedView = self.stickyTopDimmedView {
                 stickyTapListStackView.removeFromSuperview()
                 stickyDimmedView.removeFromSuperview()
             }
             self.stickyTapListStackView = nil
-            self.stickyDimmedView = nil
+            self.stickyTopDimmedView = nil
         }
     }
     
-    private func createDimmedView() -> UIView {
+    private func createDimmedView(isFromTop: Bool) -> UIView {
         let dimmedView = UIView()
         dimmedView.backgroundColor = UIColor.gray900
         let gradientLayer = CAGradientLayer()
@@ -451,8 +460,8 @@ extension MyPageViewController: UIScrollViewDelegate {
         let startColor = UIColor.gray900.cgColor
         let endColor = UIColor.black.withAlphaComponent(0).cgColor
         gradientLayer.colors = [startColor, endColor]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: isFromTop ? 0 : 1)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: isFromTop ? 1 : 0)
         dimmedView.layer.mask = gradientLayer
         gradientLayer.frame = CGRect(origin: .zero, size: .init(width: self.view.frame.width, height: 24))
         return dimmedView
