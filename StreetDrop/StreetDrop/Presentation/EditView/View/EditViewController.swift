@@ -104,7 +104,6 @@ private extension EditViewController {
         self.dropButton.setTitle(Constant.editButtonDisabledTitle, for: .disabled)
         self.dropButton.setTitle(Constant.editButtonNormalTitle, for: .normal)
         self.backButton.setTitle(Constant.empty, for: .normal)
-        self.dataSharingPermissionGuideLabel.isHidden = true
         self.locationLabel.isHidden = true
         self.cancelButton.setTitle(Constant.empty, for: .normal)
 

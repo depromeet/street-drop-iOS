@@ -16,13 +16,9 @@ class MusicDropViewController: UIViewController, Toastable, Alertable {
     enum Constant {
         static let textDefault = " "
         static let commentPlaceHolder: String = "음악에 대해 하고싶은 말이 있나요?"
-        static let dropButtonTitle: String = "동의 후 드랍하기"
+        static let dropButtonTitle: String = "드랍하기"
         static let communityButtonTitle: String = "커뮤니티 가이드"
         static let defaultCommentCount: String = "0/40"
-        static let dataSharingPermissionText: String = """
-                                                       해당 위치에 드랍한 음악, 코멘트, 위치 정보를
-                                                       다른 사용자가 볼 수 있습니다. 정보 공유에 동의하시겠어요?
-                                                       """
     }
 
     private var viewModel: MusicDropViewModel
@@ -210,18 +206,6 @@ class MusicDropViewController: UIViewController, Toastable, Alertable {
         label.textColor = .gray300
         label.font = .pretendard(size: 14, weightName: .medium)
         label.isHidden = true
-
-        return label
-    }()
-
-    lazy var dataSharingPermissionGuideLabel: UILabel = {
-        let label = UILabel()
-        label.text = Constant.dataSharingPermissionText
-        label.font = .pretendard(size: 12, weightName: .regular)
-        label.setLineHeight(lineHeight: 16)
-        label.numberOfLines = 2
-        label.textColor = .gray300
-        label.textAlignment = .center
 
         return label
     }()
@@ -429,7 +413,6 @@ private extension MusicDropViewController {
         [
             musicInfoStackView,
             communityGuideButton,
-            dataSharingPermissionGuideLabel,
             dropButton,
             communityGuideDetailView
         ]
@@ -523,11 +506,6 @@ private extension MusicDropViewController {
             $0.bottom.equalTo(contentView.snp.bottom).inset(8)
             $0.height.equalTo(54)
             $0.centerX.equalTo(contentView)
-        }
-
-        dataSharingPermissionGuideLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(dropButton.snp.top).offset(-16)
         }
     }
 }
