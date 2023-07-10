@@ -40,7 +40,6 @@ class MusicDropViewController: UIViewController, Toastable, Alertable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .primaryBackground
 
         configureUI()
         bindAction()

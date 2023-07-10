@@ -46,7 +46,7 @@ public extension UIColor {
     }
 
     static var primary300: UIColor {
-        UIColor(hexString: "#A3FAFF")
+        UIColor(hexString: "#9EF9FF")
     }
 
     static var primary400: UIColor {
@@ -57,24 +57,24 @@ public extension UIColor {
         UIColor(hexString: "#68EFF7")
     }
 
-    static var primary500Alpha75: UIColor {
+    static var primary500_75: UIColor {
         UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0.75)
     }
 
     static var primary500_50: UIColor {
-        UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0.5)
+        UIColor(red: 0.408, green: 0.89, blue: 0.969, alpha: 0.5)
     }
 
     static var primary500_25: UIColor {
-        UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0.25)
+        UIColor(red: 0.408, green: 0.86, blue: 0.969, alpha: 0.25)
     }
 
     static var primary500_16: UIColor {
-        UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0.16)
+        UIColor(red: 0.39, green: 0.84, blue: 0.98, alpha: 0.16)
     }
 
     static var primary500_10: UIColor {
-        UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0.10)
+        UIColor(red: 0.38, green: 0.84, blue: 1, alpha: 0.05)
     }
 
     static var primary600: UIColor {
