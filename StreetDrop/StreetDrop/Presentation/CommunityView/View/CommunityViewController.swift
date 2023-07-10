@@ -32,7 +32,7 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .primaryBackground
+        view.backgroundColor = .gray900
 
         configureUI()
         bindAction()
@@ -90,7 +90,7 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
         collectionView.isPagingEnabled = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.decelerationRate = .fast
-        collectionView.backgroundColor = .primaryBackground
+        collectionView.backgroundColor = .gray900
         collectionView.clipsToBounds = false
         collectionView.delegate = self
         collectionView.register(
