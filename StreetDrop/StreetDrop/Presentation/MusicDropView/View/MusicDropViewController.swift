@@ -284,10 +284,12 @@ private extension MusicDropViewController {
             .bind { [weak self] in
                 guard let self = self else { return }
                 self.endEditing()
-                self.communityGuideDetailView.isHidden = !self.communityGuideDetailView.isHidden
 
-                let isHidden = self.communityGuideDetailView.isHidden
-                self.communityGuideDetailView.isUserInteractionEnabled = isHidden ? false : true
+                UIView.animate(withDuration: 0.3) {
+                    let isHidden: Bool = (self.communityGuideDetailView.alpha == 0)
+                    self.communityGuideDetailView.alpha = isHidden ? 1 : 0
+                    self.communityGuideDetailView.isUserInteractionEnabled = isHidden ? true : false
+                }
             }.disposed(by: disposeBag)
 
         backButton.rx.tap
@@ -616,7 +618,11 @@ private extension MusicDropViewController {
         keyboardShowEvent.accept(())
         changeLayoutWhenKeyboardShowAndHide(isKeyboardShow: true)
         scrollView.contentInset.bottom = keyboardFrame.size.height
-        communityGuideDetailView.isHidden = true
+
+        UIView.animate(withDuration: 0.3) {
+            self.communityGuideDetailView.alpha = 0
+            self.communityGuideDetailView.isUserInteractionEnabled = false
+        }
 
         let activeRect = commentTextView.convert(commentTextView.bounds, to: scrollView)
         scrollView.scrollRectToVisible(activeRect, animated: true)
