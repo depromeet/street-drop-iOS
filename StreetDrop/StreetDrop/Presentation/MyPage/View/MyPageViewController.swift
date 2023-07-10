@@ -377,16 +377,26 @@ private extension MyPageViewController {
 
         let newDropButton = UIButton()
         newDropButton.setTitle("드랍", for: .normal)
-        newDropButton.setTitleColor(.white, for: .normal)
-        newDropButton.setTitleColor(.lightGray, for: .highlighted)
         newDropButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
 
         let newLikeButton = UIButton()
         newLikeButton.setTitle("좋아요", for: .normal)
-        newLikeButton.setTitleColor(UIColor.gray400, for: .normal)
-        newLikeButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
         newLikeButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
 
+        if self.dropMusicListTableView.isHidden {
+            newDropButton.setTitleColor(UIColor.gray400, for: .normal)
+            newDropButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+            
+            newLikeButton.setTitleColor(.white, for: .normal)
+            newLikeButton.setTitleColor(.lightGray, for: .highlighted)
+        } else {
+            newDropButton.setTitleColor(.white, for: .normal)
+            newDropButton.setTitleColor(.lightGray, for: .highlighted)
+            
+            newLikeButton.setTitleColor(UIColor.gray400, for: .normal)
+            newLikeButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+        }
+        
         let newLabel = UILabel()
         newLabel.text = "전체 0개"
         newLabel.textColor = UIColor.gray400
@@ -405,19 +415,25 @@ private extension MyPageViewController {
         )
         newStackView.addArrangedSubview(newLabel)
 
+        bindTapButtonAction(dropTapButton: newDropButton, likeTapButton: newLikeButton)
+        
         return newStackView
     }
     
     // MARK: - Action Binding
     
-    private func bindAction() {
+    private func bindTapButtonAction(dropTapButton: UIButton, likeTapButton: UIButton) {
         dropTapButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.dropMusicListTableView.isHidden = false
                 self?.likeMusicListTableView.isHidden = true
                 
+                dropTapButton.setTitleColor(.white, for: .normal)
+                dropTapButton.setTitleColor(.lightGray, for: .highlighted)
                 self?.dropTapButton.setTitleColor(.white, for: .normal)
                 self?.dropTapButton.setTitleColor(.lightGray, for: .highlighted)
+                likeTapButton.setTitleColor(UIColor.gray400, for: .normal)
+                likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
                 self?.likeTapButton.setTitleColor(UIColor.gray400, for: .normal)
                 self?.likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
             })
@@ -428,12 +444,19 @@ private extension MyPageViewController {
                 self?.dropMusicListTableView.isHidden = true
                 self?.likeMusicListTableView.isHidden = false
                 
+                dropTapButton.setTitleColor(UIColor.gray400, for: .normal)
+                dropTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
                 self?.dropTapButton.setTitleColor(UIColor.gray400, for: .normal)
                 self?.dropTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+                likeTapButton.setTitleColor(.white, for: .normal)
+                likeTapButton.setTitleColor(.lightGray, for: .highlighted)
                 self?.likeTapButton.setTitleColor(.white, for: .normal)
                 self?.likeTapButton.setTitleColor(.lightGray, for: .highlighted)
             })
             .disposed(by: disposeBag)
+    }
+    private func bindAction() {
+        bindTapButtonAction(dropTapButton: self.dropTapButton, likeTapButton: self.likeTapButton)
         
         scrollToTopButton.rx.tap
             .subscribe(onNext: { [weak self] in
