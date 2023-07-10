@@ -46,6 +46,7 @@
 		18CB7BED2A359F53002B31FB /* MusicWithinAreaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CB7BEC2A359F53002B31FB /* MusicWithinAreaEntity.swift */; };
 		18D671EF2A35A1CB003B1A71 /* MusicWithinAreaResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF8402A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift */; };
 		18D671F62A35C5D4003B1A71 /* UIImage+Resizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D671F52A35C5D4003B1A71 /* UIImage+Resizing.swift */; };
+		18EF9FC92A5C51FB00266D27 /* NicknameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF9FC82A5C51FB00266D27 /* NicknameEditViewController.swift */; };
 		18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
 		18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
 		41008EB82A48891000FD4ABE /* UITextView+setLineSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41008EB72A48891000FD4ABE /* UITextView+setLineSpacing.swift */; };
@@ -223,6 +224,7 @@
 		18AAF8402A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicWithinAreaResponseDTO.swift; sourceTree = "<group>"; };
 		18CB7BEC2A359F53002B31FB /* MusicWithinAreaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicWithinAreaEntity.swift; sourceTree = "<group>"; };
 		18D671F52A35C5D4003B1A71 /* UIImage+Resizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resizing.swift"; sourceTree = "<group>"; };
+		18EF9FC82A5C51FB00266D27 /* NicknameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewController.swift; sourceTree = "<group>"; };
 		18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		2611E7411DB7C5436A272A27 /* Pods-StreetDrop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetDrop.release.xcconfig"; path = "Target Support Files/Pods-StreetDrop/Pods-StreetDrop.release.xcconfig"; sourceTree = "<group>"; };
@@ -589,6 +591,7 @@
 			children = (
 				1867C81F2A4DDB8C00F8EC48 /* MyPageViewController.swift */,
 				1867C8232A4FFCDF00F8EC48 /* MusicTableViewCell.swift */,
+				18EF9FC82A5C51FB00266D27 /* NicknameEditViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1422,6 +1425,7 @@
 				04FB1F322A021C330064B3C8 /* TestError.swift in Sources */,
 				188D2C772A1BA74E0088F49C /* LocationManager.swift in Sources */,
 				4143452E2A373550003FEE2A /* AddressManager.swift in Sources */,
+				18EF9FC92A5C51FB00266D27 /* NicknameEditViewController.swift in Sources */,
 				18683FDF2A348B25005A94AC /* MainRepository.swift in Sources */,
 				41A3DDF62A5AD1C7004CFA2F /* BlockUserRepository.swift in Sources */,
 				04FB1F282A021B0A0064B3C8 /* MainModel.swift in Sources */,
