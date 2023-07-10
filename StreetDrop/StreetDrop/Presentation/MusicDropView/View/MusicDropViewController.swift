@@ -463,10 +463,14 @@ private extension MusicDropViewController {
             $0.height.greaterThanOrEqualTo(scrollView)
         }
 
-        self.changeLayoutWhenKeyboardShowAndHide(isKeyboardShow: false)
         musicInfoStackView.setCustomSpacing(2, after: musicNameLabel)
         musicInfoStackView.setCustomSpacing(16, after: albumImageView)
         musicInfoStackView.setCustomSpacing(24, after: artistLabel)
+
+        albumImageView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(140)
+            $0.height.equalTo(self.albumImageView.snp.width)
+        }
 
         musicInfoStackView.snp.makeConstraints {
             $0.top.equalTo(contentView).inset(8)
@@ -485,7 +489,7 @@ private extension MusicDropViewController {
         commentTextView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(12)
             $0.leading.equalToSuperview().inset(16)
-            $0.trailing.equalToSuperview().inset(16+40+10) // inset+countLabel+spacing
+            $0.trailing.equalToSuperview().inset(16+40+4) // inset+countLabel+spacing
         }
 
         commentClearButton.snp.makeConstraints {
