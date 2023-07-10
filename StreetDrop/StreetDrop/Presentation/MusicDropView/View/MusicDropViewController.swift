@@ -65,7 +65,7 @@ class MusicDropViewController: UIViewController, Toastable, Alertable {
     lazy var backButton: UIButton = {
         let button: UIButton = UIButton()
         button.setImage(UIImage(named: "backButton"), for: .normal)
-        button.setTitle("음악검색", for: .normal)
+        button.setTitle("음악 검색", for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.titleLabel?.font = .pretendard(size: 14, weight: 600)
 
@@ -177,7 +177,6 @@ class MusicDropViewController: UIViewController, Toastable, Alertable {
         let icon = UIImage(named: "infoIcon")
         let button = UIButton(frame: .zero)
         button.setImage(icon, for: .normal)
-        button.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 4)
         button.setTitle(Constant.communityButtonTitle, for: .normal)
         button.setTitleColor(.gray200, for: .normal)
         button.titleLabel?.font = .pretendard(size: 12, weightName: .semiBold)
@@ -214,6 +213,7 @@ class MusicDropViewController: UIViewController, Toastable, Alertable {
         let button = UIButton(type: .system)
         button.setTitle(Constant.dropButtonTitle, for: .normal)
         button.setTitleColor(.gray400, for: .normal)
+        button.titleLabel?.font = .pretendard(size: 16, weightName: .bold)
         button.layer.cornerRadius = 10
         button.backgroundColor = .gray300
         button.isEnabled = false
@@ -394,6 +394,7 @@ private extension MusicDropViewController {
     //MARK: - UI
 
     func configureUI() {
+        self.view.backgroundColor = .gray900
         self.view.clipsToBounds = true
 
         [backButton, cancelButton].forEach {
@@ -438,7 +439,7 @@ private extension MusicDropViewController {
         }
 
         backButton.imageView?.snp.makeConstraints {
-            $0.height.width.equalTo(24)
+            $0.height.width.equalTo(32)
             $0.leading.centerY.equalToSuperview()
             $0.trailing.equalTo(backButton.titleLabel!.snp.leading)
         }
@@ -494,6 +495,13 @@ private extension MusicDropViewController {
             $0.top.equalTo(musicInfoStackView.snp.bottom).offset(16)
             $0.width.equalTo(120)
             $0.height.equalTo(32)
+        }
+
+        communityGuideButton.imageView?.snp.makeConstraints {
+            $0.width.height.equalTo(16)
+            $0.centerY.leading.equalToSuperview().inset(12)
+            $0.centerY.top.equalToSuperview().inset(8)
+            $0.leftMargin.equalTo(4)
         }
 
         communityGuideDetailView.snp.makeConstraints {
