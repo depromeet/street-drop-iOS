@@ -100,7 +100,7 @@ final class MyPageViewController: UIViewController {
         return label
     }()
     
-    private lazy var nickNameChangeButton: UIButton = {
+    private lazy var nickNameEditButton: UIButton = {
         let button = UIButton()
         let image = UIImage(named: "editIcon")?.withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
@@ -267,7 +267,7 @@ private extension MyPageViewController {
         )
         self.profileStackView.addArrangedSubview(nickNameLabel)
         
-        // MARK: - NickName Change Button
+        // MARK: - NickName Edit Button
         
         self.profileStackView.addArrangedSubview(
             {
@@ -278,8 +278,8 @@ private extension MyPageViewController {
                 return spacerView
             }()
         )
-        self.profileStackView.addArrangedSubview(nickNameChangeButton)
-        self.nickNameChangeButton.snp.makeConstraints { make in
+        self.profileStackView.addArrangedSubview(nickNameEditButton)
+        self.nickNameEditButton.snp.makeConstraints { make in
             make.width.height.equalTo(24)
         }
         self.profileStackView.addArrangedSubview(
@@ -383,6 +383,12 @@ private extension MyPageViewController {
         scrollToTopButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        nickNameEditButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.navigationController?.pushViewController(NicknameEditViewController(), animated: true)
             })
             .disposed(by: disposeBag)
     }
