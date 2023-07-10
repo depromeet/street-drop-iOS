@@ -146,7 +146,7 @@ public extension UIColor {
     }
 
     static var gray700: UIColor {
-        UIColor(hexString: "#20242C")
+        UIColor(hexString: "#1F2127")
     }
     static var gray800: UIColor {
         UIColor(hexString: "#17191F")
