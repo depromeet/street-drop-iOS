@@ -54,6 +54,7 @@ class CommunityGuideDetailView: UIView {
         super.init(frame: .zero)
         configureUI()
         bindAction()
+        self.isUserInteractionEnabled = false
     }
 
     @available(*, unavailable)
@@ -84,7 +85,7 @@ private extension CommunityGuideDetailView {
     func configureUI() {
         backgroundColor = .gray600
         layer.cornerRadius = 12
-        isHidden = true
+        self.alpha = 0
         translatesAutoresizingMaskIntoConstraints = false
 
         [speechBubblePointImageView, guideLabel, detailGuideLinkButton]
