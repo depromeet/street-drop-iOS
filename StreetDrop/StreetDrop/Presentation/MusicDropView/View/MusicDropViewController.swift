@@ -126,6 +126,7 @@ class MusicDropViewController: UIViewController, Toastable, Alertable {
         label.font = .pretendard(size: 16, weight: 700)
         label.setLineHeight(lineHeight: 24)
         label.lineBreakMode = .byTruncatingTail
+        label.textAlignment = .center
 
         return label
     }()
@@ -282,6 +283,7 @@ private extension MusicDropViewController {
         communityGuideButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
+                self.endEditing()
                 self.communityGuideDetailView.isHidden = !self.communityGuideDetailView.isHidden
 
                 let isHidden = self.communityGuideDetailView.isHidden
@@ -614,6 +616,7 @@ private extension MusicDropViewController {
         keyboardShowEvent.accept(())
         changeLayoutWhenKeyboardShowAndHide(isKeyboardShow: true)
         scrollView.contentInset.bottom = keyboardFrame.size.height
+        communityGuideDetailView.isHidden = true
 
         let activeRect = commentTextView.convert(commentTextView.bounds, to: scrollView)
         scrollView.scrollRectToVisible(activeRect, animated: true)
@@ -643,8 +646,8 @@ private extension MusicDropViewController {
                 $0.leading.trailing.equalToSuperview().inset(albumImageLeadingAndTrailing)
                 $0.height.equalTo(self.albumImageView.snp.width)
             }
-
-            self.musicInfoStackView.layoutIfNeeded()
+            self.view.layoutIfNeeded()
+            //self.musicInfoStackView.layoutIfNeeded()
         }
     }
 }
