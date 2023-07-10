@@ -8,6 +8,7 @@
 import Foundation
 import CoreLocation
 
+import NMapsMap
 import RxCocoa
 import RxRelay
 import RxSwift
@@ -20,6 +21,7 @@ final class MainViewModel: ViewModel {
     var musicWithinArea: Musics = []
     var currentIndex: Int = 0
     var tappedPOIID: Int?
+    private var poiMarkers: [NMFMarker] = []
     
     private let model = MainModel(
         repository: DefaultMainRepository(
@@ -143,6 +145,15 @@ extension MainViewModel {
         )
         
         return distanceFromCurrentLocation <= radius
+    }
+    
+    func addPOIMarker(_ poi: NMFMarker) {
+        self.poiMarkers.append(poi)
+    }
+    
+    func removeAllPOIMarkers() {
+        self.poiMarkers.forEach { $0.mapView = nil }
+        self.poiMarkers = []
     }
 }
 
