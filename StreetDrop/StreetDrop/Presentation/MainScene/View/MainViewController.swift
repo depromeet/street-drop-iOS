@@ -429,7 +429,7 @@ private extension MainViewController {
                 self?.removeAllPOIMarkers()
                 let pois = pois.sorted { $0.id < $1.id }
                 for poi in pois {
-                    self?.drawPOI(item: poi, poiID: poi.id)
+                    self?.drawPOIMarker(item: poi, poiID: poi.id)
                 }
             })
             .disposed(by: disposeBag)
@@ -704,12 +704,12 @@ private extension MainViewController {
         return combinedImage
     }
     
-    func drawPOI(item: PoiEntity, poiID: Int) {
-        let poi = NMFMarker()
-        poi.tag = UInt(poiID)
+    func drawPOIMarker(item: PoiEntity, poiID: Int) {
+        let poiMarker = NMFMarker()
+        poiMarker.tag = UInt(poiID)
         
         let defaultMusicMarkerImage = UIImage(named: "musicMarker") ?? UIImage()
-        poi.iconImage = NMFOverlayImage(image: defaultMusicMarkerImage)
+        poiMarker.iconImage = NMFOverlayImage(image: defaultMusicMarkerImage)
         UIImage.load(with: item.imageURL)
             .subscribe(onNext: { image in
                 guard let image = image else { return }
@@ -718,23 +718,23 @@ private extension MainViewController {
                 let resizedImage = originalImage.resized(to: newSize)?.withRoundedCorners(radius: newSize.width / 2) ?? UIImage()
                 let musicMarkFrameImage = UIImage(named: "musicMarkerFrame") ?? UIImage()
                 if let combinedImage = self.combineImages(markerFrame: musicMarkFrameImage, album: resizedImage) {
-                    poi.iconImage = NMFOverlayImage(image: combinedImage)
+                    poiMarker.iconImage = NMFOverlayImage(image: combinedImage)
                 }
             })
             .disposed(by: disposeBag)
         
-        poi.position = NMGLatLng(lat: item.lat, lng: item.lon)
-        poi.mapView = self.naverMapView
-        poi.globalZIndex = 400000 // 네이버맵 sdk 오버레이 가이드를 참고한 zIndex 설정
-        viewModel.addPOIMarker(poi)
-        bindPOI(poi: poi)
+        poiMarker.position = NMGLatLng(lat: item.lat, lng: item.lon)
+        poiMarker.mapView = self.naverMapView
+        poiMarker.globalZIndex = 400000 // 네이버맵 sdk 오버레이 가이드를 참고한 zIndex 설정
+        viewModel.addPOIMarker(poiMarker)
+        bindPOIMarker(poiMarker: poiMarker)
     }
     
-    func bindPOI(poi: NMFMarker) {
-        poi.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
+    func bindPOIMarker(poiMarker: NMFMarker) {
+        poiMarker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
             guard let self = self else { return true }
-            if self.viewModel.isWithin(latitude: poi.position.lat, longitude: poi.position.lng) {
-                self.viewModel.tappedPOIID = Int(poi.tag)
+            if self.viewModel.isWithin(latitude: poiMarker.position.lat, longitude: poiMarker.position.lng) {
+                self.viewModel.tappedPOIID = Int(poiMarker.tag)
                 self.poiMarkerDidTapEvent.accept(Void())
             }
             return true
