@@ -426,6 +426,7 @@ private extension MainViewController {
         
         output.pois
             .bind(onNext: { [weak self] pois in
+                self?.removeAllPOIMarkers()
                 let pois = pois.sorted { $0.id < $1.id }
                 for poi in pois {
                     self?.drawPOI(item: poi, poiID: poi.id)
@@ -725,6 +726,7 @@ private extension MainViewController {
         poi.position = NMGLatLng(lat: item.lat, lng: item.lon)
         poi.mapView = self.naverMapView
         poi.globalZIndex = 400000 // 네이버맵 sdk 오버레이 가이드를 참고한 zIndex 설정
+        viewModel.addPOIMarker(poi)
         bindPOI(poi: poi)
     }
     
@@ -737,6 +739,10 @@ private extension MainViewController {
             }
             return true
         }
+    }
+    
+    func removeAllPOIMarkers() {
+        viewModel.removeAllPOIMarkers()
     }
 }
 
