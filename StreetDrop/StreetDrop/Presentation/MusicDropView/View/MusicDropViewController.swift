@@ -126,6 +126,7 @@ class MusicDropViewController: UIViewController, Toastable, Alertable {
         label.textColor = .white
         label.font = .pretendard(size: 16, weight: 700)
         label.setLineHeight(lineHeight: 24)
+        label.lineBreakMode = .byTruncatingTail
 
         return label
     }()
@@ -467,6 +468,10 @@ private extension MusicDropViewController {
         musicInfoStackView.snp.makeConstraints {
             $0.top.equalTo(contentView).inset(8)
             $0.leading.trailing.equalToSuperview()
+        }
+
+        musicNameLabel.snp.makeConstraints {
+            $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(66)
         }
 
         commentView.snp.makeConstraints {
