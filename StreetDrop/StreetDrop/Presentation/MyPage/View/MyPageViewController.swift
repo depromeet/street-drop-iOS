@@ -353,6 +353,61 @@ private extension MyPageViewController {
         }
     }
     
+    func createDimmedView(isFromTop: Bool) -> UIView {
+        let dimmedView = UIView()
+        dimmedView.backgroundColor = UIColor.gray900
+        let gradientLayer = CAGradientLayer()
+
+        let startColor = UIColor.gray900.cgColor
+        let endColor = UIColor.black.withAlphaComponent(0).cgColor
+        gradientLayer.colors = [startColor, endColor]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: isFromTop ? 0 : 1)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: isFromTop ? 1 : 0)
+        dimmedView.layer.mask = gradientLayer
+        gradientLayer.frame = CGRect(origin: .zero, size: .init(width: self.view.frame.width, height: 24))
+        return dimmedView
+    }
+    
+    func createTapListStackView() -> UIStackView {
+        let newStackView = UIStackView()
+        newStackView.axis = .horizontal
+        newStackView.spacing = 8
+        newStackView.alignment = .bottom
+        newStackView.backgroundColor = UIColor.gray900
+
+        let newDropButton = UIButton()
+        newDropButton.setTitle("드랍", for: .normal)
+        newDropButton.setTitleColor(.white, for: .normal)
+        newDropButton.setTitleColor(.lightGray, for: .highlighted)
+        newDropButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
+
+        let newLikeButton = UIButton()
+        newLikeButton.setTitle("좋아요", for: .normal)
+        newLikeButton.setTitleColor(UIColor.gray400, for: .normal)
+        newLikeButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+        newLikeButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
+
+        let newLabel = UILabel()
+        newLabel.text = "전체 0개"
+        newLabel.textColor = UIColor.gray400
+        newLabel.font = .pretendard(size: 14, weightName: .regular)
+
+        newStackView.addArrangedSubview(newDropButton)
+        newStackView.addArrangedSubview(newLikeButton)
+        newStackView.addArrangedSubview(
+            {
+                let spacerView = UIView()
+                spacerView.translatesAutoresizingMaskIntoConstraints = false
+                spacerView.backgroundColor = UIColor.clear
+                spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+                return spacerView
+            }()
+        )
+        newStackView.addArrangedSubview(newLabel)
+
+        return newStackView
+    }
+    
     // MARK: - Action Binding
     
     private func bindAction() {
@@ -456,61 +511,6 @@ extension MyPageViewController: UIScrollViewDelegate {
             self.stickyTapListStackView = nil
             self.stickyTopDimmedView = nil
         }
-    }
-    
-    private func createDimmedView(isFromTop: Bool) -> UIView {
-        let dimmedView = UIView()
-        dimmedView.backgroundColor = UIColor.gray900
-        let gradientLayer = CAGradientLayer()
-
-        let startColor = UIColor.gray900.cgColor
-        let endColor = UIColor.black.withAlphaComponent(0).cgColor
-        gradientLayer.colors = [startColor, endColor]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: isFromTop ? 0 : 1)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: isFromTop ? 1 : 0)
-        dimmedView.layer.mask = gradientLayer
-        gradientLayer.frame = CGRect(origin: .zero, size: .init(width: self.view.frame.width, height: 24))
-        return dimmedView
-    }
-    
-    private func createTapListStackView() -> UIStackView {
-        let newStackView = UIStackView()
-        newStackView.axis = .horizontal
-        newStackView.spacing = 8
-        newStackView.alignment = .bottom
-        newStackView.backgroundColor = UIColor.gray900
-
-        let newDropButton = UIButton()
-        newDropButton.setTitle("드랍", for: .normal)
-        newDropButton.setTitleColor(.white, for: .normal)
-        newDropButton.setTitleColor(.lightGray, for: .highlighted)
-        newDropButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
-
-        let newLikeButton = UIButton()
-        newLikeButton.setTitle("좋아요", for: .normal)
-        newLikeButton.setTitleColor(UIColor.gray400, for: .normal)
-        newLikeButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-        newLikeButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
-
-        let newLabel = UILabel()
-        newLabel.text = "전체 0개"
-        newLabel.textColor = UIColor.gray400
-        newLabel.font = .pretendard(size: 14, weightName: .regular)
-
-        newStackView.addArrangedSubview(newDropButton)
-        newStackView.addArrangedSubview(newLikeButton)
-        newStackView.addArrangedSubview(
-            {
-                let spacerView = UIView()
-                spacerView.translatesAutoresizingMaskIntoConstraints = false
-                spacerView.backgroundColor = UIColor.clear
-                spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-                return spacerView
-            }()
-        )
-        newStackView.addArrangedSubview(newLabel)
-
-        return newStackView
     }
 }
 
