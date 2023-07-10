@@ -436,6 +436,12 @@ private extension MyPageViewController {
                 likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
                 self?.likeTapButton.setTitleColor(UIColor.gray400, for: .normal)
                 self?.likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+                
+                if let offsetY = self?.scrollView.contentOffset.y {
+                    if  offsetY > 343 {
+                        self?.scrollView.setContentOffset(CGPoint(x: 0, y: 343), animated: true)
+                    }
+                }
             })
             .disposed(by: disposeBag)
         
@@ -452,6 +458,12 @@ private extension MyPageViewController {
                 likeTapButton.setTitleColor(.lightGray, for: .highlighted)
                 self?.likeTapButton.setTitleColor(.white, for: .normal)
                 self?.likeTapButton.setTitleColor(.lightGray, for: .highlighted)
+                
+                if let offsetY = self?.scrollView.contentOffset.y {
+                    if  offsetY > 343 {
+                        self?.scrollView.setContentOffset(CGPoint(x: 0, y: 343), animated: true)
+                    }
+                }
             })
             .disposed(by: disposeBag)
     }
