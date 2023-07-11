@@ -23,6 +23,11 @@ final class MainViewController: UIViewController, Toastable {
     private let viewWillAppearEvent = PublishRelay<Void>()
     private let poiMarkerDidTapEvent = PublishRelay<Void>()
     private let cameraDidStopEvent = PublishRelay<(latitude: Double, longitude: Double)>()
+    
+    var cellWidth: Double? {
+        guard let layout = self.droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return nil }
+        return layout.itemSize.width
+    }
 
     init(viewModel: MainViewModel = MainViewModel()) {
         self.viewModel = viewModel
@@ -460,9 +465,7 @@ private extension MainViewController {
                     self.viewModel.currentIndex = index
                 }
                 let currentIndex = self.viewModel.currentIndex
-
-                guard let layout = self.droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-                let cellWidth = layout.itemSize.width
+                guard let cellWidth = self.cellWidth else { return }
 
                 self.droppedMusicWithinAreaCollectionView.setContentOffset(
                     CGPoint(x: cellWidth * CGFloat(currentIndex - 1), y: .zero),
@@ -479,8 +482,7 @@ private extension MainViewController {
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func setupInitialOffset() {
-        guard let layout = droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        let cellWidth = layout.itemSize.width
+        guard let cellWidth = self.cellWidth else { return }
         droppedMusicWithinAreaCollectionView.setContentOffset(
             CGPoint(x: cellWidth, y: .zero),
             animated: false
@@ -504,11 +506,18 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
             }
             
             self.view.layoutIfNeeded()
+            
+            guard let cellWidth = self.cellWidth else { return }
+            self.droppedMusicWithinAreaCollectionView.setContentOffset(
+                CGPoint(x: cellWidth * CGFloat(currentIndex - 1), y: .zero),
+                animated: false
+            )
         }, completion: { _ in
             UIView.animate(withDuration: 0.1, animations: {
                 if let middleCell = self.droppedMusicWithinAreaCollectionView.cellForItem(at: IndexPath(row: currentIndex, section: 0)) as? DroppedMusicWithinAreaCollectionViewCell {
                     middleCell.middleCell()
                 }
+        
                 self.view.layoutIfNeeded()
             })
         })
@@ -551,8 +560,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
     }
 
     func scrollToItem(at index: Int) {
-        guard let layout = self.droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        let cellWidth = layout.itemSize.width
+        guard let cellWidth = self.cellWidth else { return }
         // 무한스크롤 O
         if viewModel.musicWithinArea.count > 3 {
             if index == 1 { // 맨 왼쪽 도달
