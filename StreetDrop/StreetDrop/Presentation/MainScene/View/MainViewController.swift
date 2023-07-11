@@ -149,13 +149,15 @@ final class MainViewController: UIViewController, Toastable {
     
     private lazy var homeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "homeButton.png"), for: .normal)
+        button.setImage(UIImage(named: "homeButton.png")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = UIColor.primary400
         return button
     }()
     
-    private lazy var settingButton: UIButton = {
+    private lazy var myPageButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "settingButton.png"), for: .normal)
+        button.setImage(UIImage(named: "myPageButton.png")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.6)
         return button
     }()
     
@@ -287,12 +289,12 @@ private extension MainViewController {
             make.left.equalToSuperview().inset(28)
         }
         
-        // MARK: - Setting Button
+        // MARK: - My Page Button
         
-        self.bottomBarImageView.addSubview(self.settingButton)
-        self.settingButton.snp.makeConstraints { make in
+        self.bottomBarImageView.addSubview(self.myPageButton)
+        self.myPageButton.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(8)
-            make.width.equalTo(self.settingButton.snp.height)
+            make.width.equalTo(self.myPageButton.snp.height)
             make.right.equalToSuperview().inset(28)
         }
         
@@ -400,14 +402,11 @@ private extension MainViewController {
             }
             .disposed(by: disposeBag)
         
-        settingButton.rx.tap
+        myPageButton.rx.tap
             .bind { [weak self] in
-                guard let self = self else { return }
-                
-                let settingViewController = SettingsViewController(viewModel: .init())
-                
-                self.navigationController?.pushViewController(
-                    settingViewController,
+                let myPageViewController = MyPageViewController()
+                self?.navigationController?.pushViewController(
+                    myPageViewController,
                     animated: true
                 )
             }
