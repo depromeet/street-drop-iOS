@@ -14,7 +14,7 @@ import RxRelay
 import RxSwift
 import SnapKit
 
-final class MainViewController: UIViewController {
+final class MainViewController: UIViewController, Toastable {
     private var viewModel: MainViewModel
     private let currentLocationMarker = NMFMarker()
     private let disposeBag = DisposeBag()
@@ -364,6 +364,16 @@ private extension MainViewController {
                     communityInfos: self.viewModel.musicWithinArea,
                     index: indexPath.row
                 )
+
+                communityViewModel.blockSuccessToast
+                    .bind { [weak self] toastTitle in
+                        self?.navigationController?.popToRootViewController(animated: true)
+                        self?.showSuccessNormalToast(
+                            text: toastTitle,
+                            bottomInset: 96,
+                            duration: .now()+3
+                        )
+                    }.disposed(by: self.disposeBag)
 
                 let communityViewController = CommunityViewController(viewModel: communityViewModel)
 
