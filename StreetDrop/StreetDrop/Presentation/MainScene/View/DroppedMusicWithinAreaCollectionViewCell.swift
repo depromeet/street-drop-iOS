@@ -29,6 +29,7 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.albumCoverImageView.image = nil
+        self.sideCell()
         self.disposeBag = DisposeBag()
     }
     
