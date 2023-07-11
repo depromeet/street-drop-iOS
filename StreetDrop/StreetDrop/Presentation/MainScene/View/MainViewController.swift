@@ -58,7 +58,6 @@ final class MainViewController: UIViewController, Toastable {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.dismissDial()
     }
     
     // MARK: - UI
@@ -363,6 +362,11 @@ private extension MainViewController {
             .disposed(by: disposeBag)
 
         droppedMusicWithinAreaCollectionView.rx.itemSelected
+            .do(afterNext: { [weak self] _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self?.dismissDial()
+                }
+            })
             .bind { [weak self] indexPath in
                 guard let self = self else { return }
                 let communityViewModel = CommunityViewModel(
