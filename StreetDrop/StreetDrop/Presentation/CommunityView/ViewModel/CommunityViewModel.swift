@@ -44,6 +44,7 @@ final class CommunityViewModel: ViewModel {
     private(set) var currentIndex: Int
     private var communityModel: CommunityModel
     private let disposeBag: DisposeBag = DisposeBag()
+    var blockSuccessToast:  PublishRelay<String> = .init()
     
     init(
         communityInfos: [MusicWithinAreaEntity],
@@ -145,9 +146,7 @@ final class CommunityViewModel: ViewModel {
                 self.communityModel.blockUser(blockUserID)
                     .subscribe(onSuccess: { response in
                         if (200...299).contains(response) {
-                            self.handleBlockedUserComment()
-                            self.changeCommunityInfoForIndex(index: index, output: output)
-                            output.toast.accept((isSuccess: true, title: "차단이 완료되었습니다"))
+                            self.blockSuccessToast.accept("차단이 완료되었습니다")
                         } else {
                             output.toast.accept(
                                 (isSuccess: false, title: "차단에 실패했습니다. 네트워크를 확인해주세요")
@@ -343,16 +342,5 @@ private extension CommunityViewModel {
     private func removeOtherSideTwoInfoAtEachEnd() {
         //ex [4,5] + [1,2,3,4,5] + [1,2] ===>>> [1,2,3,4,5]
         self.communityInfos = Array(communityInfos[2...(communityInfos.count-3)])
-    }
-
-    private func handleBlockedUserComment() {
-        let blockUserID = communityInfos[currentIndex].userId
-
-        for (index, user) in communityInfos.enumerated() {
-            if user.userId == blockUserID {
-                communityInfos[index].content = "차단된 게시글입니다."
-                communityInfos[index].userName = "차단된 사용자"
-            }
-        }
     }
 }
