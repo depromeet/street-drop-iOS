@@ -199,9 +199,15 @@ private extension NicknameEditViewController {
     
     func bindAction() {
         nicknameTextField.rx.text.orEmpty
-            .subscribe(onNext: { [weak self] nickname in
+            .bind{ [weak self] nickname in
                 self?.validateNickname(nickname)
-            })
+            }
+            .disposed(by: disposeBag)
+        
+        backButton.rx.tap
+            .bind{ [weak self] nickname in
+                self?.navigationController?.popViewController(animated: true)
+            }
             .disposed(by: disposeBag)
     }
 }

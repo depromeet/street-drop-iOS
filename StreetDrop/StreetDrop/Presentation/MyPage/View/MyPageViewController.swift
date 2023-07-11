@@ -40,6 +40,14 @@ final class MyPageViewController: UIViewController {
         return view
     }()
     
+    private lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "backButton")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = UIColor.gray100
+        button.imageView?.contentMode = .scaleAspectFit
+        return button
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "마이페이지"
@@ -206,10 +214,20 @@ private extension MyPageViewController {
             make.top.equalToSuperview().offset(18)
         }
         
+        // MARK: - Back Button
+        
+        self.containerView.addSubview(backButton)
+        self.backButton.snp.makeConstraints { make in
+            make.width.height.equalTo(32)
+            make.centerY.equalTo(titleLabel)
+            make.leading.equalToSuperview().inset(24)
+        }
+        
         // MARK: - Settings Button
         
         self.containerView.addSubview(settingsButton)
         self.settingsButton.snp.makeConstraints { make in
+            make.width.height.equalTo(32)
             make.centerY.equalTo(titleLabel)
             make.trailing.equalToSuperview().inset(24)
         }
@@ -467,19 +485,36 @@ private extension MyPageViewController {
             })
             .disposed(by: disposeBag)
     }
+    
     private func bindAction() {
         bindTapButtonAction(dropTapButton: self.dropTapButton, likeTapButton: self.likeTapButton)
         
         scrollToTopButton.rx.tap
-            .subscribe(onNext: { [weak self] in
+            .bind{ [weak self] in
                 self?.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-            })
+            }
             .disposed(by: disposeBag)
         
         nickNameEditButton.rx.tap
-            .subscribe(onNext: { [weak self] in
+            .bind{ [weak self] in
                 self?.navigationController?.pushViewController(NicknameEditViewController(), animated: true)
-            })
+            }
+            .disposed(by: disposeBag)
+        
+        settingsButton.rx.tap
+            .bind { [weak self] in
+                let settingViewController = SettingsViewController(viewModel: .init())
+                self?.navigationController?.pushViewController(
+                    settingViewController,
+                    animated: true
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        backButton.rx.tap
+            .bind{ [weak self] nickname in
+                self?.navigationController?.popViewController(animated: true)
+            }
             .disposed(by: disposeBag)
     }
     
