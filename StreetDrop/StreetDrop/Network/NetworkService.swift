@@ -24,6 +24,7 @@ enum NetworkService {
     case deleteMusic(itemID: Int)
     case getVillageName(latitude: Double, longitude: Double)
     case blockUser(blockUserID: Int)
+    case postFCMToken(token: FCMTokenRequestDTO)
 }
 
 extension NetworkService: TargetType {
@@ -73,6 +74,8 @@ extension NetworkService: TargetType {
             return "/geo/reverse-geocode"
         case .blockUser:
             return "/users/block"
+        case .postFCMToken:
+            return "/notifications/tokens"
         }
     }
     
@@ -91,6 +94,7 @@ extension NetworkService: TargetType {
                 .postLikeDown,
                 .claimComment,
                 .blockUser:
+                .postFCMToken:
             return .post
         case .editComment:
             return .patch
@@ -164,6 +168,8 @@ extension NetworkService: TargetType {
                 parameters: ["blockUserID": blockUserID],
                 encoding: URLEncoding.queryString
             )
+        case .postFCMToken(token: let token):
+            return .requestJSONEncodable(token)
         }
     }
     
