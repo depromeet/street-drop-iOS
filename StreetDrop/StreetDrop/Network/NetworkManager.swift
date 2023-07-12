@@ -7,6 +7,7 @@
 
 import Foundation
 
+import Alamofire
 import Moya
 import RxSwift
 import RxMoya
@@ -110,5 +111,54 @@ struct NetworkManager {
         return provider.rx.request(.postFCMToken(token: token))
             .retry(3)
             .map { $0.statusCode }
+    }
+}
+
+
+// MARK: - Error Handling
+private extension NetworkManager {
+    func converToURLError(_ error: Error) -> URLError? {
+        switch error {
+        case let MoyaError.underlying(afError as AFError, _):
+            fallthrough
+        case let afError as AFError:
+            return afError.underlyingError as? URLError
+        case let MoyaError.underlying(urlError as URLError, _):
+            fallthrough
+        case let urlError as URLError:
+            return urlError
+        default:
+            return nil
+        }
+    }
+    
+    func checkInternetConnection<T: Any>(error: Error) throws -> Single<T> {
+        guard let urlError = converToURLError(error),
+              urlError.code == .notConnectedToInternet else {
+            throw error
+        }
+        
+        throw NetworkError.notConnectedToInternet
+    }
+    
+    func checkTimeOut<T: Any>(error: Error) throws -> Single<T> {
+        guard let urlError = converToURLError(error),
+              urlError.code == .timedOut else {
+            throw error
+        }
+        
+        throw NetworkError.timeout
+    }
+    
+    func checkRESTError<T: Any>(error: Error) throws -> Single<T> {
+        guard error is NetworkError else {
+            throw NetworkError.restError(
+                statusCode: (error as? MoyaError)?.response?.statusCode,
+                errorCode: (try? (error as? MoyaError)?.response?.mapJSON() as? [String: Any])?["code"] as? String,
+                errorMessage: (try? (error as? MoyaError)?.response?.mapJSON() as? [String: Any])?["message"] as? String
+            )
+        }
+        
+        throw error
     }
 }
