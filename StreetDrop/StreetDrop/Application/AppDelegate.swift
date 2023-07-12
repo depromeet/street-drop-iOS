@@ -10,6 +10,7 @@ import UserNotifications
 
 import Firebase
 import FirebaseMessaging
+import NMapsMap
 import RxSwift
 
 @main
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        NMFAuthManager.shared().clientId = Bundle.main.naverMapsClientID
         
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self

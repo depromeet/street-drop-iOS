@@ -131,6 +131,7 @@
 		C475839D2A5F114000CA7335 /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839A2A5F113F00CA7335 /* GoogleService-Info-Prod.plist */; };
 		C475839E2A5F114000CA7335 /* NaverMaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839B2A5F113F00CA7335 /* NaverMaps.plist */; };
 		C475839F2A5F114000CA7335 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */; };
+		C47583A12A5F11BD00CA7335 /* Bundle+APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47583A02A5F11BD00CA7335 /* Bundle+APIKeys.swift */; };
 		C47F02222A38633500F48884 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02212A38633500F48884 /* MyPageViewController.swift */; };
 		C47F02242A38633C00F48884 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02232A38633C00F48884 /* MyPageViewModel.swift */; };
 		C47F02282A3864A500F48884 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02272A3864A500F48884 /* InfoTableViewCell.swift */; };
@@ -286,6 +287,7 @@
 		C475839A2A5F113F00CA7335 /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
 		C475839B2A5F113F00CA7335 /* NaverMaps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = NaverMaps.plist; path = "../../../../../Desktop/아카이브/NaverMaps.plist"; sourceTree = "<group>"; };
 		C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
+		C47583A02A5F11BD00CA7335 /* Bundle+APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+APIKeys.swift"; sourceTree = "<group>"; };
 		C47F02212A38633500F48884 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		C47F02232A38633C00F48884 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		C47F02272A3864A500F48884 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -1039,6 +1041,7 @@
 		C4D16FCA2A1B985F008B076F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C47583A02A5F11BD00CA7335 /* Bundle+APIKeys.swift */,
 				C41BD2E82A38467A0090EF2B /* UIImageView+ImageCache.swift */,
 				18D671F52A35C5D4003B1A71 /* UIImage+Resizing.swift */,
 				C41BD2EB2A3848880090EF2B /* UIImage+loadURLImage.swift */,
@@ -1290,6 +1293,7 @@
 				414345232A35B9A3003FEE2A /* LikeMusicRepository.swift in Sources */,
 				040685042A01539800377094 /* MainViewController.swift in Sources */,
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
+				C47583A12A5F11BD00CA7335 /* Bundle+APIKeys.swift in Sources */,
 				41396D8F2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift in Sources */,
 				41396D822A4EF65B00B69341 /* EditCommentRequestDTO.swift in Sources */,
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
