@@ -21,94 +21,91 @@ struct NetworkManager {
     }
 
     func getMyInfo() -> Single<Data> {
-        return provider.rx.request(.getMyInfo)
+        return requestWithCatchingError(token: .getMyInfo)
             .retry(3)
             .map { $0.data }
     }
     
     func searchMusic(keyword: String) -> Single<Data> {
-        return provider.rx.request(.searchMusic(keyword: keyword))
+        return requestWithCatchingError(token: .searchMusic(keyword: keyword))
             .retry(3)
             .map { $0.data }
     }
     
     func dropMusic(requestDTO: DropMusicRequestDTO) -> Single<Int> {
-        return provider.rx.request(.dropMusic(requestDTO: requestDTO))
+        return requestWithCatchingError(token: .dropMusic(requestDTO: requestDTO))
             .retry(3)
             .map { $0.statusCode }
     }
     
     func getMusicCountByDong(latitude: Double, longitude: Double) -> Single<Data> {
-        return provider.rx
-            .request(.getMusicCountByDong(latitude: latitude, longitude: longitude))
+        return requestWithCatchingError(token: .getMusicCountByDong(latitude: latitude, longitude: longitude))
             .retry(3)
             .map { $0.data }
     }
     
     func getMusicWithinArea(latitude: Double, longitude: Double, distance: Double) -> Single<Data> {
-        return provider.rx
-            .request(.getMusicWithinArea(latitude: latitude, longitude: longitude, distance: distance))
+        return requestWithCatchingError(token: .getMusicWithinArea(latitude: latitude, longitude: longitude, distance: distance))
             .retry(3)
             .map { $0.data }
     }
     
     func getCommunity(itemID: UUID) -> Single<Data> {
-        return provider.rx.request(.getCommunity(itemID: itemID))
+        return requestWithCatchingError(token: .getCommunity(itemID: itemID))
             .retry(3)
             .map { $0.data }
     }
 
     func getPoi(latitude: Double, longitude: Double, distance: Double) -> Single<Data> {
-        return provider.rx
-            .request(.getPoi(latitude: latitude, longitude: longitude, distance: distance))
+        return requestWithCatchingError(token: .getPoi(latitude: latitude, longitude: longitude, distance: distance))
             .retry(3)
             .map { $0.data }
     }
 
     func postLikeUp(itemID: Int) -> Single<Int> {
-        return provider.rx.request(.postLikeUp(itemID: itemID))
+        return requestWithCatchingError(token: .postLikeUp(itemID: itemID))
             .retry(3)
             .map { $0.statusCode }
     }
 
     func postLikeDown(itemID: Int) -> Single<Int> {
-        return provider.rx.request(.postLikeDown(itemID: itemID))
+        return requestWithCatchingError(token: .postLikeDown(itemID: itemID))
             .retry(3)
             .map { $0.statusCode }
     }
 
     func claimComment(requestDTO: ClaimCommentRequestDTO) -> Single<Int> {
-        return provider.rx.request(.claimComment(requestDTO: requestDTO))
+        return requestWithCatchingError(token: .claimComment(requestDTO: requestDTO))
             .retry(3)
             .map { $0.statusCode }
     }
 
     func editComment(itemID: Int, requestDTO: EditCommentRequestDTO) -> Single<Int> {
-        return provider.rx.request(.editComment(itemID: itemID, requestDTO: requestDTO))
+        return requestWithCatchingError(token: .editComment(itemID: itemID, requestDTO: requestDTO))
             .retry(3)
             .map { $0.statusCode }
     }
 
     func deleteMusic(itemID: Int) -> Single<Int> {
-        return provider.rx.request(.deleteMusic(itemID: itemID))
+        return requestWithCatchingError(token: .deleteMusic(itemID: itemID))
             .retry(3)
         .map { $0.statusCode }
     }
     
     func getVillageName(latitude: Double, longitude: Double) -> Single<Data> {
-        return provider.rx.request(.getVillageName(latitude: latitude, longitude: longitude))
+        return requestWithCatchingError(token: .getVillageName(latitude: latitude, longitude: longitude))
             .retry(3)
             .map { $0.data }
     }
 
     func blockUser(_ blockUserID: Int) -> Single<Int> {
-        return provider.rx.request(.blockUser(blockUserID: blockUserID))
+        return requestWithCatchingError(token: .blockUser(blockUserID: blockUserID))
             .retry(3)
             .map { $0.statusCode }
     }
     
     func postFCMToken(token: FCMTokenRequestDTO) -> Single<Int> {
-        return provider.rx.request(.postFCMToken(token: token))
+        return requestWithCatchingError(token: .postFCMToken(token: token))
             .retry(3)
             .map { $0.statusCode }
     }
@@ -117,6 +114,14 @@ struct NetworkManager {
 
 // MARK: - Error Handling
 private extension NetworkManager {
+    func requestWithCatchingError(token: NetworkService) -> Single<Response> {
+        return provider.rx.request(token)
+            .filterSuccessfulStatusCodes()
+            .catch(checkInternetConnection)
+            .catch(checkTimeOut)
+            .catch(checkRESTError)
+    }
+
     func converToURLError(_ error: Error) -> URLError? {
         switch error {
         case let MoyaError.underlying(afError as AFError, _):
