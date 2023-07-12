@@ -93,7 +93,7 @@ extension NetworkService: TargetType {
                 .postLikeUp,
                 .postLikeDown,
                 .claimComment,
-                .blockUser:
+                .blockUser,
                 .postFCMToken:
             return .post
         case .editComment:
