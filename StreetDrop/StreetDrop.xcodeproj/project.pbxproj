@@ -128,6 +128,9 @@
 		C45BF3A82A1D19D100CEDE74 /* RecentMusicQueryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A02A1D133000CEDE74 /* RecentMusicQueryDTO.swift */; };
 		C45BF3AA2A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */; };
 		C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */; };
+		C475839D2A5F114000CA7335 /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839A2A5F113F00CA7335 /* GoogleService-Info-Prod.plist */; };
+		C475839E2A5F114000CA7335 /* NaverMaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839B2A5F113F00CA7335 /* NaverMaps.plist */; };
+		C475839F2A5F114000CA7335 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */; };
 		C47F02222A38633500F48884 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02212A38633500F48884 /* MyPageViewController.swift */; };
 		C47F02242A38633C00F48884 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02232A38633C00F48884 /* MyPageViewModel.swift */; };
 		C47F02282A3864A500F48884 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02272A3864A500F48884 /* InfoTableViewCell.swift */; };
@@ -152,8 +155,6 @@
 		C4D16FC92A1B9338008B076F /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */; };
 		C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */; };
 		C4E0943B2A4DF002000B4513 /* VillageNameResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */; };
-		C4E25A8A2A57D42C00E6A236 /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4E25A892A57D42C00E6A236 /* GoogleService-Info-Prod.plist */; };
-		C4E25A8C2A57DC1700E6A236 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4E25A8B2A57DC1700E6A236 /* GoogleService-Info-Dev.plist */; };
 		C4E25A972A57EF6E00E6A236 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C4E25A962A57EF6E00E6A236 /* FirebaseMessaging */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
 /* End PBXBuildFile section */
@@ -282,6 +283,9 @@
 		C45BF3A22A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicQueriesStorage.swift; sourceTree = "<group>"; };
 		C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicSearchScrollView.swift; sourceTree = "<group>"; };
 		C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentQueryButton.swift; sourceTree = "<group>"; };
+		C475839A2A5F113F00CA7335 /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
+		C475839B2A5F113F00CA7335 /* NaverMaps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = NaverMaps.plist; path = "../../../../../Desktop/아카이브/NaverMaps.plist"; sourceTree = "<group>"; };
+		C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		C47F02212A38633500F48884 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		C47F02232A38633C00F48884 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		C47F02272A3864A500F48884 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -301,8 +305,6 @@
 		C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+LineHeight.swift"; sourceTree = "<group>"; };
 		C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VillageNameResponseDTO.swift; sourceTree = "<group>"; };
-		C4E25A892A57D42C00E6A236 /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
-		C4E25A8B2A57DC1700E6A236 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		C4E25A9A2A57F8FF00E6A236 /* StreetDropDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StreetDropDebug.entitlements; sourceTree = "<group>"; };
 		C4E25A9B2A580B0D00E6A236 /* StreetDropRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StreetDropRelease.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -502,7 +504,9 @@
 				040685082A01539800377094 /* Assets.xcassets */,
 				C4D16FC52A1B9184008B076F /* Font */,
 				0406850D2A01539800377094 /* Info.plist */,
-				C4E25A942A57EC4300E6A236 /* Firebase */,
+				C475839B2A5F113F00CA7335 /* NaverMaps.plist */,
+				C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */,
+				C475839A2A5F113F00CA7335 /* GoogleService-Info-Prod.plist */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -1053,15 +1057,6 @@
 			path = VillageName;
 			sourceTree = "<group>";
 		};
-		C4E25A942A57EC4300E6A236 /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				C4E25A8B2A57DC1700E6A236 /* GoogleService-Info-Dev.plist */,
-				C4E25A892A57D42C00E6A236 /* GoogleService-Info-Prod.plist */,
-			);
-			path = Firebase;
-			sourceTree = "<group>";
-		};
 		DD24191EB8D98350CCDA3174 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1175,15 +1170,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D16FC42A1B917B008B076F /* Pretendard-Bold.otf in Resources */,
+				C475839F2A5F114000CA7335 /* GoogleService-Info-Dev.plist in Resources */,
 				C4D16FC02A1B917B008B076F /* Pretendard-Medium.otf in Resources */,
 				0406850C2A01539800377094 /* LaunchScreen.storyboard in Resources */,
 				C4D16FC32A1B917B008B076F /* Pretendard-ExtraLight.otf in Resources */,
-				C4E25A8C2A57DC1700E6A236 /* GoogleService-Info-Dev.plist in Resources */,
 				C4D16FBC2A1B917B008B076F /* Pretendard-Regular.otf in Resources */,
-				C4E25A8A2A57D42C00E6A236 /* GoogleService-Info-Prod.plist in Resources */,
 				C4D16FBE2A1B917B008B076F /* Pretendard-SemiBold.otf in Resources */,
 				C4D16FBF2A1B917B008B076F /* Pretendard-Thin.otf in Resources */,
 				C4D16FBD2A1B917B008B076F /* Pretendard-ExtraBold.otf in Resources */,
+				C475839D2A5F114000CA7335 /* GoogleService-Info-Prod.plist in Resources */,
+				C475839E2A5F114000CA7335 /* NaverMaps.plist in Resources */,
 				C4D16FC12A1B917B008B076F /* Pretendard-Black.otf in Resources */,
 				040685092A01539800377094 /* Assets.xcassets in Resources */,
 				C4D16FC22A1B917B008B076F /* Pretendard-Light.otf in Resources */,
@@ -1238,7 +1234,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "case \"${CONFIGURATION}\" in\n  \"Debug\" )\ncp -r \"$SRCROOT/StreetDrop/Resource/Firebase/GoogleService-Info-Dev.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n  \"Release\" )\ncp -r \"$SRCROOT/StreetDrop/Resource/Firebase/GoogleService-Info-Prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n*)\n;;\nesac\n";
+			shellScript = "case \"${CONFIGURATION}\" in\n  \"Debug\" )\ncp -r \"$SRCROOT/StreetDrop/Resource/GoogleService-Info-Dev.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n  \"Release\" )\ncp -r \"$SRCROOT/StreetDrop/Resource/GoogleService-Info-Prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n*)\n;;\nesac\n";
 		};
 		D7AAC29D93F6B0DD182BBCE1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
