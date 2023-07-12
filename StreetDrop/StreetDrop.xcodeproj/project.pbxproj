@@ -128,6 +128,7 @@
 		C45BF3A82A1D19D100CEDE74 /* RecentMusicQueryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A02A1D133000CEDE74 /* RecentMusicQueryDTO.swift */; };
 		C45BF3AA2A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */; };
 		C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */; };
+		C462F0FD2A5EC82A00C43F9C /* FCMTokenRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C462F0FC2A5EC82A00C43F9C /* FCMTokenRequestDTO.swift */; };
 		C47F02222A38633500F48884 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02212A38633500F48884 /* MyPageViewController.swift */; };
 		C47F02242A38633C00F48884 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02232A38633C00F48884 /* MyPageViewModel.swift */; };
 		C47F02282A3864A500F48884 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02272A3864A500F48884 /* InfoTableViewCell.swift */; };
@@ -137,6 +138,8 @@
 		C49BA7832A1BE71700A83E95 /* SearchingMusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CB2A1796F300C63526 /* SearchingMusicViewModel.swift */; };
 		C49BA7852A1BE72900A83E95 /* RxCocoa-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = C49BA7842A1BE72900A83E95 /* RxCocoa-Dynamic */; };
 		C49BA7872A1BE72900A83E95 /* RxCocoa-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C49BA7842A1BE72900A83E95 /* RxCocoa-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		C4BB15982A5EC507001BC5E8 /* FCMRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BB15972A5EC507001BC5E8 /* FCMRepository.swift */; };
+		C4BB159B2A5EC521001BC5E8 /* DefaultFCMRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BB159A2A5EC521001BC5E8 /* DefaultFCMRepository.swift */; };
 		C4D16FBC2A1B917B008B076F /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB32A1B917B008B076F /* Pretendard-Regular.otf */; };
 		C4D16FBD2A1B917B008B076F /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB42A1B917B008B076F /* Pretendard-ExtraBold.otf */; };
 		C4D16FBE2A1B917B008B076F /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB52A1B917B008B076F /* Pretendard-SemiBold.otf */; };
@@ -279,10 +282,13 @@
 		C45BF3A22A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicQueriesStorage.swift; sourceTree = "<group>"; };
 		C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicSearchScrollView.swift; sourceTree = "<group>"; };
 		C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentQueryButton.swift; sourceTree = "<group>"; };
+		C462F0FC2A5EC82A00C43F9C /* FCMTokenRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMTokenRequestDTO.swift; sourceTree = "<group>"; };
 		C47F02212A38633500F48884 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		C47F02232A38633C00F48884 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		C47F02272A3864A500F48884 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
 		C47F02292A3869DC00F48884 /* MyPageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageInfo.swift; sourceTree = "<group>"; };
+		C4BB15972A5EC507001BC5E8 /* FCMRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMRepository.swift; sourceTree = "<group>"; };
+		C4BB159A2A5EC521001BC5E8 /* DefaultFCMRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFCMRepository.swift; sourceTree = "<group>"; };
 		C4D16FB32A1B917B008B076F /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		C4D16FB42A1B917B008B076F /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		C4D16FB52A1B917B008B076F /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
@@ -411,6 +417,7 @@
 				41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */,
 				41396D902A4EFBF700B69341 /* DefaultEditCommentRepository.swift */,
 				41A3DDF72A5AD222004CFA2F /* DefaultBlockUserRepository.swift */,
+				C4BB159C2A5EC59F001BC5E8 /* FCM */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -503,6 +510,7 @@
 		04FB1F292A021B750064B3C8 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				C4BB15992A5EC50D001BC5E8 /* FCM */,
 				18683FDD2A348B19005A94AC /* Main */,
 				C434A4D62A17986400C63526 /* SearchingMusic */,
 				41F23B4D2A1B6EE80083D2EC /* DropMusicRepository.swift */,
@@ -598,6 +606,7 @@
 				18AAF8362A136D9E002EF441 /* MusicWithinArea */,
 				C45BF39F2A1D12EF00CEDE74 /* RecentMusicSearch */,
 				C4E094392A4DEFC5000B4513 /* VillageName */,
+				C462F0FB2A5EC80200C43F9C /* FCM */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -932,6 +941,14 @@
 			path = RecentMusicSearch;
 			sourceTree = "<group>";
 		};
+		C462F0FB2A5EC80200C43F9C /* FCM */ = {
+			isa = PBXGroup;
+			children = (
+				C462F0FC2A5EC82A00C43F9C /* FCMTokenRequestDTO.swift */,
+			);
+			path = FCM;
+			sourceTree = "<group>";
+		};
 		C47F02202A385BA700F48884 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -956,6 +973,22 @@
 				C47F02232A38633C00F48884 /* MyPageViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C4BB15992A5EC50D001BC5E8 /* FCM */ = {
+			isa = PBXGroup;
+			children = (
+				C4BB15972A5EC507001BC5E8 /* FCMRepository.swift */,
+			);
+			path = FCM;
+			sourceTree = "<group>";
+		};
+		C4BB159C2A5EC59F001BC5E8 /* FCM */ = {
+			isa = PBXGroup;
+			children = (
+				C4BB159A2A5EC521001BC5E8 /* DefaultFCMRepository.swift */,
+			);
+			path = FCM;
 			sourceTree = "<group>";
 		};
 		C4D16FC52A1B9184008B076F /* Font */ = {
@@ -1223,6 +1256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18AAF83E2A137349002EF441 /* CommunityResponseDTO.swift in Sources */,
+				C462F0FD2A5EC82A00C43F9C /* FCMTokenRequestDTO.swift in Sources */,
 				41396D952A4EFF7B00B69341 /* MyInfo.swift in Sources */,
 				188F90C72A39FD7D003A1B4A /* UIImage+cornerRadius.swift in Sources */,
 				C41BD2EC2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */,
@@ -1296,6 +1330,8 @@
 				C45A4CAE2A37104600EE9C36 /* ImageCacheService.swift in Sources */,
 				C41BD2E92A38467A0090EF2B /* UIImageView+ImageCache.swift in Sources */,
 				41D0974F2A19065B00C011A0 /* UIView+generateCircleGradientView.swift in Sources */,
+				C4BB15982A5EC507001BC5E8 /* FCMRepository.swift in Sources */,
+				C4BB159B2A5EC521001BC5E8 /* DefaultFCMRepository.swift in Sources */,
 				41396DA42A51B61000B69341 /* EditViewModel.swift in Sources */,
 				049F50222A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift in Sources */,
 				41A9BEB92A4DCA4A00F3605C /* ClaimCommentRepository.swift in Sources */,
