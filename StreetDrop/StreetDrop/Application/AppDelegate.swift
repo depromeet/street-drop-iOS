@@ -10,10 +10,12 @@ import UserNotifications
 
 import Firebase
 import FirebaseMessaging
+import RxSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+    private let fcmRepository: FCMRepository = DefaultFCMRepository()
+    private let disposedBag: DisposeBag = .init()
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -71,8 +73,18 @@ extension AppDelegate: MessagingDelegate {
         guard let fcmToken = fcmToken else { return }
         guard fcmToken == UserDefaults.standard.string(forKey: UserDefaultKey.fcmToken) ?? "" else {
             //TODO: 푸시 등록 API 추가
-            
-            UserDefaults.standard.set(fcmToken, forKey: UserDefaultKey.fcmToken)
+            fcmRepository.enrollFCMToken(token: fcmToken)
+                .subscribe(onSuccess: { response in
+                    if (200...299).contains(response) {
+                        print("fcm token 서버 등록 성공")
+                        UserDefaults.standard.set(fcmToken, forKey: UserDefaultKey.fcmToken)
+                    } else {
+                        print("fcm token 서버 등록 실패 statusCode: \(response)")
+                    }
+                }, onFailure: { error in
+                    print(error.localizedDescription)
+                })
+                .disposed(by: disposedBag)
             return
         }
     }
