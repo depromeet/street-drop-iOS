@@ -116,6 +116,10 @@
 		C434A4DA2A17AB5600C63526 /* SearchingMusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CD2A17970A00C63526 /* SearchingMusicModel.swift */; };
 		C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
 		C434A4DD2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
+		C4434D1E2A5F1CB200DF5BEF /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4434D1C2A5F1CB200DF5BEF /* GoogleService-Info-Prod.plist */; };
+		C4434D1F2A5F1CB200DF5BEF /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4434D1D2A5F1CB200DF5BEF /* GoogleService-Info-Dev.plist */; };
+		C4434D212A5F1CD100DF5BEF /* NaverMaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4434D202A5F1CD000DF5BEF /* NaverMaps.plist */; };
+		C4434D232A5F1CF500DF5BEF /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4434D222A5F1CF500DF5BEF /* NetworkError.swift */; };
 		C45A4CAE2A37104600EE9C36 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A4CAD2A37104600EE9C36 /* ImageCacheService.swift */; };
 		C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */; };
 		C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */; };
@@ -128,9 +132,6 @@
 		C45BF3A82A1D19D100CEDE74 /* RecentMusicQueryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A02A1D133000CEDE74 /* RecentMusicQueryDTO.swift */; };
 		C45BF3AA2A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */; };
 		C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */; };
-		C475839D2A5F114000CA7335 /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839A2A5F113F00CA7335 /* GoogleService-Info-Prod.plist */; };
-		C475839E2A5F114000CA7335 /* NaverMaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839B2A5F113F00CA7335 /* NaverMaps.plist */; };
-		C475839F2A5F114000CA7335 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */; };
 		C47583A12A5F11BD00CA7335 /* Bundle+APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47583A02A5F11BD00CA7335 /* Bundle+APIKeys.swift */; };
 		C47F02222A38633500F48884 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02212A38633500F48884 /* MyPageViewController.swift */; };
 		C47F02242A38633C00F48884 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02232A38633C00F48884 /* MyPageViewModel.swift */; };
@@ -276,6 +277,10 @@
 		C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicRepository.swift; sourceTree = "<group>"; };
 		C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicViewModelTest.swift; sourceTree = "<group>"; };
 		C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicTableViewCell.swift; sourceTree = "<group>"; };
+		C4434D1C2A5F1CB200DF5BEF /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
+		C4434D1D2A5F1CB200DF5BEF /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
+		C4434D202A5F1CD000DF5BEF /* NaverMaps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = NaverMaps.plist; path = "../../../../../Desktop/APIKey Plist/NaverMaps.plist"; sourceTree = "<group>"; };
+		C4434D222A5F1CF500DF5BEF /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		C45A4CAD2A37104600EE9C36 /* ImageCacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheError.swift; sourceTree = "<group>"; };
 		C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKey.swift; sourceTree = "<group>"; };
@@ -284,9 +289,6 @@
 		C45BF3A22A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicQueriesStorage.swift; sourceTree = "<group>"; };
 		C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicSearchScrollView.swift; sourceTree = "<group>"; };
 		C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentQueryButton.swift; sourceTree = "<group>"; };
-		C475839A2A5F113F00CA7335 /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
-		C475839B2A5F113F00CA7335 /* NaverMaps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = NaverMaps.plist; path = "../../../../../Desktop/아카이브/NaverMaps.plist"; sourceTree = "<group>"; };
-		C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		C47583A02A5F11BD00CA7335 /* Bundle+APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+APIKeys.swift"; sourceTree = "<group>"; };
 		C47F02212A38633500F48884 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		C47F02232A38633C00F48884 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
@@ -506,9 +508,9 @@
 				040685082A01539800377094 /* Assets.xcassets */,
 				C4D16FC52A1B9184008B076F /* Font */,
 				0406850D2A01539800377094 /* Info.plist */,
-				C475839B2A5F113F00CA7335 /* NaverMaps.plist */,
-				C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */,
-				C475839A2A5F113F00CA7335 /* GoogleService-Info-Prod.plist */,
+				C4434D202A5F1CD000DF5BEF /* NaverMaps.plist */,
+				C4434D1D2A5F1CB200DF5BEF /* GoogleService-Info-Dev.plist */,
+				C4434D1C2A5F1CB200DF5BEF /* GoogleService-Info-Prod.plist */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -532,6 +534,7 @@
 		04FB1F302A021C250064B3C8 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				C4434D222A5F1CF500DF5BEF /* NetworkError.swift */,
 				04FB1F312A021C330064B3C8 /* TestError.swift */,
 				C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */,
 			);
@@ -1173,18 +1176,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D16FC42A1B917B008B076F /* Pretendard-Bold.otf in Resources */,
-				C475839F2A5F114000CA7335 /* GoogleService-Info-Dev.plist in Resources */,
+				C4434D1F2A5F1CB200DF5BEF /* GoogleService-Info-Dev.plist in Resources */,
 				C4D16FC02A1B917B008B076F /* Pretendard-Medium.otf in Resources */,
 				0406850C2A01539800377094 /* LaunchScreen.storyboard in Resources */,
 				C4D16FC32A1B917B008B076F /* Pretendard-ExtraLight.otf in Resources */,
 				C4D16FBC2A1B917B008B076F /* Pretendard-Regular.otf in Resources */,
+				C4434D1E2A5F1CB200DF5BEF /* GoogleService-Info-Prod.plist in Resources */,
 				C4D16FBE2A1B917B008B076F /* Pretendard-SemiBold.otf in Resources */,
 				C4D16FBF2A1B917B008B076F /* Pretendard-Thin.otf in Resources */,
 				C4D16FBD2A1B917B008B076F /* Pretendard-ExtraBold.otf in Resources */,
-				C475839D2A5F114000CA7335 /* GoogleService-Info-Prod.plist in Resources */,
-				C475839E2A5F114000CA7335 /* NaverMaps.plist in Resources */,
 				C4D16FC12A1B917B008B076F /* Pretendard-Black.otf in Resources */,
 				040685092A01539800377094 /* Assets.xcassets in Resources */,
+				C4434D212A5F1CD100DF5BEF /* NaverMaps.plist in Resources */,
 				C4D16FC22A1B917B008B076F /* Pretendard-Light.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1284,6 +1287,7 @@
 				41396DA12A51B0DF00B69341 /* EditViewController.swift in Sources */,
 				41008EBA2A49B56F00FD4ABE /* ClaimModalViewController.swift in Sources */,
 				C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */,
+				C4434D232A5F1CF500DF5BEF /* NetworkError.swift in Sources */,
 				C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */,
 				C47F02222A38633500F48884 /* MyPageViewController.swift in Sources */,
 				41A3DDF12A593ED4004CFA2F /* AlertViewController.swift in Sources */,
