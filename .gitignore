@@ -59,5 +59,7 @@ Carthage/Build
 
 iOSInjectionProject/
 
-
-
+# API KEYS
+GoogleService-Info-Dev.plist
+GoogleService-Info-Prod.plist
+NaverMaps.plist

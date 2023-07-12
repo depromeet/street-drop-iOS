@@ -105,4 +105,10 @@ struct NetworkManager {
             .retry(3)
             .map { $0.statusCode }
     }
+    
+    func postFCMToken(token: FCMTokenRequestDTO) -> Single<Int> {
+        return provider.rx.request(.postFCMToken(token: token))
+            .retry(3)
+            .map { $0.statusCode }
+    }
 }
