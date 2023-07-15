@@ -132,6 +132,7 @@
 		C475839E2A5F114000CA7335 /* NaverMaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839B2A5F113F00CA7335 /* NaverMaps.plist */; };
 		C475839F2A5F114000CA7335 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */; };
 		C47583A12A5F11BD00CA7335 /* Bundle+APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47583A02A5F11BD00CA7335 /* Bundle+APIKeys.swift */; };
+		C46410F42A629820009DD88F /* MusicAppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46410F32A629820009DD88F /* MusicAppButton.swift */; };
 		C47F02222A38633500F48884 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02212A38633500F48884 /* SettingsViewController.swift */; };
 		C47F02242A38633C00F48884 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02232A38633C00F48884 /* SettingsViewModel.swift */; };
 		C47F02282A3864A500F48884 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02272A3864A500F48884 /* InfoTableViewCell.swift */; };
@@ -297,6 +298,7 @@
 		C4A4458F2A5EF225008279C1 /* FCMTokenRequestDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMTokenRequestDTO.swift; sourceTree = "<group>"; };
 		C4A445922A5EF265008279C1 /* DefaultFCMRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFCMRepository.swift; sourceTree = "<group>"; };
 		C4BB15972A5EC507001BC5E8 /* FCMRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMRepository.swift; sourceTree = "<group>"; };
+		C46410F32A629820009DD88F /* MusicAppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicAppButton.swift; sourceTree = "<group>"; };
 		C47F02212A38633500F48884 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C47F02232A38633C00F48884 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		C47F02272A3864A500F48884 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -978,6 +980,7 @@
 			children = (
 				C47F02212A38633500F48884 /* SettingsViewController.swift */,
 				C47F02272A3864A500F48884 /* InfoTableViewCell.swift */,
+				C46410F32A629820009DD88F /* MusicAppButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1314,6 +1317,7 @@
 				18683FE12A349109005A94AC /* PoiEntity.swift in Sources */,
 				41D097512A191D6700C011A0 /* MusicDropViewModel.swift in Sources */,
 				C4A445902A5EF225008279C1 /* FCMTokenRequestDTO.swift in Sources */,
+				C46410F42A629820009DD88F /* MusicAppButton.swift in Sources */,
 				41396D872A4EFA2900B69341 /* MyInfoResponseDTO.swift in Sources */,
 				412D668C2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift in Sources */,
 				41396DA92A51B8F700B69341 /* EditInfo.swift in Sources */,
