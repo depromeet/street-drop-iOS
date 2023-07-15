@@ -8,12 +8,16 @@
 import UIKit
 
 import RxSwift
+import RxRelay
 import RxCocoa
 import SnapKit
 
 final class SettingsViewController: UIViewController {
     private let viewModel: DefaultSettingsViewModel
     private let disposeBag = DisposeBag()
+    private var musicAppButtons: [MusicAppButton] = []
+    private let musicAppButtonEvent: PublishRelay<String> = .init()
+    private let viewDidLoadEvent = PublishRelay<Void>()
     
     init(viewModel: DefaultSettingsViewModel) {
         self.viewModel = viewModel
@@ -55,6 +59,40 @@ final class SettingsViewController: UIViewController {
         return button
     }()
     
+    private let selectingMusicAppLabel: UILabel = {
+        let label: UILabel = .init()
+        label.text = "스트리밍 서비스 선택"
+        label.font = .pretendard(size: 14, weightName: .medium)
+        label.textColor = .gray100
+        label.setLineHeight(lineHeight: 20)
+        
+        return label
+    }()
+    
+    private lazy var selectingMusicAppStackView: UIStackView = {
+        let stackView: UIStackView = .init()
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.distribution = .fillEqually
+        
+        MusicApp.allCases.forEach { musicApp in
+            let button: MusicAppButton = .init()
+            button.setData(musicApp: musicApp)
+            button.rx.controlEvent(.touchUpInside)
+                .bind { [weak self] in
+                    self?.musicAppButtonEvent.accept(musicApp.queryString)
+                }
+                .disposed(by: disposeBag)
+                
+            musicAppButtons.append(button)
+        }
+        musicAppButtons.forEach {
+            stackView.addArrangedSubview($0)
+        }
+        
+        return stackView
+    }()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(
@@ -73,6 +111,7 @@ final class SettingsViewController: UIViewController {
         bindAction()
         bindViewModel()
         configureUI()
+        viewDidLoadEvent.accept(Void())
     }
 }
 
@@ -112,12 +151,37 @@ private extension SettingsViewController {
     }
     
     func bindViewModel() {
-        let input = DefaultSettingsViewModel.Input()
+        let input = DefaultSettingsViewModel.Input(
+            viewDidLoadEvent: viewDidLoadEvent.asObservable(),
+            musicAppButtonEvent: musicAppButtonEvent.asObservable()
+        )
         
-        let _ = viewModel.convert(
+        let output = viewModel.convert(
             input: input,
             disposedBag: disposeBag
         )
+        
+        output.currentMusicApp
+            .bind { [weak self] musicApp in
+                self?.musicAppButtons.forEach {
+                    if $0.musicApp == musicApp {
+                        $0.setSelectedAppearance()
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.savedMusicAppInServer
+            .bind { [weak self] savedMusicAppInServer in
+                self?.musicAppButtons.forEach {
+                    if $0.musicApp == savedMusicAppInServer {
+                        $0.setSelectedAppearance()
+                    } else {
+                        $0.setUnselectedAppearance()
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     func configureUI() {
@@ -161,11 +225,40 @@ private extension SettingsViewController {
             $0.trailing.equalToSuperview().inset(24)
         }
         
-        self.tableView.snp.makeConstraints {
-            $0.top.equalTo(self.navigationBar.snp.bottom)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+        let selectingMusicAppContainerView: UIView = .init()
+        selectingMusicAppContainerView.backgroundColor = .gray800
+        selectingMusicAppContainerView.layer.cornerRadius = 12
+        
+        self.view.addSubview(selectingMusicAppContainerView)
+        [
+            self.selectingMusicAppLabel,
+            self.selectingMusicAppStackView
+        ].forEach {
+            selectingMusicAppContainerView.addSubview($0)
         }
+        
+        selectingMusicAppContainerView.snp.makeConstraints {
+            $0.top.equalTo(self.navigationBar.snp.bottom).offset(4)
+            $0.leading.equalToSuperview().inset(24)
+            $0.trailing.equalToSuperview().inset(24)
+        }
+        
+        self.selectingMusicAppLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(20)
+            
+        }
+        
+        self.selectingMusicAppStackView.snp.makeConstraints {
+            $0.top.equalTo(self.selectingMusicAppLabel.snp.bottom).offset(16)
+            $0.leading.trailing.bottom.equalToSuperview().inset(20)
+        }
+        
+//        self.tableView.snp.makeConstraints {
+//            $0.top.equalTo(self.navigationBar.snp.bottom)
+//            $0.leading.equalToSuperview()
+//            $0.trailing.equalToSuperview()
+//            $0.bottom.equalToSuperview()
+//        }
     }
 }
