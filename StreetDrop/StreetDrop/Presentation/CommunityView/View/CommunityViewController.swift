@@ -744,6 +744,8 @@ extension CommunityViewController: ClaimModalViewModelDelegate {
             showSuccessNormalToast(text: text, bottomInset: 16, duration: .now() + 3)
         case .fail:
             showFailNormalToast(text: text, bottomInset: 16, duration: .now() + 3)
+        case .musicAppCheckBox:
+            showMusicAppCheckBoxToast(text: text, bottomInset: 16, duration: .now() + 3)
         }
     }
 }

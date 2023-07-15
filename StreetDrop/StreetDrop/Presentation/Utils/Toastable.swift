@@ -22,6 +22,11 @@ extension Toastable {
         let toastView = ToastView(state: .fail, text: text)
         showToast(toastView, bottomInset: bottomInset, duration: duration)
     }
+    
+    func showMusicAppCheckBoxToast(text: String, bottomInset: CGFloat, duration: DispatchTime) {
+        let toastView = ToastView(state: .musicAppCheckBox, text: text)
+        showToast(toastView, bottomInset: bottomInset, duration: duration)
+    }
 
     func showSuccessButtonToast(
         text: String,
