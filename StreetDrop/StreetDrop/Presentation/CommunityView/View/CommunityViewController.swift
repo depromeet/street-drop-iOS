@@ -38,10 +38,6 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
         bindAction()
         bindViewModel()
         viewDidLoadEvent.accept(())
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
         makeCommentViewToGradientView()
     }
 
@@ -677,6 +673,7 @@ private extension CommunityViewController {
     }
 
     func makeCommentViewToGradientView() {
+        self.view.layoutIfNeeded()
         commentStackView.makeGradientView(
             colors: [
                 UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0.1).cgColor,
