@@ -1,5 +1,5 @@
 //
-//  MyPageInfo.swift
+//  SettingsInfo.swift
 //  StreetDrop
 //
 //  Created by 차요셉 on 2023/06/13.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MyPageInfo: String, CaseIterable {
+enum SettingsInfo: String, CaseIterable {
 //    case serviceUsageGuide = "서비스 이용 안내"
 //    case termsAndConditions = "이용약관"
     case privacyPolicy = "개인정보 처리방침"
