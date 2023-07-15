@@ -23,7 +23,7 @@ struct MyInfoResponseDTO: Decodable {
             userID: userID,
             nickname: nickname,
             profileImage: profileImage,
-            musicApp: musicApp
+            musicApp: MusicApp(rawValue: musicApp) ?? .youtubeMusic
         )
     }
 }

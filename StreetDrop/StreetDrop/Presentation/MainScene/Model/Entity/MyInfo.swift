@@ -11,5 +11,5 @@ struct MyInfo: Codable {
     let userID: Int
     let nickname: String
     let profileImage: String
-    let musicApp: String
+    let musicApp: MusicApp
 }
