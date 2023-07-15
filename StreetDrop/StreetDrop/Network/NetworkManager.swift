@@ -111,4 +111,10 @@ struct NetworkManager {
             .retry(3)
             .map { $0.statusCode }
     }
+    
+    func patchUsersMusicApp(musicAppQueryString: String) -> Single<Data> {
+        return provider.rx.request(.patchUsersMusicApp(musicAppQuery: musicAppQueryString))
+            .retry(3)
+            .map { $0.data }
+    }
 }
