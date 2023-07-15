@@ -1,5 +1,5 @@
 //
-//  MyPageViewModel.swift
+//  SettingsViewModel.swift
 //  StreetDrop
 //
 //  Created by 차요셉 on 2023/06/13.
@@ -10,11 +10,11 @@ import Foundation
 import RxSwift
 import RxRelay
 
-protocol MyPageViewModel: ViewModel {
+protocol SettingsViewModel: ViewModel {
     
 }
 
-final class DefaultMyPageViewModel: MyPageViewModel {
+final class DefaultSettingsViewModel: SettingsViewModel {
     private let disposeBag: DisposeBag = DisposeBag()
     struct Input {}
     
