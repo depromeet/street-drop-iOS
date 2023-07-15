@@ -235,7 +235,7 @@ private extension CommunityViewModel {
         }
 
         let myDateFormatter = DateFormatter()
-        myDateFormatter.dateFormat = "yyyy.MM.dd"
+        myDateFormatter.dateFormat = "yy.MM.dd"
 
         return myDateFormatter.string(from: convertDate)
     }

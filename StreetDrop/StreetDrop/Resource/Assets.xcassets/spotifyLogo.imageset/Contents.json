@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Subtractx1.png",
+      "filename" : "spotifyMusicLogo_x1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Subtractx2.png",
+      "filename" : "spotifyMusicLogo_x2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Subtractx3.png",
+      "filename" : "spotifyMusicLogo_x3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -42,7 +42,6 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        profileImageView.makeCircleShape()
         makeCommentViewToGradientView()
     }
 
@@ -55,7 +54,7 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
     }()
 
     private lazy var locationImageView: UIImageView = {
-        let image = UIImage(named: "locationBasic")
+        let image = UIImage(named: "locationIcon")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill
 
@@ -65,8 +64,8 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
     private lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
-        label.textColor = .gray100
-        label.font = .pretendard(size: 12, weight: 600)
+        label.textColor = .gray50
+        label.font = .pretendard(size: 16, weightName: .bold)
         label.setLineHeight(lineHeight: 16)
 
         return label
@@ -74,13 +73,17 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
 
     private lazy var locationTopView: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray800
-        view.layer.cornerRadius = 15
+        view.backgroundColor = .gray900
 
         return view
     }()
 
-    private lazy var topView: UIView = UIView()
+    private lazy var topView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray900
+
+        return view
+    }()
 
     private lazy var albumCollectionView: UICollectionView = {
         let collectionView = UICollectionView(
@@ -106,8 +109,8 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
         let label = UILabel()
         label.text = Constant.textDefault // setLineHeight() 적용을위해 text 디폴트 값 필요
         label.textColor = .white
-        label.font = .pretendard(size: 20, weight: 700)
-        label.setLineHeight(lineHeight: 26.4)
+        label.font = .pretendard(size: 24, weightName: .bold)
+        label.setLineHeight(lineHeight: 32)
 
         return label
     }()
@@ -116,8 +119,8 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
         let label = UILabel()
         label.text = Constant.textDefault
         label.textColor = .gray200
-        label.font = .pretendard(size: 14, weight: 500)
-        label.setLineHeight(lineHeight: 19.6)
+        label.font = .pretendard(size: 14, weightName: .medium)
+        label.setLineHeight(lineHeight: 20)
 
         return label
     }()
@@ -125,6 +128,7 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
     private lazy var musicInfoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
+        stackView.spacing = 4
         stackView.alignment = .center
 
         return stackView
@@ -148,6 +152,7 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
         textView.backgroundColor = .clear
         textView.text = Constant.textDefault
         textView.isEditable = false
+        textView.font = .pretendard(size: 16, weightName: .medium)
         textView.showsVerticalScrollIndicator = false
 
         return textView
@@ -162,18 +167,12 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
         return button
     }()
 
-    private lazy var profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-
-        return imageView
-    }()
-
     private lazy var nicknameLabel: UILabel = {
         let label = UILabel()
         label.text = Constant.textDefault
+        label.textAlignment = .left
         label.textColor = .gray100
-        label.font = .pretendard(size: 14, weight: 500)
+        label.font = .pretendard(size: 14, weightName: .regular)
         label.setLineHeight(lineHeight: 19.6)
 
         return label
@@ -183,7 +182,7 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
         let label = UILabel()
         label.text = Constant.textDefault
         label.textColor = .gray300
-        label.font = .pretendard(size: 12, weight: 400)
+        label.font = .pretendard(size: 12, weightName: .regular)
         label.setLineHeight(lineHeight: 16.8)
 
         return label
@@ -192,7 +191,6 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
     private lazy var userInfoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 8
 
         return stackView
     }()
@@ -200,29 +198,32 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
     private lazy var commentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 5
+        stackView.spacing = 12
         stackView.layer.cornerRadius = 12
-        stackView.backgroundColor = UIColor(red: 0.089, green: 0.099, blue: 0.12, alpha: 1)
+        stackView.backgroundColor = .gray800
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layer.masksToBounds = true
-        stackView.layoutMargins = UIEdgeInsets(top: 24, left: 24, bottom: 24, right: 24)
+        stackView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 
         return stackView
     }()
 
     // listeningGuide 요소
     private lazy var listenButton: UIButton = {
+        let musicIcon = UIImage(named: "youtubeMusicLogo")
         let button: UIButton = UIButton()
+        button.setImage(musicIcon, for: .normal)
         button.setTitle("바로 듣기", for: .normal)
-        button.setTitleColor(.primary500, for: .normal)
-        button.titleLabel?.font = .pretendard(size: 16, weight: 700)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .pretendard(size: 14, weightName: .medium)
 
         return button
     }()
 
     private lazy var listeningGuideView: UIView = {
+
         let view = UIView()
-        view.layer.cornerRadius = 12
+        view.layer.cornerRadius = 8
         view.backgroundColor = .gray800
         view.layoutMargins = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
 
@@ -240,21 +241,27 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
 
     private lazy var likeCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "31.8K"
-        label.textColor = .white
-        label.font = .pretendard(size: 16, weight: 500)
-        label.setLineHeight(lineHeight: 21)
+        label.text = "0"
+        label.textColor = .gray200
+        label.font = .pretendard(size: 14, weightName: .bold)
 
         return label
     }()
 
     private lazy var likeView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 12
+        view.layer.cornerRadius = 8
         view.backgroundColor = .gray800
         view.layoutMargins = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
 
         return view
+    }()
+
+    private lazy var listenAndLikeStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = 8
+
+        return stackView
     }()
 }
 
@@ -275,7 +282,7 @@ private extension CommunityViewController {
                 guard let self = self else { return }
                 let musicName = self.musicNameLabel.text ?? ""
                 let artistName = self.artistLabel.text ?? ""
-                
+
                 // urlScheme을 통해 유튜브뮤직  앱으로 이동
                 let youtubeMusicAppURLString = "youtubemusic://search?q=\(musicName)-\(artistName)"
                 if let encodedYoutubeMusicAppURLString = youtubeMusicAppURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
@@ -284,7 +291,7 @@ private extension CommunityViewController {
                     UIApplication.shared.open(encodedYoutubeMusicAppURL)
                     return
                 }
-                
+
                 // urlScheme을 통해 유튜브뮤직 앱으로 이동 실패 시, 유튜브뮤직 웹사이트 url으로 이동
                 let youtubeMusicWebURLString = "https://music.youtube.com/search?q=\(musicName)-\(artistName)"
                 if let encodedYoutubeMusicWebURLString = youtubeMusicWebURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
@@ -376,15 +383,8 @@ private extension CommunityViewController {
 
         output.profileImageURL
             .asDriver(onErrorJustReturn: String())
-            .drive { [weak self] url in
-                guard let self = self else { return }
-                // 프로필 이미지 URL 생기면 맨 아랫 줄로 바꾸기. 1차 배포는 애플 이미지 사용
-                let image = UIImage(systemName: url)?
-                    .withTintColor(.white, renderingMode: .alwaysOriginal)
-
-                self.profileImageView.image = image
-
-                //self.profileImageView.setImage(with: url, disposeBag: self.disposeBag)
+            .drive { url in
+                // 로그인기능 후 데이터 셋업
             }.disposed(by: disposeBag)
 
         output.nicknameText
@@ -452,10 +452,10 @@ private extension CommunityViewController {
     }
 
     // MARK: - UI
-    
+
     func configureUI() {
         self.view.clipsToBounds = true
-        
+
         [locationImageView, locationLabel].forEach {
             locationTopView.addSubview($0)
         }
@@ -474,7 +474,7 @@ private extension CommunityViewController {
 
         genreLabelStackView.addArrangedSubview(voidView)
 
-        [profileImageView, nicknameLabel, dateLabel].forEach {
+        [nicknameLabel, dateLabel].forEach {
             userInfoStackView.addArrangedSubview($0)
         }
 
@@ -492,27 +492,28 @@ private extension CommunityViewController {
             likeView.addSubview($0)
         }
 
+        [listeningGuideView, likeView].forEach {
+            listenAndLikeStackView.addArrangedSubview($0)
+        }
+
         [topView,
          albumCollectionView,
          musicInfoStackView,
          commentStackView,
-         listeningGuideView,
-         likeView
+         listenAndLikeStackView
         ]
             .forEach {
                 self.view.addSubview($0)
             }
 
         locationImageView.snp.makeConstraints {
-            $0.width.height.equalTo(12.5)
-            $0.leading.equalToSuperview().inset(16)
-            $0.top.bottom.equalToSuperview().inset(11)
+            $0.leading.centerY.equalToSuperview()
+            $0.width.height.equalTo(20)
         }
 
         locationLabel.snp.makeConstraints {
-            $0.leading.equalTo(locationImageView.snp.trailing).offset(9)
-            $0.top.bottom.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(16)
+            $0.leading.equalTo(locationImageView.snp.trailing)
+            $0.top.trailing.bottom.equalToSuperview()
         }
 
         locationTopView.snp.makeConstraints {
@@ -521,12 +522,12 @@ private extension CommunityViewController {
 
         topView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(56)
+            $0.height.equalTo(60)
         }
 
         backButton.snp.makeConstraints {
             $0.width.height.equalTo(32)
-            $0.leading.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(24)
             $0.centerY.equalToSuperview()
         }
 
@@ -535,18 +536,17 @@ private extension CommunityViewController {
         }
 
         albumCollectionView.snp.makeConstraints {
-            $0.top.equalTo(topView.snp.bottom).offset(8)
+            let heightRatio: CGFloat = 1/3
+            $0.top.equalTo(topView.snp.bottom).offset(32-20) // padding - cellPadding
             $0.leading.trailing.equalToSuperview().inset(-self.view.frame.width/4)
-            $0.height.equalTo(albumCollectionView.snp.width).multipliedBy(0.34)
+            $0.height.equalTo(albumCollectionView.snp.width).multipliedBy(heightRatio)
         }
 
         musicInfoStackView.snp.makeConstraints {
-            $0.top.lessThanOrEqualTo(albumCollectionView.snp.bottom).offset(8)
-            $0.height.equalTo(51)
-            $0.centerX.equalToSuperview()
+            $0.top.equalTo(albumCollectionView.snp.bottom).offset(16-20) // padding - cellPadding
+            $0.leading.trailing.equalToSuperview().inset(24)
         }
 
-        commentTextView.setContentHuggingPriority(.init(1), for: .vertical)
         nicknameLabel.setContentHuggingPriority(.init(1), for: .horizontal)
         voidView.setContentHuggingPriority(.init(1), for: .horizontal)
 
@@ -556,33 +556,27 @@ private extension CommunityViewController {
             $0.trailing.equalToSuperview().inset(24)
         }
 
-        profileImageView.snp.makeConstraints {
-            $0.width.equalToSuperview().multipliedBy(0.1)
-            $0.height.equalTo(profileImageView.snp.width)
-        }
-
         commentStackView.snp.makeConstraints {
-            $0.top.lessThanOrEqualTo(musicInfoStackView.snp.bottom).offset(20)
-            $0.centerX.equalToSuperview()
+            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(32)
             $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalToSuperview().multipliedBy(0.33)
+            $0.height.lessThanOrEqualTo(283)
         }
 
         listenButton.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+            $0.top.bottom.centerX.equalToSuperview()
         }
 
-        listeningGuideView.snp.makeConstraints {
-            $0.top.equalTo(commentStackView.snp.bottom).offset(16)
-            $0.height.equalTo(56)
-            $0.leading.equalTo(commentStackView)
-            $0.trailing.equalTo(commentStackView.snp.trailing).multipliedBy(0.66)
+        listenButton.imageView?.snp.makeConstraints {
+            $0.width.height.equalTo(40)
+            if let listenButtonTitle = listenButton.titleLabel {
+                $0.trailing.equalTo(listenButtonTitle.snp.leading)
+            }
         }
 
-        likeButton.snp.makeConstraints { make in
-            make.width.height.equalTo(36)
-            make.centerX.equalToSuperview().multipliedBy(0.8)
-            make.centerY.equalToSuperview()
+        likeButton.snp.makeConstraints {
+            $0.width.height.equalTo(36)
+            $0.centerX.equalToSuperview().multipliedBy(0.8)
+            $0.centerY.equalToSuperview()
         }
 
         likeCountLabel.snp.makeConstraints {
@@ -591,9 +585,13 @@ private extension CommunityViewController {
         }
 
         likeView.snp.makeConstraints {
-            $0.leading.equalTo(listeningGuideView.snp.trailing).offset(8)
-            $0.trailing.equalTo(commentStackView)
-            $0.top.height.equalTo(listeningGuideView)
+            $0.width.equalTo(114)
+        }
+
+        listenAndLikeStackView.snp.makeConstraints {
+            $0.top.equalTo(commentStackView.snp.bottom).offset(8)
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(56)
         }
     }
 
@@ -603,6 +601,12 @@ private extension CommunityViewController {
         }
 
         genreLabelStackView.addArrangedSubview(voidView)
+        genreLabelStackView.layoutIfNeeded()
+
+        genreLabels.forEach {
+            $0.layer.cornerRadius = $0.layer.frame.height/2
+            $0.clipsToBounds = true
+        }
     }
 }
 
@@ -622,10 +626,8 @@ private extension CommunityViewController {
             label.text = genreTitle
             label.textColor = .gray800
             label.textAlignment = .center
-            label.font = .pretendard(size: 12, weight: 600)
+            label.font = .pretendard(size: 12, weightName: .semiBold)
             label.numberOfLines = 1
-            label.layer.cornerRadius = 12
-            label.clipsToBounds = true
             label.backgroundColor = .pointGradation_1
             labels.append(label)
         }
@@ -651,7 +653,7 @@ private extension CommunityViewController {
                 UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0.05).cgColor,
                 UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0).cgColor
               ],
-            gradientLocations: [0, 0.29, 1],
+            gradientLocations: [0, 0.25, 0.5],
             viewBackgroundColor: .gray800,
             startPoint: CGPoint(x: 0.5, y: 0.0),
             endPoint: CGPoint(x: 0.5, y: 0.75)
