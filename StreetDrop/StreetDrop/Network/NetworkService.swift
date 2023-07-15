@@ -25,6 +25,7 @@ enum NetworkService {
     case getVillageName(latitude: Double, longitude: Double)
     case blockUser(blockUserID: Int)
     case postFCMToken(token: FCMTokenRequestDTO)
+    case patchUsersMusicApp(musicAppQuery: String)
 }
 
 extension NetworkService: TargetType {
@@ -76,6 +77,8 @@ extension NetworkService: TargetType {
             return "/users/block"
         case .postFCMToken:
             return "/notifications/tokens"
+        case .patchUsersMusicApp:
+            return "/users/music-app"
         }
     }
     
@@ -96,7 +99,7 @@ extension NetworkService: TargetType {
                 .blockUser,
                 .postFCMToken:
             return .post
-        case .editComment:
+        case .editComment, .patchUsersMusicApp:
             return .patch
         case .deleteMusic:
             return .delete
@@ -170,6 +173,11 @@ extension NetworkService: TargetType {
             )
         case .postFCMToken(token: let token):
             return .requestJSONEncodable(token)
+        case .patchUsersMusicApp(musicAppQuery: let musicAppQuery):
+            return .requestParameters(
+                parameters: ["musicApp": musicAppQuery],
+                encoding: URLEncoding.queryString
+            )
         }
     }
     
