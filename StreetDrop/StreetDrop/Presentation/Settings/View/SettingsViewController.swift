@@ -49,16 +49,6 @@ final class SettingsViewController: UIViewController, Toastable {
         return label
     }()
     
-    private lazy var cancleButton: UIButton = {
-        let button: UIButton = UIButton()
-        button.setTitle("취소", for: .normal)
-        button.titleLabel?.textColor = UIColor(red: 0.844, green: 0.881, blue: 0.933, alpha: 1)
-        button.setTitleColor(UIColor(red: 0.844, green: 0.881, blue: 0.933, alpha: 0.5), for: .highlighted)
-        button.titleLabel?.font = .pretendard(size: 14, weight: 500)
-        button.titleLabel?.setLineHeight(lineHeight: 20)
-        return button
-    }()
-    
     private let selectingMusicAppLabel: UILabel = {
         let label: UILabel = .init()
         label.text = "스트리밍 서비스 선택"
@@ -141,8 +131,7 @@ private extension SettingsViewController {
             .disposed(by: disposeBag)
         
         Observable.merge(
-            self.backButton.rx.tap.asObservable(),
-            self.cancleButton.rx.tap.asObservable()
+            self.backButton.rx.tap.asObservable()
         )
         .bind { _ in
             self.navigationController?.popViewController(animated: true)
@@ -206,8 +195,7 @@ private extension SettingsViewController {
         
         [
             self.backButton,
-            self.navigationTitle,
-            self.cancleButton
+            self.navigationTitle
         ].forEach {
             self.navigationBar.addSubview($0)
         }
@@ -235,11 +223,6 @@ private extension SettingsViewController {
         self.navigationTitle.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(self.backButton.snp.trailing).offset(18.67)
-        }
-        
-        self.cancleButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(24)
         }
         
         let selectingMusicAppContainerView: UIView = .init()
