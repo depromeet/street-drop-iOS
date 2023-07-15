@@ -263,6 +263,16 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
 
         return stackView
     }()
+
+    // 다른 앱으로 듣기 요소
+    private lazy var otherMusicAppButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("다른 앱으로 듣기", for: .normal)
+        button.setTitleColor(.gray300, for: .normal)
+        button.titleLabel?.font = .pretendard(size: 14, weightName: .medium)
+
+        return button
+    }()
 }
 
 private extension CommunityViewController {
@@ -500,7 +510,8 @@ private extension CommunityViewController {
          albumCollectionView,
          musicInfoStackView,
          commentStackView,
-         listenAndLikeStackView
+         listenAndLikeStackView,
+         otherMusicAppButton
         ]
             .forEach {
                 self.view.addSubview($0)
@@ -559,7 +570,6 @@ private extension CommunityViewController {
         commentStackView.snp.makeConstraints {
             $0.top.equalTo(musicInfoStackView.snp.bottom).offset(32)
             $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.lessThanOrEqualTo(283)
         }
 
         listenButton.snp.makeConstraints {
@@ -592,6 +602,12 @@ private extension CommunityViewController {
             $0.top.equalTo(commentStackView.snp.bottom).offset(8)
             $0.leading.trailing.equalToSuperview().inset(24)
             $0.height.equalTo(56)
+        }
+
+        otherMusicAppButton.snp.makeConstraints {
+            $0.top.equalTo(listenAndLikeStackView.snp.bottom).offset(23)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(21)
         }
     }
 
