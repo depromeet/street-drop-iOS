@@ -157,6 +157,11 @@
 		C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */; };
 		C4E0943B2A4DF002000B4513 /* VillageNameResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */; };
 		C4E25A972A57EF6E00E6A236 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C4E25A962A57EF6E00E6A236 /* FirebaseMessaging */; };
+		C4E4C6B22A5ADC2C00B1C84A /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B12A5ADC2C00B1C84A /* SettingsRepository.swift */; };
+		C4E4C6B42A5ADC4B00B1C84A /* DefaultSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B32A5ADC4B00B1C84A /* DefaultSettingsRepository.swift */; };
+		C4E4C6B82A5ADFDB00B1C84A /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B72A5ADFDB00B1C84A /* SettingsModel.swift */; };
+		C4E4C6BA2A5AE40900B1C84A /* UserDefaultsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */; };
+		C4E4C6BD2A5AE6F500B1C84A /* MusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
 /* End PBXBuildFile section */
 
@@ -310,6 +315,11 @@
 		C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VillageNameResponseDTO.swift; sourceTree = "<group>"; };
 		C4E25A9A2A57F8FF00E6A236 /* StreetDropDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StreetDropDebug.entitlements; sourceTree = "<group>"; };
 		C4E25A9B2A580B0D00E6A236 /* StreetDropRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StreetDropRelease.entitlements; sourceTree = "<group>"; };
+		C4E4C6B12A5ADC2C00B1C84A /* SettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepository.swift; sourceTree = "<group>"; };
+		C4E4C6B32A5ADC4B00B1C84A /* DefaultSettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSettingsRepository.swift; sourceTree = "<group>"; };
+		C4E4C6B72A5ADFDB00B1C84A /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
+		C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsError.swift; sourceTree = "<group>"; };
+		C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,6 +427,7 @@
 				18683FDA2A348B00005A94AC /* Main */,
 				C434A4D52A17984200C63526 /* SearchingMusic */,
 				C4A445912A5EF24E008279C1 /* FCM */,
+				C4E4C6B52A5ADC4F00B1C84A /* Setting */,
 				41F23B4A2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift */,
 				414345242A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift */,
 				41A9BEBA2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift */,
@@ -520,6 +531,7 @@
 				C4BB15992A5EC50D001BC5E8 /* FCM */,
 				18683FDD2A348B19005A94AC /* Main */,
 				C434A4D62A17986400C63526 /* SearchingMusic */,
+				C4E4C6B02A5ADBF200B1C84A /* Setting */,
 				41F23B4D2A1B6EE80083D2EC /* DropMusicRepository.swift */,
 				414345222A35B9A3003FEE2A /* LikeMusicRepository.swift */,
 				41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */,
@@ -535,6 +547,7 @@
 			children = (
 				04FB1F312A021C330064B3C8 /* TestError.swift */,
 				C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */,
+				C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -902,6 +915,7 @@
 			children = (
 				C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */,
 				C47F02292A3869DC00F48884 /* SettingsInfo.swift */,
+				C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -954,6 +968,7 @@
 			children = (
 				C47F02252A3863A300F48884 /* View */,
 				C47F02262A38640000F48884 /* ViewModel */,
+				C4E4C6B62A5ADFCA00B1C84A /* Model */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1059,6 +1074,30 @@
 				C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */,
 			);
 			path = VillageName;
+			sourceTree = "<group>";
+		};
+		C4E4C6B02A5ADBF200B1C84A /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				C4E4C6B12A5ADC2C00B1C84A /* SettingsRepository.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		C4E4C6B52A5ADC4F00B1C84A /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				C4E4C6B32A5ADC4B00B1C84A /* DefaultSettingsRepository.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		C4E4C6B62A5ADFCA00B1C84A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C4E4C6B72A5ADFDB00B1C84A /* SettingsModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		DD24191EB8D98350CCDA3174 /* Pods */ = {
@@ -1290,6 +1329,8 @@
 				C47F02222A38633500F48884 /* SettingsViewController.swift in Sources */,
 				C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */,
 				18D671F62A35C5D4003B1A71 /* UIImage+Resizing.swift in Sources */,
+				C4E4C6B42A5ADC4B00B1C84A /* DefaultSettingsRepository.swift in Sources */,
+				C4E4C6BD2A5AE6F500B1C84A /* MusicApp.swift in Sources */,
 				C434A4D02A17981C00C63526 /* DefaultSearchingMusicRepository.swift in Sources */,
 				414345232A35B9A3003FEE2A /* LikeMusicRepository.swift in Sources */,
 				040685042A01539800377094 /* MainViewController.swift in Sources */,
@@ -1310,6 +1351,7 @@
 				C45BF3A12A1D133000CEDE74 /* RecentMusicQueryDTO.swift in Sources */,
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
 				18CB7BED2A359F53002B31FB /* MusicWithinAreaEntity.swift in Sources */,
+				C4E4C6B82A5ADFDB00B1C84A /* SettingsModel.swift in Sources */,
 				41396D912A4EFBF700B69341 /* DefaultEditCommentRepository.swift in Sources */,
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
 				C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */,
@@ -1355,9 +1397,12 @@
 				41D097532A19BE6C00C011A0 /* DroppingInfo.swift in Sources */,
 				412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */,
 				41396D8D2A4EFB3300B69341 /* DeleteMusicRepository.swift in Sources */,
+				C4E4C6BA2A5AE40900B1C84A /* UserDefaultsError.swift in Sources */,
 				41E008CE2A1442A000F5D99C /* PoiResponseDTO+Mapping.swift in Sources */,
 				41008EB82A48891000FD4ABE /* UITextView+setLineSpacing.swift in Sources */,
 				C434A4CC2A1796F300C63526 /* SearchingMusicViewModel.swift in Sources */,
+				41396D9D2A4F329200B69341 /* OptionModalViewModel.swift in Sources */,
+				C4E4C6B22A5ADC2C00B1C84A /* SettingsRepository.swift in Sources */,
 				C4E0943B2A4DF002000B4513 /* VillageNameResponseDTO.swift in Sources */,
 				41F23B4B2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift in Sources */,
 				C4A445932A5EF265008279C1 /* DefaultFCMRepository.swift in Sources */,
