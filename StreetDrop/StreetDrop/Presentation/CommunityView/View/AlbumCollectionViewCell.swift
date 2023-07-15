@@ -18,7 +18,6 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
     private let albumImageView: UIImageView = {
         let imageView = UIImageView()   // TODO: 로딩이미지 추후 진행 (디자인팀과 희의O)
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
 
         return imageView
@@ -30,14 +29,17 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
 
     private func configureLayout() {
         albumImageView.snp.makeConstraints {
-            $0.width.height.equalToSuperview().multipliedBy(0.8)
-            $0.centerX.centerY.equalToSuperview()
+            let inset = 20
+            $0.leading.trailing.centerY.equalToSuperview().inset(inset)
+            $0.height.equalTo(albumImageView.snp.width)
         }
     }
 
     func layout() {
         configureHierarchy()
         configureLayout()
+        self.layoutIfNeeded()
+        albumImageView.layer.cornerRadius = albumImageView.frame.width * 0.2
     }
 
     func setData(_ albumImageURL: String) {
