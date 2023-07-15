@@ -28,6 +28,7 @@ final class DefaultSettingsViewModel: SettingsViewModel {
     struct Output {
         let currentMusicApp: PublishRelay<MusicApp> = .init()
         let savedMusicAppInServer: PublishRelay<MusicApp> = .init()
+        let changingMusicAppFailAlert: PublishRelay<String> = .init()
     }
     
     func convert(input: Input, disposedBag: DisposeBag) -> Output {
@@ -65,7 +66,7 @@ private extension DefaultSettingsViewModel {
             .subscribe { myMusicApp in
                 output.currentMusicApp.accept(myMusicApp)
             } onFailure: { error in
-                print(error.localizedDescription)
+                output.changingMusicAppFailAlert.accept("연결 앱 변경이 실패했어요!")
             }
             .disposed(by: disposeBag)
     }

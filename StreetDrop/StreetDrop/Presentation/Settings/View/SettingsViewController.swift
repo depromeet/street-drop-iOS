@@ -12,7 +12,7 @@ import RxRelay
 import RxCocoa
 import SnapKit
 
-final class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController, Toastable {
     private let viewModel: DefaultSettingsViewModel
     private let disposeBag = DisposeBag()
     private var musicAppButtons: [MusicAppButton] = []
@@ -176,10 +176,25 @@ private extension SettingsViewController {
                 self?.musicAppButtons.forEach {
                     if $0.musicApp == savedMusicAppInServer {
                         $0.setSelectedAppearance()
+                        self?.showMusicAppCheckBoxToast(
+                            text: "연결 앱이 변경되었어요!",
+                            bottomInset: 44,
+                            duration: .now() + 3
+                        )
                     } else {
                         $0.setUnselectedAppearance()
                     }
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        output.changingMusicAppFailAlert
+            .bind { [weak self] message in
+                self?.showFailNormalToast(
+                    text: message,
+                    bottomInset: 44,
+                    duration: .now() + 3
+                )
             }
             .disposed(by: disposeBag)
     }
