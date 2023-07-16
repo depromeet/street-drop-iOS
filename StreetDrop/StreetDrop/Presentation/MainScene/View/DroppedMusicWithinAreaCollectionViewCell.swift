@@ -75,6 +75,12 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         let view = UIView()
         view.layer.backgroundColor = UIColor.primary300.cgColor
         view.layer.cornerRadius = 12
+        
+        view.layer.shadowColor = UIColor.primary500.cgColor
+        view.layer.shadowOpacity = 0.2
+        view.layer.shadowOffset = CGSize(width: 0, height: 4)
+        view.layer.shadowRadius = 10
+
         view.isUserInteractionEnabled = true
         view.isHidden = true
         return view
