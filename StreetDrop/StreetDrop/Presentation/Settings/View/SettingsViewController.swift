@@ -166,6 +166,8 @@ private extension SettingsViewController {
                 self?.musicAppButtons.forEach {
                     if $0.musicApp == musicApp {
                         $0.setSelectedAppearance()
+                    } else {
+                        $0.setUnselectedAppearance()
                     }
                 }
             }
