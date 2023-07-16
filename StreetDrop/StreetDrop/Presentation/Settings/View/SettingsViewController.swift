@@ -83,21 +83,56 @@ final class SettingsViewController: UIViewController, Toastable {
         return stackView
     }()
     
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(
-            InfoTableViewCell.self,
-            forCellReuseIdentifier: InfoTableViewCell.identifier
-        )
-        tableView.backgroundColor = .clear
-        tableView.rowHeight = 60
+    private let settingElementStackView: UIStackView = {
+        let stackView: UIStackView = .init()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 4
+        stackView.layer.cornerRadius = 12
         
-        return tableView
+        return stackView
+    }()
+    
+    private let pushNotificationOnOffView: UIView = {
+        let view: UIView = .init()
+        view.backgroundColor = .gray800
+        view.layer.cornerRadius = 12
+        
+        let label: UILabel = .init()
+        label.text = "푸쉬 알림"
+        label.font = .pretendard(size: 14, weightName: .medium)
+        label.setLineHeight(lineHeight: 20)
+        label.textColor = .gray100
+        label.numberOfLines = 1
+        
+        let customSwitch = CustomSwitch()
+        customSwitch.isOn = false
+        customSwitch.translatesAutoresizingMaskIntoConstraints = false
+        
+        [
+            label,
+            customSwitch
+        ].forEach {
+            view.addSubview($0)
+        }
+        
+        label.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        customSwitch.snp.makeConstraints {
+            $0.width.equalTo(48)
+            $0.height.equalTo(28)
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20)
+        }
+        
+        return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindUI()
         bindAction()
         bindViewModel()
         configureUI()
@@ -106,29 +141,7 @@ final class SettingsViewController: UIViewController, Toastable {
 }
 
 private extension SettingsViewController {
-    func bindUI() {
-        let infos = SettingsInfo.allCases
-        Observable.of(infos).bind(
-            to: self.tableView.rx.items(
-                cellIdentifier: InfoTableViewCell.identifier,
-                cellType: InfoTableViewCell.self
-            )
-        ) { (row, info, infoTableViewCell) in
-            infoTableViewCell.setData(text: info.rawValue)
-        }
-        .disposed(by: disposeBag)
-    }
-    
     func bindAction() {
-        self.tableView.rx.itemSelected
-            .bind { indexPath in
-                guard let url = URL(string: SettingsInfo.allCases[indexPath.row].urlAddress) else {
-                    return
-                }
-                
-                UIApplication.shared.open(url)
-            }
-            .disposed(by: disposeBag)
         
         Observable.merge(
             self.backButton.rx.tap.asObservable()
@@ -201,8 +214,7 @@ private extension SettingsViewController {
         }
         
         [
-            self.navigationBar,
-            self.tableView
+            self.navigationBar
         ].forEach {
             self.view.addSubview($0)
         }
@@ -254,11 +266,28 @@ private extension SettingsViewController {
             $0.leading.trailing.bottom.equalToSuperview().inset(20)
         }
         
-//        self.tableView.snp.makeConstraints {
-//            $0.top.equalTo(self.navigationBar.snp.bottom)
-//            $0.leading.equalToSuperview()
-//            $0.trailing.equalToSuperview()
-//            $0.bottom.equalToSuperview()
-//        }
+        self.view.addSubview(settingElementStackView)
+        self.settingElementStackView.addArrangedSubview(pushNotificationOnOffView)
+        
+        SettingsInfo.allCases.forEach { settingsInfo in
+            let settingElementView: SettingElementView = .init()
+            settingElementView.text = settingsInfo.rawValue
+            settingElementView.settingElementDidTappedEvent
+                .bind {
+                    guard let url = URL(string: settingsInfo.urlAddress) else {
+                        return
+                    }
+                    
+                    UIApplication.shared.open(url)
+                }
+                .disposed(by: disposeBag)
+            self.settingElementStackView.addArrangedSubview(settingElementView)
+        }
+        
+        self.settingElementStackView.snp.makeConstraints {
+            $0.height.equalTo(252)
+            $0.top.equalTo(selectingMusicAppContainerView.snp.bottom).offset(4)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
     }
 }
