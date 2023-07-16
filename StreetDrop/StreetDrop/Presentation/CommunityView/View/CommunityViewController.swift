@@ -20,6 +20,7 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
     private let deleteEvent = PublishRelay<Void>()
     private let editEvent = PublishRelay<(editedComment: String, index: Int)>()
     private let blockEvent = PublishRelay<Void>()
+    private var musicApp: String?
 
     init(viewModel: CommunityViewModel) {
         self.viewModel = viewModel
@@ -293,27 +294,7 @@ private extension CommunityViewController {
         listenButton.rx.tap
             .observe(on: MainScheduler.instance)
             .bind { [weak self] in
-                guard let self = self else { return }
-                let musicName = self.musicNameLabel.text ?? ""
-                let artistName = self.artistLabel.text ?? ""
-
-                // urlScheme을 통해 유튜브뮤직  앱으로 이동
-                let youtubeMusicAppURLString = "youtubemusic://search?q=\(musicName)-\(artistName)"
-                if let encodedYoutubeMusicAppURLString = youtubeMusicAppURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-                   let encodedYoutubeMusicAppURL = URL(string: encodedYoutubeMusicAppURLString),
-                   UIApplication.shared.canOpenURL(encodedYoutubeMusicAppURL) {
-                    UIApplication.shared.open(encodedYoutubeMusicAppURL)
-                    return
-                }
-
-                // urlScheme을 통해 유튜브뮤직 앱으로 이동 실패 시, 유튜브뮤직 웹사이트 url으로 이동
-                let youtubeMusicWebURLString = "https://music.youtube.com/search?q=\(musicName)-\(artistName)"
-                if let encodedYoutubeMusicWebURLString = youtubeMusicWebURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-                   let encodedYoutubeMusicWebURL = URL(string: encodedYoutubeMusicWebURLString),
-                   UIApplication.shared.canOpenURL(encodedYoutubeMusicWebURL) {
-                    UIApplication.shared.open(encodedYoutubeMusicWebURL)
-                    return
-                }
+                self?.openMusicApp()
             }
             .disposed(by: disposeBag)
 
@@ -441,6 +422,7 @@ private extension CommunityViewController {
                         return UIImage(named: "youtubeMusicLogo")
                     }
                 }
+                self?.musicApp = musicApp
                 self?.listenButton.setImage(musicAppIcon, for: .normal)
             }.disposed(by: disposeBag)
 
@@ -715,6 +697,55 @@ private extension CommunityViewController {
             startPoint: CGPoint(x: 0.5, y: 0.0),
             endPoint: CGPoint(x: 0.5, y: 0.75)
         )
+    }
+
+    // OpenMusicApp
+    func openMusicApp() {
+        let musicName = self.musicNameLabel.text ?? ""
+        let artistName = self.artistLabel.text ?? ""
+
+        if musicApp == "youtubemusic" {
+            // urlScheme을 통해 유튜브뮤직  앱으로 이동
+            let youtubeMusicAppURLString = "youtubemusic://search?q=\(musicName)-\(artistName)"
+            if let encodedYoutubeMusicAppURLString = youtubeMusicAppURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+               let encodedYoutubeMusicAppURL = URL(string: encodedYoutubeMusicAppURLString),
+               UIApplication.shared.canOpenURL(encodedYoutubeMusicAppURL) {
+                UIApplication.shared.open(encodedYoutubeMusicAppURL)
+                return
+            }
+
+            // urlScheme을 통해 유튜브뮤직 앱으로 이동 실패 시, 유튜브뮤직 웹사이트 url으로 이동
+            let youtubeMusicWebURLString = "https://music.youtube.com/search?q=\(musicName)-\(artistName)"
+            if let encodedYoutubeMusicWebURLString = youtubeMusicWebURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+               let encodedYoutubeMusicWebURL = URL(string: encodedYoutubeMusicWebURLString),
+               UIApplication.shared.canOpenURL(encodedYoutubeMusicWebURL) {
+                UIApplication.shared.open(encodedYoutubeMusicWebURL)
+                return
+            }
+        }
+
+        //FIXME: app, web 여는 로직 함수분리
+        if musicApp == "spotify" {
+            // urlScheme을 통해 스포티파이 앱으로 이동
+//            let spotifyAppURLString = "spotify://search/\(artistName) \(musicName)"
+//            if let encodedSpotifyAppURLString =
+//                spotifyAppURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+//               let encodedSpotifyAppURL = URL(string: encodedSpotifyAppURLString),
+//               UIApplication.shared.canOpenURL(encodedSpotifyAppURL) {
+//                UIApplication.shared.open(encodedSpotifyAppURL)
+//                return
+//            }
+
+            // urlScheme을 통해 유튜브뮤직 스포티파이 이동 실패 시, 스포티파이 웹사이트 url으로 이동
+            let spotifyWebURLString = "https://open.spotify.com/search/result/\(musicName)-\(artistName)"
+            if let encodedSpotifyWebURLString = spotifyWebURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+               let encodedSpotifyWebURL = URL(string: encodedSpotifyWebURLString),
+               UIApplication.shared.canOpenURL(encodedSpotifyWebURL) {
+                UIApplication.shared.open(encodedSpotifyWebURL)
+                return
+            }
+
+        }
     }
 }
 
