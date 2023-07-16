@@ -372,7 +372,7 @@ private extension MusicDropViewController {
                 guard let self = self else { return }
 
                 if isSuccess {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                         self.navigationController?.popToRootViewController(animated: true)
                     })
 
