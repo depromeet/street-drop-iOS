@@ -132,6 +132,7 @@
 		C475839D2A5F114000CA7335 /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839A2A5F113F00CA7335 /* GoogleService-Info-Prod.plist */; };
 		C475839F2A5F114000CA7335 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */; };
 		C47583A12A5F11BD00CA7335 /* Bundle+APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47583A02A5F11BD00CA7335 /* Bundle+APIKeys.swift */; };
+		C47C1D1B2A643B38007317EA /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C47C1D1A2A643B38007317EA /* Lottie */; };
 		C47F02222A38633500F48884 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02212A38633500F48884 /* SettingsViewController.swift */; };
 		C47F02242A38633C00F48884 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02232A38633C00F48884 /* SettingsViewModel.swift */; };
 		C47F02282A3864A500F48884 /* SettingElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02272A3864A500F48884 /* SettingElementView.swift */; };
@@ -332,6 +333,7 @@
 			files = (
 				C4E25A972A57EF6E00E6A236 /* FirebaseMessaging in Frameworks */,
 				049BC4382A02845900071A12 /* RxMoya in Frameworks */,
+				C47C1D1B2A643B38007317EA /* Lottie in Frameworks */,
 				049BC42A2A02826400071A12 /* RxSwift in Frameworks */,
 				049BC4282A02826400071A12 /* RxRelay in Frameworks */,
 				049BC43B2A0284E900071A12 /* SnapKit in Frameworks */,
@@ -1141,6 +1143,7 @@
 				049BC4372A02845900071A12 /* RxMoya */,
 				049BC43A2A0284E900071A12 /* SnapKit */,
 				C4E25A962A57EF6E00E6A236 /* FirebaseMessaging */,
+				C47C1D1A2A643B38007317EA /* Lottie */,
 			);
 			productName = StreetDrop;
 			productReference = 040684FC2A01539800377094 /* StreetDrop.app */;
@@ -1201,6 +1204,7 @@
 				049BC4342A02845900071A12 /* XCRemoteSwiftPackageReference "Moya" */,
 				049BC4392A0284E900071A12 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				C4E25A952A57EF6E00E6A236 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C47C1D192A643B38007317EA /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 040684FD2A01539800377094 /* Products */;
 			projectDirPath = "";
@@ -1775,6 +1779,14 @@
 				kind = branch;
 			};
 		};
+		C47C1D192A643B38007317EA /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		C4E25A952A57EF6E00E6A236 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1815,6 +1827,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 049BC4392A0284E900071A12 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		C47C1D1A2A643B38007317EA /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C47C1D192A643B38007317EA /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		C49BA7842A1BE72900A83E95 /* RxCocoa-Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
