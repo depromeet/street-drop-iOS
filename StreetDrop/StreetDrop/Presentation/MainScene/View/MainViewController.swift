@@ -21,7 +21,7 @@ final class MainViewController: UIViewController, Toastable {
     private let circleRadius: Double = 500
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let viewWillAppearEvent = PublishRelay<Void>()
-    private let poiMarkerDidTapEvent = PublishRelay<Void>()
+    private let poiMarkerDidTapEvent = PublishRelay<Int>()
     private let cameraDidStopEvent = PublishRelay<(latitude: Double, longitude: Double)>()
     
     var cellWidth: Double? {
@@ -753,8 +753,7 @@ private extension MainViewController {
         poiMarker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
             guard let self = self else { return true }
             if self.viewModel.isWithin(latitude: poiMarker.position.lat, longitude: poiMarker.position.lng) {
-                self.viewModel.tappedPOIID = Int(poiMarker.tag)
-                self.poiMarkerDidTapEvent.accept(Void())
+                self.poiMarkerDidTapEvent.accept(Int(poiMarker.tag))
             }
             return true
         }
