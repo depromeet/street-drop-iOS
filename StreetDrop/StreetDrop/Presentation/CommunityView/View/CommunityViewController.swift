@@ -15,6 +15,7 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
     private let viewModel: CommunityViewModel
     private let disposeBag = DisposeBag()
     private let viewDidLoadEvent = PublishRelay<Void>()
+    private let viewWillAppearEvent = PublishRelay<Void>()
     private let changedAlbumCollectionViewIndexEvent = PublishRelay<Int>()
     private let deleteEvent = PublishRelay<Void>()
     private let editEvent = PublishRelay<(editedComment: String, index: Int)>()
@@ -39,6 +40,12 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
         bindViewModel()
         viewDidLoadEvent.accept(())
         makeCommentViewToGradientView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        viewWillAppearEvent.accept(())
     }
 
     //MARK: - UI
@@ -330,6 +337,7 @@ private extension CommunityViewController {
     func bindViewModel() {
         let input = CommunityViewModel.Input(
             viewDidLoadEvent: self.viewDidLoadEvent.asObservable(),
+            viewWillAppearEvent: self.viewWillAppearEvent.asObservable(),
             changedIndex: self.changedAlbumCollectionViewIndexEvent.asObservable(),
             tapLikeButtonEvent: self.likeButton.rx.tap.asObservable(),
             tapOptionButtonEvent: self.optionButton.rx.tap.asObservable(),
@@ -418,6 +426,22 @@ private extension CommunityViewController {
             .asDriver(onErrorJustReturn: "")
             .drive { [weak self] in
                 self?.dateLabel.text = $0
+            }.disposed(by: disposeBag)
+
+        output.musicApp
+            .asDriver(onErrorJustReturn: "youtubemusic")
+            .drive { [weak self] musicApp in
+                var musicAppIcon: UIImage? {
+                    switch musicApp {
+                    case "youtubemusic":
+                        return UIImage(named: "youtubeMusicLogo")
+                    case "spotify":
+                        return UIImage(named: "spotifyLogo")
+                    default:
+                        return UIImage(named: "youtubeMusicLogo")
+                    }
+                }
+                self?.listenButton.setImage(musicAppIcon, for: .normal)
             }.disposed(by: disposeBag)
 
         output.isLiked

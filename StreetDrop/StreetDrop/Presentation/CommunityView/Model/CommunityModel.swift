@@ -16,6 +16,7 @@ protocol CommunityModel {
     func deleteMusic(itemID: Int) -> Single<Int>
     func blockUser(_ blockUserID: Int) -> Single<Int>
     func fetchMyUserID() -> Int?
+    func fetchMyMusicApp() -> String?
 }
 
 final class DefaultCommunityModel: CommunityModel {
@@ -63,5 +64,9 @@ extension DefaultCommunityModel {
 
     func fetchMyUserID() -> Int? {
         return myInfoStorage.fetchMyInfo()?.userID
+    }
+
+    func fetchMyMusicApp() -> String? {
+        return myInfoStorage.fetchMyInfo()?.musicApp
     }
 }
