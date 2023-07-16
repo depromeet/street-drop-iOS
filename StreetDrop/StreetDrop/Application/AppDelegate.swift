@@ -32,7 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         application.registerForRemoteNotifications()
         
-        sleep(1)
         return true
     }
     
