@@ -15,7 +15,7 @@ import RxSwift
 
 final class MainViewModel: ViewModel {
     var location: CLLocation = CLLocation()
-    var poisDistance: Double = 200000 // 1차 앱스토어 배포 시엔, 대한민국 전체 조회를 위해 반지름 200KM로 조회
+    var poisDistance: Double = 600000 // 1차 앱스토어 배포 시엔, 대한민국 전체 조회를 위해 반지름 200KM로 조회
     var detailItemsDistance: Double = 500
     var currentLocationAddress: String = ""
     var musicWithinArea: Musics = []
