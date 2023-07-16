@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "musicMarkerActivated.png",
+      "filename" : "musicMarkerFrameActivated.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "musicMarkerActivated@2x.png",
+      "filename" : "musicMarkerFrameActivated@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "musicMarkerActivated@3x.png",
+      "filename" : "musicMarkerFrameActivated@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
