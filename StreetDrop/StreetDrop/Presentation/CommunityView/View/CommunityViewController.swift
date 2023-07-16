@@ -88,6 +88,7 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
         )
         collectionView.isPagingEnabled = false
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.decelerationRate = .fast
         collectionView.backgroundColor = .gray900
         collectionView.clipsToBounds = false
@@ -557,14 +558,18 @@ private extension CommunityViewController {
         }
 
         albumCollectionView.snp.makeConstraints {
-            let heightRatio: CGFloat = 1/3
-            $0.top.equalTo(topView.snp.bottom).offset(32-20) // padding - cellPadding
-            $0.leading.trailing.equalToSuperview().inset(-self.view.frame.width/4)
-            $0.height.equalTo(albumCollectionView.snp.width).multipliedBy(heightRatio)
+            let cellInset: CGFloat = 20
+            let height: CGFloat = (view.frame.height * 0.24) + (cellInset * 2)
+            let width: CGFloat = (height * 3)
+            let leading: CGFloat = (width - (view.frame.width))/2
+            $0.top.equalTo(topView.snp.bottom).offset(24-20) // padding - cellPadding
+            $0.height.equalTo(height)
+            $0.width.equalTo(width)
+            $0.leading.trailing.equalToSuperview().inset(-leading)
         }
 
         musicInfoStackView.snp.makeConstraints {
-            $0.top.equalTo(albumCollectionView.snp.bottom).offset(16-20) // padding - cellPadding
+            $0.top.equalTo(albumCollectionView.snp.bottom).offset(24-20) // padding - cellPadding
             $0.leading.trailing.equalToSuperview().inset(24)
         }
 
@@ -578,7 +583,7 @@ private extension CommunityViewController {
         }
 
         commentStackView.snp.makeConstraints {
-            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(32)
+            $0.top.equalTo(musicInfoStackView.snp.bottom).offset(24)
             $0.leading.trailing.equalToSuperview().inset(24)
         }
 
@@ -664,8 +669,9 @@ private extension CommunityViewController {
     // collectionView Layout
     func createCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
-        let halfWidth = self.view.frame.width/2
-        layout.itemSize = .init(width: halfWidth, height: halfWidth)
+        let cellInset: CGFloat = 20
+        let cellHeight: CGFloat = (view.frame.height * 0.24) + (cellInset*2)
+        layout.itemSize = .init(width: cellHeight, height: cellHeight)
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
 
@@ -699,18 +705,19 @@ extension CommunityViewController: UICollectionViewDelegate {
                 as? UICollectionViewFlowLayout else { return }
 
         let count = viewModel.communityInfos.count
+        let contentOffsetX = scrollView.contentOffset.x
         let cellWidth = layout.itemSize.width
 
-        if scrollView.contentOffset.x < cellWidth {
+        if contentOffsetX < cellWidth {
             scrollView.setContentOffset(
-                .init(x: scrollView.contentSize.width-(cellWidth*3), y: 0),
+                .init(x: scrollView.contentSize.width-(cellWidth*3)-1, y: 0),
                 animated: false
             )
         }
 
-        if scrollView.contentOffset.x > cellWidth * Double(count-3) {
+        if contentOffsetX > cellWidth * Double(count-3) {
             scrollView.setContentOffset(
-                .init(x: cellWidth, y: 0),
+                .init(x: cellWidth+1, y: 0),
                 animated: false
             )
         }
