@@ -67,6 +67,14 @@ final class MainViewController: UIViewController, Toastable {
         mapView.mapType = .navi
         mapView.isNightModeEnabled = true
         mapView.addCameraDelegate(delegate: self)
+        mapView.extent = NMGLatLngBounds(
+            southWestLat: 33,
+            southWestLng: 123,
+            northEastLat: 42,
+            northEastLng: 133
+        )
+        mapView.minZoomLevel = 5
+        
         return mapView
     }()
     
