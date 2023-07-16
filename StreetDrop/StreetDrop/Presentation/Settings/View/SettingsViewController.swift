@@ -132,7 +132,7 @@ final class SettingsViewController: UIViewController, Toastable {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(checkNotifiCations),
+            selector: #selector(checkNotifications),
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
@@ -327,7 +327,7 @@ private extension SettingsViewController {
         }
     }
     
-    @objc func checkNotifiCations() {
+    @objc func checkNotifications() {
         UNUserNotificationCenter.current().getNotificationSettings { permission in
             switch permission.authorizationStatus {
             case .authorized, .notDetermined:
