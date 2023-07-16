@@ -155,6 +155,10 @@ public extension UIColor {
     static var gray900: UIColor {
         UIColor(hexString: "#0F1114")
     }
+    
+    static var gray900_75: UIColor {
+        UIColor(red: 0.01, green: 0.02, blue: 0.06, alpha: 0.75)
+    }
 
     static var darkGradient_1: UIColor {
         UIColor(hexString: "#0F1114")
@@ -170,5 +174,9 @@ public extension UIColor {
 
     static var systemBlueDark: UIColor {
         UIColor(hexString: "#608CFF")
+    }
+    
+    static var white_60: UIColor {
+        UIColor(red: 1, green: 1, blue: 1, alpha: 0.6)
     }
 }
