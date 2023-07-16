@@ -8,22 +8,18 @@
 import Foundation
 
 enum SettingsInfo: String, CaseIterable {
-//    case serviceUsageGuide = "서비스 이용 안내"
-//    case termsAndConditions = "이용약관"
+    case serviceUsageGuide = "서비스 이용 가이드"
     case privacyPolicy = "개인정보 처리방침"
-//    case copyrightInformation = "저작권 정보"
+    case feedback = "피드백"
     
-    // FIXME: 노션 페이지 url 받으면 변경
     var urlAddress: String {
         switch self {
-//        case .serviceUsageGuide:
-//            return "https://www.naver.com"
-//        case .termsAndConditions:
-//            return "https://github.com/depromeet/street-drop-iOS"
+        case .serviceUsageGuide:
+            return "https://www.notion.so/streetdrop/d3d5bb5808a5499f9f98428d5753ee58?pvs=4"
         case .privacyPolicy:
             return "https://plip.kr/pcc/2bb0b6a6-1ff7-467b-80ec-df0ff70aee02/privacy/2.html"
-//        case .copyrightInformation:
-//            return "https://www.daum.net"
+        case .feedback:
+            return "https://docs.google.com/forms/d/e/1FAIpQLSfFMNdRomVqIt-XKOpLc10TyR80OXHG0ZpLYW6Fl2ky7NmI4A/viewform"
         }
     }
 }
