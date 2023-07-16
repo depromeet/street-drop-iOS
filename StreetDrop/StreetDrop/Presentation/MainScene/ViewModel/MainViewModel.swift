@@ -21,7 +21,10 @@ final class MainViewModel: ViewModel {
     var musicWithinArea: Musics = []
     var currentIndex: Int = 0
     var tappedPOIID: Int?
+    var tappedPOIMarekr: NMFMarker?
+    var poiDict: [Int: NMFMarker] = [:] // POI ID로 마커를 찾기 위함입니다.
     private var poiMarkers: [NMFMarker] = []
+    var markerAlbumImages: [Int: UIImage] = [:] // POI ID로 앨범 이미지를 찾기 위함입니다.
     
     private let model = MainModel(
         repository: DefaultMainRepository(
@@ -40,7 +43,7 @@ extension MainViewModel {
     struct Input {
         let viewDidLoadEvent: PublishRelay<Void>
         let viewWillAppearEvent: PublishRelay<Void>
-        let poiMarkerDidTapEvent: PublishRelay<Int>
+        let poiMarkerDidTapEvent: PublishRelay<NMFMarker>
         let cameraDidStopEvent: PublishRelay<(latitude: Double, longitude: Double)>
         let homeButtonDidTapEvent: ControlEvent<Void>
         let myLocationButtonDidTapEvent: ControlEvent<Void>
@@ -113,8 +116,9 @@ extension MainViewModel {
             .disposed(by: disposedBag)
         
         input.poiMarkerDidTapEvent
-            .do(onNext: { poiID in
-                self.tappedPOIID = poiID
+            .do(onNext: { poiMarker in
+                self.tappedPOIMarekr = poiMarker
+                self.tappedPOIID = Int(poiMarker.tag)
             })
             .withLatestFrom(self.locationUpdated)
             .bind { [weak self] in

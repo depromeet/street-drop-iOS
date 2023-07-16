@@ -107,7 +107,7 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
 
 extension DroppedMusicWithinAreaCollectionViewCell {
     
-    func middleCell() {
+    func middleCell(completion: (() -> Void)? = nil) {
         self.singerNameLabel.snp.updateConstraints { make in
             make.bottom.equalToSuperview().inset(20)
         }
@@ -126,9 +126,12 @@ extension DroppedMusicWithinAreaCollectionViewCell {
         self.isUserInteractionEnabled = true
         
         middleComment()
+        if let completion = completion {
+            completion()
+        }
     }
     
-    func sideCell() {
+    func sideCell(completion: (() -> Void)? = nil) {
         self.singerNameLabel.snp.updateConstraints { make in
             make.bottom.equalToSuperview()
         }
@@ -147,6 +150,9 @@ extension DroppedMusicWithinAreaCollectionViewCell {
         self.isUserInteractionEnabled = false
         
         sideComment()
+        if let completion = completion {
+            completion()
+        }
     }
     
     func middleComment() {
