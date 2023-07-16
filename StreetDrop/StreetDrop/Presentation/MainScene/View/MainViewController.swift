@@ -110,7 +110,7 @@ final class MainViewController: UIViewController, Toastable {
     
     private lazy var locationLabel: UILabel = {
         let label = UILabel()
-        label.font = .pretendard(size: 16, weight: 700)
+        label.font = .pretendard(size: 20, weightName: .bold)
         label.textColor = UIColor(red: 0.902, green: 0.931, blue: 0.971, alpha: 1)
         label.text = "위치 정보 없음"
         return label
@@ -125,7 +125,7 @@ final class MainViewController: UIViewController, Toastable {
     
     private lazy var musicDroppedCountLabel: UILabel = {
         let label = UILabel()
-        label.font = .pretendard(size: 12, weight: 600)
+        label.font = .pretendard(size: 14, weightName: .medium)
         label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.6)
         label.text = "드랍된 음악 0개"
         return label
@@ -239,8 +239,8 @@ private extension MainViewController {
         
         self.view.addSubview(self.musicDroppedCountContainerView)
         self.musicDroppedCountContainerView.snp.makeConstraints { make in
-            make.top.equalTo(self.locationStackView.snp.bottom).offset(12)
-            make.height.equalTo(32)
+            make.top.equalTo(self.locationStackView.snp.bottom).offset(10)
+            make.height.equalTo(36)
             make.centerX.equalToSuperview()
         }
         
@@ -256,10 +256,9 @@ private extension MainViewController {
         
         self.view.addSubview(self.myLocationButton)
         self.myLocationButton.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(53.8)
-            $0.width.equalTo(40)
-            $0.height.equalTo(40)
-            $0.trailing.equalToSuperview().inset(16)
+            $0.centerY.equalTo(self.musicDroppedCountContainerView)
+            $0.width.height.equalTo(38.4)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(28.8)
         }
         
         // MARK: - Bottom Bar IamgeView
