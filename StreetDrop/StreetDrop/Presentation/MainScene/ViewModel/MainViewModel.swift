@@ -40,7 +40,7 @@ extension MainViewModel {
     struct Input {
         let viewDidLoadEvent: PublishRelay<Void>
         let viewWillAppearEvent: PublishRelay<Void>
-        let poiMarkerDidTapEvent: PublishRelay<Void>
+        let poiMarkerDidTapEvent: PublishRelay<Int>
         let cameraDidStopEvent: PublishRelay<(latitude: Double, longitude: Double)>
         let homeButtonDidTapEvent: ControlEvent<Void>
         let myLocationButtonDidTapEvent: ControlEvent<Void>
@@ -113,6 +113,9 @@ extension MainViewModel {
             .disposed(by: disposedBag)
         
         input.poiMarkerDidTapEvent
+            .do(onNext: { poiID in
+                self.tappedPOIID = poiID
+            })
             .withLatestFrom(self.locationUpdated)
             .bind { [weak self] in
                 guard let self = self else { return }
