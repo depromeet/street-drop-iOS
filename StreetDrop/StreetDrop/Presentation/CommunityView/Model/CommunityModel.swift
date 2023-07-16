@@ -67,6 +67,6 @@ extension DefaultCommunityModel {
     }
 
     func fetchMyMusicApp() -> String? {
-        return myInfoStorage.fetchMyInfo()?.musicApp
+        return myInfoStorage.fetchMyInfo()?.musicApp.rawValue
     }
 }

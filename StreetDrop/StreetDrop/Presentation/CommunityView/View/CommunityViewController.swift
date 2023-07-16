@@ -303,7 +303,7 @@ private extension CommunityViewController {
                 guard let self = self else { return }
 
                 //FIXME: MyPage -> Setting으로 Presentaion관련 클래스및 파일 이름들 변경 필요
-                let settingViewController = MyPageViewController(viewModel: .init())
+                let settingViewController = SettingsViewController(viewModel: .init())
 
                 self.navigationController?.pushViewController(
                     settingViewController,
