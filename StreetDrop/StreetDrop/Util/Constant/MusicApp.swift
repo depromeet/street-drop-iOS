@@ -26,9 +26,9 @@ enum MusicApp: String, CaseIterable, Codable {
     var imageName: String {
         switch self {
         case .youtubeMusic:
-            return "youtubeMusicLogo"
+            return "youtubeMusicLogoSelectingMusicApp"
         case .spotify:
-            return "spotifyLogo"
+            return "spotifyLogoSelectingMusicApp"
 //        case .appleMusic:
 //            return ""
         }
