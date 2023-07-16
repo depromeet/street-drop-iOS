@@ -18,6 +18,7 @@ final class SettingsViewController: UIViewController, Toastable {
     private var musicAppButtons: [MusicAppButton] = []
     private let musicAppButtonEvent: PublishRelay<String> = .init()
     private let viewDidLoadEvent = PublishRelay<Void>()
+    private let customSwitch: CustomSwitch = .init()
     
     init(viewModel: DefaultSettingsViewModel) {
         self.viewModel = viewModel
@@ -93,7 +94,7 @@ final class SettingsViewController: UIViewController, Toastable {
         return stackView
     }()
     
-    private let pushNotificationOnOffView: UIView = {
+    private lazy var pushNotificationOnOffView: UIView = {
         let view: UIView = .init()
         view.backgroundColor = .gray800
         view.layer.cornerRadius = 12
@@ -105,9 +106,36 @@ final class SettingsViewController: UIViewController, Toastable {
         label.textColor = .gray100
         label.numberOfLines = 1
         
-        let customSwitch = CustomSwitch()
-        customSwitch.isOn = false
+        
         customSwitch.translatesAutoresizingMaskIntoConstraints = false
+        
+        UNUserNotificationCenter.current().getNotificationSettings { permission in
+            switch permission.authorizationStatus {
+            case .authorized, .notDetermined:
+                DispatchQueue.main.async { [weak self] in
+                    self?.customSwitch.setOnSwitchUI(isOn: true)
+                }
+            default:
+                DispatchQueue.main.async { [weak self] in
+                    self?.customSwitch.setOnSwitchUI(isOn: false)
+                }
+            }
+        }
+        
+        customSwitch.switchEvent
+            .bind {
+                if let appSetting = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(appSetting)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(checkNotifiCations),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
         
         [
             label,
@@ -137,6 +165,14 @@ final class SettingsViewController: UIViewController, Toastable {
         bindViewModel()
         configureUI()
         viewDidLoadEvent.accept(Void())
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
     }
 }
 
@@ -288,6 +324,21 @@ private extension SettingsViewController {
             $0.height.equalTo(252)
             $0.top.equalTo(selectingMusicAppContainerView.snp.bottom).offset(4)
             $0.leading.trailing.equalToSuperview().inset(20)
+        }
+    }
+    
+    @objc func checkNotifiCations() {
+        UNUserNotificationCenter.current().getNotificationSettings { permission in
+            switch permission.authorizationStatus {
+            case .authorized, .notDetermined:
+                DispatchQueue.main.async { [weak self] in
+                    self?.customSwitch.setOnSwitchUI(isOn: true)
+                }
+            default:
+                DispatchQueue.main.async { [weak self] in
+                    self?.customSwitch.setOnSwitchUI(isOn: false)
+                }
+            }
         }
     }
 }
