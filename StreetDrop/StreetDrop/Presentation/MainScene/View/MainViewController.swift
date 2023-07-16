@@ -83,7 +83,7 @@ final class MainViewController: UIViewController, Toastable {
         locationOverlay.hidden = false
         locationOverlay.icon = NMFOverlayImage(name: "locationOverlayIcon")
         locationOverlay.circleRadius = circleRadius / naverMapView.projection.metersPerPixel()
-        locationOverlay.circleColor = UIColor(red: 0.408, green: 0.937, blue: 0.969, alpha: 0.16)
+        locationOverlay.circleColor = UIColor.primary500_16
         
         return locationOverlay
     }()
@@ -119,7 +119,7 @@ final class MainViewController: UIViewController, Toastable {
     private lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.font = .pretendard(size: 20, weightName: .bold)
-        label.textColor = UIColor(red: 0.902, green: 0.931, blue: 0.971, alpha: 1)
+        label.textColor = UIColor.gray50
         label.text = "위치 정보 없음"
         return label
     }()
@@ -127,14 +127,14 @@ final class MainViewController: UIViewController, Toastable {
     private lazy var musicDroppedCountContainerView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 16
-        view.backgroundColor = UIColor(red: 0.008, green: 0.016, blue: 0.058, alpha: 0.75)
+        view.backgroundColor = UIColor.gray900_75
         return view
     }()
     
     private lazy var musicDroppedCountLabel: UILabel = {
         let label = UILabel()
         label.font = .pretendard(size: 14, weightName: .medium)
-        label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.6)
+        label.textColor = UIColor.white_60
         label.text = "드랍된 음악 0개"
         return label
     }()
