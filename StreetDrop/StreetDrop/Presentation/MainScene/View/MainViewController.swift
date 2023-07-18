@@ -776,6 +776,8 @@ private extension MainViewController {
     func moveCameraToCurrentLocation(location: CLLocation) {
         self.naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude,
                                                                lng: location.coordinate.longitude)))
+        self.naverMapView.moveCamera(NMFCameraUpdate(zoomTo: 14))
+        self.locationOverlay.circleRadius = circleRadius / naverMapView.projection.metersPerPixel()
     }
     
     func combineImages(markerFrame: UIImage, album: UIImage) -> UIImage? {
