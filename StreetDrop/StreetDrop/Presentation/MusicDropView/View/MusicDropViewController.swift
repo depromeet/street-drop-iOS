@@ -555,7 +555,7 @@ private extension MusicDropViewController {
         let count = commentTextView.text.count
 
         if count > max {
-            commentTextView.text = String(commentTextView.text.dropLast())
+            commentTextView.text = String(commentTextView.text.prefix(40))
         }
     }
 
