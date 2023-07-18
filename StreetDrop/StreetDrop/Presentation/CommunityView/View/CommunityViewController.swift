@@ -116,6 +116,8 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
         label.textColor = .white
         label.font = .pretendard(size: 24, weightName: .bold)
         label.setLineHeight(lineHeight: 32)
+        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 1
 
         return label
     }()
@@ -126,6 +128,8 @@ final class CommunityViewController: UIViewController, Toastable, Alertable {
         label.textColor = .gray200
         label.font = .pretendard(size: 14, weightName: .medium)
         label.setLineHeight(lineHeight: 20)
+        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 1
 
         return label
     }()
