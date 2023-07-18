@@ -1313,6 +1313,7 @@
 				049BC4392A0284E900071A12 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				C4E25A952A57EF6E00E6A236 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C47C1D192A643B38007317EA /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				1876F0512A6709B20064B887 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 040684FD2A01539800377094 /* Products */;
 			projectDirPath = "";
@@ -1914,6 +1915,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.0.0;
+                };
+        };
+		1876F0512A6709B20064B887 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 5.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
