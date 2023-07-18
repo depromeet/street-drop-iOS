@@ -271,8 +271,12 @@ private extension MusicDropViewController {
         commentTextView.rx.text.orEmpty
             .asObservable()
             .bind { [weak self] text in
-                guard text != Constant.commentPlaceHolder else { return }
+                guard text != Constant.commentPlaceHolder,
+                      !text.isEmpty else { return }
                 self?.commentCountLabel.text = "\(text.count)/40"
+                self?.commentView.layer.borderColor = text.count < 40
+                ? UIColor.darkPrimary_25.cgColor
+                : UIColor.systemCritical.cgColor
             }.disposed(by: disposeBag)
 
         commentClearButton.rx.tap

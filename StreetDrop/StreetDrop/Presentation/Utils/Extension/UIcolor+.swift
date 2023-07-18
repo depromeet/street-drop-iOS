@@ -195,4 +195,8 @@ public extension UIColor {
     static var white_60: UIColor {
         UIColor(red: 1, green: 1, blue: 1, alpha: 0.6)
     }
+
+    static var systemCritical: UIColor {
+        UIColor(hexString: "#F47068")
+    }
 }
