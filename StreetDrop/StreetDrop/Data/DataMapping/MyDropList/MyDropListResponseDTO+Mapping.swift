@@ -13,7 +13,7 @@ struct MyDropListResponseDTO: Decodable {
     
     struct Datum: Decodable {
         let key: String
-        let value: Value
+        let value: [Value]
     }
     
     struct Value: Decodable {
@@ -42,3 +42,22 @@ struct MyDropListResponseDTO: Decodable {
     }
 }
 
+extension MyDropListResponseDTO {
+    func toEntity() -> TotalMyMusics {
+        return data.map { datum in
+            .init(
+                date: datum.key,
+                musics: datum.value.map { value in
+                    .init(
+                        albumImageURL: value.music.albumImage,
+                        singer: value.music.artist,
+                        song: value.music.title,
+                        comment: value.content,
+                        location: value.location.address,
+                        likeCount: value.itemLikeCount
+                    )
+                }
+            )
+        }
+    }
+}

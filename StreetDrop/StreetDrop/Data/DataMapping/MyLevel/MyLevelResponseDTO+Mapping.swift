@@ -18,3 +18,14 @@ struct MyLevelResponseDTO: Decodable {
         case nickname, levelName, levelImage, levelDescription
     }
 }
+
+extension MyLevelResponseDTO {
+    func toEntity() -> MyLevel {
+        return .init(
+            nickName: nickname,
+            levelName: levelName,
+            levelImageURL: levelImage,
+            levelDescription: levelDescription
+        )
+    }
+}
