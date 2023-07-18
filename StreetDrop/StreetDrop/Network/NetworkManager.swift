@@ -117,4 +117,22 @@ struct NetworkManager {
             .retry(3)
             .map { $0.data }
     }
+    
+    func getMyDropList() -> Single<Data> {
+        return provider.rx.request(.myDropList)
+            .retry(3)
+            .map { $0.data }
+    }
+    
+    func getMyLikeList() -> Single<Data> {
+        return provider.rx.request(.myLikeList)
+            .retry(3)
+            .map { $0.data }
+    }
+    
+    func getMyLevel() -> Single<Data> {
+        return provider.rx.request(.myLevel)
+            .retry(3)
+            .map { $0.data }
+    }
 }
