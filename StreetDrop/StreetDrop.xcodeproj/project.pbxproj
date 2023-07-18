@@ -35,6 +35,9 @@
 		18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18683FDB2A348B15005A94AC /* DefaultMainRepository.swift */; };
 		18683FDF2A348B25005A94AC /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18683FDE2A348B25005A94AC /* MainRepository.swift */; };
 		18683FE12A349109005A94AC /* PoiEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18683FE02A349109005A94AC /* PoiEntity.swift */; };
+		1876F03D2A66E0330064B887 /* MyDropListResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F03C2A66E0330064B887 /* MyDropListResponseDTO+Mapping.swift */; };
+		1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F03E2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift */; };
+		1876F0412A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0402A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift */; };
 		188D2C772A1BA74E0088F49C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C762A1BA74E0088F49C /* LocationManager.swift */; };
 		188D2C792A1BA7C60088F49C /* LocationManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C782A1BA7C60088F49C /* LocationManagerDelegate.swift */; };
 		188D2C7B2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C7A2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift */; };
@@ -216,6 +219,9 @@
 		18683FDB2A348B15005A94AC /* DefaultMainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMainRepository.swift; sourceTree = "<group>"; };
 		18683FDE2A348B25005A94AC /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
 		18683FE02A349109005A94AC /* PoiEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoiEntity.swift; sourceTree = "<group>"; };
+		1876F03C2A66E0330064B887 /* MyDropListResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyDropListResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		1876F03E2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyLikeListResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		1876F0402A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyLevelResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		188D2C762A1BA74E0088F49C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		188D2C782A1BA7C60088F49C /* LocationManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerDelegate.swift; sourceTree = "<group>"; };
 		188D2C7A2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroppedMusicWithinAreaCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -620,6 +626,30 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		1876F0392A66DFD90064B887 /* MyDropList */ = {
+			isa = PBXGroup;
+			children = (
+				1876F03C2A66E0330064B887 /* MyDropListResponseDTO+Mapping.swift */,
+			);
+			path = MyDropList;
+			sourceTree = "<group>";
+		};
+		1876F03A2A66E0170064B887 /* MyLikeList */ = {
+			isa = PBXGroup;
+			children = (
+				1876F03E2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift */,
+			);
+			path = MyLikeList;
+			sourceTree = "<group>";
+		};
+		1876F03B2A66E01C0064B887 /* MyLevel */ = {
+			isa = PBXGroup;
+			children = (
+				1876F0402A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift */,
+			);
+			path = MyLevel;
+			sourceTree = "<group>";
+		};
 		18AAF8362A136D9E002EF441 /* MusicWithinArea */ = {
 			isa = PBXGroup;
 			children = (
@@ -649,6 +679,9 @@
 			isa = PBXGroup;
 			children = (
 				C4A4458B2A5EF1EA008279C1 /* New Group */,
+				1876F03B2A66E01C0064B887 /* MyLevel */,
+				1876F03A2A66E0170064B887 /* MyLikeList */,
+				1876F0392A66DFD90064B887 /* MyDropList */,
 				41396D852A4EFA0400B69341 /* MyInfo */,
 				41396D802A4EF64700B69341 /* Comment */,
 				41A9BEB52A4DC6B200F3605C /* ClaimComment */,
@@ -1365,6 +1398,7 @@
 				414345282A35BA3C003FEE2A /* CommunityModel.swift in Sources */,
 				41F23B4E2A1B6EE80083D2EC /* DropMusicRepository.swift in Sources */,
 				18683FE12A349109005A94AC /* PoiEntity.swift in Sources */,
+				1876F03D2A66E0330064B887 /* MyDropListResponseDTO+Mapping.swift in Sources */,
 				41D097512A191D6700C011A0 /* MusicDropViewModel.swift in Sources */,
 				C4A445902A5EF225008279C1 /* FCMTokenRequestDTO.swift in Sources */,
 				C46410F42A629820009DD88F /* MusicAppButton.swift in Sources */,
@@ -1437,6 +1471,7 @@
 				41BCFD452A38C099001D3E5F /* Alertable.swift in Sources */,
 				C47F02282A3864A500F48884 /* SettingElementView.swift in Sources */,
 				18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */,
+				1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */,
 				C45A4CAE2A37104600EE9C36 /* ImageCacheService.swift in Sources */,
 				C41BD2E92A38467A0090EF2B /* UIImageView+ImageCache.swift in Sources */,
 				41D0974F2A19065B00C011A0 /* UIView+generateCircleGradientView.swift in Sources */,
@@ -1451,6 +1486,7 @@
 				1824F1372A349F3700A10320 /* MusicCountEntity.swift in Sources */,
 				4141398F2A1FA252005418A1 /* PaddingLabel.swift in Sources */,
 				4143450B2A34603B003FEE2A /* MusicDropModel.swift in Sources */,
+				1876F0412A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift in Sources */,
 				18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */,
 				41D097532A19BE6C00C011A0 /* DroppingInfo.swift in Sources */,
 				412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */,
