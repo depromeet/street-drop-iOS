@@ -38,6 +38,11 @@
 		1876F03D2A66E0330064B887 /* MyDropListResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F03C2A66E0330064B887 /* MyDropListResponseDTO+Mapping.swift */; };
 		1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F03E2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift */; };
 		1876F0412A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0402A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift */; };
+		1876F0442A66E6E00064B887 /* MyPageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0432A66E6E00064B887 /* MyPageRepository.swift */; };
+		1876F0472A66EDA20064B887 /* MyPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0462A66EDA20064B887 /* MyPageModel.swift */; };
+		1876F04A2A66EDF10064B887 /* MyMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0492A66EDF10064B887 /* MyMusic.swift */; };
+		1876F04E2A66EE030064B887 /* MyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F04D2A66EE030064B887 /* MyLevel.swift */; };
+		1876F0502A66F7A30064B887 /* DefaultMyPageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F04F2A66F7A30064B887 /* DefaultMyPageRepository.swift */; };
 		188D2C772A1BA74E0088F49C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C762A1BA74E0088F49C /* LocationManager.swift */; };
 		188D2C792A1BA7C60088F49C /* LocationManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C782A1BA7C60088F49C /* LocationManagerDelegate.swift */; };
 		188D2C7B2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C7A2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift */; };
@@ -222,6 +227,11 @@
 		1876F03C2A66E0330064B887 /* MyDropListResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyDropListResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		1876F03E2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyLikeListResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		1876F0402A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyLevelResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		1876F0432A66E6E00064B887 /* MyPageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageRepository.swift; sourceTree = "<group>"; };
+		1876F0462A66EDA20064B887 /* MyPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageModel.swift; sourceTree = "<group>"; };
+		1876F0492A66EDF10064B887 /* MyMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMusic.swift; sourceTree = "<group>"; };
+		1876F04D2A66EE030064B887 /* MyLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLevel.swift; sourceTree = "<group>"; };
+		1876F04F2A66F7A30064B887 /* DefaultMyPageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyPageRepository.swift; sourceTree = "<group>"; };
 		188D2C762A1BA74E0088F49C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		188D2C782A1BA7C60088F49C /* LocationManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerDelegate.swift; sourceTree = "<group>"; };
 		188D2C7A2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroppedMusicWithinAreaCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -449,6 +459,7 @@
 				C4E4C6B52A5ADC4F00B1C84A /* Setting */,
 				41F23B4A2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift */,
 				414345242A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift */,
+				1876F04F2A66F7A30064B887 /* DefaultMyPageRepository.swift */,
 				41A9BEBA2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift */,
 				41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */,
 				41396D902A4EFBF700B69341 /* DefaultEditCommentRepository.swift */,
@@ -555,6 +566,7 @@
 				C4E4C6B02A5ADBF200B1C84A /* Setting */,
 				41F23B4D2A1B6EE80083D2EC /* DropMusicRepository.swift */,
 				414345222A35B9A3003FEE2A /* LikeMusicRepository.swift */,
+				1876F0432A66E6E00064B887 /* MyPageRepository.swift */,
 				41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */,
 				41396D8A2A4EFB2500B69341 /* EditCommentRepository.swift */,
 				41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */,
@@ -587,6 +599,7 @@
 		1867C81D2A4DDAB700F8EC48 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				1876F0452A66E8470064B887 /* Model */,
 				1867C81E2A4DDB7C00F8EC48 /* View */,
 			);
 			path = MyPage;
@@ -648,6 +661,24 @@
 				1876F0402A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift */,
 			);
 			path = MyLevel;
+			sourceTree = "<group>";
+		};
+		1876F0452A66E8470064B887 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1876F0482A66EDE60064B887 /* Entites */,
+				1876F0462A66EDA20064B887 /* MyPageModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1876F0482A66EDE60064B887 /* Entites */ = {
+			isa = PBXGroup;
+			children = (
+				1876F0492A66EDF10064B887 /* MyMusic.swift */,
+				1876F04D2A66EE030064B887 /* MyLevel.swift */,
+			);
+			path = Entites;
 			sourceTree = "<group>";
 		};
 		18AAF8362A136D9E002EF441 /* MusicWithinArea */ = {
@@ -1408,6 +1439,7 @@
 				18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */,
 				41A3DDEB2A58428F004CFA2F /* ToastView.swift in Sources */,
 				C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */,
+				1876F04A2A66EDF10064B887 /* MyMusic.swift in Sources */,
 				C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */,
 				41396DA12A51B0DF00B69341 /* EditViewController.swift in Sources */,
 				41008EBA2A49B56F00FD4ABE /* ClaimModalViewController.swift in Sources */,
@@ -1424,6 +1456,7 @@
 				040685042A01539800377094 /* MainViewController.swift in Sources */,
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
 				C47583A12A5F11BD00CA7335 /* Bundle+APIKeys.swift in Sources */,
+				1876F0442A66E6E00064B887 /* MyPageRepository.swift in Sources */,
 				41396D8F2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift in Sources */,
 				41396D822A4EF65B00B69341 /* EditCommentRequestDTO.swift in Sources */,
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
@@ -1436,6 +1469,7 @@
 				414139972A20B434005418A1 /* UIImageView+makeCircleShape.swift in Sources */,
 				414139922A20506D005418A1 /* CommunityViewModel.swift in Sources */,
 				41A9BEB72A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift in Sources */,
+				1876F0502A66F7A30064B887 /* DefaultMyPageRepository.swift in Sources */,
 				415113272A165DC50051F809 /* MusicDropViewController.swift in Sources */,
 				1867C8242A4FFCDF00F8EC48 /* MusicTableViewCell.swift in Sources */,
 				C45BF3A12A1D133000CEDE74 /* RecentMusicQueryDTO.swift in Sources */,
@@ -1444,6 +1478,7 @@
 				C4E4C6B82A5ADFDB00B1C84A /* SettingsModel.swift in Sources */,
 				41396D912A4EFBF700B69341 /* DefaultEditCommentRepository.swift in Sources */,
 				C4A0567B2A631D6E00AE2F0B /* CustomSwitch.swift in Sources */,
+				1876F04E2A66EE030064B887 /* MyLevel.swift in Sources */,
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
 				C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */,
 				41396D8B2A4EFB2500B69341 /* EditCommentRepository.swift in Sources */,
@@ -1470,6 +1505,8 @@
 				18D671EF2A35A1CB003B1A71 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				41BCFD452A38C099001D3E5F /* Alertable.swift in Sources */,
 				C47F02282A3864A500F48884 /* SettingElementView.swift in Sources */,
+				C47F02282A3864A500F48884 /* InfoTableViewCell.swift in Sources */,
+				1876F0472A66EDA20064B887 /* MyPageModel.swift in Sources */,
 				18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */,
 				1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */,
 				C45A4CAE2A37104600EE9C36 /* ImageCacheService.swift in Sources */,

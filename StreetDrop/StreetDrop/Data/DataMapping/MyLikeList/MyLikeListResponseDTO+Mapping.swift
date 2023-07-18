@@ -13,7 +13,7 @@ struct MyLikeListResponseDTO: Decodable {
     
     struct Datum: Decodable {
         let key: String
-        let value: Value
+        let value: [Value]
     }
     
     struct Value: Decodable {
@@ -22,7 +22,7 @@ struct MyLikeListResponseDTO: Decodable {
         let music: Music
         let content, createdAt: String
         let itemLikeCount: Int
-
+        
         enum CodingKeys: String, CodingKey {
             case itemID = "itemId"
             case location, music, content, createdAt, itemLikeCount
@@ -36,10 +36,28 @@ struct MyLikeListResponseDTO: Decodable {
     struct Music: Decodable {
         let title, artist, albumImage: String
     }
-
+    
     struct Meta: Decodable {
         let totalCount, nextCusor: Int
     }
 }
 
-
+extension MyLikeListResponseDTO {
+    func toEntity() -> TotalMyMusics {
+        return data.map { datum in
+            .init(
+                date: datum.key,
+                musics: datum.value.map { value in
+                    .init(
+                        albumImageURL: value.music.albumImage,
+                        singer: value.music.artist,
+                        song: value.music.title,
+                        comment: value.content,
+                        location: value.location.address,
+                        likeCount: value.itemLikeCount
+                    )
+                }
+            )
+        }
+    }
+}
