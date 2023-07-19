@@ -14,11 +14,11 @@ import RxMoya
 struct NetworkManager {
     var provider = MoyaProvider<NetworkService>()
     let disposeBag = DisposeBag()
-
+    
     init(provider: MoyaProvider<NetworkService> = MoyaProvider()) {
         self.provider = provider
     }
-
+    
     func getMyInfo() -> Single<Data> {
         return provider.rx.request(.getMyInfo)
             .retry(3)
@@ -56,42 +56,42 @@ struct NetworkManager {
             .retry(3)
             .map { $0.data }
     }
-
+    
     func getPoi(latitude: Double, longitude: Double, distance: Double) -> Single<Data> {
         return provider.rx
             .request(.getPoi(latitude: latitude, longitude: longitude, distance: distance))
             .retry(3)
             .map { $0.data }
     }
-
+    
     func postLikeUp(itemID: Int) -> Single<Int> {
         return provider.rx.request(.postLikeUp(itemID: itemID))
             .retry(3)
             .map { $0.statusCode }
     }
-
+    
     func postLikeDown(itemID: Int) -> Single<Int> {
         return provider.rx.request(.postLikeDown(itemID: itemID))
             .retry(3)
             .map { $0.statusCode }
     }
-
+    
     func claimComment(requestDTO: ClaimCommentRequestDTO) -> Single<Int> {
         return provider.rx.request(.claimComment(requestDTO: requestDTO))
             .retry(3)
             .map { $0.statusCode }
     }
-
+    
     func editComment(itemID: Int, requestDTO: EditCommentRequestDTO) -> Single<Int> {
         return provider.rx.request(.editComment(itemID: itemID, requestDTO: requestDTO))
             .retry(3)
             .map { $0.statusCode }
     }
-
+    
     func deleteMusic(itemID: Int) -> Single<Int> {
         return provider.rx.request(.deleteMusic(itemID: itemID))
             .retry(3)
-        .map { $0.statusCode }
+            .map { $0.statusCode }
     }
     
     func getVillageName(latitude: Double, longitude: Double) -> Single<Data> {
@@ -134,6 +134,7 @@ struct NetworkManager {
         return provider.rx.request(.myLevel)
             .retry(3)
             .map { $0.data }
+    }
     
     func editNickname(nickname: String) -> Single<Void> {
         return provider.rx.request(.editNickname(nickname: nickname))
