@@ -134,5 +134,12 @@ struct NetworkManager {
         return provider.rx.request(.myLevel)
             .retry(3)
             .map { $0.data }
+    
+    func editNickname(nickname: String) -> Single<Void> {
+        return provider.rx.request(.editNickname(nickname: nickname))
+            .retry(3)
+            .map {
+                $0.data
+            }
     }
 }
