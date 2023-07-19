@@ -404,7 +404,7 @@ private extension MainViewController {
         
         myPageButton.rx.tap
             .bind { [weak self] in
-                let myPageViewController = MyPageViewController()
+                let myPageViewController = MyPageViewController(viewModel: MyPageViewModel())
                 self?.navigationController?.pushViewController(
                     myPageViewController,
                     animated: true
