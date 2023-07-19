@@ -14,43 +14,6 @@ import RxSwift
 import SnapKit
 
 final class MyPageViewController: UIViewController {
-    // TODO: - Mock 데이터 삭제 후 뷰모델 연결 필요
-    var mockSections: [MyMusicsSection] = [
-        .init(date: "이번 주", items: [
-            .init(albumImageURL: "https://picsum.photos/200",
-                  singer: "아이유",
-                  song: "뱅뱅뱅",
-                  comment: "되나요~~~",
-                  location: "송파구 잠실본동",
-                  likeCount: 100
-                 ),
-            .init(albumImageURL: "https://picsum.photos/200",
-                  singer: "두번째가수",
-                  song: "내손을잡아",
-                  comment: "동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세",
-                  location: "송파구 잠실본동",
-                  likeCount: 100
-                 )
-        ]),
-        .init(date: "저번 주", items: [
-            .init(albumImageURL: "https://picsum.photos/200",
-                  singer: "아이유",
-                  song: "뱅뱅뱅",
-                  comment: "되나요~~~",
-                  location: "송파구 잠실본동",
-                  likeCount: 100
-                 ),
-            .init(albumImageURL: "https://picsum.photos/200",
-                  singer: "두번째가수",
-                  song: "내손을잡아",
-                  comment: "동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세",
-                  location: "송파구 잠실본동",
-                  likeCount: 100
-                 )
-        ])
-    ]
-    var mockSectionSubject = BehaviorRelay(value: [MyMusicsSection]())
-    
     private var stickyTapListStackView: UIStackView?
     private var stickyTopDimmedView: UIView?
     
@@ -66,6 +29,7 @@ final class MyPageViewController: UIViewController {
     }()
     
     private var viewModel: MyPageViewModel
+    private let viewWillAppearEvent = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     
     init(viewModel: MyPageViewModel = MyPageViewModel()) {
@@ -84,6 +48,11 @@ final class MyPageViewController: UIViewController {
         self.configureUI()
         self.bindAction()
         self.bindViewModel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewWillAppearEvent.accept(Void())
     }
     
     // MARK: - UI
@@ -125,7 +94,6 @@ final class MyPageViewController: UIViewController {
     
     private lazy var levelImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .yellow
         return imageView
     }()
     
@@ -139,7 +107,7 @@ final class MyPageViewController: UIViewController {
     
     private lazy var levelTagLabel: UILabel = {
         let label = UILabel()
-        label.text = "L.3 ~~드랍퍼"
+        label.text = "   "
         label.textColor = UIColor.primary500
         label.font = .pretendard(size: 12, weightName: .semiBold)
         return label
@@ -156,7 +124,6 @@ final class MyPageViewController: UIViewController {
     
     private lazy var nickNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "닉네임"
         label.textColor = .white
         label.font = .pretendard(size: 20, weightName: .bold)
         return label
@@ -569,10 +536,44 @@ private extension MyPageViewController {
     // MARK: - Data Binding
     
     private func bindViewModel() {
-        mockSectionSubject.accept(mockSections)
-        mockSectionSubject
+        // TODO: -  Mock 데이터 관련 삭제 필요
+//        mockSectionSubject.accept(mockSections)
+//        mockSectionSubject
+//            .bind(to: dropMusicListTableView.rx.items(dataSource: dataSource))
+//            .disposed(by: disposeBag)
+        
+        let input = MyPageViewModel.Input(
+            viewWillAppearEvent: self.viewWillAppearEvent
+        )
+        let output = viewModel.convert(input: input, disposedBag: disposeBag)
+        
+        output.levelName
+            .bind(onNext: { [weak self] levelName in
+                self?.levelTagLabel.text = levelName
+            })
+            .disposed(by: disposeBag)
+        
+        output.nickName
+            .bind(onNext: { [weak self] nickName in
+                self?.nickNameLabel.text = nickName
+            })
+            .disposed(by: disposeBag)
+        
+        output.levelImageURL
+            .bind(onNext: { [weak self] levelImageURL in
+                guard let self = self else { return }
+                self.levelImageView.setImage(with: levelImageURL, disposeBag: self.disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        output.myDropMusicsSections
             .bind(to: dropMusicListTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        output.myLikeMusicsSections
+            .bind(to: likeMusicListTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
     }
 }
 
