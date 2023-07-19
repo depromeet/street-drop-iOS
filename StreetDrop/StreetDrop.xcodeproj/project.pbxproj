@@ -43,6 +43,8 @@
 		1876F04A2A66EDF10064B887 /* MyMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0492A66EDF10064B887 /* MyMusic.swift */; };
 		1876F04E2A66EE030064B887 /* MyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F04D2A66EE030064B887 /* MyLevel.swift */; };
 		1876F0502A66F7A30064B887 /* DefaultMyPageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F04F2A66F7A30064B887 /* DefaultMyPageRepository.swift */; };
+		188682A12A6711AF006C11E1 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 188682A02A6711AF006C11E1 /* Differentiator */; };
+		188682A32A6711AF006C11E1 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 188682A22A6711AF006C11E1 /* RxDataSources */; };
 		188D2C772A1BA74E0088F49C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C762A1BA74E0088F49C /* LocationManager.swift */; };
 		188D2C792A1BA7C60088F49C /* LocationManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C782A1BA7C60088F49C /* LocationManagerDelegate.swift */; };
 		188D2C7B2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D2C7A2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift */; };
@@ -361,7 +363,9 @@
 				049BC42A2A02826400071A12 /* RxSwift in Frameworks */,
 				049BC4282A02826400071A12 /* RxRelay in Frameworks */,
 				049BC43B2A0284E900071A12 /* SnapKit in Frameworks */,
+				188682A12A6711AF006C11E1 /* Differentiator in Frameworks */,
 				049BC4362A02845900071A12 /* Moya in Frameworks */,
+				188682A32A6711AF006C11E1 /* RxDataSources in Frameworks */,
 				049BC4262A02826400071A12 /* RxCocoa in Frameworks */,
 				C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */,
 			);
@@ -1252,6 +1256,8 @@
 				049BC43A2A0284E900071A12 /* SnapKit */,
 				C4E25A962A57EF6E00E6A236 /* FirebaseMessaging */,
 				C47C1D1A2A643B38007317EA /* Lottie */,
+				188682A02A6711AF006C11E1 /* Differentiator */,
+				188682A22A6711AF006C11E1 /* RxDataSources */,
 			);
 			productName = StreetDrop;
 			productReference = 040684FC2A01539800377094 /* StreetDrop.app */;
@@ -1313,7 +1319,7 @@
 				049BC4392A0284E900071A12 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				C4E25A952A57EF6E00E6A236 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C47C1D192A643B38007317EA /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				1876F0512A6709B20064B887 /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				1886829F2A6711AF006C11E1 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 040684FD2A01539800377094 /* Products */;
 			projectDirPath = "";
@@ -1917,7 +1923,7 @@
 				minimumVersion = 10.0.0;
                 };
         };
-		1876F0512A6709B20064B887 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+		1886829F2A6711AF006C11E1 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
 			requirement = {
@@ -1962,6 +1968,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C47C1D192A643B38007317EA /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+        };
+		188682A02A6711AF006C11E1 /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1886829F2A6711AF006C11E1 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		188682A22A6711AF006C11E1 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1886829F2A6711AF006C11E1 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
 		};
 		C49BA7842A1BE72900A83E95 /* RxCocoa-Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
