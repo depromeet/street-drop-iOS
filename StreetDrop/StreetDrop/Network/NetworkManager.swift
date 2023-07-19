@@ -139,8 +139,6 @@ struct NetworkManager {
     func editNickname(nickname: String) -> Single<Void> {
         return provider.rx.request(.editNickname(nickname: nickname))
             .retry(3)
-            .map {
-                $0.data
-            }
+            .map { _ in }
     }
 }
