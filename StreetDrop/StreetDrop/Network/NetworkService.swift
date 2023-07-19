@@ -29,6 +29,7 @@ enum NetworkService {
     case myDropList
     case myLikeList
     case myLevel
+    case editNickname(nickname: String)
 }
 
 extension NetworkService: TargetType {
@@ -88,6 +89,8 @@ extension NetworkService: TargetType {
             return "/users/me/items/like"
         case .myLevel:
             return "/users/me/level"
+        case .editNickname:
+            return "/users/me/nickname"
         }
     }
     
@@ -111,7 +114,7 @@ extension NetworkService: TargetType {
                 .blockUser,
                 .postFCMToken:
             return .post
-        case .editComment, .patchUsersMusicApp:
+        case .editComment, .patchUsersMusicApp, .editNickname:
             return .patch
         case .deleteMusic:
             return .delete
@@ -188,6 +191,13 @@ extension NetworkService: TargetType {
         case .patchUsersMusicApp(musicAppQuery: let musicAppQuery):
             return .requestParameters(
                 parameters: ["musicApp": musicAppQuery],
+                encoding: URLEncoding.queryString
+            )
+        case .editNickname(let nickname):
+            return .requestParameters(
+                parameters: [
+                    "nickname": nickname
+                ],
                 encoding: URLEncoding.queryString
             )
         }
