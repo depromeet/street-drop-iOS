@@ -26,6 +26,10 @@
 		04FB1F322A021C330064B3C8 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F312A021C330064B3C8 /* TestError.swift */; };
 		1816ED3C2A680608005009FC /* MusicListSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */; };
 		1816ED3F2A68064E005009FC /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3E2A68064E005009FC /* MyPageViewModel.swift */; };
+		1816ED412A685704005009FC /* NicknameEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED402A685704005009FC /* NicknameEditViewModel.swift */; };
+		1816ED432A685865005009FC /* NicknameEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED422A685865005009FC /* NicknameEditModel.swift */; };
+		1816ED462A6858DE005009FC /* NicknameEditRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED452A6858DE005009FC /* NicknameEditRepository.swift */; };
+		1816ED492A68591F005009FC /* DefaultNicknameEditRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED482A68591F005009FC /* DefaultNicknameEditRepository.swift */; };
 		1824F1372A349F3700A10320 /* MusicCountEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1824F1362A349F3700A10320 /* MusicCountEntity.swift */; };
 		1824F1382A34A30F00A10320 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18683FD82A2A251E005A94AC /* ViewModel.swift */; };
 		1824F1392A34A4AE00A10320 /* MusicCountByDongResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041038962A126E7B00BC5532 /* MusicCountByDongResponseDTO+Mapping.swift */; };
@@ -223,6 +227,10 @@
 		04FB1F312A021C330064B3C8 /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListSectionHeaderView.swift; sourceTree = "<group>"; };
 		1816ED3E2A68064E005009FC /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
+		1816ED402A685704005009FC /* NicknameEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewModel.swift; sourceTree = "<group>"; };
+		1816ED422A685865005009FC /* NicknameEditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditModel.swift; sourceTree = "<group>"; };
+		1816ED452A6858DE005009FC /* NicknameEditRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditRepository.swift; sourceTree = "<group>"; };
+		1816ED482A68591F005009FC /* DefaultNicknameEditRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNicknameEditRepository.swift; sourceTree = "<group>"; };
 		1824F1362A349F3700A10320 /* MusicCountEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCountEntity.swift; sourceTree = "<group>"; };
 		1867C81F2A4DDB8C00F8EC48 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		1867C8232A4FFCDF00F8EC48 /* MusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTableViewCell.swift; sourceTree = "<group>"; };
@@ -465,9 +473,9 @@
 				C434A4D52A17984200C63526 /* SearchingMusic */,
 				C4A445912A5EF24E008279C1 /* FCM */,
 				C4E4C6B52A5ADC4F00B1C84A /* Setting */,
+				1816ED472A685902005009FC /* MyPage */,
 				41F23B4A2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift */,
 				414345242A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift */,
-				1876F04F2A66F7A30064B887 /* DefaultMyPageRepository.swift */,
 				41A9BEBA2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift */,
 				41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */,
 				41396D902A4EFBF700B69341 /* DefaultEditCommentRepository.swift */,
@@ -572,9 +580,9 @@
 				18683FDD2A348B19005A94AC /* Main */,
 				C434A4D62A17986400C63526 /* SearchingMusic */,
 				C4E4C6B02A5ADBF200B1C84A /* Setting */,
+				1816ED442A6858C2005009FC /* MyPage */,
 				41F23B4D2A1B6EE80083D2EC /* DropMusicRepository.swift */,
 				414345222A35B9A3003FEE2A /* LikeMusicRepository.swift */,
-				1876F0432A66E6E00064B887 /* MyPageRepository.swift */,
 				41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */,
 				41396D8A2A4EFB2500B69341 /* EditCommentRepository.swift */,
 				41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */,
@@ -597,8 +605,27 @@
 			isa = PBXGroup;
 			children = (
 				1816ED3E2A68064E005009FC /* MyPageViewModel.swift */,
+				1816ED402A685704005009FC /* NicknameEditViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		1816ED442A6858C2005009FC /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				1876F0432A66E6E00064B887 /* MyPageRepository.swift */,
+				1816ED452A6858DE005009FC /* NicknameEditRepository.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		1816ED472A685902005009FC /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				1876F04F2A66F7A30064B887 /* DefaultMyPageRepository.swift */,
+				1816ED482A68591F005009FC /* DefaultNicknameEditRepository.swift */,
+			);
+			path = MyPage;
 			sourceTree = "<group>";
 		};
 		1824F1352A349DFC00A10320 /* Entity */ = {
@@ -686,6 +713,7 @@
 			children = (
 				1876F0482A66EDE60064B887 /* Entites */,
 				1876F0462A66EDA20064B887 /* MyPageModel.swift */,
+				1816ED422A685865005009FC /* NicknameEditModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1472,6 +1500,7 @@
 				18D671F62A35C5D4003B1A71 /* UIImage+Resizing.swift in Sources */,
 				C4E4C6B42A5ADC4B00B1C84A /* DefaultSettingsRepository.swift in Sources */,
 				C4E4C6BD2A5AE6F500B1C84A /* MusicApp.swift in Sources */,
+				1816ED492A68591F005009FC /* DefaultNicknameEditRepository.swift in Sources */,
 				C434A4D02A17981C00C63526 /* DefaultSearchingMusicRepository.swift in Sources */,
 				414345232A35B9A3003FEE2A /* LikeMusicRepository.swift in Sources */,
 				040685042A01539800377094 /* MainViewController.swift in Sources */,
@@ -1484,6 +1513,7 @@
 				41A3DDF82A5AD222004CFA2F /* DefaultBlockUserRepository.swift in Sources */,
 				C47F02242A38633C00F48884 /* SettingsViewModel.swift in Sources */,
 				1867C8202A4DDB8C00F8EC48 /* MyPageViewController.swift in Sources */,
+				1816ED432A685865005009FC /* NicknameEditModel.swift in Sources */,
 				C40008EA2A32012B00EA7FA9 /* Music.swift in Sources */,
 				413ABEEC2A39D1E900EA1010 /* UIcolor+.swift in Sources */,
 				41A9BEBB2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift in Sources */,
@@ -1523,6 +1553,7 @@
 				04FB1F282A021B0A0064B3C8 /* MainModel.swift in Sources */,
 				C434A4CE2A17970A00C63526 /* SearchingMusicModel.swift in Sources */,
 				414345252A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift in Sources */,
+				1816ED412A685704005009FC /* NicknameEditViewModel.swift in Sources */,
 				04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */,
 				41396DAB2A51C4D200B69341 /* EditModel.swift in Sources */,
 				18D671EF2A35A1CB003B1A71 /* MusicWithinAreaResponseDTO.swift in Sources */,
@@ -1550,6 +1581,7 @@
 				18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */,
 				41D097532A19BE6C00C011A0 /* DroppingInfo.swift in Sources */,
 				412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */,
+				1816ED462A6858DE005009FC /* NicknameEditRepository.swift in Sources */,
 				41396D8D2A4EFB3300B69341 /* DeleteMusicRepository.swift in Sources */,
 				C4E4C6BA2A5AE40900B1C84A /* UserDefaultsError.swift in Sources */,
 				41E008CE2A1442A000F5D99C /* PoiResponseDTO+Mapping.swift in Sources */,
