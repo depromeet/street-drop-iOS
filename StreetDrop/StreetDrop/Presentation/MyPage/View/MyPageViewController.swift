@@ -8,15 +8,75 @@
 import UIKit
 
 import RxCocoa
+import RxDataSources
 import RxRelay
 import RxSwift
 import SnapKit
 
 final class MyPageViewController: UIViewController {
+    // TODO: - Mock 데이터 삭제 후 뷰모델 연결 필요
+    var mockSections: [MyMusicsSection] = [
+        .init(date: "이번 주", items: [
+            .init(albumImageURL: "https://picsum.photos/200",
+                  singer: "아이유",
+                  song: "뱅뱅뱅",
+                  comment: "되나요~~~",
+                  location: "송파구 잠실본동",
+                  likeCount: 100
+                 ),
+            .init(albumImageURL: "https://picsum.photos/200",
+                  singer: "두번째가수",
+                  song: "내손을잡아",
+                  comment: "동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세",
+                  location: "송파구 잠실본동",
+                  likeCount: 100
+                 )
+        ]),
+        .init(date: "저번 주", items: [
+            .init(albumImageURL: "https://picsum.photos/200",
+                  singer: "아이유",
+                  song: "뱅뱅뱅",
+                  comment: "되나요~~~",
+                  location: "송파구 잠실본동",
+                  likeCount: 100
+                 ),
+            .init(albumImageURL: "https://picsum.photos/200",
+                  singer: "두번째가수",
+                  song: "내손을잡아",
+                  comment: "동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세",
+                  location: "송파구 잠실본동",
+                  likeCount: 100
+                 )
+        ])
+    ]
+    var mockSectionSubject = BehaviorRelay(value: [MyMusicsSection]())
+    
     private var stickyTapListStackView: UIStackView?
     private var stickyTopDimmedView: UIView?
     
+    private var dataSource: RxTableViewSectionedReloadDataSource<MyMusicsSection> = {
+        let dataSource = RxTableViewSectionedReloadDataSource<MyMusicsSection>(
+            configureCell: { _, tableView, indexPath, item in
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: MusicTableViewCell.identifier, for: indexPath) as? MusicTableViewCell else { return UITableViewCell() }
+                cell.setData(item: item)
+                return cell
+            }
+        )
+        return dataSource
+    }()
+    
+    private var viewModel: MyPageViewModel
     private let disposeBag = DisposeBag()
+    
+    init(viewModel: MyPageViewModel = MyPageViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +87,7 @@ final class MyPageViewController: UIViewController {
     }
     
     // MARK: - UI
+    // TODO: - 디폴트 텍스트, 이미지 변경 필요
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = UIColor.gray900
@@ -93,13 +154,6 @@ final class MyPageViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.layer.cornerRadius = 16
-        imageView.backgroundColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1)
-        return imageView
-    }()
-    
     private lazy var nickNameLabel: UILabel = {
         let label = UILabel()
         label.text = "닉네임"
@@ -152,25 +206,35 @@ final class MyPageViewController: UIViewController {
     
     private lazy var dropMusicListTableView: MusicListTableView = {
         let tableView = MusicListTableView()
+        tableView.backgroundColor = .gray900
         tableView.isScrollEnabled = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
         tableView.register(MusicTableViewCell.self, forCellReuseIdentifier: MusicTableViewCell.identifier)
+        tableView.register(MusicListSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: MusicListSectionHeaderView.identifier)
+        tableView.sectionFooterHeight = 0
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
         return tableView
     }()
     
     private lazy var likeMusicListTableView: MusicListTableView = {
         let tableView = MusicListTableView()
+        tableView.backgroundColor = .gray900
         tableView.isHidden = true
         tableView.isScrollEnabled = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
         tableView.register(MusicTableViewCell.self, forCellReuseIdentifier: MusicTableViewCell.identifier)
+        tableView.register(MusicListSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: MusicListSectionHeaderView.identifier)
+        tableView.sectionFooterHeight = 0
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
         return tableView
     }()
     
     private lazy var scrollToTopButton: UIButton = {
-       let button = UIButton(type: .custom)
+        let button = UIButton(type: .custom)
         button.layer.cornerRadius = 24
         button.backgroundColor = UIColor.gray600
         button.setImage(UIImage(systemName: "chevron.up")?.withRenderingMode(.alwaysTemplate), for: .normal)
@@ -265,24 +329,8 @@ private extension MyPageViewController {
             make.leading.trailing.equalToSuperview().inset(24)
         }
         
-        // MARK: - Profile ImageView
-        
-        self.profileStackView.addArrangedSubview(profileImageView)
-        self.profileImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(32)
-        }
-        
         // MARK: - NickName Label
         
-        self.profileStackView.addArrangedSubview(
-            {
-                let spacerView = UIView()
-                spacerView.translatesAutoresizingMaskIntoConstraints = false
-                spacerView.backgroundColor = UIColor.clear
-                spacerView.widthAnchor.constraint(equalToConstant: 8).isActive = true
-                return spacerView
-            }()
-        )
         self.profileStackView.addArrangedSubview(nickNameLabel)
         
         // MARK: - NickName Edit Button
@@ -375,7 +423,7 @@ private extension MyPageViewController {
         let dimmedView = UIView()
         dimmedView.backgroundColor = UIColor.gray900
         let gradientLayer = CAGradientLayer()
-
+        
         let startColor = UIColor.gray900.cgColor
         let endColor = UIColor.black.withAlphaComponent(0).cgColor
         gradientLayer.colors = [startColor, endColor]
@@ -392,15 +440,15 @@ private extension MyPageViewController {
         newStackView.spacing = 8
         newStackView.alignment = .bottom
         newStackView.backgroundColor = UIColor.gray900
-
+        
         let newDropButton = UIButton()
         newDropButton.setTitle("드랍", for: .normal)
         newDropButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
-
+        
         let newLikeButton = UIButton()
         newLikeButton.setTitle("좋아요", for: .normal)
         newLikeButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
-
+        
         if self.dropMusicListTableView.isHidden {
             newDropButton.setTitleColor(UIColor.gray400, for: .normal)
             newDropButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
@@ -419,7 +467,7 @@ private extension MyPageViewController {
         newLabel.text = "전체 0개"
         newLabel.textColor = UIColor.gray400
         newLabel.font = .pretendard(size: 14, weightName: .regular)
-
+        
         newStackView.addArrangedSubview(newDropButton)
         newStackView.addArrangedSubview(newLikeButton)
         newStackView.addArrangedSubview(
@@ -432,7 +480,7 @@ private extension MyPageViewController {
             }()
         )
         newStackView.addArrangedSubview(newLabel)
-
+        
         bindTapButtonAction(dropTapButton: newDropButton, likeTapButton: newLikeButton)
         
         return newStackView
@@ -521,17 +569,9 @@ private extension MyPageViewController {
     // MARK: - Data Binding
     
     private func bindViewModel() {
-        // TODO: - 목데이터 대신 뷰모델 연결 필요
-        Observable.just([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-            .bind(to: dropMusicListTableView.rx.items(cellIdentifier: MusicTableViewCell.identifier, cellType: MusicTableViewCell.self)) { index, item, cell in
-                // 뷰모델 연결 필요
-            }
-            .disposed(by: disposeBag)
-        
-        Observable.just([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-            .bind(to: likeMusicListTableView.rx.items(cellIdentifier: MusicTableViewCell.identifier, cellType: MusicTableViewCell.self)) { index, item, cell in
-                // 뷰모델 연결 필요
-            }
+        mockSectionSubject.accept(mockSections)
+        mockSectionSubject
+            .bind(to: dropMusicListTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
 }
@@ -584,6 +624,21 @@ extension MyPageViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK: - TableView Delegate
+
+extension MyPageViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 32
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: MusicListSectionHeaderView.identifier) as? MusicListSectionHeaderView else { return UIView() }
+        let sectionData = dataSource[section]
+        headerView.setData(date: sectionData.date)
+        return headerView
+    }
+}
+
 // MARK: - 커스텀 테이블뷰
 
 private final class MusicListTableView: UITableView {
@@ -592,7 +647,7 @@ private final class MusicListTableView: UITableView {
             invalidateIntrinsicContentSize()
         }
     }
-
+    
     override var intrinsicContentSize: CGSize {
         layoutIfNeeded()
         return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
