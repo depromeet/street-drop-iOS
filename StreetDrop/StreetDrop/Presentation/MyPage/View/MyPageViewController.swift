@@ -56,7 +56,6 @@ final class MyPageViewController: UIViewController {
     }
     
     // MARK: - UI
-    // TODO: - 디폴트 텍스트, 이미지 변경 필요
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = UIColor.gray900
@@ -107,9 +106,9 @@ final class MyPageViewController: UIViewController {
     
     private lazy var levelTagLabel: UILabel = {
         let label = UILabel()
-        label.text = "   "
         label.textColor = UIColor.primary500
         label.font = .pretendard(size: 12, weightName: .semiBold)
+        label.text = "     "
         return label
     }()
     
@@ -163,11 +162,20 @@ final class MyPageViewController: UIViewController {
         return button
     }()
     
-    private lazy var countLabel: UILabel = {
+    private lazy var dropCountLabel: UILabel = {
         let label = UILabel()
         label.text = "전체 0개"
         label.textColor = UIColor.gray400
         label.font = .pretendard(size: 14, weightName: .regular)
+        return label
+    }()
+    
+    private lazy var likeCountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "전체 0개"
+        label.textColor = UIColor.gray400
+        label.font = .pretendard(size: 14, weightName: .regular)
+        label.isHidden = true
         return label
     }()
     
@@ -351,7 +359,7 @@ private extension MyPageViewController {
             }()
         )
         
-        self.tapListStackView.addArrangedSubview(countLabel)
+        self.tapListStackView.addArrangedSubview(dropCountLabel)
         
         // MARK: - Drop Music List TableView
         
@@ -431,9 +439,13 @@ private extension MyPageViewController {
         }
         
         let newLabel = UILabel()
-        newLabel.text = "전체 0개"
         newLabel.textColor = UIColor.gray400
         newLabel.font = .pretendard(size: 14, weightName: .regular)
+        if self.dropMusicListTableView.isHidden {
+            newLabel.text = likeCountLabel.text
+        } else {
+            newLabel.text = dropCountLabel.text
+        }
         
         newStackView.addArrangedSubview(newDropButton)
         newStackView.addArrangedSubview(newLikeButton)
@@ -458,44 +470,52 @@ private extension MyPageViewController {
     private func bindTapButtonAction(dropTapButton: UIButton, likeTapButton: UIButton) {
         dropTapButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.dropMusicListTableView.isHidden = false
-                self?.likeMusicListTableView.isHidden = true
+                guard let self = self else { return }
+                self.dropMusicListTableView.isHidden = false
+                self.likeMusicListTableView.isHidden = true
+                
+                self.tapListStackView.removeArrangedSubview(self.likeCountLabel)
+                self.likeCountLabel.isHidden = true
+                self.tapListStackView.addArrangedSubview(self.dropCountLabel)
+                self.dropCountLabel.isHidden = false
                 
                 dropTapButton.setTitleColor(.white, for: .normal)
                 dropTapButton.setTitleColor(.lightGray, for: .highlighted)
-                self?.dropTapButton.setTitleColor(.white, for: .normal)
-                self?.dropTapButton.setTitleColor(.lightGray, for: .highlighted)
+                self.dropTapButton.setTitleColor(.white, for: .normal)
+                self.dropTapButton.setTitleColor(.lightGray, for: .highlighted)
                 likeTapButton.setTitleColor(UIColor.gray400, for: .normal)
                 likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-                self?.likeTapButton.setTitleColor(UIColor.gray400, for: .normal)
-                self?.likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+                self.likeTapButton.setTitleColor(UIColor.gray400, for: .normal)
+                self.likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
                 
-                if let offsetY = self?.scrollView.contentOffset.y {
-                    if  offsetY > 343 {
-                        self?.scrollView.setContentOffset(CGPoint(x: 0, y: 343), animated: true)
-                    }
+                if self.scrollView.contentOffset.y > 343 {
+                    self.scrollView.setContentOffset(CGPoint(x: 0, y: 343), animated: true)
                 }
             })
             .disposed(by: disposeBag)
         
         likeTapButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.dropMusicListTableView.isHidden = true
-                self?.likeMusicListTableView.isHidden = false
+                guard let self = self else { return }
+                self.dropMusicListTableView.isHidden = true
+                self.likeMusicListTableView.isHidden = false
+                
+                self.tapListStackView.removeArrangedSubview(self.dropCountLabel)
+                self.dropCountLabel.isHidden = true
+                self.tapListStackView.addArrangedSubview(self.likeCountLabel)
+                self.likeCountLabel.isHidden = false
                 
                 dropTapButton.setTitleColor(UIColor.gray400, for: .normal)
                 dropTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-                self?.dropTapButton.setTitleColor(UIColor.gray400, for: .normal)
-                self?.dropTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+                self.dropTapButton.setTitleColor(UIColor.gray400, for: .normal)
+                self.dropTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
                 likeTapButton.setTitleColor(.white, for: .normal)
                 likeTapButton.setTitleColor(.lightGray, for: .highlighted)
-                self?.likeTapButton.setTitleColor(.white, for: .normal)
-                self?.likeTapButton.setTitleColor(.lightGray, for: .highlighted)
+                self.likeTapButton.setTitleColor(.white, for: .normal)
+                self.likeTapButton.setTitleColor(.lightGray, for: .highlighted)
                 
-                if let offsetY = self?.scrollView.contentOffset.y {
-                    if  offsetY > 343 {
-                        self?.scrollView.setContentOffset(CGPoint(x: 0, y: 343), animated: true)
-                    }
+                if self.scrollView.contentOffset.y > 343 {
+                    self.scrollView.setContentOffset(CGPoint(x: 0, y: 343), animated: true)
                 }
             })
             .disposed(by: disposeBag)
@@ -536,12 +556,6 @@ private extension MyPageViewController {
     // MARK: - Data Binding
     
     private func bindViewModel() {
-        // TODO: -  Mock 데이터 관련 삭제 필요
-//        mockSectionSubject.accept(mockSections)
-//        mockSectionSubject
-//            .bind(to: dropMusicListTableView.rx.items(dataSource: dataSource))
-//            .disposed(by: disposeBag)
-        
         let input = MyPageViewModel.Input(
             viewWillAppearEvent: self.viewWillAppearEvent
         )
@@ -567,13 +581,20 @@ private extension MyPageViewController {
             .disposed(by: disposeBag)
         
         output.myDropMusicsSections
+            .do(onNext: { items in
+                let count = items.map { $0.items }.reduce(0) { $0 + $1.count }
+                self.dropCountLabel.text = "전체 \(count)개"
+            })
             .bind(to: dropMusicListTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         output.myLikeMusicsSections
+            .do(onNext: { items in
+                let count = items.map { $0.items }.reduce(0) { $0 + $1.count }
+                self.likeCountLabel.text = "전체 \(count)개"
+            })
             .bind(to: likeMusicListTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
     }
 }
 
