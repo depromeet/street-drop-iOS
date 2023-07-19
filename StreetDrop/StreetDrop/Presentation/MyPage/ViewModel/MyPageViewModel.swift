@@ -30,6 +30,8 @@ extension MyPageViewModel {
         var nickName = PublishRelay<String>()
         var myDropMusicsSections = PublishRelay<[MyMusicsSection]>()
         var myLikeMusicsSections = PublishRelay<[MyMusicsSection]>()
+        var totalDropMusicsCount = PublishRelay<Int>()
+        var totalLikeMusicsCount = PublishRelay<Int>()
     }
 }
 
@@ -67,9 +69,10 @@ extension MyPageViewModel {
         model.fetchMyDropList()
             .subscribe { result in
                 switch result {
-                case .success(let musics):
+                case .success(let totalMusics):
+                    output.totalDropMusicsCount.accept(totalMusics.totalCount)
                     output.myDropMusicsSections.accept(
-                        musics.map {
+                        totalMusics.musics.map {
                             .init(date: $0.date, items: $0.musics)
                         }
                     )
@@ -84,9 +87,10 @@ extension MyPageViewModel {
         model.fetchMyLikeList()
             .subscribe { result in
                 switch result {
-                case .success(let musics):
+                case .success(let totalMusics):
+                    output.totalLikeMusicsCount.accept(totalMusics.totalCount)
                     output.myLikeMusicsSections.accept(
-                        musics.map {
+                        totalMusics.musics.map {
                             .init(date: $0.date, items: $0.musics)
                         }
                     )

@@ -49,7 +49,7 @@ struct MyLikeListResponseDTO: Decodable {
             case nickname, profileImage, musicApp
         }
     }
-            
+    
     struct Meta: Decodable {
         let totalCount, nextCursor: Int
     }
@@ -57,20 +57,23 @@ struct MyLikeListResponseDTO: Decodable {
 
 extension MyLikeListResponseDTO {
     func toEntity() -> TotalMyMusics {
-        return data.map { datum in
-            .init(
-                date: datum.date,
-                musics: datum.value.map { value in
-                    .init(
-                        albumImageURL: value.music.albumImage,
-                        singer: value.music.artist,
-                        song: value.music.title,
-                        comment: value.content,
-                        location: value.location.address,
-                        likeCount: value.itemLikeCount
-                    )
-                }
-            )
-        }
+        return .init(
+            musics: data.map { datum in
+                .init(
+                    date: datum.date,
+                    musics: datum.value.map { value in
+                        .init(
+                            albumImageURL: value.music.albumImage,
+                            singer: value.music.artist,
+                            song: value.music.title,
+                            comment: value.content,
+                            location: value.location.address,
+                            likeCount: value.itemLikeCount
+                        )
+                    }
+                )
+            },
+            totalCount: meta.totalCount
+        )
     }
 }

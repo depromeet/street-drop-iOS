@@ -581,19 +581,23 @@ private extension MyPageViewController {
             .disposed(by: disposeBag)
         
         output.myDropMusicsSections
-            .do(onNext: { items in
-                let count = items.map { $0.items }.reduce(0) { $0 + $1.count }
-                self.dropCountLabel.text = "전체 \(count)개"
-            })
             .bind(to: dropMusicListTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         output.myLikeMusicsSections
-            .do(onNext: { items in
-                let count = items.map { $0.items }.reduce(0) { $0 + $1.count }
-                self.likeCountLabel.text = "전체 \(count)개"
-            })
             .bind(to: likeMusicListTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        output.totalDropMusicsCount
+            .bind(onNext: { [weak self] count in
+                self?.dropCountLabel.text = "전체 \(count)개"
+            })
+            .disposed(by: disposeBag)
+        
+        output.totalLikeMusicsCount
+            .bind(onNext: { [weak self] count in
+                self?.likeCountLabel.text = "전체 \(count)개"
+            })
             .disposed(by: disposeBag)
     }
 }
