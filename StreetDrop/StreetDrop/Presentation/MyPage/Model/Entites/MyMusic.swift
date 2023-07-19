@@ -22,7 +22,10 @@ struct MyMusics {
     let musics: [MyMusic]
 }
 
-typealias TotalMyMusics = [MyMusics]
+struct TotalMyMusics {
+    let musics: [MyMusics]
+    let totalCount: Int
+}
 
 struct MyMusicsSection {
     var date: String

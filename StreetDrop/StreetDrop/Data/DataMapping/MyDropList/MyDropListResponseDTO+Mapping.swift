@@ -57,21 +57,24 @@ struct MyDropListResponseDTO: Decodable {
 
 extension MyDropListResponseDTO {
     func toEntity() -> TotalMyMusics {
-        return data.map { datum in
+        return .init(
+            musics: data.map { datum in
                 .init(
                     date: datum.date,
                     musics: datum.value.map { value in
-                            .init(
-                                albumImageURL: value.music.albumImage,
-                                singer: value.music.artist,
-                                song: value.music.title,
-                                comment: value.content,
-                                location: value.location.address,
-                                likeCount: value.itemLikeCount
-                            )
+                        .init(
+                            albumImageURL: value.music.albumImage,
+                            singer: value.music.artist,
+                            song: value.music.title,
+                            comment: value.content,
+                            location: value.location.address,
+                            likeCount: value.itemLikeCount
+                        )
                     }
                 )
-        }
+            },
+            totalCount: meta.totalCount
+        )
     }
 }
 
