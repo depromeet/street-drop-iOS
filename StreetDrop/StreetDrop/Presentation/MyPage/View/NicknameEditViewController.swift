@@ -13,14 +13,27 @@ import RxSwift
 import SnapKit
 
 final class NicknameEditViewController: UIViewController {
-    
+    private var viewModel: NicknameEditViewModel
     private let disposeBag = DisposeBag()
-
+    
+    private let tapEditButtonEvent = PublishRelay<String>()
+    
+    init(viewModel: NicknameEditViewModel = NicknameEditViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureUI()
         bindAction()
+        bindViewModel()
     }
     
     // MARK: - UI
@@ -205,9 +218,32 @@ private extension NicknameEditViewController {
             .disposed(by: disposeBag)
         
         backButton.rx.tap
-            .bind{ [weak self] nickname in
+            .bind{ [weak self] in
                 self?.navigationController?.popViewController(animated: true)
             }
+            .disposed(by: disposeBag)
+        
+        confirmButton.rx.tap
+            .bind{ [weak self] _ in
+                guard let nickname = self?.nicknameTextField.text else { return }
+                self?.tapEditButtonEvent.accept(nickname)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Data Binding
+
+    func bindViewModel() {
+        let input = NicknameEditViewModel.Input(
+            tapEditButtonEvent: self.tapEditButtonEvent.asObservable()
+        )
+
+        let output = viewModel.convert(input: input, disposedBag: disposeBag)
+        
+        output.complete
+            .bind(onNext: { [weak self] nickName in
+                self?.navigationController?.popViewController(animated: true)
+            })
             .disposed(by: disposeBag)
     }
 }
