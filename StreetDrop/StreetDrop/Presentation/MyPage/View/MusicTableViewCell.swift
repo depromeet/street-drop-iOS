@@ -25,6 +25,15 @@ final class MusicTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setData(item: MyMusic) {
+        self.albumCoverImageView.setImage(with: item.albumImageURL, disposeBag: disposeBag)
+        self.musicTitleLabel.text = item.song
+        self.singerNameLabel.text = item.singer
+        self.commentLabel.text = item.comment
+        self.locationLabel.text = item.location
+        self.likeLabel.text = String(item.likeCount)
+    }
+    
     // MARK: - UI
     
     private lazy var containerStackView: UIStackView = {
@@ -39,6 +48,7 @@ final class MusicTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.backgroundColor = .gray
         imageView.layer.cornerRadius = 10
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     
@@ -53,7 +63,7 @@ final class MusicTableViewCell: UITableViewCell {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 8
-        stackView.alignment = .bottom
+        stackView.alignment = .center
         stackView.distribution = .fill
         return stackView
     }()
@@ -62,7 +72,7 @@ final class MusicTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "음악 이름"
         label.textColor = .white
-        label.font = .pretendard(size: 20, weightName: .bold)
+        label.font = .pretendard(size: 14, weightName: .bold)
         return label
     }()
     
@@ -76,9 +86,10 @@ final class MusicTableViewCell: UITableViewCell {
     
     private lazy var commentLabel: UILabel = {
         let label = UILabel()
-        label.text = "코멘트 입니다."
+        label.text = "코멘트"
         label.textColor = .gray100
         label.font = .pretendard(size: 16, weightName: .medium)
+        label.numberOfLines = 0
         return label
     }()
     
