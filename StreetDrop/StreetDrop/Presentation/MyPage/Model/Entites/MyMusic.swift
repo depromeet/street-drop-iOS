@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 struct MyMusic {
     let albumImageURL: String
@@ -22,3 +23,22 @@ struct MyMusics {
 }
 
 typealias TotalMyMusics = [MyMusics]
+
+struct MyMusicsSection {
+    var date: String
+    var items: [Item]
+    
+    init(date: String, items: [MyMusic]) {
+        self.date = date
+        self.items = items
+    }
+}
+
+extension MyMusicsSection: SectionModelType {
+    typealias Item = MyMusic
+    
+    init(original: MyMusicsSection, items: [MyMusic]) {
+        self = original
+        self.items = items
+    }
+}
