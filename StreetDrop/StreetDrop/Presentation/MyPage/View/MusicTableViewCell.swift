@@ -104,14 +104,14 @@ final class MusicTableViewCell: UITableViewCell {
     private lazy var locationIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "locationBasicIcon")?.withRenderingMode(.alwaysTemplate)
-        imageView.tintColor = UIColor.primary500Alpha75
+        imageView.tintColor = UIColor.darkPrimary_75
         return imageView
     }()
     
     private lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.text = "XXX구 XXX동"
-        label.textColor = UIColor.primary500Alpha75
+        label.textColor = UIColor.darkPrimary_75
         label.font = .pretendard(size: 12, weightName: .regular)
         return label
     }()
@@ -119,14 +119,14 @@ final class MusicTableViewCell: UITableViewCell {
     private lazy var likeIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "likeFillIcon")?.withRenderingMode(.alwaysTemplate)
-        imageView.tintColor = UIColor.primary500Alpha75
+        imageView.tintColor = UIColor.darkPrimary_75
         return imageView
     }()
     
     private lazy var likeLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
-        label.textColor = UIColor.primary500Alpha75
+        label.textColor = UIColor.darkPrimary_75
         label.font = .pretendard(size: 12, weightName: .regular)
         return label
     }()

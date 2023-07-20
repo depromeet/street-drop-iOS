@@ -1559,7 +1559,7 @@
 				18D671EF2A35A1CB003B1A71 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				41BCFD452A38C099001D3E5F /* Alertable.swift in Sources */,
 				C47F02282A3864A500F48884 /* SettingElementView.swift in Sources */,
-				C47F02282A3864A500F48884 /* InfoTableViewCell.swift in Sources */,
+				C47F02282A3864A500F48884 /* SettingElementView.swift in Sources */,
 				1876F0472A66EDA20064B887 /* MyPageModel.swift in Sources */,
 				18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */,
 				1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */,
@@ -1955,6 +1955,14 @@
 				kind = branch;
 			};
 		};
+		1886829F2A6711AF006C11E1 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		C47C1D192A643B38007317EA /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -1969,14 +1977,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.0.0;
-                };
-        };
-		1886829F2A6711AF006C11E1 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 5.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -2012,11 +2012,6 @@
 			package = 049BC4392A0284E900071A12 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		C47C1D1A2A643B38007317EA /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C47C1D192A643B38007317EA /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
-        };
 		188682A02A6711AF006C11E1 /* Differentiator */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1886829F2A6711AF006C11E1 /* XCRemoteSwiftPackageReference "RxDataSources" */;
@@ -2026,6 +2021,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1886829F2A6711AF006C11E1 /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
+		};
+		C47C1D1A2A643B38007317EA /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C47C1D192A643B38007317EA /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		C49BA7842A1BE72900A83E95 /* RxCocoa-Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
