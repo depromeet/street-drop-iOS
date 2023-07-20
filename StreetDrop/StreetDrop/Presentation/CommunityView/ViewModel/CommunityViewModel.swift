@@ -14,6 +14,7 @@ final class CommunityViewModel: ViewModel {
 
     struct Input {
         let viewDidLoadEvent: Observable<Void>
+        let viewWillAppearEvent: Observable<Void>
         let changedIndex: Observable<Int>
         let tapLikeButtonEvent: Observable<Void>
         let tapOptionButtonEvent: Observable<Void>
@@ -33,6 +34,7 @@ final class CommunityViewModel: ViewModel {
         var profileImageURL: PublishRelay<String> = .init()
         var nicknameText: PublishRelay<String> = .init()
         var dateText: PublishRelay<String> = .init()
+        var musicApp: PublishRelay<String> = .init()
         var isLiked: PublishRelay<Bool> = .init()
         var likeCount: PublishRelay<String> = .init()
         var isMyDrop: PublishRelay<Bool> = .init()
@@ -75,6 +77,13 @@ final class CommunityViewModel: ViewModel {
                 let albumImagesURL = self.communityInfos.map { $0.albumImageURL }
                 output.albumImages.accept(albumImagesURL)
                 output.currentIndex.accept(self.currentIndex)
+            }).disposed(by: disposedBag)
+
+        input.viewWillAppearEvent
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let musicApp: String = self.communityModel.fetchMyMusicApp() ?? "youtubemusic"
+                output.musicApp.accept(musicApp)
             }).disposed(by: disposedBag)
 
         input.changedIndex
@@ -235,7 +244,7 @@ private extension CommunityViewModel {
         }
 
         let myDateFormatter = DateFormatter()
-        myDateFormatter.dateFormat = "yyyy.MM.dd"
+        myDateFormatter.dateFormat = "yy.MM.dd"
 
         return myDateFormatter.string(from: convertDate)
     }

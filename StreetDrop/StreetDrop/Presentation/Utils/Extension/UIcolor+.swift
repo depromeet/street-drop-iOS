@@ -155,6 +155,10 @@ public extension UIColor {
     static var gray900: UIColor {
         UIColor(hexString: "#0F1114")
     }
+    
+    static var gray900_75: UIColor {
+        UIColor(red: 0.01, green: 0.02, blue: 0.06, alpha: 0.75)
+    }
 
     static var darkGradient_1: UIColor {
         UIColor(hexString: "#0F1114")
@@ -167,8 +171,32 @@ public extension UIColor {
     static var darkPrimary_25: UIColor {
         UIColor(red: 0.41, green: 0.86, blue: 0.97, alpha: 0.25)
     }
+    
+    static var darkPrimary_75: UIColor {
+        UIColor(red: 0.408, green: 0.922, blue: 0.969, alpha: 0.75)
+    }
+    
+    static var darkPrimary_500: UIColor {
+        UIColor(red: 0.408, green: 0.894, blue: 0.969, alpha: 0.5)
+    }
 
+    static var darkPrimary_500_10: UIColor {
+        UIColor(red: 0.384, green: 0.851, blue: 0.988, alpha: 0.1)
+    }
+    
+    static var darkPrimary_700: UIColor {
+        UIColor(red: 0.126, green: 0.855, blue: 0.9, alpha: 1)
+    }
+    
     static var systemBlueDark: UIColor {
         UIColor(hexString: "#608CFF")
+    }
+    
+    static var white_60: UIColor {
+        UIColor(red: 1, green: 1, blue: 1, alpha: 0.6)
+    }
+
+    static var systemCritical: UIColor {
+        UIColor(hexString: "#F47068")
     }
 }

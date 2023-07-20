@@ -271,8 +271,12 @@ private extension MusicDropViewController {
         commentTextView.rx.text.orEmpty
             .asObservable()
             .bind { [weak self] text in
-                guard text != Constant.commentPlaceHolder else { return }
+                guard text != Constant.commentPlaceHolder,
+                      !text.isEmpty else { return }
                 self?.commentCountLabel.text = "\(text.count)/40"
+                self?.commentView.layer.borderColor = text.count < 40
+                ? UIColor.darkPrimary_25.cgColor
+                : UIColor.systemCritical.cgColor
             }.disposed(by: disposeBag)
 
         commentClearButton.rx.tap
@@ -372,7 +376,7 @@ private extension MusicDropViewController {
                 guard let self = self else { return }
 
                 if isSuccess {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                         self.navigationController?.popToRootViewController(animated: true)
                     })
 
@@ -555,7 +559,7 @@ private extension MusicDropViewController {
         let count = commentTextView.text.count
 
         if count > max {
-            commentTextView.text = String(commentTextView.text.dropLast())
+            commentTextView.text = String(commentTextView.text.prefix(40))
         }
     }
 

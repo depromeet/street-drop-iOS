@@ -44,8 +44,8 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     
     private lazy var musicTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .pretendard(size: 16, weight: 700)
-        label.textColor = .white
+        label.font = .pretendard(size: 16, weightName: .bold)
+        label.textColor = UIColor.gray50
         label.numberOfLines = 1
         label.textAlignment = .center
         return label
@@ -53,8 +53,8 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     
     private lazy var singerNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .pretendard(size: 12, weight: 600)
-        label.textColor = .white
+        label.font = .pretendard(size: 12, weightName: .semiBold)
+        label.textColor = UIColor.gray150
         label.numberOfLines = 1
         label.textAlignment = .center
         return label
@@ -64,7 +64,7 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.backgroundColor = .gray
         imageView.isUserInteractionEnabled = true
-        imageView.layer.borderColor = UIColor(red: 0.9, green: 0.997, blue: 1, alpha: 1).cgColor
+        imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.borderWidth = 2
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
@@ -73,8 +73,14 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     
     private lazy var commentContainerView: UIView = {
         let view = UIView()
-        view.layer.backgroundColor = UIColor(red: 0.64, green: 0.979, blue: 1, alpha: 1).cgColor
+        view.layer.backgroundColor = UIColor.primary300.cgColor
         view.layer.cornerRadius = 12
+        
+        view.layer.shadowColor = UIColor.primary500.cgColor
+        view.layer.shadowOpacity = 0.2
+        view.layer.shadowOffset = CGSize(width: 0, height: 4)
+        view.layer.shadowRadius = 10
+
         view.isUserInteractionEnabled = true
         view.isHidden = true
         return view
@@ -89,10 +95,10 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     
     private lazy var commentLabel: UILabel = {
         let label = UILabel()
-        label.font = .pretendard(size: 14, weight: 500)
+        label.font = .pretendard(size: 14, weightName: .medium)
         label.numberOfLines = 2
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = UIColor.gray900
         label.isHidden = true
         label.preferredMaxLayoutWidth = UIScreen.main.bounds.width / 3
         return label
@@ -101,7 +107,7 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
 
 extension DroppedMusicWithinAreaCollectionViewCell {
     
-    func middleCell() {
+    func middleCell(completion: (() -> Void)? = nil) {
         self.singerNameLabel.snp.updateConstraints { make in
             make.bottom.equalToSuperview().inset(20)
         }
@@ -120,9 +126,12 @@ extension DroppedMusicWithinAreaCollectionViewCell {
         self.isUserInteractionEnabled = true
         
         middleComment()
+        if let completion = completion {
+            completion()
+        }
     }
     
-    func sideCell() {
+    func sideCell(completion: (() -> Void)? = nil) {
         self.singerNameLabel.snp.updateConstraints { make in
             make.bottom.equalToSuperview()
         }
@@ -141,6 +150,9 @@ extension DroppedMusicWithinAreaCollectionViewCell {
         self.isUserInteractionEnabled = false
         
         sideComment()
+        if let completion = completion {
+            completion()
+        }
     }
     
     func middleComment() {

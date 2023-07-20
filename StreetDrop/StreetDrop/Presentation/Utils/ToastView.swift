@@ -14,6 +14,7 @@ final class ToastView: UIView {
     enum State {
         case success
         case fail
+        case musicAppCheckBox
 
         var icon: UIImage? {
             switch self {
@@ -21,6 +22,8 @@ final class ToastView: UIView {
                 return UIImage(named: "toastSuccessIcon")
             case .fail:
                 return UIImage(named: "toastFailIcon")
+            case .musicAppCheckBox:
+                return UIImage(named: "toastMusicAppCheckBox")
             }
         }
     }

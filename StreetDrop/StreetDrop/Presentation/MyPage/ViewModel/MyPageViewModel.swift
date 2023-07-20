@@ -2,27 +2,102 @@
 //  MyPageViewModel.swift
 //  StreetDrop
 //
-//  Created by 차요셉 on 2023/06/13.
+//  Created by JoongkyuPark on 2023/07/19.
 //
 
 import Foundation
 
-import RxSwift
+import RxCocoa
 import RxRelay
+import RxSwift
 
-protocol MyPageViewModel: ViewModel {
-    
+final class MyPageViewModel: ViewModel {
+    private let model = DefaultMyPageModel(
+        repository: DefaultMyPageRepository(
+            networkManager: NetworkManager()
+        )
+    )
 }
 
-final class DefaultMyPageViewModel: MyPageViewModel {
-    private let disposeBag: DisposeBag = DisposeBag()
-    struct Input {}
+extension MyPageViewModel {
+    struct Input {
+        let viewWillAppearEvent: PublishRelay<Void>
+    }
     
-    struct Output {}
-    
-    func convert(input: Input, disposedBag: DisposeBag) -> Output {
+    struct Output {
+        var levelImageURL = PublishRelay<String>()
+        var levelName = PublishRelay<String>()
+        var nickName = PublishRelay<String>()
+        var myDropMusicsSections = PublishRelay<[MyMusicsSection]>()
+        var myLikeMusicsSections = PublishRelay<[MyMusicsSection]>()
+        var totalDropMusicsCount = PublishRelay<Int>()
+        var totalLikeMusicsCount = PublishRelay<Int>()
+    }
+}
+
+extension MyPageViewModel {
+    func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
         let output = Output()
+            
+        input.viewWillAppearEvent
+            .bind {_ in
+                self.fetchLevelItems(output: output, disposedBag: disposedBag)
+                self.fetchMyDropMusicsSections(output: output, disposedBag: disposedBag)
+                self.fetchMyLikeMusicsSections(output: output, disposedBag: disposedBag)
+            }
+            .disposed(by: disposedBag)
         
         return output
+    }
+    
+    func fetchLevelItems(output: Output, disposedBag: DisposeBag) {
+        model.fetchMyLevel()
+            .subscribe { result in
+                switch result {
+                case .success(let levelItem):
+                    output.levelName.accept(levelItem.levelName)
+                    output.levelImageURL.accept(levelItem.levelImageURL)
+                    output.nickName.accept(levelItem.nickName)
+                case .failure:
+                    break
+                }
+            }
+            .disposed(by: disposedBag)
+    }
+    
+    func fetchMyDropMusicsSections(output: Output, disposedBag: DisposeBag) {
+        model.fetchMyDropList()
+            .subscribe { result in
+                switch result {
+                case .success(let totalMusics):
+                    output.totalDropMusicsCount.accept(totalMusics.totalCount)
+                    output.myDropMusicsSections.accept(
+                        totalMusics.musics.map {
+                            .init(date: $0.date, items: $0.musics)
+                        }
+                    )
+                case .failure(let error):
+                    output.myDropMusicsSections.accept([])
+                }
+            }
+            .disposed(by: disposedBag)
+    }
+
+    func fetchMyLikeMusicsSections(output: Output, disposedBag: DisposeBag) {
+        model.fetchMyLikeList()
+            .subscribe { result in
+                switch result {
+                case .success(let totalMusics):
+                    output.totalLikeMusicsCount.accept(totalMusics.totalCount)
+                    output.myLikeMusicsSections.accept(
+                        totalMusics.musics.map {
+                            .init(date: $0.date, items: $0.musics)
+                        }
+                    )
+                case .failure:
+                    output.myLikeMusicsSections.accept([])
+                }
+            }
+            .disposed(by: disposedBag)
     }
 }

@@ -24,6 +24,12 @@ enum NetworkService {
     case deleteMusic(itemID: Int)
     case getVillageName(latitude: Double, longitude: Double)
     case blockUser(blockUserID: Int)
+    case postFCMToken(token: FCMTokenRequestDTO)
+    case patchUsersMusicApp(musicAppQuery: String)
+    case myDropList
+    case myLikeList
+    case myLevel
+    case editNickname(nickname: String)
 }
 
 extension NetworkService: TargetType {
@@ -73,6 +79,18 @@ extension NetworkService: TargetType {
             return "/geo/reverse-geocode"
         case .blockUser:
             return "/users/block"
+        case .postFCMToken:
+            return "/notifications/tokens"
+        case .patchUsersMusicApp:
+            return "/users/music-app"
+        case .myDropList:
+            return "/users/me/items/drop"
+        case .myLikeList:
+            return "/users/me/items/like"
+        case .myLevel:
+            return "/users/me/level"
+        case .editNickname:
+            return "/users/me/nickname"
         }
     }
     
@@ -84,15 +102,19 @@ extension NetworkService: TargetType {
                 .getPoi,
                 .getMusicWithinArea,
                 .getCommunity,
-                .getVillageName:
+                .getVillageName,
+                .myDropList,
+                .myLikeList,
+                .myLevel:
             return .get
         case .dropMusic,
                 .postLikeUp,
                 .postLikeDown,
                 .claimComment,
-                .blockUser:
+                .blockUser,
+                .postFCMToken:
             return .post
-        case .editComment:
+        case .editComment, .patchUsersMusicApp, .editNickname:
             return .patch
         case .deleteMusic:
             return .delete
@@ -101,7 +123,7 @@ extension NetworkService: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .getMyInfo:
+        case .getMyInfo, .myDropList, .myLikeList, .myLevel:
             return .requestPlain
         case .searchMusic(let keyword):
             return .requestParameters(
@@ -162,6 +184,20 @@ extension NetworkService: TargetType {
         case .blockUser(let blockUserID):
             return .requestParameters(
                 parameters: ["blockUserID": blockUserID],
+                encoding: URLEncoding.queryString
+            )
+        case .postFCMToken(token: let token):
+            return .requestJSONEncodable(token)
+        case .patchUsersMusicApp(musicAppQuery: let musicAppQuery):
+            return .requestParameters(
+                parameters: ["musicApp": musicAppQuery],
+                encoding: URLEncoding.queryString
+            )
+        case .editNickname(let nickname):
+            return .requestParameters(
+                parameters: [
+                    "nickname": nickname
+                ],
                 encoding: URLEncoding.queryString
             )
         }

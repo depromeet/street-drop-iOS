@@ -15,13 +15,16 @@ import RxSwift
 
 final class MainViewModel: ViewModel {
     var location: CLLocation = CLLocation()
-    var poisDistance: Double = 200000 // 1차 앱스토어 배포 시엔, 대한민국 전체 조회를 위해 반지름 200KM로 조회
+    var poisDistance: Double = 600000 // 1차 앱스토어 배포 시엔, 대한민국 전체 조회를 위해 반지름 200KM로 조회
     var detailItemsDistance: Double = 500
     var currentLocationAddress: String = ""
     var musicWithinArea: Musics = []
     var currentIndex: Int = 0
     var tappedPOIID: Int?
+    var tappedPOIMarekr: NMFMarker?
+    var poiDict: [Int: NMFMarker] = [:] // POI ID로 마커를 찾기 위함입니다.
     private var poiMarkers: [NMFMarker] = []
+    var markerAlbumImages: [Int: UIImage] = [:] // POI ID로 앨범 이미지를 찾기 위함입니다.
     
     private let model = MainModel(
         repository: DefaultMainRepository(
@@ -40,7 +43,7 @@ extension MainViewModel {
     struct Input {
         let viewDidLoadEvent: PublishRelay<Void>
         let viewWillAppearEvent: PublishRelay<Void>
-        let poiMarkerDidTapEvent: PublishRelay<Void>
+        let poiMarkerDidTapEvent: PublishRelay<NMFMarker>
         let cameraDidStopEvent: PublishRelay<(latitude: Double, longitude: Double)>
         let homeButtonDidTapEvent: ControlEvent<Void>
         let myLocationButtonDidTapEvent: ControlEvent<Void>
@@ -113,6 +116,10 @@ extension MainViewModel {
             .disposed(by: disposedBag)
         
         input.poiMarkerDidTapEvent
+            .do(onNext: { poiMarker in
+                self.tappedPOIMarekr = poiMarker
+                self.tappedPOIID = Int(poiMarker.tag)
+            })
             .withLatestFrom(self.locationUpdated)
             .bind { [weak self] in
                 guard let self = self else { return }
