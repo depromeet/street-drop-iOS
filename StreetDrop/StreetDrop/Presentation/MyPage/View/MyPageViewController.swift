@@ -277,7 +277,8 @@ private extension MyPageViewController {
         self.levelImageView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(18)
             make.centerX.equalToSuperview()
-            make.width.height.equalTo(169)
+            make.width.equalTo(243)
+            make.height.equalTo(184)
         }
         
         // MARK: - Level Tag Container View
