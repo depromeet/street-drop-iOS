@@ -867,7 +867,7 @@ extension MainViewController: NMFMapViewCameraDelegate {
         self.cameraDidStopEvent.accept((mapView.latitude, mapView.longitude))
     }
     
-    func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
+    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
         self.locationOverlay.circleRadius = circleRadius / naverMapView.projection.metersPerPixel()
     }
 }
