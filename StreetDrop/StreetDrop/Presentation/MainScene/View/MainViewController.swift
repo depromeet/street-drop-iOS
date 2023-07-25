@@ -803,7 +803,7 @@ private extension MainViewController {
         
         let defaultMusicMarkerImage = UIImage(named: "musicMarker") ?? UIImage()
         poiMarker.iconImage = NMFOverlayImage(image: defaultMusicMarkerImage)
-        UIImage.load(with: item.imageURL)
+        UIImage.load(with: item.imageURL, isImageFromAppleServer: true)
             .subscribe(onNext: { albumImage in
                 self.viewModel.markerAlbumImages[poiID] = albumImage
                 self.drawPOIMarker(poiMarker: poiMarker,poiID: poiID, isActivated: false)

@@ -47,7 +47,11 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
             return
         }
 
-        self.albumImageView.setImage(with: albumImageURL, disposeBag: disposeBag)
+        self.albumImageView.setImage(
+            with: albumImageURL,
+            isImageFromAppleServer: true,
+            disposeBag: disposeBag
+        )
     }
 
     override func prepareForReuse() {

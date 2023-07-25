@@ -26,7 +26,11 @@ final class MusicTableViewCell: UITableViewCell {
     }
     
     func setData(item: MyMusic) {
-        self.albumCoverImageView.setImage(with: item.albumImageURL, disposeBag: disposeBag)
+        self.albumCoverImageView.setImage(
+            with: item.albumImageURL,
+            isImageFromAppleServer: true,
+            disposeBag: disposeBag
+        )
         self.musicTitleLabel.text = item.song
         self.singerNameLabel.text = item.singer
         self.commentLabel.text = item.comment

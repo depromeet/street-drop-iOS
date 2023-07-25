@@ -36,7 +36,11 @@ class SearchingMusicTableViewCell: UITableViewCell {
     }
     
     func setData(music: Music) {
-        self.albumImage.setImage(with: music.albumImage, disposeBag: disposeBag)
+        self.albumImage.setImage(
+            with: music.albumImage,
+            isImageFromAppleServer: true,
+            disposeBag: disposeBag
+        )
         self.songNameLabel.text = music.songName
         self.artistNameLabel.text = music.artistName
         self.durationTimeLabel.text = music.durationTime

@@ -62,16 +62,20 @@ final class ImageCacheService {
         self.cache.configureCachePolicy(with: maximumMemoryBytes, with: maximumDiskBytes)
     }
     
-    func setImage(_ url: String, isUsingDiskCache: Bool) -> Observable<Data> {
+    func setImage(_ url: String, isUsingDiskCache: Bool, isImageFromAppleServer: Bool) -> Observable<Data> {
         guard let imageURL = URL(string: url) else {
             return Observable.error(ImageCacheError.invalidURLError)
         }
         
         // 1. Lookup NSCache
         if let image = self.checkMemory(imageURL) {
-            return self.get(imageURL: imageURL, etag: image.cacheInfo.etag)
-                .map({ $0.imageData })
-                .catchAndReturn(image.imageData)
+            if isImageFromAppleServer {
+                return Observable<Data>.just(image.imageData)
+            } else {
+                return self.get(imageURL: imageURL, etag: image.cacheInfo.etag)
+                    .map({ $0.imageData })
+                    .catchAndReturn(image.imageData)
+            }
         }
         
         // 2. Lookup Disk
