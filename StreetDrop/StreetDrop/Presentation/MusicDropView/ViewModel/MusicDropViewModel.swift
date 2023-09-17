@@ -36,15 +36,15 @@ class MusicDropViewModel: ViewModel {
 
     var state: State = .drop
     private let droppingInfo: DroppingInfo
-    private let musicDropModel: MusicDropModel
+    private let musicDropUseCase: MusicDropUseCase
     private let disposeBag: DisposeBag = DisposeBag()
 
     init (
         droppingInfo: DroppingInfo,
-        musicDropModel: MusicDropModel = MusicDropModel()
+        musicDropUseCase: MusicDropUseCase = DefaultMusicDropUseCase()
     ) {
         self.droppingInfo = droppingInfo
-        self.musicDropModel = musicDropModel
+        self.musicDropUseCase = musicDropUseCase
     }
 
     func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
@@ -93,7 +93,7 @@ class MusicDropViewModel: ViewModel {
                 var comment = ""
                 input.comment.bind { comment = $0 }.disposed(by: DisposeBag())
 
-                self.musicDropModel.drop(droppingInfo: self.droppingInfo, content: comment)
+                self.musicDropUseCase.drop(droppingInfo: self.droppingInfo, content: comment)
                     .subscribe(onSuccess: { response in
                         if !(200...299).contains(response) {
                             output.isSuccessDrop.accept(
