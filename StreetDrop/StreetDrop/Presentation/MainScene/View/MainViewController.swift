@@ -23,6 +23,7 @@ final class MainViewController: UIViewController, Toastable {
     private let viewWillAppearEvent = PublishRelay<Void>()
     private let poiMarkerDidTapEvent = PublishRelay<NMFMarker>()
     private let cameraDidStopEvent = PublishRelay<(latitude: Double, longitude: Double)>()
+    private var outsideRadiusCountForRandom = 0
     
     var cellWidth: Double? {
         guard let layout = self.droppedMusicWithinAreaCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return nil }
@@ -841,6 +842,17 @@ private extension MainViewController {
                 let poiID = Int(poiMarker.tag)
                 self.drawPOIMarker(poiMarker: poiMarker, poiID: poiID, isActivated: true)
                 self.poiMarkerDidTapEvent.accept(poiMarker)
+            } else {
+                showFailNormalToast(
+                    text: [
+                        "반경 밖 음악을 듣고싶다면 레벨을 올려보세요!",
+                        "음악이 있는 위치로 직접 가야해요!",
+                        "반경 밖 음악을 듣고싶다면 위치를 이동해보세요!"
+                    ][outsideRadiusCountForRandom % 3],
+                    bottomInset: 96,
+                    duration: .now() + 3
+                )
+                outsideRadiusCountForRandom += 1
             }
             return true
         }
