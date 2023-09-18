@@ -843,7 +843,7 @@ private extension MainViewController {
                 self.drawPOIMarker(poiMarker: poiMarker, poiID: poiID, isActivated: true)
                 self.poiMarkerDidTapEvent.accept(poiMarker)
             } else {
-                showFailNormalToast(
+                self.showFailNormalToast(
                     text: [
                         "반경 밖 음악을 듣고싶다면 레벨을 올려보세요!",
                         "음악이 있는 위치로 직접 가야해요!",
