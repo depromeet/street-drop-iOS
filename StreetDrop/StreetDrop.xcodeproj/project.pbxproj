@@ -24,6 +24,8 @@
 		04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F252A0215BC0064B3C8 /* MainViewModel.swift */; };
 		04FB1F282A021B0A0064B3C8 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F272A021B0A0064B3C8 /* MainModel.swift */; };
 		04FB1F322A021C330064B3C8 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F312A021C330064B3C8 /* TestError.swift */; };
+		082F171A2AB7454200174D98 /* EditCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17192AB7454200174D98 /* EditCommentUseCase.swift */; };
+		082F171C2AB7455400174D98 /* DefaultEditCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */; };
 		1816ED3C2A680608005009FC /* MusicListSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */; };
 		1816ED3F2A68064E005009FC /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3E2A68064E005009FC /* MyPageViewModel.swift */; };
 		1816ED412A685704005009FC /* NicknameEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED402A685704005009FC /* NicknameEditViewModel.swift */; };
@@ -79,10 +81,9 @@
 		41396D972A4F04CB00B69341 /* MyInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D962A4F04CB00B69341 /* MyInfoStorage.swift */; };
 		41396D992A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D982A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift */; };
 		41396D9B2A4F1C5600B69341 /* OptionModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D9A2A4F1C5600B69341 /* OptionModalViewController.swift */; };
-		41396DA12A51B0DF00B69341 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396DA02A51B0DF00B69341 /* EditViewController.swift */; };
-		41396DA42A51B61000B69341 /* EditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396DA32A51B61000B69341 /* EditViewModel.swift */; };
+		41396DA12A51B0DF00B69341 /* EditCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396DA02A51B0DF00B69341 /* EditCommentViewController.swift */; };
+		41396DA42A51B61000B69341 /* EditCommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396DA32A51B61000B69341 /* EditCommentViewModel.swift */; };
 		41396DA92A51B8F700B69341 /* EditInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396DA82A51B8F700B69341 /* EditInfo.swift */; };
-		41396DAB2A51C4D200B69341 /* EditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396DAA2A51C4D200B69341 /* EditModel.swift */; };
 		413ABEE82A39BBA500EA1010 /* Toastable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEE72A39BBA500EA1010 /* Toastable.swift */; };
 		413ABEEC2A39D1E900EA1010 /* UIcolor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEEB2A39D1E900EA1010 /* UIcolor+.swift */; };
 		4141398F2A1FA252005418A1 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4141398E2A1FA252005418A1 /* PaddingLabel.swift */; };
@@ -225,6 +226,8 @@
 		04FB1F252A0215BC0064B3C8 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		04FB1F272A021B0A0064B3C8 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		04FB1F312A021C330064B3C8 /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
+		082F17192AB7454200174D98 /* EditCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentUseCase.swift; sourceTree = "<group>"; };
+		082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEditCommentUseCase.swift; sourceTree = "<group>"; };
 		1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListSectionHeaderView.swift; sourceTree = "<group>"; };
 		1816ED3E2A68064E005009FC /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		1816ED402A685704005009FC /* NicknameEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewModel.swift; sourceTree = "<group>"; };
@@ -273,10 +276,9 @@
 		41396D962A4F04CB00B69341 /* MyInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoStorage.swift; sourceTree = "<group>"; };
 		41396D982A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsMyInfoStorage.swift; sourceTree = "<group>"; };
 		41396D9A2A4F1C5600B69341 /* OptionModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionModalViewController.swift; sourceTree = "<group>"; };
-		41396DA02A51B0DF00B69341 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
-		41396DA32A51B61000B69341 /* EditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModel.swift; sourceTree = "<group>"; };
+		41396DA02A51B0DF00B69341 /* EditCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentViewController.swift; sourceTree = "<group>"; };
+		41396DA32A51B61000B69341 /* EditCommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentViewModel.swift; sourceTree = "<group>"; };
 		41396DA82A51B8F700B69341 /* EditInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInfo.swift; sourceTree = "<group>"; };
-		41396DAA2A51C4D200B69341 /* EditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModel.swift; sourceTree = "<group>"; };
 		413ABEE72A39BBA500EA1010 /* Toastable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toastable.swift; sourceTree = "<group>"; };
 		413ABEEB2A39D1E900EA1010 /* UIcolor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIcolor+.swift"; sourceTree = "<group>"; };
 		4141398E2A1FA252005418A1 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				04FB1F222A0214A20064B3C8 /* Util */,
 				04FB1F1D2A0213B90064B3C8 /* Presentation */,
 				04FB1F1B2A02138C0064B3C8 /* Data */,
+				082F17182AB7451A00174D98 /* Domain */,
 				04FB1F232A0214B40064B3C8 /* Network */,
 			);
 			path = StreetDrop;
@@ -599,6 +602,24 @@
 				C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		082F17182AB7451A00174D98 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				41396DA72A51B8E600B69341 /* Entity */,
+				082F171D2AB7465A00174D98 /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		082F171D2AB7465A00174D98 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				082F17192AB7454200174D98 /* EditCommentUseCase.swift */,
+				082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */,
+			);
+			path = UseCase;
 			sourceTree = "<group>";
 		};
 		1816ED3D2A680640005009FC /* ViewModel */ = {
@@ -816,7 +837,6 @@
 			children = (
 				41396D9F2A51B0C500B69341 /* View */,
 				41396DA22A51B5F900B69341 /* ViewModel */,
-				41396DA52A51B81000B69341 /* Model */,
 			);
 			path = EditView;
 			sourceTree = "<group>";
@@ -824,7 +844,7 @@
 		41396D9F2A51B0C500B69341 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				41396DA02A51B0DF00B69341 /* EditViewController.swift */,
+				41396DA02A51B0DF00B69341 /* EditCommentViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -832,18 +852,9 @@
 		41396DA22A51B5F900B69341 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				41396DA32A51B61000B69341 /* EditViewModel.swift */,
+				41396DA32A51B61000B69341 /* EditCommentViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		41396DA52A51B81000B69341 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				41396DA72A51B8E600B69341 /* Entity */,
-				41396DAA2A51C4D200B69341 /* EditModel.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		41396DA72A51B8E600B69341 /* Entity */ = {
@@ -1486,11 +1497,12 @@
 				412D668C2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift in Sources */,
 				41396DA92A51B8F700B69341 /* EditInfo.swift in Sources */,
 				18F76FAD2A04FF3D006CF9EF /* NetworkService.swift in Sources */,
+				082F171C2AB7455400174D98 /* DefaultEditCommentUseCase.swift in Sources */,
 				41A3DDEB2A58428F004CFA2F /* ToastView.swift in Sources */,
 				C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */,
 				1876F04A2A66EDF10064B887 /* MyMusic.swift in Sources */,
 				C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */,
-				41396DA12A51B0DF00B69341 /* EditViewController.swift in Sources */,
+				41396DA12A51B0DF00B69341 /* EditCommentViewController.swift in Sources */,
 				41008EBA2A49B56F00FD4ABE /* ClaimModalViewController.swift in Sources */,
 				C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */,
 				C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */,
@@ -1555,10 +1567,10 @@
 				414345252A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift in Sources */,
 				1816ED412A685704005009FC /* NicknameEditViewModel.swift in Sources */,
 				04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */,
-				41396DAB2A51C4D200B69341 /* EditModel.swift in Sources */,
 				18D671EF2A35A1CB003B1A71 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				41BCFD452A38C099001D3E5F /* Alertable.swift in Sources */,
 				C47F02282A3864A500F48884 /* SettingElementView.swift in Sources */,
+				082F171A2AB7454200174D98 /* EditCommentUseCase.swift in Sources */,
 				C47F02282A3864A500F48884 /* SettingElementView.swift in Sources */,
 				1876F0472A66EDA20064B887 /* MyPageModel.swift in Sources */,
 				18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */,
@@ -1567,7 +1579,7 @@
 				C41BD2E92A38467A0090EF2B /* UIImageView+ImageCache.swift in Sources */,
 				41D0974F2A19065B00C011A0 /* UIView+generateCircleGradientView.swift in Sources */,
 				C4BB15982A5EC507001BC5E8 /* FCMRepository.swift in Sources */,
-				41396DA42A51B61000B69341 /* EditViewModel.swift in Sources */,
+				41396DA42A51B61000B69341 /* EditCommentViewModel.swift in Sources */,
 				049F50222A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift in Sources */,
 				41A9BEB92A4DCA4A00F3605C /* ClaimCommentRepository.swift in Sources */,
 				C45BF3A32A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */,

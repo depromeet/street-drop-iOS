@@ -825,7 +825,7 @@ extension CommunityViewController: UICollectionViewDelegate {
     }
 }
 
-extension CommunityViewController: EditViewModelDelegate {
+extension CommunityViewController: EditCommentViewModelDelegate {
     func editComment(editedComment: String, musicIndex: Int) {
         self.commentTextView.text = editedComment
         self.editEvent.accept((editedComment: editedComment, index: musicIndex))
@@ -867,9 +867,9 @@ private extension CommunityViewController {
 
             let musicIndex = self.viewModel.currentIndex
             let editInfo = self.viewModel.communityInfos[musicIndex].convertToEditInfo()
-            let editViewModel = EditViewModel(editInfo: editInfo, musicIndex: musicIndex)
+            let editViewModel = EditCommentViewModel(editInfo: editInfo, musicIndex: musicIndex)
             editViewModel.delegate = self
-            let editViewController = EditViewController(viewModel: editViewModel)
+            let editViewController = EditCommentViewController(viewModel: editViewModel)
 
             self.navigationController?.dismiss(animated: true)
             self.navigationController?.present(editViewController, animated: true)

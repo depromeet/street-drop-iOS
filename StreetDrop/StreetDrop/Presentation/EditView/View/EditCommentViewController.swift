@@ -1,5 +1,5 @@
 //
-//  EditViewController.swift
+//  EditCommentViewController.swift
 //  StreetDrop
 //
 //  Created by 맹선아 on 2023/07/02.
@@ -12,7 +12,7 @@ import RxCocoa
 import SnapKit
 
 // 드랍화면 재사용 (상속)
-class EditViewController: MusicDropViewController {
+class EditCommentViewController: MusicDropViewController {
 
     enum Constant {
         static let topLabelTitle = "수정하기"
@@ -21,7 +21,7 @@ class EditViewController: MusicDropViewController {
         static let empty = ""
     }
 
-    private let viewModel: EditViewModel
+    private let viewModel: EditCommentViewModel
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let tapEditButtonEvent = PublishRelay<String>()
     private let disposeBag = DisposeBag()
@@ -35,7 +35,7 @@ class EditViewController: MusicDropViewController {
         return label
     }()
 
-    init(viewModel: EditViewModel) {
+    init(viewModel: EditCommentViewModel) {
         self.viewModel = viewModel
         super.init(viewModel: viewModel)
     }
@@ -55,7 +55,7 @@ class EditViewController: MusicDropViewController {
     }
 }
 
-private extension EditViewController {
+private extension EditCommentViewController {
     
     // MARK: - Action Binding
 
@@ -77,7 +77,7 @@ private extension EditViewController {
     // MARK: - Data Binding
 
     func bindViewModel() {
-        let input = EditViewModel.Input(
+        let input = EditCommentViewModel.Input(
             viewDidLoadEvent: self.viewDidLoadEvent.asObservable(),
             tapEditButtonEvent: self.tapEditButtonEvent.asObservable()
         )
