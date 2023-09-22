@@ -11,9 +11,11 @@ import RxSwift
 
 final class DefaultMainRepository: MainRepository {
     private let networkManager: NetworkManager
+    private let myInfoStorage: MyInfoStorage
     
-    init(networkManager: NetworkManager) {
+    init(networkManager: NetworkManager, myInfoStorage: MyInfoStorage) {
         self.networkManager = networkManager
+        self.myInfoStorage = myInfoStorage
     }
 }
 
@@ -49,5 +51,8 @@ extension DefaultMainRepository {
                 return dto.toEntity()
             })
     }
+    
+    func saveMyInfo(_ myInfo: MyInfo) -> RxSwift.Single<Void> {
+        return myInfoStorage.saveMyInfo(myInfo: myInfo)
+    }
 }
-
