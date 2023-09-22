@@ -7,6 +7,8 @@
 
 import Foundation
 
+import RxSwift
+
 final class UserDefaultsMyInfoStorage {
     private var userDefaults: UserDefaults
 
@@ -25,11 +27,19 @@ extension UserDefaultsMyInfoStorage: MyInfoStorage {
         return myInfo
     }
 
-    func saveMyInfo(myInfo: MyInfo) {
-        let encoder = JSONEncoder()
-        if let encodedData = try? encoder.encode(myInfo) {
-            userDefaults.set(encodedData, forKey: UserDefaultKey.myUserInfo)
-            userDefaults.synchronize()
+    func saveMyInfo(myInfo: MyInfo) -> Single<Void> {
+        return Single.create { [weak self] observer in
+            let encoder = JSONEncoder()
+            guard let encodedData = try? encoder.encode(myInfo) else {
+                observer(.failure(MyInfoError.encodeError))
+                return Disposables.create()
+            }
+            
+            self?.userDefaults.set(encodedData, forKey: UserDefaultKey.myUserInfo)
+            self?.userDefaults.synchronize()
+            observer(.success(Void()))
+            
+            return Disposables.create()
         }
     }
 }
