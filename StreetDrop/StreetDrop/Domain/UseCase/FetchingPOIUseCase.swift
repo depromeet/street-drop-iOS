@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 protocol FetchingPOIUseCase {
-    func fetchPois(lat: Double, lon: Double, distance: Double) -> Single<Pois>
+    func execute(lat: Double, lon: Double, distance: Double) -> Single<Pois>
 }

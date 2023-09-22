@@ -26,15 +26,24 @@ final class MainViewModel: ViewModel {
     private var poiMarkers: [NMFMarker] = []
     var markerAlbumImages: [Int: UIImage] = [:] // POI ID로 앨범 이미지를 찾기 위함입니다.
     
-    private let model = MainModel(
-        repository: DefaultMainRepository(
-            networkManager: NetworkManager()
-        )
-    )
+    private let myInfoUseCase: MyInfoUseCase
+    private let fetchingPOIUseCase: FetchingPOIUseCase
+    private let fetchingMusicCountUseCse: FetchingMusicCountUseCase
+    private let fetchingMusicWithinArea: FetchingMusicWithinArea
+    
     var locationManager = LocationManager()
     private let locationUpdated = PublishRelay<Void>()
     
-    init() {
+    init(
+        myInfoUseCase: MyInfoUseCase = DefaultMyInfoUseCase(),
+        fetchingPOIUseCase: FetchingPOIUseCase = DefaultFetchingPOIUseCase(),
+        fetchingMusicCountUseCse: FetchingMusicCountUseCase = DefaultFetchingMusicCountUseCase(),
+        fetchingMusicWithinArea: FetchingMusicWithinArea = DefaultFetchingMusicWithinArea()
+    ) {
+        self.myInfoUseCase = myInfoUseCase
+        self.fetchingPOIUseCase = fetchingPOIUseCase
+        self.fetchingMusicCountUseCse = fetchingMusicCountUseCse
+        self.fetchingMusicWithinArea = fetchingMusicWithinArea
         self.locationManager.delegate = self
     }
 }
@@ -166,15 +175,21 @@ extension MainViewModel {
 
 private extension MainViewModel {
     func fetchMyInfoAndSave(disposedBag: DisposeBag) {
-        self.model.fetchMyInfo()
+        myInfoUseCase.fetchMyInfo()
             .subscribe { [weak self] myInfo in
-                self?.model.saveMyInfo(myInfo)
+                self?.myInfoUseCase.saveMyInfo(myInfo)
+                    .subscribe(onSuccess: {
+                        print("MyInfo 저장 성공")
+                    }, onFailure: { error in
+                        print(error.localizedDescription)
+                    })
+                    .disposed(by: disposedBag)
             }
             .disposed(by: disposedBag)
     }
 
     func fetchMusicWithArea(output: Output, disposedBag: DisposeBag) {
-        self.model.fetchMusicWithinArea(
+        fetchingMusicWithinArea.execute(
             lat: self.location.coordinate.latitude,
             lon: self.location.coordinate.longitude,
             distance: self.detailItemsDistance
@@ -214,7 +229,7 @@ private extension MainViewModel {
     }
     
     func fetchPois(output: Output, disposedBag: DisposeBag) {
-        self.model.fetchPois(
+        fetchingPOIUseCase.execute(
             lat: self.location.coordinate.latitude,
             lon: self.location.coordinate.longitude,
             distance: self.poisDistance
@@ -236,7 +251,7 @@ private extension MainViewModel {
         output: Output,
         disposedBag: DisposeBag
     ) {
-        self.model.fetchMusicCount(lat: latitude, lon: longitude)
+        fetchingMusicCountUseCse.execute(lat: latitude, lon: longitude)
             .subscribe { result in
                 switch result {
                 case .success(let musicCountEntity):

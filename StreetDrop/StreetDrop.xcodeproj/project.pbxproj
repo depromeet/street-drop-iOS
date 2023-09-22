@@ -22,7 +22,6 @@
 		049BC43B2A0284E900071A12 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 049BC43A2A0284E900071A12 /* SnapKit */; };
 		049F50222A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049F50212A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift */; };
 		04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F252A0215BC0064B3C8 /* MainViewModel.swift */; };
-		04FB1F282A021B0A0064B3C8 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F272A021B0A0064B3C8 /* MainModel.swift */; };
 		04FB1F322A021C330064B3C8 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F312A021C330064B3C8 /* TestError.swift */; };
 		082F171A2AB7454200174D98 /* EditCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17192AB7454200174D98 /* EditCommentUseCase.swift */; };
 		082F171C2AB7455400174D98 /* DefaultEditCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */; };
@@ -233,7 +232,6 @@
 		041038962A126E7B00BC5532 /* MusicCountByDongResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MusicCountByDongResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		049F50212A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DropMusicRequestDTO+Mapping.swift"; sourceTree = "<group>"; };
 		04FB1F252A0215BC0064B3C8 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		04FB1F272A021B0A0064B3C8 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		04FB1F312A021C330064B3C8 /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		082F17192AB7454200174D98 /* EditCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentUseCase.swift; sourceTree = "<group>"; };
 		082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEditCommentUseCase.swift; sourceTree = "<group>"; };
@@ -554,7 +552,6 @@
 			isa = PBXGroup;
 			children = (
 				1824F1352A349DFC00A10320 /* Entity */,
-				04FB1F272A021B0A0064B3C8 /* MainModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1595,7 +1592,6 @@
 				18EF9FC92A5C51FB00266D27 /* NicknameEditViewController.swift in Sources */,
 				18683FDF2A348B25005A94AC /* MainRepository.swift in Sources */,
 				41A3DDF62A5AD1C7004CFA2F /* BlockUserRepository.swift in Sources */,
-				04FB1F282A021B0A0064B3C8 /* MainModel.swift in Sources */,
 				C434A4CE2A17970A00C63526 /* SearchingMusicModel.swift in Sources */,
 				C419723C2ABDB5AF00211222 /* FetchingMusicWithinArea.swift in Sources */,
 				414345252A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift in Sources */,
