@@ -1,5 +1,5 @@
 //
-//  DefaultMyInfoUseCase.swift
+//  DefaultFetchingPOIUseCase.swift
 //  StreetDrop
 //
 //  Created by 차요셉 on 2023/09/22.
@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-final class DefaultMyInfoUseCase: MyInfoUseCase {
+final class DefaultFetchingPOIUseCase: FetchingPOIUseCase {
     private let mainRepository: MainRepository
     
     init(mainRepository: MainRepository = DefaultMainRepository(
@@ -19,11 +19,7 @@ final class DefaultMyInfoUseCase: MyInfoUseCase {
         self.mainRepository = mainRepository
     }
     
-    func fetchMyInfo() -> Single<MyInfo> {
-        return mainRepository.fetchMyInfo()
-    }
-    
-    func saveMyInfo(_ myInfo: MyInfo) -> Single<Void> {
-        return mainRepository.saveMyInfo(myInfo)
+    func fetchPois(lat: Double, lon: Double, distance: Double) -> Single<Pois> {
+        return mainRepository.fetchPoi(lat: lat, lon: lon, distacne: distance)
     }
 }

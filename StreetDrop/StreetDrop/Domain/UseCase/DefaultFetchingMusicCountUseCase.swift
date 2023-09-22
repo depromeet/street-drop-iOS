@@ -1,5 +1,5 @@
 //
-//  DefaultMyInfoUseCase.swift
+//  DefaultFetchingMusicCountUseCase.swift
 //  StreetDrop
 //
 //  Created by 차요셉 on 2023/09/22.
@@ -9,9 +9,9 @@ import Foundation
 
 import RxSwift
 
-final class DefaultMyInfoUseCase: MyInfoUseCase {
+final class DefaultFetchingMusicCountUseCase: FetchingMusicCountUseCase {
     private let mainRepository: MainRepository
-    
+
     init(mainRepository: MainRepository = DefaultMainRepository(
         networkManager: .init(),
         myInfoStorage: UserDefaultsMyInfoStorage()
@@ -19,11 +19,7 @@ final class DefaultMyInfoUseCase: MyInfoUseCase {
         self.mainRepository = mainRepository
     }
     
-    func fetchMyInfo() -> Single<MyInfo> {
-        return mainRepository.fetchMyInfo()
-    }
-    
-    func saveMyInfo(_ myInfo: MyInfo) -> Single<Void> {
-        return mainRepository.saveMyInfo(myInfo)
+    func execute(lat: Double, lon: Double) -> Single<MusicCountEntity> {
+        return mainRepository.fetchMusicCountByDong(lat: lat, lon: lon)
     }
 }

@@ -125,6 +125,12 @@
 		C419722E2ABD9D6F00211222 /* MyInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419722D2ABD9D6F00211222 /* MyInfoUseCase.swift */; };
 		C41972302ABDAB0200211222 /* DefaultMyInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419722F2ABDAB0200211222 /* DefaultMyInfoUseCase.swift */; };
 		C41972322ABDAEF200211222 /* MyInfoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972312ABDAEF200211222 /* MyInfoError.swift */; };
+		C41972342ABDB36600211222 /* FetchingPOIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972332ABDB36600211222 /* FetchingPOIUseCase.swift */; };
+		C41972362ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972352ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift */; };
+		C41972382ABDB49400211222 /* FetchingMusicCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972372ABDB49400211222 /* FetchingMusicCountUseCase.swift */; };
+		C419723A2ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972392ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift */; };
+		C419723C2ABDB5AF00211222 /* FetchingMusicWithinArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419723B2ABDB5AF00211222 /* FetchingMusicWithinArea.swift */; };
+		C419723E2ABDB5D600211222 /* DefaultFetchingMusicWithinArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419723D2ABDB5D600211222 /* DefaultFetchingMusicWithinArea.swift */; };
 		C41BD2E92A38467A0090EF2B /* UIImageView+ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41BD2E82A38467A0090EF2B /* UIImageView+ImageCache.swift */; };
 		C41BD2EC2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41BD2EB2A3848880090EF2B /* UIImage+loadURLImage.swift */; };
 		C41BD2ED2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41BD2EB2A3848880090EF2B /* UIImage+loadURLImage.swift */; };
@@ -320,6 +326,12 @@
 		C419722D2ABD9D6F00211222 /* MyInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoUseCase.swift; sourceTree = "<group>"; };
 		C419722F2ABDAB0200211222 /* DefaultMyInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyInfoUseCase.swift; sourceTree = "<group>"; };
 		C41972312ABDAEF200211222 /* MyInfoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoError.swift; sourceTree = "<group>"; };
+		C41972332ABDB36600211222 /* FetchingPOIUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingPOIUseCase.swift; sourceTree = "<group>"; };
+		C41972352ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingPOIUseCase.swift; sourceTree = "<group>"; };
+		C41972372ABDB49400211222 /* FetchingMusicCountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingMusicCountUseCase.swift; sourceTree = "<group>"; };
+		C41972392ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingMusicCountUseCase.swift; sourceTree = "<group>"; };
+		C419723B2ABDB5AF00211222 /* FetchingMusicWithinArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingMusicWithinArea.swift; sourceTree = "<group>"; };
+		C419723D2ABDB5D600211222 /* DefaultFetchingMusicWithinArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingMusicWithinArea.swift; sourceTree = "<group>"; };
 		C41BD2E82A38467A0090EF2B /* UIImageView+ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageCache.swift"; sourceTree = "<group>"; };
 		C41BD2EB2A3848880090EF2B /* UIImage+loadURLImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+loadURLImage.swift"; sourceTree = "<group>"; };
 		C434A4C92A1796E400C63526 /* SearchingMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicViewController.swift; sourceTree = "<group>"; };
@@ -627,6 +639,12 @@
 				082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */,
 				C419722D2ABD9D6F00211222 /* MyInfoUseCase.swift */,
 				C419722F2ABDAB0200211222 /* DefaultMyInfoUseCase.swift */,
+				C41972332ABDB36600211222 /* FetchingPOIUseCase.swift */,
+				C41972352ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift */,
+				C41972372ABDB49400211222 /* FetchingMusicCountUseCase.swift */,
+				C41972392ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift */,
+				C419723B2ABDB5AF00211222 /* FetchingMusicWithinArea.swift */,
+				C419723D2ABDB5D600211222 /* DefaultFetchingMusicWithinArea.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -1489,6 +1507,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C41972362ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift in Sources */,
 				18AAF83E2A137349002EF441 /* CommunityResponseDTO.swift in Sources */,
 				41396D952A4EFF7B00B69341 /* MyInfo.swift in Sources */,
 				188F90C72A39FD7D003A1B4A /* UIImage+cornerRadius.swift in Sources */,
@@ -1503,6 +1522,7 @@
 				41D097512A191D6700C011A0 /* MusicDropViewModel.swift in Sources */,
 				C4A445902A5EF225008279C1 /* FCMTokenRequestDTO.swift in Sources */,
 				C46410F42A629820009DD88F /* MusicAppButton.swift in Sources */,
+				C41972382ABDB49400211222 /* FetchingMusicCountUseCase.swift in Sources */,
 				41396D872A4EFA2900B69341 /* MyInfoResponseDTO.swift in Sources */,
 				412D668C2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift in Sources */,
 				41396DA92A51B8F700B69341 /* EditInfo.swift in Sources */,
@@ -1535,6 +1555,7 @@
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
 				41A3DDF82A5AD222004CFA2F /* DefaultBlockUserRepository.swift in Sources */,
 				C47F02242A38633C00F48884 /* SettingsViewModel.swift in Sources */,
+				C41972342ABDB36600211222 /* FetchingPOIUseCase.swift in Sources */,
 				1867C8202A4DDB8C00F8EC48 /* MyPageViewController.swift in Sources */,
 				1816ED432A685865005009FC /* NicknameEditModel.swift in Sources */,
 				C40008EA2A32012B00EA7FA9 /* Music.swift in Sources */,
@@ -1576,6 +1597,7 @@
 				41A3DDF62A5AD1C7004CFA2F /* BlockUserRepository.swift in Sources */,
 				04FB1F282A021B0A0064B3C8 /* MainModel.swift in Sources */,
 				C434A4CE2A17970A00C63526 /* SearchingMusicModel.swift in Sources */,
+				C419723C2ABDB5AF00211222 /* FetchingMusicWithinArea.swift in Sources */,
 				414345252A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift in Sources */,
 				1816ED412A685704005009FC /* NicknameEditViewModel.swift in Sources */,
 				04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */,
@@ -1583,6 +1605,7 @@
 				41BCFD452A38C099001D3E5F /* Alertable.swift in Sources */,
 				C47F02282A3864A500F48884 /* SettingElementView.swift in Sources */,
 				082F171A2AB7454200174D98 /* EditCommentUseCase.swift in Sources */,
+				C419723A2ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift in Sources */,
 				C47F02282A3864A500F48884 /* SettingElementView.swift in Sources */,
 				1876F0472A66EDA20064B887 /* MyPageModel.swift in Sources */,
 				18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */,
@@ -1597,6 +1620,7 @@
 				C45BF3A32A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */,
 				041038972A126E7B00BC5532 /* MusicCountByDongResponseDTO+Mapping.swift in Sources */,
 				41396D992A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift in Sources */,
+				C419723E2ABDB5D600211222 /* DefaultFetchingMusicWithinArea.swift in Sources */,
 				41396D972A4F04CB00B69341 /* MyInfoStorage.swift in Sources */,
 				1824F1372A349F3700A10320 /* MusicCountEntity.swift in Sources */,
 				4141398F2A1FA252005418A1 /* PaddingLabel.swift in Sources */,
