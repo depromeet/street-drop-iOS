@@ -44,18 +44,28 @@ final class CommunityViewModel: ViewModel {
 
     private(set) var communityInfos: [MusicWithinAreaEntity]
     private(set) var currentIndex: Int
-    private var communityModel: CommunityModel
+    private let fetchingMyInfoUseCase: FetchingMyInfoUseCase
+    private let deletingMusicUseCase: DeletingMusicUseCase
+    private let blockUserUseCase: BlockUserUseCase
+    private let likingUseCase: LikingUseCase
+    
     private let disposeBag: DisposeBag = DisposeBag()
     var blockSuccessToast:  PublishRelay<String> = .init()
     
     init(
         communityInfos: [MusicWithinAreaEntity],
         index: Int,
-        communityModel: CommunityModel = DefaultCommunityModel()
+        fetchingMyInfoUseCase: FetchingMyInfoUseCase = DefaultFetchingMyInfoUseCase(),
+        deletingMusicUseCase: DeletingMusicUseCase = DefaultDeletingMusicUseCase(),
+        blockUserUseCase: BlockUserUseCase = DefaultBlockUserUseCase(),
+        likingUseCase: LikingUseCase = DefaultLikingUseCase()
     ) {
         self.communityInfos = communityInfos
         self.currentIndex = index
-        self.communityModel = communityModel
+        self.fetchingMyInfoUseCase = fetchingMyInfoUseCase
+        self.deletingMusicUseCase = deletingMusicUseCase
+        self.blockUserUseCase = blockUserUseCase
+        self.likingUseCase = likingUseCase
     }
 
     func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
@@ -82,7 +92,7 @@ final class CommunityViewModel: ViewModel {
         input.viewWillAppearEvent
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                let musicApp: String = self.communityModel.fetchMyMusicApp() ?? "youtubemusic"
+                let musicApp: String = fetchingMyInfoUseCase.fetchMyMusicAppFromStorage() ?? "youtubemusic"
                 output.musicApp.accept(musicApp)
             }).disposed(by: disposedBag)
 
@@ -109,7 +119,7 @@ final class CommunityViewModel: ViewModel {
             .subscribe(onNext: { [weak self] index in
                 guard let self = self else { return }
 
-                let myUserID = self.communityModel.fetchMyUserID()
+                let myUserID = fetchingMyInfoUseCase.fetchMyUserIDFromStorage()
                 let MusicInfoUserID = self.communityInfos[self.currentIndex].userId
                 output.isMyDrop.accept(myUserID == MusicInfoUserID)
 
@@ -119,7 +129,7 @@ final class CommunityViewModel: ViewModel {
             .subscribe(onNext: { [weak self] index in
                 guard let self = self else { return }
 
-                self.communityModel.deleteMusic(itemID: self.communityInfos[self.currentIndex].id)
+                deletingMusicUseCase.execute(itemID: self.communityInfos[self.currentIndex].id)
                     .subscribe(onSuccess: { response in
                         if (200...299).contains(response) {
                             self.deleteMusic(output: output)
@@ -152,7 +162,7 @@ final class CommunityViewModel: ViewModel {
                 let index = self.currentIndex
                 let blockUserID = self.communityInfos[index].userId
 
-                self.communityModel.blockUser(blockUserID)
+                blockUserUseCase.execute(blockUserID)
                     .subscribe(onSuccess: { response in
                         if (200...299).contains(response) {
                             self.blockSuccessToast.accept("차단이 완료되었습니다")
@@ -197,7 +207,7 @@ private extension CommunityViewModel {
     }
 
     func likeDown(itemID: Int, output: Output) {
-        self.communityModel.likeDown(itemID: itemID)
+        likingUseCase.likeDown(itemID: itemID)
             .subscribe(onSuccess: { response in
                 guard (200...299).contains(response) else {
                     output.toast.accept((isSuccess: false, title: "네트워크를 확인해 주세요"))
@@ -217,7 +227,7 @@ private extension CommunityViewModel {
     }
 
     func likeUp(itemID: Int, output: Output) {
-        self.communityModel.likeUp(itemID: itemID)
+        likingUseCase.likeUp(itemID: itemID)
             .subscribe(onSuccess: { response in
                 guard (200...299).contains(response) else {
                     output.toast.accept((isSuccess: false, title: "네트워크를 확인해 주세요"))

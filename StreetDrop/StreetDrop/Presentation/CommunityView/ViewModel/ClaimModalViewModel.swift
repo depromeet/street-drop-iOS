@@ -26,16 +26,16 @@ final class ClaimModalViewModel {
 
     private let itemID: Int
     private var claimOption: Claim?
-    private let communityModel: CommunityModel
+    private let claimingCommentUseCase: ClaimingCommentUseCase
     var delegate: ClaimModalViewModelDelegate?
 
     init(itemID: Int,
          claimOption: Claim? = nil,
-         communityModel: CommunityModel = DefaultCommunityModel()
+         claimingCommentUseCase: ClaimingCommentUseCase = DefaultClaimingCommentUseCase()
     ) {
         self.itemID = itemID
         self.claimOption = claimOption
-        self.communityModel = communityModel
+        self.claimingCommentUseCase = claimingCommentUseCase
     }
 
     func convert(input: Input, disposedBag: DisposeBag) -> Output {
@@ -51,8 +51,7 @@ final class ClaimModalViewModel {
                 guard let self = self,
                       let claimOption = self.claimOption,
                       let delegate = self.delegate else { return }
-
-                self.communityModel.claimComment(
+                claimingCommentUseCase.execute(
                     itemID: self.itemID,
                     reason: claimOption.title
                 )
