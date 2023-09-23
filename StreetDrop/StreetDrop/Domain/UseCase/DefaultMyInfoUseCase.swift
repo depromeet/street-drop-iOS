@@ -11,19 +11,27 @@ import RxSwift
 
 final class DefaultMyInfoUseCase: MyInfoUseCase {
     private let mainRepository: MainRepository
+    private let myInfoRepository: MyInfoRepository
     
-    init(mainRepository: MainRepository = DefaultMainRepository(
-        networkManager: .init(),
-        myInfoStorage: UserDefaultsMyInfoStorage()
-    )) {
+    init(
+        mainRepository: MainRepository = DefaultMainRepository(
+            networkManager: .init(),
+            myInfoStorage: UserDefaultsMyInfoStorage()
+        ),
+        myInfoRepository: MyInfoRepository = DefaultMyInfoRepository(
+            networkManager: .init(),
+            myInfoStorage: UserDefaultsMyInfoStorage()
+        )
+    ) {
         self.mainRepository = mainRepository
+        self.myInfoRepository = myInfoRepository
     }
     
     func fetchMyInfo() -> Single<MyInfo> {
-        return mainRepository.fetchMyInfo()
+        return myInfoRepository.fetchMyInfoFromServer()
     }
     
     func saveMyInfo(_ myInfo: MyInfo) -> Single<Void> {
-        return mainRepository.saveMyInfo(myInfo)
+        return myInfoRepository.saveMyInfo(myInfo)
     }
 }
