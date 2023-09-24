@@ -15,10 +15,10 @@ protocol SettingsViewModel: ViewModel {
 }
 
 final class DefaultSettingsViewModel: SettingsViewModel {
-    private let model: SettingsModel
+    private let useCase: SettingsUseCase
     
-    init(model: SettingsModel = DefaultSettingsModel()) {
-        self.model = model
+    init(useCase: SettingsUseCase = DefaultSettingsUseCase()) {
+        self.useCase = useCase
     }
     struct Input {
         let viewDidLoadEvent: Observable<Void>
@@ -52,7 +52,7 @@ final class DefaultSettingsViewModel: SettingsViewModel {
 
 private extension DefaultSettingsViewModel {
     func selectMusicApp(musicAppQueryString: String, output: Output, disposeBag: DisposeBag) {
-        self.model.updateUsersMusicAppToServer(musicAppQueryString: musicAppQueryString)
+        self.useCase.updateUsersMusicApp(musicAppQueryString: musicAppQueryString)
             .subscribe { savedMusicAppInServer in
                 output.savedMusicAppInServer.accept(savedMusicAppInServer)
             } onFailure: { error in
@@ -62,7 +62,7 @@ private extension DefaultSettingsViewModel {
     }
     
     func fetchMymusicAppFromLocal(output: Output, disposeBag: DisposeBag) {
-        self.model.fetchMymusicAppFromLocal()
+        self.useCase.fetchMyMusicApp()
             .subscribe { myMusicApp in
                 output.currentMusicApp.accept(myMusicApp)
             } onFailure: { error in
