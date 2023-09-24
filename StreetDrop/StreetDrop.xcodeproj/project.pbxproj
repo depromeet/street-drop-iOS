@@ -201,7 +201,7 @@
 		C4E25A972A57EF6E00E6A236 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C4E25A962A57EF6E00E6A236 /* FirebaseMessaging */; };
 		C4E4C6B22A5ADC2C00B1C84A /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B12A5ADC2C00B1C84A /* SettingsRepository.swift */; };
 		C4E4C6B42A5ADC4B00B1C84A /* DefaultSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B32A5ADC4B00B1C84A /* DefaultSettingsRepository.swift */; };
-		C4E4C6B82A5ADFDB00B1C84A /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B72A5ADFDB00B1C84A /* SettingsModel.swift */; };
+		C4E4C6B82A5ADFDB00B1C84A /* SettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B72A5ADFDB00B1C84A /* SettingsUseCase.swift */; };
 		C4E4C6BA2A5AE40900B1C84A /* UserDefaultsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */; };
 		C4E4C6BD2A5AE6F500B1C84A /* MusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
@@ -399,7 +399,7 @@
 		C4E25A9B2A580B0D00E6A236 /* StreetDropRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StreetDropRelease.entitlements; sourceTree = "<group>"; };
 		C4E4C6B12A5ADC2C00B1C84A /* SettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepository.swift; sourceTree = "<group>"; };
 		C4E4C6B32A5ADC4B00B1C84A /* DefaultSettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSettingsRepository.swift; sourceTree = "<group>"; };
-		C4E4C6B72A5ADFDB00B1C84A /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
+		C4E4C6B72A5ADFDB00B1C84A /* SettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUseCase.swift; sourceTree = "<group>"; };
 		C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsError.swift; sourceTree = "<group>"; };
 		C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -686,6 +686,7 @@
 				C41972542ABED3EC00211222 /* FetchingMyInfoUseCase.swift */,
 				C41972562ABED40100211222 /* DefaultFetchingMyInfoUseCase.swift */,
 				C434A4CD2A17970A00C63526 /* SearchMusicUsecase.swift */,
+				C4E4C6B72A5ADFDB00B1C84A /* SettingsUseCase.swift */,
 				082F170A2AB6E42800174D98 /* MusicDrop */,
 			);
 			path = UseCase;
@@ -1172,7 +1173,6 @@
 			children = (
 				C47F02252A3863A300F48884 /* View */,
 				C47F02262A38640000F48884 /* ViewModel */,
-				C4E4C6B62A5ADFCA00B1C84A /* Model */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1296,14 +1296,6 @@
 				C4E4C6B32A5ADC4B00B1C84A /* DefaultSettingsRepository.swift */,
 			);
 			path = Setting;
-			sourceTree = "<group>";
-		};
-		C4E4C6B62A5ADFCA00B1C84A /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				C4E4C6B72A5ADFDB00B1C84A /* SettingsModel.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		DD24191EB8D98350CCDA3174 /* Pods */ = {
@@ -1585,7 +1577,7 @@
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
 				18CB7BED2A359F53002B31FB /* MusicWithinAreaEntity.swift in Sources */,
 				C41972482ABDC4C700211222 /* DeletingMusicUseCase.swift in Sources */,
-				C4E4C6B82A5ADFDB00B1C84A /* SettingsModel.swift in Sources */,
+				C4E4C6B82A5ADFDB00B1C84A /* SettingsUseCase.swift in Sources */,
 				41396D912A4EFBF700B69341 /* DefaultEditCommentRepository.swift in Sources */,
 				C419722E2ABD9D6F00211222 /* MyInfoUseCase.swift in Sources */,
 				C4A0567B2A631D6E00AE2F0B /* CustomSwitch.swift in Sources */,
