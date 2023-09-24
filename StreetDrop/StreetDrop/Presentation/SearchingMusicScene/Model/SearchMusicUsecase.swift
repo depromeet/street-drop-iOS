@@ -1,5 +1,5 @@
 //
-//  SearchingMusicModel.swift
+//  SearchMusicUsecase.swift
 //  StreetDrop
 //
 //  Created by 차요셉 on 2023/05/19.
@@ -9,14 +9,14 @@ import Foundation
 
 import RxSwift
 
-protocol SearchingMusicModel {
-    func fetchMusic(keyword: String) -> Single<[Music]>
+protocol SearchMusicUsecase {
+    func searchMusic(keyword: String) -> Single<[Music]>
     func saveRecentSearch(keyword: String)
-    func fetchRecentSearch() -> Single<[String]>
-    func fetchVillageName(latitude: Double, longitude: Double) -> Single<String>
+    func getRecentSearches() -> Single<[String]>
+    func getVillageName(latitude: Double, longitude: Double) -> Single<String>
 }
 
-final class DefaultSearchingMusicModel: SearchingMusicModel {
+final class DefaultSearchingMusicUsecase: SearchMusicUsecase {
     private let searchingMusicRepository: SearchingMusicRepository
     
     init(searchingMusicRepository: SearchingMusicRepository = DefaultSearchingMusicRepository()) {
@@ -24,7 +24,7 @@ final class DefaultSearchingMusicModel: SearchingMusicModel {
     }
     
     // FIXME: 클린아키텍처로 리팩토링 시, 반환값을 [SearchedMusicResponseDTO.Music]가 아닌 Music이라는 Entity를 만들어 반환하도록 함
-    func fetchMusic(keyword: String) -> Single<[Music]> {
+    func searchMusic(keyword: String) -> Single<[Music]> {
         return searchingMusicRepository.fetchMusic(keyword: keyword)
     }
     
@@ -32,11 +32,11 @@ final class DefaultSearchingMusicModel: SearchingMusicModel {
         self.searchingMusicRepository.saveMusic(keyword: keyword)
     }
     
-    func fetchRecentSearch() -> Single<[String]> {
+    func getRecentSearches() -> Single<[String]> {
         return self.searchingMusicRepository.fetchRecentMusicQueries()
     }
     
-    func fetchVillageName(latitude: Double, longitude: Double) -> Single<String> {
+    func getVillageName(latitude: Double, longitude: Double) -> Single<String> {
         return self.searchingMusicRepository.fetchVillageName(latitude: latitude, longitude: longitude)
     }
 }
