@@ -577,7 +577,7 @@ private extension MyPageViewController {
         output.levelImageURL
             .bind(onNext: { [weak self] levelImageURL in
                 guard let self = self else { return }
-                self.levelImageView.setImage(with: levelImageURL, disposeBag: self.disposeBag)
+                self.levelImageView.setImage(with: levelImageURL)
             })
             .disposed(by: disposeBag)
         
