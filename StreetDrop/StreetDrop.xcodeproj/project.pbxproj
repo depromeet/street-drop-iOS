@@ -154,7 +154,6 @@
 		C434A4D82A17AAAB00C63526 /* SearchingMusicViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */; };
 		C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
 		C434A4DD2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
-		C45A4CAE2A37104600EE9C36 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A4CAD2A37104600EE9C36 /* ImageCacheService.swift */; };
 		C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */; };
 		C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */; };
 		C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */; };
@@ -361,7 +360,6 @@
 		C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicRepository.swift; sourceTree = "<group>"; };
 		C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicViewModelTest.swift; sourceTree = "<group>"; };
 		C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicTableViewCell.swift; sourceTree = "<group>"; };
-		C45A4CAD2A37104600EE9C36 /* ImageCacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheError.swift; sourceTree = "<group>"; };
 		C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKey.swift; sourceTree = "<group>"; };
 		C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRecentMusicSearches.swift; sourceTree = "<group>"; };
@@ -950,7 +948,6 @@
 		4143452C2A373520003FEE2A /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				C45A4CAD2A37104600EE9C36 /* ImageCacheService.swift */,
 				4143452D2A373550003FEE2A /* AddressManager.swift */,
 			);
 			path = Service;
@@ -1620,7 +1617,6 @@
 				1876F0472A66EDA20064B887 /* MyPageModel.swift in Sources */,
 				18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */,
 				1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */,
-				C45A4CAE2A37104600EE9C36 /* ImageCacheService.swift in Sources */,
 				C41BD2E92A38467A0090EF2B /* UIImageView+ImageCache.swift in Sources */,
 				41D0974F2A19065B00C011A0 /* UIView+generateCircleGradientView.swift in Sources */,
 				C4BB15982A5EC507001BC5E8 /* FCMRepository.swift in Sources */,
