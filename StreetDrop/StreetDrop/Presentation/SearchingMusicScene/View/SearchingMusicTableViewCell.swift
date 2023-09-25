@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import SnapKit
+import Kingfisher
 
 class SearchingMusicTableViewCell: UITableViewCell {
     static let identifier = "SearchingMusicTableViewCell"
@@ -36,7 +37,7 @@ class SearchingMusicTableViewCell: UITableViewCell {
     }
     
     func setData(music: Music) {
-        self.albumImage.setImage(with: music.albumImage, disposeBag: disposeBag)
+        albumImage.setImage(with: music.albumImage)
         self.songNameLabel.text = music.songName
         self.artistNameLabel.text = music.artistName
         self.durationTimeLabel.text = music.durationTime
