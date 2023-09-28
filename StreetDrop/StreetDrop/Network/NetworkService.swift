@@ -35,14 +35,12 @@ enum NetworkService {
 extension NetworkService: TargetType {
     var baseURL: URL {
         switch self {
-#if DEBUG // 테스트 서버 주소
         case .searchMusic:
-            return URL(string: "https://test-search.street-drop.com")!
+            return URL(string: "https://search.street-drop.com")!
+#if DEBUG // 테스트 서버 주소
         default:
             return URL(string: "https://test-api.street-drop.com")!
 #elseif RELEASE // 실 서버 주소
-        case .searchMusic:
-            return URL(string: "https://search.street-drop.com")!
         default:
             return URL(string: "https://api.street-drop.com")!
 #endif
