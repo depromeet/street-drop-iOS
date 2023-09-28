@@ -17,7 +17,7 @@ protocol SearchingMusicViewModel: ViewModel {
 }
 
 final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
-    private let model: SearchingMusicModel
+    private let model: SearchMusicUsecase
     let location: CLLocation
     var address: String = ""
     private let disposeBag: DisposeBag = DisposeBag()
@@ -38,7 +38,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     }
     
     init(
-        model: SearchingMusicModel = DefaultSearchingMusicModel(),
+        model: SearchMusicUsecase = DefaultSearchingMusicUsecase(),
         location: CLLocation
     ) {
         self.model = model
@@ -50,7 +50,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         
         input.viewDidAppearEvent
             .subscribe(onNext: { [weak self] in
-                self?.model.fetchRecentSearch()
+                self?.model.getRecentSearches()
                     .subscribe { result in
                         switch result {
                         case .success(let queries):
@@ -97,7 +97,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     }
     
     func searchMusic(output: Output, keyword: String) {
-        model.fetchMusic(keyword: keyword)
+        model.searchMusic(keyword: keyword)
             .subscribe { result in
                 switch result {
                 case .success(let musicList):
@@ -113,7 +113,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     }
     
     func fetchCurrentLocationVillageName() {
-        self.model.fetchVillageName(
+        self.model.getVillageName(
             latitude: self.location.coordinate.latitude,
             longitude: self.location.coordinate.longitude
         )

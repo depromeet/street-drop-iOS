@@ -1,17 +1,17 @@
 //
-//  MusicDropModel.swift
+//  DefaultMusicDropUseCase.swift
 //  StreetDrop
 //
-//  Created by 맹선아 on 2023/06/10.
+//  Created by thoonk on 2023/09/17.
 //
 
 import Foundation
 
 import RxSwift
 
-struct MusicDropModel {
+final class DefaultMusicDropUseCase: MusicDropUseCase {
     private let dropMusicRepository: DropMusicRepository
-
+    
     init(dropMusicRepository: DropMusicRepository = DefaultDropMusicRepository()) {
         self.dropMusicRepository = dropMusicRepository
     }

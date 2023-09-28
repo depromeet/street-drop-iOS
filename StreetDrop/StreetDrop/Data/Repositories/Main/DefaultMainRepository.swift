@@ -11,21 +11,15 @@ import RxSwift
 
 final class DefaultMainRepository: MainRepository {
     private let networkManager: NetworkManager
+    private let myInfoStorage: MyInfoStorage
     
-    init(networkManager: NetworkManager) {
+    init(networkManager: NetworkManager, myInfoStorage: MyInfoStorage) {
         self.networkManager = networkManager
+        self.myInfoStorage = myInfoStorage
     }
 }
 
 extension DefaultMainRepository {
-    func fetchMyInfo() -> Single<MyInfo> {
-        return networkManager.getMyInfo()
-            .map({ data in
-                let dto = try JSONDecoder().decode(MyInfoResponseDTO.self, from: data)
-                return dto.toEntity()
-            })
-    }
-    
     func fetchPoi(lat: Double, lon: Double, distacne: Double) -> Single<Pois> {
         networkManager.getPoi(latitude: lat, longitude: lon, distance: distacne)
             .map({ data in
@@ -50,4 +44,3 @@ extension DefaultMainRepository {
             })
     }
 }
-

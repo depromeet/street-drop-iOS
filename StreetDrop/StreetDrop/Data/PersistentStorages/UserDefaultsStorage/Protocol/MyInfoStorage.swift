@@ -7,7 +7,9 @@
 
 import Foundation
 
+import RxSwift
+
 protocol MyInfoStorage {
     func fetchMyInfo() -> MyInfo?
-    func saveMyInfo(myInfo: MyInfo)
+    func saveMyInfo(myInfo: MyInfo) -> Single<Void>
 }

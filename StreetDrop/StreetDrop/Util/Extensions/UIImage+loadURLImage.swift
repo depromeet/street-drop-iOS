@@ -8,14 +8,31 @@
 import UIKit
 
 import RxSwift
+import Kingfisher
 
 extension UIImage {
     static func load(
-        with url: String,
+        with urlString: String,
         isUsingDiskCache: Bool = false
-    ) -> Observable<UIImage?> {
-        return ImageCacheService.shared.setImage(url, isUsingDiskCache: isUsingDiskCache)
-            .observe(on: MainScheduler.instance)
-            .map { return UIImage(data: $0)}
+    ) -> Single<UIImage> {
+        return Single<UIImage>.create { observer in
+            guard let url = URL(string: urlString) else {
+                observer(.failure(ImageCacheError.invalidURLError))
+                return Disposables.create()
+            }
+            
+            KingfisherManager.shared.retrieveImage(with: url, options: nil, progressBlock: nil) { result in
+                switch result {
+                case .success(let value):
+                    print("이미지 가져온 방식: \(value.cacheType == .none ? "네트워크 통신" : "\(value.cacheType) 캐싱")")
+                    observer(.success(value.image))
+                    
+                case .failure(let error):
+                    observer(.failure(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
     }
 }

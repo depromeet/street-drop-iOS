@@ -1,5 +1,5 @@
 //
-//  EditViewModel.swift
+//  EditCommentViewModel.swift
 //  StreetDrop
 //
 //  Created by 맹선아 on 2023/07/02.
@@ -10,12 +10,12 @@ import Foundation
 import RxSwift
 import RxRelay
 
-protocol EditViewModelDelegate {
+protocol EditCommentViewModelDelegate {
     func editComment(editedComment: String, musicIndex: Int)
 }
 
 // 드랍뷰모델 재사용 (상속)
-final class EditViewModel: MusicDropViewModel {
+final class EditCommentViewModel: MusicDropViewModel {
 
     struct Input {
         let viewDidLoadEvent: Observable<Void>
@@ -28,14 +28,18 @@ final class EditViewModel: MusicDropViewModel {
     }
 
     private let editInfo: EditInfo
-    private let editModel: EditModel
+    private let editCommentUseCase: EditCommentUseCase
     private let musicIndex: Int
-    var delegate: EditViewModelDelegate?
+    var delegate: EditCommentViewModelDelegate?
 
-    init (editInfo: EditInfo, musicIndex: Int, editModel: EditModel = EditModel()) {
+    init (
+        editInfo: EditInfo,
+        musicIndex: Int,
+        editCommentUseCase: EditCommentUseCase = DefaultEditCommentUseCase()
+    ) {
         self.editInfo = editInfo
         self.musicIndex = musicIndex
-        self.editModel = editModel
+        self.editCommentUseCase = editCommentUseCase
 
         let droppingInfo = DroppingInfo(
             location: DroppingInfo.Location(latitude: 0, longitude: 0, address: ""),
@@ -68,7 +72,7 @@ final class EditViewModel: MusicDropViewModel {
                 guard let self = self,
                       self.state == .edit else { return }
 
-                self.editModel.edit(itemId: self.editInfo.id, content: editedComment)
+                self.editCommentUseCase.edit(itemId: self.editInfo.id, content: editedComment)
                     .subscribe(onSuccess: { response in
                         if !(200...299).contains(response) {
                             //TODO: - 실패 토스트 띄워주기

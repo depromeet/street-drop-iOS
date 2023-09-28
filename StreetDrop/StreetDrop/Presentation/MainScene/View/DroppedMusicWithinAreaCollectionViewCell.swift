@@ -36,7 +36,7 @@ final class DroppedMusicWithinAreaCollectionViewCell: UICollectionViewCell {
     func setData(item: MusicWithinAreaEntity) {
         self.musicTitleLabel.text = item.musicTitle
         self.singerNameLabel.text = item.artist
-        self.albumCoverImageView.setImage(with: item.albumImageURL, disposeBag: disposeBag)
+        albumCoverImageView.setImage(with: item.albumImageURL)
         self.commentLabel.text = item.content
     }
     

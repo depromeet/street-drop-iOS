@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import SnapKit
+import Kingfisher
 
 final class AlbumCollectionViewCell: UICollectionViewCell {
 
@@ -43,11 +44,7 @@ final class AlbumCollectionViewCell: UICollectionViewCell {
     }
 
     func setData(_ albumImageURL: String) {
-        guard !albumImageURL.isEmpty  else {
-            return
-        }
-
-        self.albumImageView.setImage(with: albumImageURL, disposeBag: disposeBag)
+        albumImageView.setImage(with: albumImageURL)
     }
 
     override func prepareForReuse() {
