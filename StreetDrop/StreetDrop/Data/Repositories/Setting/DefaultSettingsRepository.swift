@@ -13,6 +13,7 @@ import RxSwift
 final class DefaultSettingsRepository: SettingsRepository {
     private let networkManager: NetworkManager
     private let myInfoStorage: MyInfoStorage
+    private let disposeBag: DisposeBag = .init()
     
     init(
         networkManager: NetworkManager = NetworkManager(
@@ -37,28 +38,40 @@ final class DefaultSettingsRepository: SettingsRepository {
     }
     
     func updateUsersMusicAppToServer(musicAppQueryString: String) -> Single<MusicApp> {
-        return networkManager.patchUsersMusicApp(musicAppQueryString: musicAppQueryString)
-            .map { [weak self] data in
-                let dto = try JSONDecoder().decode(
-                    MyInfoResponseDTO.self,
-                    from: data
-                )
-                
-                self?.myInfoStorage.saveMyInfo(myInfo: dto.toEntity())
-                
-                var savedMusicApp: MusicApp = .youtubeMusic
-                switch dto.musicApp {
-                case "youtubemusic":
-                    savedMusicApp = MusicApp.youtubeMusic
-                case "spotify":
-                    savedMusicApp = MusicApp.spotify
-//                case "applemusic":
-//                    savedMusicApp = MusicApp.appleMusic
-                default:
-                    savedMusicApp = MusicApp.youtubeMusic
+        return Single.create { [weak self] observer in
+            guard let self = self else { return Disposables.create()}
+            networkManager.patchUsersMusicApp(musicAppQueryString: musicAppQueryString)
+                .subscribe { data in
+                    do {
+                        let dto = try JSONDecoder().decode(MyInfoResponseDTO.self, from: data)
+                        
+                        self.myInfoStorage.saveMyInfo(myInfo: dto.toEntity())
+                            .subscribe(onSuccess: {
+                                var savedMusicApp: MusicApp = .youtubeMusic
+                                switch dto.musicApp {
+                                case "youtubemusic":
+                                    savedMusicApp = MusicApp.youtubeMusic
+                                case "spotify":
+                                    savedMusicApp = MusicApp.spotify
+//                                case "applemusic":
+//                                    savedMusicApp = MusicApp.appleMusic
+                                default:
+                                    savedMusicApp = MusicApp.youtubeMusic
+                                }
+                                observer(.success(savedMusicApp))
+                            }, onFailure: { error in
+                                observer(.failure(error))
+                            })
+                            .disposed(by: self.disposeBag)
+                    } catch {
+                        observer(.failure(error))
+                    }
+                } onFailure: { error in
+                    observer(.failure(error))
                 }
-                
-                return savedMusicApp
-            }
+                .disposed(by: disposeBag)
+            
+            return Disposables.create()
+        }
     }
 }
