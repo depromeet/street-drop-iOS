@@ -27,6 +27,7 @@
 		082F17092AB6E41100174D98 /* DefaultMusicDropUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17082AB6E41100174D98 /* DefaultMusicDropUseCase.swift */; };
 		082F171A2AB7454200174D98 /* EditCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17192AB7454200174D98 /* EditCommentUseCase.swift */; };
 		082F171C2AB7455400174D98 /* DefaultEditCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */; };
+		082F17242ADD60BB00174D98 /* UINavigation+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17232ADD60BB00174D98 /* UINavigation+Gesture.swift */; };
 		1816ED3C2A680608005009FC /* MusicListSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */; };
 		1816ED3F2A68064E005009FC /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3E2A68064E005009FC /* MyPageViewModel.swift */; };
 		1816ED412A685704005009FC /* NicknameEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED402A685704005009FC /* NicknameEditViewModel.swift */; };
@@ -247,6 +248,7 @@
 		082F17082AB6E41100174D98 /* DefaultMusicDropUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMusicDropUseCase.swift; sourceTree = "<group>"; };
 		082F17192AB7454200174D98 /* EditCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentUseCase.swift; sourceTree = "<group>"; };
 		082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEditCommentUseCase.swift; sourceTree = "<group>"; };
+		082F17232ADD60BB00174D98 /* UINavigation+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigation+Gesture.swift"; sourceTree = "<group>"; };
 		1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListSectionHeaderView.swift; sourceTree = "<group>"; };
 		1816ED3E2A68064E005009FC /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		1816ED402A685704005009FC /* NicknameEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewModel.swift; sourceTree = "<group>"; };
@@ -1269,6 +1271,7 @@
 				C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */,
 				414345012A31F17B003FEE2A /* UIViewController+Constant.swift */,
 				188F90C62A39FD7D003A1B4A /* UIImage+cornerRadius.swift */,
+				082F17232ADD60BB00174D98 /* UINavigation+Gesture.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1572,6 +1575,7 @@
 				1816ED3C2A680608005009FC /* MusicListSectionHeaderView.swift in Sources */,
 				41A9BEB72A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift in Sources */,
 				1876F0502A66F7A30064B887 /* DefaultMyPageRepository.swift in Sources */,
+				082F17242ADD60BB00174D98 /* UINavigation+Gesture.swift in Sources */,
 				415113272A165DC50051F809 /* MusicDropViewController.swift in Sources */,
 				1867C8242A4FFCDF00F8EC48 /* MusicTableViewCell.swift in Sources */,
 				C45BF3A12A1D133000CEDE74 /* RecentMusicQueryDTO.swift in Sources */,
