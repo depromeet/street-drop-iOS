@@ -9,8 +9,9 @@
 ---
 
 ### 📮 Contact Info
-depromeet5@gmail.com
-
+| 📧 Email | depromeet5@gmail.com |
+| --- | --- |
+| ☎️ Phone | +821090700234 |
 ---
 
 <img width="700" alt="스크린샷 2023-06-16 오후 1 26 07" src="https://github.com/depromeet/street-drop-iOS/assets/107384230/4164780e-5fac-45d2-bf96-41ab19db1290"> <br>
