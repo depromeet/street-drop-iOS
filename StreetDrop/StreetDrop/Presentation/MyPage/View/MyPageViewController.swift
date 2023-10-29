@@ -14,19 +14,18 @@ import RxSwift
 import SnapKit
 
 final class MyPageViewController: UIViewController {
+    typealias DataSource = RxTableViewSectionedReloadDataSource<MyMusicsSection>
+    
+    enum TableViewType: Int {
+        case dropMusic = 100
+        case likeMusic = 101
+    }
+    
     private var stickyTapListStackView: UIStackView?
     private var stickyTopDimmedView: UIView?
     
-    private var dataSource: RxTableViewSectionedReloadDataSource<MyMusicsSection> = {
-        let dataSource = RxTableViewSectionedReloadDataSource<MyMusicsSection>(
-            configureCell: { _, tableView, indexPath, item in
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: MusicTableViewCell.identifier, for: indexPath) as? MusicTableViewCell else { return UITableViewCell() }
-                cell.setData(item: item)
-                return cell
-            }
-        )
-        return dataSource
-    }()
+    private lazy var dropMusicDataSource: DataSource = configureDataSource()
+    private lazy var likeMusicDataSource: DataSource = configureDataSource()
     
     private var viewModel: MyPageViewModel
     private let viewWillAppearEvent = PublishRelay<Void>()
@@ -188,6 +187,8 @@ final class MyPageViewController: UIViewController {
         tableView.register(MusicTableViewCell.self, forCellReuseIdentifier: MusicTableViewCell.identifier)
         tableView.register(MusicListSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: MusicListSectionHeaderView.identifier)
         tableView.sectionFooterHeight = 0
+        tableView.tableFooterView = UIView()
+        tableView.tag = TableViewType.dropMusic.rawValue
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         return tableView
@@ -203,6 +204,8 @@ final class MyPageViewController: UIViewController {
         tableView.register(MusicTableViewCell.self, forCellReuseIdentifier: MusicTableViewCell.identifier)
         tableView.register(MusicListSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: MusicListSectionHeaderView.identifier)
         tableView.sectionFooterHeight = 0
+        tableView.tableFooterView = UIView()
+        tableView.tag = TableViewType.likeMusic.rawValue
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         return tableView
@@ -582,11 +585,11 @@ private extension MyPageViewController {
             .disposed(by: disposeBag)
         
         output.myDropMusicsSections
-            .bind(to: dropMusicListTableView.rx.items(dataSource: dataSource))
+            .bind(to: dropMusicListTableView.rx.items(dataSource: dropMusicDataSource))
             .disposed(by: disposeBag)
         
         output.myLikeMusicsSections
-            .bind(to: likeMusicListTableView.rx.items(dataSource: dataSource))
+            .bind(to: likeMusicListTableView.rx.items(dataSource: likeMusicDataSource))
             .disposed(by: disposeBag)
         
         output.totalDropMusicsCount
@@ -659,7 +662,47 @@ extension MyPageViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: MusicListSectionHeaderView.identifier) as? MusicListSectionHeaderView else { return UIView() }
+        if let type = TableViewType(rawValue: tableView.tag) {
+            return configureHeaderView(
+                type: type,
+                tableView: tableView,
+                section: section
+            )
+        } else {
+            return nil
+        }
+    }
+}
+
+// MARK: - Private Methods
+
+private extension MyPageViewController {
+    func configureDataSource() -> DataSource {
+        return DataSource(
+            configureCell: { _, tableView, indexPath, item in
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: MusicTableViewCell.identifier, for: indexPath) as? MusicTableViewCell else { return UITableViewCell() }
+                cell.setData(item: item)
+                return cell
+            })
+    }
+    
+    func configureHeaderView(
+        type: TableViewType,
+        tableView: UITableView,
+        section: Int
+    ) -> UIView? {
+        var dataSource: DataSource
+        
+        switch type {
+        case .dropMusic:
+            dataSource = dropMusicDataSource
+        case .likeMusic:
+            dataSource = likeMusicDataSource
+        }
+        
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: MusicListSectionHeaderView.identifier) as? MusicListSectionHeaderView
+        else { return UIView() }
+        
         let sectionData = dataSource[section]
         headerView.setData(date: sectionData.date)
         return headerView
