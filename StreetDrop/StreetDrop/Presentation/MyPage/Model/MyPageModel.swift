@@ -13,6 +13,7 @@ protocol MyPageModel {
     func fetchMyDropList() -> Single<TotalMyMusics>
     func fetchMyLikeList() -> Single<TotalMyMusics>
     func fetchMyLevel() -> Single<MyLevel>
+    func fetchMyDropMusic(itemID: Int) -> Single<Musics>
 }
 
 final class DefaultMyPageModel: MyPageModel {
@@ -34,5 +35,9 @@ final class DefaultMyPageModel: MyPageModel {
     
     func fetchMyLevel() -> Single<MyLevel> {
         return repository.fetchMyLevel()
+    }
+    
+    func fetchMyDropMusic(itemID: Int) -> Single<Musics> {
+        return repository.fetchMyDropMusic(itemID: itemID)
     }
 }

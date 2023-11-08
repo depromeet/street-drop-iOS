@@ -49,6 +49,8 @@
 		08C7408D2AE004B500869CC3 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 08C7408C2AE004B500869CC3 /* FirebaseRemoteConfig */; };
 		08C7408F2AE004B500869CC3 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 08C7408E2AE004B500869CC3 /* FirebaseRemoteConfigSwift */; };
 		08C740912AE004B500869CC3 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 08C740902AE004B500869CC3 /* FirebaseStorage */; };
+		0856524D2AFA77FD00FD9BCB /* SingleMusicResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0856524C2AFA77FD00FD9BCB /* SingleMusicResponseDTO.swift */; };
+		085652502AFBB73100FD9BCB /* MyPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0856524F2AFBB73100FD9BCB /* MyPageType.swift */; };
 		1816ED3C2A680608005009FC /* MusicListSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */; };
 		1816ED3F2A68064E005009FC /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3E2A68064E005009FC /* MyPageViewModel.swift */; };
 		1816ED412A685704005009FC /* NicknameEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED402A685704005009FC /* NicknameEditViewModel.swift */; };
@@ -269,6 +271,8 @@
 		082F17192AB7454200174D98 /* EditCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentUseCase.swift; sourceTree = "<group>"; };
 		082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEditCommentUseCase.swift; sourceTree = "<group>"; };
 		082F17232ADD60BB00174D98 /* UINavigation+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigation+Gesture.swift"; sourceTree = "<group>"; };
+		0856524C2AFA77FD00FD9BCB /* SingleMusicResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleMusicResponseDTO.swift; sourceTree = "<group>"; };
+		0856524F2AFBB73100FD9BCB /* MyPageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageType.swift; sourceTree = "<group>"; };
 		1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListSectionHeaderView.swift; sourceTree = "<group>"; };
 		1816ED3E2A68064E005009FC /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		1816ED402A685704005009FC /* NicknameEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewModel.swift; sourceTree = "<group>"; };
@@ -734,6 +738,14 @@
 			path = UseCase;
 			sourceTree = "<group>";
 		};
+		0856524E2AFA781E00FD9BCB /* SingleMusic */ = {
+			isa = PBXGroup;
+			children = (
+				0856524C2AFA77FD00FD9BCB /* SingleMusicResponseDTO.swift */,
+			);
+			path = SingleMusic;
+			sourceTree = "<group>";
+		};
 		1816ED3D2A680640005009FC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -789,6 +801,7 @@
 				1867C8232A4FFCDF00F8EC48 /* MusicTableViewCell.swift */,
 				18EF9FC82A5C51FB00266D27 /* NicknameEditViewController.swift */,
 				1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */,
+				0856524F2AFBB73100FD9BCB /* MyPageType.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -888,7 +901,6 @@
 		18F76FAE2A050110006CF9EF /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
-				C4A4458B2A5EF1EA008279C1 /* New Group */,
 				1876F03B2A66E01C0064B887 /* MyLevel */,
 				1876F03A2A66E0170064B887 /* MyLikeList */,
 				1876F0392A66DFD90064B887 /* MyDropList */,
@@ -904,6 +916,7 @@
 				C45BF39F2A1D12EF00CEDE74 /* RecentMusicSearch */,
 				C4E094392A4DEFC5000B4513 /* VillageName */,
 				C4A4458E2A5EF203008279C1 /* FCM */,
+				0856524E2AFA781E00FD9BCB /* SingleMusic */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -1235,13 +1248,6 @@
 				C47F02232A38633C00F48884 /* SettingsViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		C4A4458B2A5EF1EA008279C1 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		C4A4458E2A5EF203008279C1 /* FCM */ = {
@@ -1685,6 +1691,7 @@
 				18EF9FC92A5C51FB00266D27 /* NicknameEditViewController.swift in Sources */,
 				18683FDF2A348B25005A94AC /* MainRepository.swift in Sources */,
 				41A3DDF62A5AD1C7004CFA2F /* BlockUserRepository.swift in Sources */,
+				085652502AFBB73100FD9BCB /* MyPageType.swift in Sources */,
 				C419723C2ABDB5AF00211222 /* FetchingMusicWithinArea.swift in Sources */,
 				C434A4CE2A17970A00C63526 /* SearchMusicUsecase.swift in Sources */,
 				414345252A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift in Sources */,
@@ -1731,6 +1738,7 @@
 				C434A4CC2A1796F300C63526 /* SearchingMusicViewModel.swift in Sources */,
 				C4E4C6B22A5ADC2C00B1C84A /* SettingsRepository.swift in Sources */,
 				C4E0943B2A4DF002000B4513 /* VillageNameResponseDTO.swift in Sources */,
+				0856524D2AFA77FD00FD9BCB /* SingleMusicResponseDTO.swift in Sources */,
 				41F23B4B2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift in Sources */,
 				C4A445932A5EF265008279C1 /* DefaultFCMRepository.swift in Sources */,
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO+Mapping.swift in Sources */,

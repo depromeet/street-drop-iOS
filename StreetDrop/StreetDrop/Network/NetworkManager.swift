@@ -37,6 +37,13 @@ struct NetworkManager {
             .map { $0.statusCode }
     }
     
+    func getSingleMusic(itemID: Int) -> Single<Data> {
+        return provider.rx
+            .request(.getSingleMusic(itemID: itemID))
+            .retry(3)
+            .map { $0.data }
+    }
+    
     func getMusicCountByDong(latitude: Double, longitude: Double) -> Single<Data> {
         return provider.rx
             .request(.getMusicCountByDong(latitude: latitude, longitude: longitude))
