@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-final class DefaultMyPageRepository: MyPageRepository {
+final class DefaultMyPageRepository {
     private let networkManager: NetworkManager
 
     init(networkManager: NetworkManager = NetworkManager()) {
@@ -17,7 +17,7 @@ final class DefaultMyPageRepository: MyPageRepository {
     }
 }
 
-extension DefaultMyPageRepository {
+extension DefaultMyPageRepository: MyPageRepository {
     func fetchMyDropList() -> Single<TotalMyMusics> {
         networkManager.getMyDropList()
             .map({ data in
@@ -38,6 +38,17 @@ extension DefaultMyPageRepository {
         networkManager.getMyLevel()
             .map({ data in
                 let dto = try JSONDecoder().decode(MyLevelResponseDTO.self, from: data)
+                return dto.toEntity()
+            })
+    }
+    
+    func fetchMyDropMusic(itemID: Int) -> Single<Musics> {
+        networkManager.getSingleMusic(itemID: itemID)
+            .map({ data in
+                let dto = try JSONDecoder().decode(
+                    SingleMusicResponseDTO.self,
+                    from: data
+                )
                 return dto.toEntity()
             })
     }
