@@ -135,4 +135,8 @@ private extension MusicDropViewModel {
 
         output.locationTitle.accept(locationTitle)
     }
+    
+    func outputRecommendTitle(output: Output) {
+        
+    }
 }

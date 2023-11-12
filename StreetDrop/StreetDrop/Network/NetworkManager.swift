@@ -31,6 +31,10 @@ struct NetworkManager {
             .map { $0.data }
     }
     
+    func getRecommendMusic() -> Single<Data> {
+        return provider.rx.request(.recommendMusic).retry(3).map { $0.data }
+    }
+    
     func dropMusic(requestDTO: DropMusicRequestDTO) -> Single<Int> {
         return provider.rx.request(.dropMusic(requestDTO: requestDTO))
             .retry(3)

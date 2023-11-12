@@ -63,6 +63,17 @@ final class DefaultSearchingMusicRepository: SearchingMusicRepository {
         }
     }
     
+    func fetchRecommendMusicQueries() -> RxSwift.Single<RecommendMusic> {
+        return networkManager.getRecommendMusic()
+            .map { recommendData -> RecommendMusic in
+                let recommendMusic = try JSONDecoder().decode(
+                    RecommendMusic.self,
+                    from: recommendData
+                )
+                return recommendMusic
+            }
+    }
+    
     func fetchVillageName(latitude: Double, longitude: Double) -> Single<String> {
         networkManager.getVillageName(latitude: latitude, longitude: longitude)
             .map { data in

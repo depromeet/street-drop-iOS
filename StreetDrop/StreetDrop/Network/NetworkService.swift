@@ -12,6 +12,7 @@ import Moya
 enum NetworkService {
     case getMyInfo
     case searchMusic(keyword: String)
+    case recommendMusic
     case dropMusic(requestDTO: DropMusicRequestDTO)
     case getSingleMusic(itemID: Int) // 아이템 드랍 - 단건 조회
     case getMusicCountByDong(latitude: Double, longitude: Double)
@@ -62,6 +63,8 @@ extension NetworkService: TargetType {
             return "/items/\(itemID)"
         case .searchMusic:
             return "/music"
+        case .recommendMusic:
+            return "/search-term/recommend"
         case .getMusicCountByDong:
             return "/villages/items/count"
         case .postLikeUp(let itemID):
@@ -99,6 +102,7 @@ extension NetworkService: TargetType {
         switch self {
         case .getMyInfo,
                 .searchMusic,
+                .recommendMusic,
                 .getMusicCountByDong,
                 .getPoi,
                 .getMusicWithinArea,
@@ -125,7 +129,7 @@ extension NetworkService: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .getMyInfo, .myDropList, .myLikeList, .myLevel:
+        case .getMyInfo, .myDropList, .myLikeList, .myLevel, .recommendMusic:
             return .requestPlain
         case .searchMusic(let keyword):
             return .requestParameters(
