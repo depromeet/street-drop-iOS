@@ -106,36 +106,15 @@ final class SearchingMusicViewController: UIViewController {
         return scrollView
     }()
     
+    private lazy var recommendMusicSearchCollectionView: RecommendMusicSearchCollectionView = {
+        let collectionView = RecommendMusicSearchCollectionView()
+        return collectionView
+    }()
+    
     private lazy var questionLabel: UILabel = {
-        let label: UILabel = UILabel()
-        label.font = .pretendard(size: 20, weight: 700)
-        label.text = "지금 이 주변에\n드랍하고 싶은 음악은 무엇인가요?"
-        label.textColor = .white
-        label.numberOfLines = 2
-        /*
-         중간 글자에 대해 attributedString을 적용하기에,
-         setLineHeight(내부에서 attributedString 사용)을 쓰지 않고 직점 구현
-         */
-        let fullText = label.text ?? ""
-        let attributedString = NSMutableAttributedString(string: fullText)
-        let range = (fullText as NSString).range(of: "드랍하고 싶은 음악")
-        attributedString.addAttribute(
-            .foregroundColor,
-            value: UIColor.primary400,
-            range: range
-        )
-        
-        let style = NSMutableParagraphStyle()
-        style.maximumLineHeight = 32
-        style.minimumLineHeight = 32
-        let attributes: [NSAttributedString.Key: Any] = [
-            .paragraphStyle: style,
-            .baselineOffset: (32 - label.font.lineHeight) / 4
-        ]
-        attributedString.addAttributes(attributes, range: NSMakeRange(0, fullText.count - 1))
-        
-        label.attributedText = attributedString
-
+       let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont(name: "Pretendard-Bold", size: 20)
         return label
     }()
     
@@ -182,6 +161,14 @@ private extension SearchingMusicViewController {
             }
             .disposed(by: disposeBag)
         
+        self.recommendMusicSearchCollectionView.queryButtonDidTappedEvent.bind { recentQuery in
+            self.searchTextField.text = recentQuery
+            self.tableView.isHidden = false
+            self.recentMusicSearchView.isHidden = true
+            self.searchTextField.resignFirstResponder()
+        }
+        .disposed(by: disposeBag)
+        
         self.backButton.rx.tap
             .bind {
                 self.navigationController?.popViewController(animated: true)
@@ -226,6 +213,14 @@ private extension SearchingMusicViewController {
             }
             .disposed(by: disposeBag)
         
+        output.recommendMusicQueries
+            .observe(on: MainScheduler.instance)
+            .bind { queries in
+                self.setRecommendData(queries.description)
+                self.recommendMusicSearchCollectionView.setData(queries: queries.terms)
+            }
+            .disposed(by: disposeBag)
+        
         output.selectedMusic
             .bind { [weak self] music in
                 guard let self = self else { return }
@@ -261,7 +256,8 @@ private extension SearchingMusicViewController {
         [
             self.recentSearchResultLabel,
             self.recentMusicSearchScrollView,
-            self.questionLabel
+            self.questionLabel,
+            self.recommendMusicSearchCollectionView
         ].forEach {
             self.recentMusicSearchView.addSubview($0)
         }
@@ -325,14 +321,36 @@ private extension SearchingMusicViewController {
         }
         
         self.questionLabel.snp.makeConstraints {
-            $0.top.equalTo(self.recentMusicSearchScrollView.snp.bottom).offset(30)
+            $0.top.equalTo(self.recentMusicSearchScrollView.snp.bottom).offset(54)
             $0.leading.trailing.equalToSuperview().inset(24)
+        }
+        
+        self.recommendMusicSearchCollectionView.snp.makeConstraints {
+            $0.top.equalTo(self.questionLabel.snp.bottom).offset(24)
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(144)
         }
         
         self.tableView.snp.makeConstraints {
             $0.top.equalTo(self.searchView.snp.bottom).offset(26)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+    }
+    
+    private func setRecommendData(_ query: [RecommendMusicData]) {
+        var attributedString =  NSMutableAttributedString()
+        let style = NSMutableParagraphStyle()
+        style.maximumLineHeight = 32
+        style.minimumLineHeight = 32
+        
+        for data in query {
+            let attributes: [NSAttributedString.Key : Any] = [
+                .foregroundColor: FontType(rawValue: data.color)?.foregroundColor ?? .white,
+                .paragraphStyle: style
+            ]
+            attributedString.append(NSAttributedString(string: data.text, attributes: attributes))
+        }
+        questionLabel.attributedText = attributedString
     }
 }
 
@@ -341,5 +359,36 @@ extension SearchingMusicViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+enum FontType: String, CaseIterable {
+    case recommendTitleBasic = "RecommendTitleBasic"
+    case recommendTitleHighlight = "RecommendTitleHighLight"
+    case recommendKeywordBasic = "RecommendKeywordBasic"
+    case recommendKeywordHighlight = "RecommendKeywordHighlight"
+    
+    var foregroundColor: UIColor {
+        switch self {
+        case .recommendTitleBasic:
+            return UIColor.white
+        case .recommendTitleHighlight:
+            return UIColor.primary400
+        case .recommendKeywordBasic:
+            return UIColor.gray50.withAlphaComponent(12)
+        case .recommendKeywordHighlight:
+            return UIColor.gray700
+        }
+    }
+    
+    var backgroundColor: UIColor {
+        switch self {
+        case .recommendKeywordBasic:
+            return UIColor.gray50.withAlphaComponent(12)
+        case .recommendKeywordHighlight:
+            return UIColor.gray700
+        default:
+            return UIColor.clear
+        }
     }
 }

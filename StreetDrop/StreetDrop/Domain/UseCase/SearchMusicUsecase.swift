@@ -14,6 +14,7 @@ protocol SearchMusicUsecase {
     func saveRecentSearch(keyword: String)
     func getRecentSearches() -> Single<[String]>
     func getVillageName(latitude: Double, longitude: Double) -> Single<String>
+    func fetchRecommendSearch() -> Single<RecommendMusic>
 }
 
 final class DefaultSearchingMusicUsecase: SearchMusicUsecase {
@@ -37,6 +38,10 @@ final class DefaultSearchingMusicUsecase: SearchMusicUsecase {
     }
     
     func getVillageName(latitude: Double, longitude: Double) -> Single<String> {
-        return self.searchingMusicRepository.fetchVillageName(latitude: latitude, longitude: longitude)
+        return searchingMusicRepository.fetchVillageName(latitude: latitude, longitude: longitude)
+    }
+
+    func fetchRecommendSearch() -> Single<RecommendMusic> {
+        return self.searchingMusicRepository.fetchRecommendMusicQueries()
     }
 }
