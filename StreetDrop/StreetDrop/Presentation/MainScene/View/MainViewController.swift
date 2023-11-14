@@ -202,6 +202,10 @@ final class MainViewController: UIViewController, Toastable {
         button.isHidden = true
         return button
     }()
+    
+    private lazy var bubbleCommentView: BubbleCommentView = {
+        return BubbleCommentView()
+    }()
 }
 
 private extension MainViewController {
@@ -483,6 +487,13 @@ private extension MainViewController {
                 )
                 //  다이얼이 올라오는 경우
                 self.presentDial(currentIndex: currentIndex)
+            }
+            .disposed(by: disposeBag)
+        
+        output.showFirstComment
+            .bind(with: self) { owner, comment in
+                owner.configureBubbledCommentView()
+                owner.bubbleCommentView.configure(with: comment)
             }
             .disposed(by: disposeBag)
     }
@@ -775,8 +786,7 @@ private extension MainViewController {
     }
     
     func moveCameraToCurrentLocation(location: CLLocation) {
-        self.naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude,
-                                                               lng: location.coordinate.longitude)))
+        self.naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude,lng: location.coordinate.longitude)))
         self.naverMapView.moveCamera(NMFCameraUpdate(zoomTo: 14))
         self.locationOverlay.circleRadius = circleRadius / naverMapView.projection.metersPerPixel()
     }
@@ -784,17 +794,17 @@ private extension MainViewController {
     func combineImages(markerFrame: UIImage, album: UIImage) -> UIImage? {
         let size = markerFrame.size
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-
+        
         let albumRect = CGRect(x: 3, y: 3, width: album.size.width, height: album.size.height)
         album.draw(in: albumRect)
-
+        
         let markerRect = CGRect(x: 0, y: 0, width: markerFrame.size.width, height: markerFrame.size.height)
         markerFrame.draw(in: markerRect, blendMode: .normal, alpha: 1)
-
-
+        
+        
         let combinedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
+        
         return combinedImage
     }
     
@@ -862,6 +872,17 @@ private extension MainViewController {
         viewModel.poiDict = [:]
         viewModel.markerAlbumImages = [:]
         viewModel.removeAllPOIMarkers()
+    }
+    
+    func configureBubbledCommentView() {
+        view.addSubview(bubbleCommentView)
+        bubbleCommentView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(148)
+            $0.height.equalTo(45)
+            $0.bottom.equalTo(musicDropButton.snp.top).offset(-10)
+        }
+        view.bringSubviewToFront(bubbleCommentView)
     }
 }
 

@@ -37,4 +37,12 @@ final class DefaultMyInfoRepository: MyInfoRepository {
     func fetchMyMusicAppFromStorage() -> String? {
         return myInfoStorage.fetchMyInfo()?.musicApp.rawValue
     }
+    
+    func checkLaunchedBefore() -> Bool {
+        let isLaunchedBefore = myInfoStorage.fetchLaunchedBefore()
+        if isLaunchedBefore == false {
+            myInfoStorage.saveLauchedBefore(true)
+        }
+        return isLaunchedBefore
+    }
 }

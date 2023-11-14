@@ -12,4 +12,6 @@ import RxSwift
 protocol MyInfoStorage {
     func fetchMyInfo() -> MyInfo?
     func saveMyInfo(myInfo: MyInfo) -> Single<Void>
+    func fetchLaunchedBefore() -> Bool
+    func saveLauchedBefore(_ launchedBefore: Bool)
 }

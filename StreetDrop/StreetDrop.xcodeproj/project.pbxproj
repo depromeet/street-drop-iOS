@@ -39,6 +39,7 @@
 		0856524B2AF6A2AD00FD9BCB /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 0856524A2AF6A2AD00FD9BCB /* FirebaseMessaging */; };
 		0856524D2AFA77FD00FD9BCB /* SingleMusicResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0856524C2AFA77FD00FD9BCB /* SingleMusicResponseDTO.swift */; };
 		085652502AFBB73100FD9BCB /* MyPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0856524F2AFBB73100FD9BCB /* MyPageType.swift */; };
+		085652522B00B68100FD9BCB /* BubbleCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085652512B00B68100FD9BCB /* BubbleCommentView.swift */; };
 		1816ED3C2A680608005009FC /* MusicListSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */; };
 		1816ED3F2A68064E005009FC /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3E2A68064E005009FC /* MyPageViewModel.swift */; };
 		1816ED412A685704005009FC /* NicknameEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED402A685704005009FC /* NicknameEditViewModel.swift */; };
@@ -261,6 +262,7 @@
 		082F17232ADD60BB00174D98 /* UINavigation+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigation+Gesture.swift"; sourceTree = "<group>"; };
 		0856524C2AFA77FD00FD9BCB /* SingleMusicResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleMusicResponseDTO.swift; sourceTree = "<group>"; };
 		0856524F2AFBB73100FD9BCB /* MyPageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageType.swift; sourceTree = "<group>"; };
+		085652512B00B68100FD9BCB /* BubbleCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleCommentView.swift; sourceTree = "<group>"; };
 		1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListSectionHeaderView.swift; sourceTree = "<group>"; };
 		1816ED3E2A68064E005009FC /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		1816ED402A685704005009FC /* NicknameEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewModel.swift; sourceTree = "<group>"; };
@@ -1021,6 +1023,7 @@
 				41A3DDEA2A58428F004CFA2F /* ToastView.swift */,
 				4141398E2A1FA252005418A1 /* PaddingLabel.swift */,
 				41396D9A2A4F1C5600B69341 /* OptionModalViewController.swift */,
+				085652512B00B68100FD9BCB /* BubbleCommentView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1654,6 +1657,7 @@
 				4143452E2A373550003FEE2A /* AddressManager.swift in Sources */,
 				18EF9FC92A5C51FB00266D27 /* NicknameEditViewController.swift in Sources */,
 				18683FDF2A348B25005A94AC /* MainRepository.swift in Sources */,
+				085652522B00B68100FD9BCB /* BubbleCommentView.swift in Sources */,
 				41A3DDF62A5AD1C7004CFA2F /* BlockUserRepository.swift in Sources */,
 				085652502AFBB73100FD9BCB /* MyPageType.swift in Sources */,
 				C419723C2ABDB5AF00211222 /* FetchingMusicWithinArea.swift in Sources */,

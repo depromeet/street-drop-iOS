@@ -9,4 +9,5 @@ enum UserDefaultKey {
     static let recentsMusicSearchesKey = "recentsMusicSearches"
     static let myUserInfo = "myUserInfo"
     static let fcmToken = "fcmToken"
+    static let launchedBefore = "launchedBefore"
 }
