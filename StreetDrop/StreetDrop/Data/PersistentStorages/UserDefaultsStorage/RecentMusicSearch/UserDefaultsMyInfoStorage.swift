@@ -42,4 +42,12 @@ extension UserDefaultsMyInfoStorage: MyInfoStorage {
             return Disposables.create()
         }
     }
+    
+    func fetchLaunchedBefore() -> Bool {
+        return userDefaults.bool(forKey: UserDefaultKey.launchedBefore)
+    }
+    
+    func saveLauchedBefore(_ launchedBefore: Bool) {
+        userDefaults.set(launchedBefore, forKey: UserDefaultKey.launchedBefore)
+    }
 }
