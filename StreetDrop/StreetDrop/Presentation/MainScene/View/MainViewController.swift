@@ -204,7 +204,9 @@ final class MainViewController: UIViewController, Toastable {
     }()
     
     private lazy var bubbleCommentView: BubbleCommentView = {
-        return BubbleCommentView()
+        let view = BubbleCommentView()
+        view.isHidden = true
+        return view
     }()
 }
 
@@ -343,6 +345,16 @@ private extension MainViewController {
         }
         self.droppedMusicWithinAreaCollectionView.delegate = self
         self.setupInitialOffset()
+        
+        // MARK: - Bubble Comment View
+        
+        view.addSubview(bubbleCommentView)
+        bubbleCommentView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(148)
+            $0.height.equalTo(45)
+            $0.bottom.equalTo(musicDropButton.snp.top).offset(-10)
+        }
     }
     
     // MARK: - Action Binding
@@ -358,6 +370,12 @@ private extension MainViewController {
         
 // TODO: 1차 앱스토어 배포때는 실시간 위치정보 갱신을 하지 않기에, 추후 드랍하기 버튼 누를 시, 실제 사용자 위치정보는 좀 더 검토 필요
         musicDropButton.rx.tap
+            .do { [weak self] _ in
+                if let self = self,
+                   bubbleCommentView.isDescendant(of: view) {
+                    bubbleCommentView.removeFromSuperview()
+                }
+            }
             .bind { [weak self] in
                 guard let self = self,
                       self.viewModel.locationManager.checkAuthorizationStatus()
@@ -387,7 +405,6 @@ private extension MainViewController {
                     communityInfos: self.viewModel.musicWithinArea,
                     index: indexPath.row
                 )
-
                 communityViewModel.blockSuccessToast
                     .bind { [weak self] toastTitle in
                         self?.navigationController?.popToRootViewController(animated: true)
@@ -492,7 +509,7 @@ private extension MainViewController {
         
         output.showFirstComment
             .bind(with: self) { owner, comment in
-                owner.configureBubbledCommentView()
+                owner.bubbleCommentView.isHidden = false
                 owner.bubbleCommentView.configure(with: comment)
             }
             .disposed(by: disposeBag)
@@ -570,6 +587,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
             self.droppedMusicWithinAreaCollectionView.isHidden = true
             self.bottomCoverImageView.isHidden = true
             self.backToMapButton.isHidden = true
+            self.bubbleCommentView.isHidden = false
         })
     }
     
@@ -848,6 +866,8 @@ private extension MainViewController {
     func bindPOIMarker(poiMarker: NMFMarker) {
         poiMarker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
             guard let self = self else { return true }
+            self.bubbleCommentView.isHidden = true
+            
             if self.viewModel.isWithin(latitude: poiMarker.position.lat, longitude: poiMarker.position.lng) {
                 let poiID = Int(poiMarker.tag)
                 self.drawPOIMarker(poiMarker: poiMarker, poiID: poiID, isActivated: true)
@@ -872,17 +892,6 @@ private extension MainViewController {
         viewModel.poiDict = [:]
         viewModel.markerAlbumImages = [:]
         viewModel.removeAllPOIMarkers()
-    }
-    
-    func configureBubbledCommentView() {
-        view.addSubview(bubbleCommentView)
-        bubbleCommentView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(148)
-            $0.height.equalTo(45)
-            $0.bottom.equalTo(musicDropButton.snp.top).offset(-10)
-        }
-        view.bringSubviewToFront(bubbleCommentView)
     }
 }
 
