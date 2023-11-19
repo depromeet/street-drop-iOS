@@ -66,7 +66,7 @@ extension MainViewModel {
         let musicWithinArea = BehaviorRelay<Musics>(value: [])
         let cameraShouldGoCurrentLocation = PublishRelay<CLLocation>()
         let tappedPOIIndex = PublishRelay<Int>()
-        let showFirstComment = PublishRelay<String>()
+        let showFirstComment = PublishRelay<Void>()
     }
 }
 
@@ -268,7 +268,7 @@ private extension MainViewModel {
     func checkAppFirstLaunched(output: Output) {
         let isLaunchedBefore = myInfoUseCase.checkLaunchedBefore()
         if isLaunchedBefore == false {
-            output.showFirstComment.accept("음악을 드랍해보세요!")
+            output.showFirstComment.accept(Void())
         }
     }
 }
