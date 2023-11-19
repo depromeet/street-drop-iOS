@@ -205,6 +205,7 @@ final class MainViewController: UIViewController, Toastable {
     
     private lazy var bubbleCommentView: BubbleCommentView = {
         let view = BubbleCommentView()
+        view.configure(with: "음악을 드랍해보세요!")
         view.isHidden = true
         return view
     }()
@@ -508,9 +509,8 @@ private extension MainViewController {
             .disposed(by: disposeBag)
         
         output.showFirstComment
-            .bind(with: self) { owner, comment in
+            .bind(with: self) { owner, _ in
                 owner.bubbleCommentView.isHidden = false
-                owner.bubbleCommentView.configure(with: comment)
             }
             .disposed(by: disposeBag)
     }
