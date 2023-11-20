@@ -43,11 +43,12 @@ final class RecommendMusicSearchCollectionView: UIView {
         let flowLayout = LeftAlignedCollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumInteritemSpacing = 12
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        cv.register(RecommendKeywordItemCell.self, forCellWithReuseIdentifier: RecommendKeywordItemCell.cellIdentifier)
-        cv.delegate = self
-        cv.dataSource = self
-        return cv
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.register(RecommendKeywordItemCell.self, forCellWithReuseIdentifier: RecommendKeywordItemCell.cellIdentifier)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        return collectionView
     }()
 }
 
@@ -60,12 +61,14 @@ extension RecommendMusicSearchCollectionView {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension RecommendMusicSearchCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.queryButtonDidTappedEvent.accept(musicData[indexPath.item].text)
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension RecommendMusicSearchCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return musicData.count

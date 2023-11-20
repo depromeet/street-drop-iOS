@@ -21,7 +21,10 @@ final class RecommendKeywordItemCell: UICollectionViewCell {
     // MARK: - layout
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        setup()
+    }
+    
+    private func setup() {
         contentView.addSubview(tagLabel)
         contentView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 16
@@ -41,7 +44,7 @@ final class RecommendKeywordItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setTextColor(color: String) -> UIColor {
+    private func setTextColor(color: String) -> UIColor {
         switch color {
         case "RecommendKeywordHighLight":
             return UIColor.gray700
