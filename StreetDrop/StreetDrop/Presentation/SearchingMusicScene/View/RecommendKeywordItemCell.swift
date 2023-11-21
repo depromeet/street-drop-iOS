@@ -21,10 +21,10 @@ final class RecommendKeywordItemCell: UICollectionViewCell {
     // MARK: - layout
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        configureUI()
     }
     
-    private func setup() {
+    private func configureUI() {
         contentView.addSubview(tagLabel)
         contentView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 16
