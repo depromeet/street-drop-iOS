@@ -28,6 +28,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         let searchTextFieldEmptyEvent: Observable<Void>
         let keyBoardDidPressSearchEventWithKeyword: Observable<String>
         let recentQueryDidPressEvent: PublishRelay<String>
+        let recommendQueryDidPressEvent: PublishRelay<String>
         let tableViewCellDidPressedEvent: Observable<Int>
     }
     
@@ -91,6 +92,12 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         input.recentQueryDidPressEvent
             .bind { [weak self] recentQuery in
                 self?.searchMusic(output: output, keyword: recentQuery)
+            }
+            .disposed(by: disposedBag)
+        
+        input.recommendQueryDidPressEvent
+            .bind { [weak self] recommendQuery in
+                self?.searchMusic(output: output, keyword: recommendQuery)
             }
             .disposed(by: disposedBag)
         

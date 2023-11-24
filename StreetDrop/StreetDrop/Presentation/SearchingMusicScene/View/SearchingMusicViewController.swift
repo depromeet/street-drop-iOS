@@ -161,7 +161,8 @@ private extension SearchingMusicViewController {
             }
             .disposed(by: disposeBag)
         
-        self.recommendMusicSearchCollectionView.queryButtonDidTappedEvent.bind { recentQuery in
+        self.recommendMusicSearchCollectionView.queryButtonDidTappedEvent
+            .bind { recentQuery in
             self.searchTextField.text = recentQuery
             self.tableView.isHidden = false
             self.recentMusicSearchView.isHidden = true
@@ -191,6 +192,7 @@ private extension SearchingMusicViewController {
             searchTextFieldEmptyEvent: searchTextFieldEmptyEvent,
             keyBoardDidPressSearchEventWithKeyword: keyBoardDidPressSearchEventWithKeyword,
             recentQueryDidPressEvent: self.recentMusicSearchScrollView.queryButtonDidTappedEvent,
+            recommendQueryDidPressEvent: self.recommendMusicSearchCollectionView.queryButtonDidTappedEvent,
             tableViewCellDidPressedEvent: selectedTableViewCellEvent
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
