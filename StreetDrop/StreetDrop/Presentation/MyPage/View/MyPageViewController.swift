@@ -13,13 +13,8 @@ import RxRelay
 import RxSwift
 import SnapKit
 
-final class MyPageViewController: UIViewController {
+final class MyPageViewController: UIViewController, Toastable {
     typealias DataSource = RxTableViewSectionedReloadDataSource<MyMusicsSection>
-    
-    enum TableViewType: Int {
-        case dropMusic = 100
-        case likeMusic = 101
-    }
     
     private var stickyTapListStackView: UIStackView?
     private var stickyTopDimmedView: UIView?
@@ -29,6 +24,7 @@ final class MyPageViewController: UIViewController {
     
     private var viewModel: MyPageViewModel
     private let viewWillAppearEvent = PublishRelay<Void>()
+    private let selectedMusicEvent = PublishRelay<MusicInfo>()
     private let disposeBag = DisposeBag()
     
     init(viewModel: MyPageViewModel = MyPageViewModel()) {
@@ -188,7 +184,7 @@ final class MyPageViewController: UIViewController {
         tableView.register(MusicListSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: MusicListSectionHeaderView.identifier)
         tableView.sectionFooterHeight = 0
         tableView.tableFooterView = UIView()
-        tableView.tag = TableViewType.dropMusic.rawValue
+        tableView.tag = MyPageType.dropMusic.rawValue
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         return tableView
@@ -205,7 +201,7 @@ final class MyPageViewController: UIViewController {
         tableView.register(MusicListSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: MusicListSectionHeaderView.identifier)
         tableView.sectionFooterHeight = 0
         tableView.tableFooterView = UIView()
-        tableView.tag = TableViewType.likeMusic.rawValue
+        tableView.tag = MyPageType.likeMusic.rawValue
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         return tableView
@@ -555,13 +551,30 @@ private extension MyPageViewController {
                 self?.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
+        
+        dropMusicListTableView.rx.itemSelected
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, indexPath in
+                let itemID = owner.viewModel.myDropMusicList[indexPath.section][indexPath.row].id
+                owner.selectedMusicEvent.accept((MyPageType.dropMusic ,itemID))
+            }
+            .disposed(by: disposeBag)
+        
+        likeMusicListTableView.rx.itemSelected
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, indexPath in
+                let itemID = owner.viewModel.myLikeMusicList[indexPath.section][indexPath.row].id
+                owner.selectedMusicEvent.accept((MyPageType.likeMusic ,itemID))
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Data Binding
     
     private func bindViewModel() {
         let input = MyPageViewModel.Input(
-            viewWillAppearEvent: self.viewWillAppearEvent
+            viewWillAppearEvent: self.viewWillAppearEvent,
+            selectedMusicEvent: selectedMusicEvent
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
         
@@ -602,6 +615,32 @@ private extension MyPageViewController {
             .bind(onNext: { [weak self] count in
                 self?.likeCountLabel.text = "전체 \(count)개"
             })
+            .disposed(by: disposeBag)
+        
+        output.pushCommunityView
+            .bind(with: self) { owner, musics in
+                let communityViewModel = CommunityViewModel(
+                    communityInfos: musics,
+                    index: 0
+                )
+                
+                let communityViewController = CommunityViewController(viewModel: communityViewModel)
+                
+                self.navigationController?.pushViewController(
+                    communityViewController,
+                    animated: true
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        output.toast
+            .bind(with: self) { owner, message in
+                owner.showFailNormalToast(
+                    text: message,
+                    bottomInset: 44,
+                    duration: .now() + 3
+                )
+            }
             .disposed(by: disposeBag)
     }
 }
@@ -662,7 +701,7 @@ extension MyPageViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let type = TableViewType(rawValue: tableView.tag) {
+        if let type = MyPageType(rawValue: tableView.tag) {
             return configureHeaderView(
                 type: type,
                 tableView: tableView,
@@ -687,7 +726,7 @@ private extension MyPageViewController {
     }
     
     func configureHeaderView(
-        type: TableViewType,
+        type: MyPageType,
         tableView: UITableView,
         section: Int
     ) -> UIView? {

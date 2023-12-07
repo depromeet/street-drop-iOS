@@ -14,4 +14,5 @@ protocol MyInfoRepository {
     func saveMyInfo(_ myInfo: MyInfo) -> Single<Void>
     func fetchMyUserIDFromStorage() -> Int?
     func fetchMyMusicAppFromStorage() -> String?
+    func checkLaunchedBefore() -> Bool
 }

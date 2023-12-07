@@ -28,6 +28,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         let searchTextFieldEmptyEvent: Observable<Void>
         let keyBoardDidPressSearchEventWithKeyword: Observable<String>
         let recentQueryDidPressEvent: PublishRelay<String>
+        let recommendQueryDidPressEvent: PublishRelay<String>
         let tableViewCellDidPressedEvent: Observable<Int>
     }
     
@@ -35,6 +36,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         let searchedMusicList = PublishRelay<[Music]>()
         let recentMusicQueries = BehaviorRelay<[String]>(value: [""])
         let selectedMusic = PublishRelay<Music>()
+        let recommendMusicQueries = PublishRelay<RecommendMusic>()
     }
     
     init(
@@ -60,7 +62,14 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
                         }
                     }
                     .disposed(by: disposedBag)
-                
+                self?.model.fetchRecommendSearch().subscribe { result in
+                    switch result {
+                    case .success(let queries):
+                        output.recommendMusicQueries.accept(queries)
+                    case .failure(_):
+                        print("failure")
+                    }
+                }.disposed(by: disposedBag)
                 self?.fetchCurrentLocationVillageName()
             })
             .disposed(by: disposedBag)
@@ -83,6 +92,12 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         input.recentQueryDidPressEvent
             .bind { [weak self] recentQuery in
                 self?.searchMusic(output: output, keyword: recentQuery)
+            }
+            .disposed(by: disposedBag)
+        
+        input.recommendQueryDidPressEvent
+            .bind { [weak self] recommendQuery in
+                self?.searchMusic(output: output, keyword: recommendQuery)
             }
             .disposed(by: disposedBag)
         

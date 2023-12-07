@@ -12,6 +12,7 @@ import RxSwift
 protocol SearchingMusicRepository {
     func fetchMusic(keyword: String) -> Single<[Music]>
     func saveMusic(keyword: String)
+    func fetchRecommendMusicQueries() -> Single<RecommendMusic>
     func fetchRecentMusicQueries() -> Single<[String]>
     func fetchVillageName(latitude: Double, longitude: Double) -> Single<String>
 }

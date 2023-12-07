@@ -59,13 +59,14 @@ extension MainViewModel {
     }
     
     struct Output {
-        var location = PublishRelay<CLLocation>()
-        var cameraAddress = PublishRelay<String>()
-        var pois = PublishRelay<Pois>()
-        var musicCount = BehaviorRelay<Int>(value: 0)
-        var musicWithinArea = BehaviorRelay<Musics>(value: [])
-        var cameraShouldGoCurrentLocation = PublishRelay<CLLocation>()
-        var tappedPOIIndex = PublishRelay<Int>()
+        let location = PublishRelay<CLLocation>()
+        let cameraAddress = PublishRelay<String>()
+        let pois = PublishRelay<Pois>()
+        let musicCount = BehaviorRelay<Int>(value: 0)
+        let musicWithinArea = BehaviorRelay<Musics>(value: [])
+        let cameraShouldGoCurrentLocation = PublishRelay<CLLocation>()
+        let tappedPOIIndex = PublishRelay<Int>()
+        let showFirstComment = PublishRelay<Void>()
     }
 }
 
@@ -77,24 +78,24 @@ extension MainViewModel {
         input.viewDidLoadEvent
             .sample(self.locationUpdated) // 앱 실행 시, 두 이벤트 모두 들어올 경우 한번만 fetchPois
             .take(1)
-            .bind { [weak self] in
-                guard let self = self else { return }
-                self.fetchPois(output: output, disposedBag: disposedBag)
-                self.fetchMusicCount(
+            .bind(with: self) { owner, _ in
+                owner.fetchPois(output: output, disposedBag: disposedBag)
+                owner.fetchMusicCount(
                     latitude: self.location.coordinate.latitude,
                     longitude: self.location.coordinate.longitude,
                     output: output,
                     disposedBag: disposedBag
                 )
                 output.cameraShouldGoCurrentLocation.accept(self.location)
-                self.fetchMusicWithArea(output: output, disposedBag: disposedBag)
-                self.fetchMyInfoAndSave(disposedBag: disposedBag)
+                owner.fetchMusicWithArea(output: output, disposedBag: disposedBag)
+                owner.fetchMyInfoAndSave(disposedBag: disposedBag)
+                owner.checkAppFirstLaunched(output: output)
             }
             .disposed(by: disposedBag)
             
         input.viewWillAppearEvent // ViewWillAppear 시, fetchPois
             .skip(1) // 첫 ViewWillAppear땐 CLLocation 가져오지 못해 스킵
-            .bind {_ in
+            .bind(with: self) { owner, _ in
                 self.fetchPois(output: output, disposedBag: disposedBag)
                 self.fetchMusicCount(
                     latitude: self.location.coordinate.latitude,
@@ -262,6 +263,13 @@ private extension MainViewModel {
                 }
             }
             .disposed(by: disposedBag)
+    }
+    
+    func checkAppFirstLaunched(output: Output) {
+        let isLaunchedBefore = myInfoUseCase.checkLaunchedBefore()
+        if isLaunchedBefore == false {
+            output.showFirstComment.accept(Void())
+        }
     }
 }
 

@@ -17,3 +17,7 @@ protocol RecentMusicQueriesStorage {
         completion: @escaping (Result<RecentMusicQueryDTO, Error>) -> Void
     )
 }
+
+protocol RecommendMusicQueriesStorage {
+    func fetchRecommendQueries(completion: @escaping (Result<[RecommendMusic], Error>) -> Void)
+}

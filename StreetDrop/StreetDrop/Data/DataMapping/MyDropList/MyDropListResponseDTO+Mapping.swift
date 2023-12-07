@@ -36,6 +36,7 @@ struct MyDropListResponseDTO: Decodable {
     
     struct Music: Decodable {
         let title, artist, albumImage: String
+        let genre: [String]
     }
     
     struct User: Decodable {
@@ -49,7 +50,7 @@ struct MyDropListResponseDTO: Decodable {
             case nickname, profileImage, musicApp
         }
     }
-            
+    
     struct Meta: Decodable {
         let totalCount, nextCursor: Int
     }
@@ -63,10 +64,17 @@ extension MyDropListResponseDTO {
                     date: datum.date,
                     musics: datum.value.map { value in
                         .init(
+                            id: value.itemID,
+                            userId: value.user.userID,
+                            userName: value.user.nickname,
+                            userProfileImageURL: value.user.profileImage,
+                            musicApp: value.user.musicApp,
                             albumImageURL: value.music.albumImage,
                             singer: value.music.artist,
                             song: value.music.title,
+                            genre: value.music.genre,
                             comment: value.content,
+                            createdAt: value.createdAt,
                             location: value.location.address,
                             likeCount: value.itemLikeCount
                         )
@@ -77,5 +85,3 @@ extension MyDropListResponseDTO {
         )
     }
 }
-
-

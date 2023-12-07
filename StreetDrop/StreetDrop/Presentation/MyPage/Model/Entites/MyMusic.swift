@@ -9,10 +9,17 @@ import Foundation
 import RxDataSources
 
 struct MyMusic {
+    let id: Int
+    let userId: Int
+    var userName: String
+    let userProfileImageURL: String
+    let musicApp: String
     let albumImageURL: String
     let singer: String
     let song: String
+    let genre: [String]
     let comment: String
+    let createdAt: String
     let location: String
     let likeCount: Int
 }

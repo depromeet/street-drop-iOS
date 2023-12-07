@@ -34,4 +34,8 @@ final class DefaultMyInfoUseCase: MyInfoUseCase {
     func saveMyInfo(_ myInfo: MyInfo) -> Single<Void> {
         return myInfoRepository.saveMyInfo(myInfo)
     }
+    
+    func checkLaunchedBefore() -> Bool {
+        return myInfoRepository.checkLaunchedBefore()
+    }
 }

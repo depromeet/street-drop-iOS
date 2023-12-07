@@ -12,7 +12,9 @@ import Moya
 enum NetworkService {
     case getMyInfo
     case searchMusic(keyword: String)
+    case recommendMusic
     case dropMusic(requestDTO: DropMusicRequestDTO)
+    case getSingleMusic(itemID: Int) // 아이템 드랍 - 단건 조회
     case getMusicCountByDong(latitude: Double, longitude: Double)
     case getMusicWithinArea(latitude: Double, longitude: Double, distance: Double)
     case getCommunity(itemID: UUID)
@@ -57,8 +59,12 @@ extension NetworkService: TargetType {
             return "/community"
         case .dropMusic:
             return "/items"
+        case .getSingleMusic(let itemID):
+            return "/items/\(itemID)"
         case .searchMusic:
             return "/music"
+        case .recommendMusic:
+            return "/search-term/recommend"
         case .getMusicCountByDong:
             return "/villages/items/count"
         case .postLikeUp(let itemID):
@@ -96,9 +102,11 @@ extension NetworkService: TargetType {
         switch self {
         case .getMyInfo,
                 .searchMusic,
+                .recommendMusic,
                 .getMusicCountByDong,
                 .getPoi,
                 .getMusicWithinArea,
+                .getSingleMusic,
                 .getCommunity,
                 .getVillageName,
                 .myDropList,
@@ -121,7 +129,7 @@ extension NetworkService: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .getMyInfo, .myDropList, .myLikeList, .myLevel:
+        case .getMyInfo, .myDropList, .myLikeList, .myLevel, .recommendMusic:
             return .requestPlain
         case .searchMusic(let keyword):
             return .requestParameters(
@@ -129,6 +137,11 @@ extension NetworkService: TargetType {
                 encoding: URLEncoding.queryString)
         case .dropMusic(let dropRequestDTO):
             return .requestJSONEncodable(dropRequestDTO)
+        case .getSingleMusic(let itemID):
+            return .requestParameters(
+                parameters: ["itemID": itemID],
+                encoding: URLEncoding.queryString
+            )
         case .getMusicCountByDong(let latitude, let longitude):
             return .requestParameters(
                 parameters: [
@@ -145,21 +158,27 @@ extension NetworkService: TargetType {
                 encoding: URLEncoding.queryString
             )
         case .getCommunity(let itemID):
-            return .requestParameters(parameters: ["itemID": itemID],
-                                      encoding: URLEncoding.queryString)
+            return .requestParameters(
+                parameters: ["itemID": itemID],
+                encoding: URLEncoding.queryString
+            )
         case .postLikeUp(let itemID):
             return .requestParameters(
                 parameters: ["itemId": itemID],
-                encoding: URLEncoding.queryString)
+                encoding: URLEncoding.queryString
+            )
         case .postLikeDown(let itemID):
             return .requestParameters(
                 parameters: ["itemId": itemID],
-                encoding: URLEncoding.queryString)
+                encoding: URLEncoding.queryString
+            )
         case .getPoi(let lat, let lon, let distance):
             return .requestParameters(
-                parameters: ["latitude": lat,
-                             "longitude": lon,
-                             "distance": distance],
+                parameters: [
+                    "latitude": lat,
+                    "longitude": lon,
+                    "distance": distance
+                ],
                 encoding: URLEncoding.queryString
             )
         case .claimComment(let claimCommentRequestDTO):
@@ -193,9 +212,7 @@ extension NetworkService: TargetType {
             )
         case .editNickname(let nickname):
             return .requestParameters(
-                parameters: [
-                    "nickname": nickname
-                ],
+                parameters: ["nickname": nickname],
                 encoding: URLEncoding.queryString
             )
         }

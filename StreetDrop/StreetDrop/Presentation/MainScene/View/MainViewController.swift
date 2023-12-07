@@ -202,6 +202,13 @@ final class MainViewController: UIViewController, Toastable {
         button.isHidden = true
         return button
     }()
+    
+    private lazy var bubbleCommentView: BubbleCommentView = {
+        let view = BubbleCommentView()
+        view.configure(with: "음악을 드랍해보세요!")
+        view.isHidden = true
+        return view
+    }()
 }
 
 private extension MainViewController {
@@ -339,6 +346,16 @@ private extension MainViewController {
         }
         self.droppedMusicWithinAreaCollectionView.delegate = self
         self.setupInitialOffset()
+        
+        // MARK: - Bubble Comment View
+        
+        view.addSubview(bubbleCommentView)
+        bubbleCommentView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(148)
+            $0.height.equalTo(45)
+            $0.bottom.equalTo(musicDropButton.snp.top).offset(-10)
+        }
     }
     
     // MARK: - Action Binding
@@ -354,6 +371,12 @@ private extension MainViewController {
         
 // TODO: 1차 앱스토어 배포때는 실시간 위치정보 갱신을 하지 않기에, 추후 드랍하기 버튼 누를 시, 실제 사용자 위치정보는 좀 더 검토 필요
         musicDropButton.rx.tap
+            .do { [weak self] _ in
+                if let self = self,
+                   bubbleCommentView.isDescendant(of: view) {
+                    bubbleCommentView.removeFromSuperview()
+                }
+            }
             .bind { [weak self] in
                 guard let self = self,
                       self.viewModel.locationManager.checkAuthorizationStatus()
@@ -383,7 +406,6 @@ private extension MainViewController {
                     communityInfos: self.viewModel.musicWithinArea,
                     index: indexPath.row
                 )
-
                 communityViewModel.blockSuccessToast
                     .bind { [weak self] toastTitle in
                         self?.navigationController?.popToRootViewController(animated: true)
@@ -485,6 +507,12 @@ private extension MainViewController {
                 self.presentDial(currentIndex: currentIndex)
             }
             .disposed(by: disposeBag)
+        
+        output.showFirstComment
+            .bind(with: self) { owner, _ in
+                owner.bubbleCommentView.isHidden = false
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -559,6 +587,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
             self.droppedMusicWithinAreaCollectionView.isHidden = true
             self.bottomCoverImageView.isHidden = true
             self.backToMapButton.isHidden = true
+            self.bubbleCommentView.isHidden = false
         })
     }
     
@@ -775,8 +804,7 @@ private extension MainViewController {
     }
     
     func moveCameraToCurrentLocation(location: CLLocation) {
-        self.naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude,
-                                                               lng: location.coordinate.longitude)))
+        self.naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude,lng: location.coordinate.longitude)))
         self.naverMapView.moveCamera(NMFCameraUpdate(zoomTo: 14))
         self.locationOverlay.circleRadius = circleRadius / naverMapView.projection.metersPerPixel()
     }
@@ -784,17 +812,17 @@ private extension MainViewController {
     func combineImages(markerFrame: UIImage, album: UIImage) -> UIImage? {
         let size = markerFrame.size
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-
+        
         let albumRect = CGRect(x: 3, y: 3, width: album.size.width, height: album.size.height)
         album.draw(in: albumRect)
-
+        
         let markerRect = CGRect(x: 0, y: 0, width: markerFrame.size.width, height: markerFrame.size.height)
         markerFrame.draw(in: markerRect, blendMode: .normal, alpha: 1)
-
-
+        
+        
         let combinedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
+        
         return combinedImage
     }
     
@@ -838,6 +866,8 @@ private extension MainViewController {
     func bindPOIMarker(poiMarker: NMFMarker) {
         poiMarker.touchHandler = { [weak self] (_: NMFOverlay) -> Bool in
             guard let self = self else { return true }
+            self.bubbleCommentView.isHidden = true
+            
             if self.viewModel.isWithin(latitude: poiMarker.position.lat, longitude: poiMarker.position.lng) {
                 let poiID = Int(poiMarker.tag)
                 self.drawPOIMarker(poiMarker: poiMarker, poiID: poiID, isActivated: true)
