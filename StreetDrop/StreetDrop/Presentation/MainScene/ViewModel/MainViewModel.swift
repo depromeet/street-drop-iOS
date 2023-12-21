@@ -30,6 +30,7 @@ final class MainViewModel: ViewModel {
     private let fetchingPOIUseCase: FetchingPOIUseCase
     private let fetchingMusicCountUseCse: FetchingMusicCountUseCase
     private let fetchingMusicWithinArea: FetchingMusicWithinArea
+    private let fetchingSingleMusicUseCase: FetchingSingleMusicUseCase
     
     var locationManager = LocationManager()
     private let locationUpdated = PublishRelay<Void>()
@@ -38,12 +39,14 @@ final class MainViewModel: ViewModel {
         myInfoUseCase: MyInfoUseCase = DefaultMyInfoUseCase(),
         fetchingPOIUseCase: FetchingPOIUseCase = DefaultFetchingPOIUseCase(),
         fetchingMusicCountUseCse: FetchingMusicCountUseCase = DefaultFetchingMusicCountUseCase(),
-        fetchingMusicWithinArea: FetchingMusicWithinArea = DefaultFetchingMusicWithinArea()
+        fetchingMusicWithinArea: FetchingMusicWithinArea = DefaultFetchingMusicWithinArea(),
+        fetchingSingleMusicUseCase: FetchingSingleMusicUseCase = DefaultFetchingSingleMusicUseCase()
     ) {
         self.myInfoUseCase = myInfoUseCase
         self.fetchingPOIUseCase = fetchingPOIUseCase
         self.fetchingMusicCountUseCse = fetchingMusicCountUseCse
         self.fetchingMusicWithinArea = fetchingMusicWithinArea
+        self.fetchingSingleMusicUseCase = fetchingSingleMusicUseCase
         self.locationManager.delegate = self
     }
 }
