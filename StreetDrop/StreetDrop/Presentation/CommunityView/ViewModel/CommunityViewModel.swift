@@ -10,6 +10,8 @@ import Foundation
 import RxRelay
 import RxSwift
 
+typealias DropInfo = (isMyDrop: Bool, id: Int)
+
 final class CommunityViewModel: ViewModel {
 
     struct Input {
@@ -37,7 +39,7 @@ final class CommunityViewModel: ViewModel {
         var musicApp: PublishRelay<String> = .init()
         var isLiked: PublishRelay<Bool> = .init()
         var likeCount: PublishRelay<String> = .init()
-        var isMyDrop: PublishRelay<Bool> = .init()
+        var dropInfo: PublishRelay<DropInfo> = .init()
         var infoIsEmpty: PublishRelay<Void> = .init()
         var toast: PublishRelay<(isSuccess: Bool, title: String)> = .init()
     }
@@ -130,13 +132,11 @@ final class CommunityViewModel: ViewModel {
             }).disposed(by: disposedBag)
         
         input.tapOptionButtonEvent
-            .subscribe(onNext: { [weak self] index in
-                guard let self = self else { return }
-
-                let myUserID = fetchingMyInfoUseCase.fetchMyUserIDFromStorage()
-                let MusicInfoUserID = self.communityInfos[self.currentIndex].userId
-                output.isMyDrop.accept(myUserID == MusicInfoUserID)
-
+            .subscribe(with: self, onNext: { owner, index in
+                let myUserID = owner.fetchingMyInfoUseCase.fetchMyUserIDFromStorage()
+                let MusicInfoUserID = owner.communityInfos[owner.currentIndex].userId
+                let itemID = owner.communityInfos[owner.currentIndex].id
+                output.dropInfo.accept((myUserID == MusicInfoUserID, itemID))
             }).disposed(by: disposedBag)
 
         input.deleteEvent

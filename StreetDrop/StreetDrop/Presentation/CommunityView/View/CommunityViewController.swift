@@ -445,18 +445,16 @@ private extension CommunityViewController {
                 self?.likeCountLabel.text = likeCount
             }.disposed(by: disposeBag)
 
-        output.isMyDrop
-            .asDriver(onErrorJustReturn: false)
-            .drive { [weak self] isMyDrop in
+        output.dropInfo
+            .asDriver(onErrorJustReturn: (false, 0))
+            .drive { [weak self] dropInfo in
                 //내가 드랍한 음악이면 수정/삭제 모달
-                if isMyDrop {
-                    self?.showEditAndDeleteOptionModalView()
-                    return
+                if dropInfo.isMyDrop == true {
+                    self?.showOptionsModalView(itemID: dropInfo.id)
                 }
-
                 //남이 드랍한 음악이면 신고/차단 모달
-                if !isMyDrop {
-                    self?.showClaimAndBlockOptionModal()
+                else {
+                    self?.showOptionsModal(itemID: dropInfo.id)
                 }
             }
             .disposed(by: disposeBag)
@@ -847,20 +845,35 @@ extension CommunityViewController: ClaimModalViewModelDelegate {
 
 //MARK: - Modal
 private extension CommunityViewController {
-    func showEditAndDeleteOptionModalView() {
-        let modalView = OptionModalViewController(
-            firstOptionIcon: UIImage(named: "editIcon"),
-            firstOptionTitle: "수정하기",
-            firstOptionActon: presentEditView(),
-            secondOptionIcon: UIImage(named: "deleteIcon"),
-            secondOptionTitle: "삭제하기",
-            secondOptionAction: deleteComment()
+    func showOptionsModalView(itemID: Int) {
+        let shareOption = ModalOption(
+            icon: UIImage(named: "shareIcon"),
+            title: "공유하기",
+            acton: shareMusicAction(itemID: itemID)
         )
-
+        
+        let claimOption = ModalOption(
+            icon: UIImage(named: "editIcon"),
+            title: "수정하기",
+            acton: presentEditView()
+        )
+        
+        let blockOption = ModalOption(
+            icon: UIImage(named: "deleteIcon"),
+            title: "삭제하기",
+            acton: deleteComment()
+        )
+        
+        let modalView = OptionModalViewController(
+            firstOption: shareOption,
+            secondOption: claimOption,
+            thirdOption: blockOption
+        )
+        
         modalView.modalPresentationStyle = .overCurrentContext
         self.navigationController?.present(modalView, animated: true)
     }
-
+    
     func presentEditView() -> UIAction {
         return UIAction { [weak self] _ in
             guard let self = self else { return }
@@ -886,18 +899,52 @@ private extension CommunityViewController {
         }
     }
 
-    func showClaimAndBlockOptionModal() {
-        let modalView = OptionModalViewController(
-            firstOptionIcon: UIImage(named: "sirenIcon"),
-            firstOptionTitle: "신고하기",
-            firstOptionActon: presentClaimModalView(),
-            secondOptionIcon: UIImage(named: "blockIcon"),
-            secondOptionTitle: "차단하기",
-            secondOptionAction: showBlockAlert()
+    func showOptionsModal(itemID: Int) {
+        let shareOption = ModalOption(
+            icon: UIImage(named: "shareIcon"),
+            title: "공유하기",
+            acton: shareMusicAction(itemID: itemID)
         )
-
+        
+        let claimOption = ModalOption(
+            icon: UIImage(named: "sirenIcon"),
+            title: "신고하기",
+            acton: presentClaimModalView()
+        )
+        
+        let blockOption = ModalOption(
+            icon: UIImage(named: "blockIcon"),
+            title: "차단하기",
+            acton: showBlockAlert()
+        )
+        
+        let modalView = OptionModalViewController(
+            firstOption: shareOption,
+            secondOption: claimOption,
+            thirdOption: blockOption
+        )
+        
         modalView.modalPresentationStyle = .overCurrentContext
         self.navigationController?.present(modalView, animated: true)
+    }
+    
+    func shareMusicAction(itemID: Int) -> UIAction {
+        return UIAction { [weak self] _ in
+            guard let self = self else { return }
+            
+            self.navigationController?.dismiss(animated: true)
+            
+            debugPrint("share it")
+            var shareObject = [Any]()
+            
+            let shareLink = URL(string: "\(UniviersialLinkKey.sharingMusic.urlString)/music?itemID=\(itemID)")!
+            shareObject.append(shareLink)
+            
+            let activityView = UIActivityViewController(activityItems: shareObject, applicationActivities: nil)
+            activityView.popoverPresentationController?.sourceView = self.view
+            
+            self.present(activityView, animated: true)
+        }
     }
 
     func presentClaimModalView() -> UIAction {
