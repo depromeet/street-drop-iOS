@@ -48,9 +48,11 @@ final class CommunityViewModel: ViewModel {
     private let deletingMusicUseCase: DeletingMusicUseCase
     private let blockUserUseCase: BlockUserUseCase
     private let likingUseCase: LikingUseCase
+    private let fetchingSingleMusicUseCase: FetchingSingleMusicUseCase
     
     private let disposeBag: DisposeBag = DisposeBag()
     var blockSuccessToast:  PublishRelay<String> = .init()
+    var itemID: Int?
     
     init(
         communityInfos: [MusicWithinAreaEntity],
@@ -58,7 +60,8 @@ final class CommunityViewModel: ViewModel {
         fetchingMyInfoUseCase: FetchingMyInfoUseCase = DefaultFetchingMyInfoUseCase(),
         deletingMusicUseCase: DeletingMusicUseCase = DefaultDeletingMusicUseCase(),
         blockUserUseCase: BlockUserUseCase = DefaultBlockUserUseCase(),
-        likingUseCase: LikingUseCase = DefaultLikingUseCase()
+        likingUseCase: LikingUseCase = DefaultLikingUseCase(),
+        fetchingSingleMusicUseCase: FetchingSingleMusicUseCase = DefaultFetchingSingleMusicUseCase()
     ) {
         self.communityInfos = communityInfos
         self.currentIndex = index
@@ -66,29 +69,40 @@ final class CommunityViewModel: ViewModel {
         self.deletingMusicUseCase = deletingMusicUseCase
         self.blockUserUseCase = blockUserUseCase
         self.likingUseCase = likingUseCase
+        self.fetchingSingleMusicUseCase = fetchingSingleMusicUseCase
     }
 
     func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
         let output = Output()
 
         input.viewDidLoadEvent
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-
-                // 데이터가 1~3개일 때는 무한스크롤없이 첫번째/마지막쎌이 가운데로 스크롤되게하기위해 처음/마지막에 빈쎌을 넣어준상태
-                // ex [1, 2, 3]  ===>>> [ ] + [1, 2, 3] + [ ]
-                if (1...3).contains(self.communityInfos.count) {
-                    self.addEmptyInfoAtEachEnd()
-                    self.currentIndex += 1
+            .flatMapLatest {
+                if let itemID = self.itemID {
+                    return self.fetchingSingleMusicUseCase.fetchSingleMusic(itemID: itemID)
+                } else {
+                    return Single.create {
+                        $0(.success(self.communityInfos))
+                        return Disposables.create()
+                    }
+                }
+            }
+            .subscribe(with: self, onNext: { owner, musics in
+                UserDefaults.standard.removeObject(forKey: UserDefaultKey.sharedMusicItemID)
+                owner.communityInfos = musics
+                
+                if (1...3).contains(owner.communityInfos.count) {
+                    owner.addEmptyInfoAtEachEnd()
+                    owner.currentIndex += 1
                 }
                 
-                output.addressTitle.accept(self.communityInfos[self.currentIndex].address)
-                self.changeCommunityInfoForIndex(index: self.currentIndex, output: output)
-                let albumImagesURL = self.communityInfos.map { $0.albumImageURL }
+                output.addressTitle.accept(owner.communityInfos[owner.currentIndex].address)
+                owner.changeCommunityInfoForIndex(index: owner.currentIndex, output: output)
+                let albumImagesURL = owner.communityInfos.map { $0.albumImageURL }
                 output.albumImages.accept(albumImagesURL)
-                output.currentIndex.accept(self.currentIndex)
-            }).disposed(by: disposedBag)
-
+                output.currentIndex.accept(owner.currentIndex)
+            })
+            .disposed(by: disposeBag)
+        
         input.viewWillAppearEvent
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
@@ -244,7 +258,7 @@ private extension CommunityViewModel {
                 print(error.localizedDescription)
             }).disposed(by: disposeBag)
     }
-
+    
     func convertDateFormat(date: String) -> String {
         //"2023-05-21 01:13:14" -> "2023.05.21"
         let dateFormatter = DateFormatter()
@@ -338,19 +352,19 @@ private extension CommunityViewModel {
         }
     }
 
-    private func addEmptyInfoAtEachEnd() {
+    func addEmptyInfoAtEachEnd() {
         //ex [1, 2, 3]  ===>>> [ ] + [1, 2, 3] + [ ]
         self.communityInfos.insert(MusicWithinAreaEntity.generateEmptyData(), at: 0)
         self.communityInfos.append(MusicWithinAreaEntity.generateEmptyData())
     }
 
-    private func removeEmptyInfoAtEachEnd() {
+    func removeEmptyInfoAtEachEnd() {
         // ex) [ ] + [1, 2, 3] + [ ] ===>>> [1, 2, 3]
         self.communityInfos.remove(at: 0)
         self.communityInfos.remove(at: communityInfos.count-1)
     }
 
-    private func addOtherSideTwoInfoAtEachEnd() {
+    func addOtherSideTwoInfoAtEachEnd() {
         //ex [1,2,3,4,5] ===>>> [4,5] + [1,2,3,4,5] + [1,2]
         let infosCount = communityInfos.count
         let lastTwo = Array(self.communityInfos[(infosCount-2)...(infosCount-1)])
@@ -358,7 +372,7 @@ private extension CommunityViewModel {
         self.communityInfos = lastTwo + self.communityInfos + firstTwo
     }
 
-    private func removeOtherSideTwoInfoAtEachEnd() {
+    func removeOtherSideTwoInfoAtEachEnd() {
         //ex [4,5] + [1,2,3,4,5] + [1,2] ===>>> [1,2,3,4,5]
         self.communityInfos = Array(communityInfos[2...(communityInfos.count-3)])
     }
