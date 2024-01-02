@@ -16,27 +16,17 @@ final class OptionModalViewController: UIViewController {
     //MARK: - Life Cycle
 
     init(
-        firstOptionIcon: UIImage?,
-        firstOptionTitle: String,
-        firstOptionActon: UIAction,
-        secondOptionIcon: UIImage?,
-        secondOptionTitle: String,
-        secondOptionAction: UIAction
+        firstOption: ModalOption,
+        secondOption: ModalOption,
+        thirdOption: ModalOption
     ) {
         super.init(nibName: nil, bundle: nil)
         
-        self.firstOptionButton = self.generateOptionButton(
-            icon: firstOptionIcon,
-            title: firstOptionTitle
+        configureOptions(
+            firstOption: firstOption,
+            secondOption: secondOption,
+            thirdOption: thirdOption
         )
-
-        self.secondOptionButton = self.generateOptionButton(
-            icon: secondOptionIcon,
-            title: secondOptionTitle
-        )
-
-        firstOptionButton.addAction(firstOptionActon, for: .touchUpInside)
-        secondOptionButton.addAction(secondOptionAction, for: .touchUpInside)
     }
 
     @available(*, unavailable)
@@ -47,6 +37,7 @@ final class OptionModalViewController: UIViewController {
     //MARK: - UI
     private var firstOptionButton: UIButton = UIButton()
     private var secondOptionButton: UIButton = UIButton()
+    private var thirdOptionButton: UIButton = UIButton()
 
     private lazy var dimmedView: UIView = {
         let view = UIView()
@@ -71,12 +62,6 @@ final class OptionModalViewController: UIViewController {
         stackView.spacing = 8
 
         return stackView
-    }()
-
-    private lazy var dividingLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .gray600
-        return view
     }()
 
     override func viewDidLoad() {
@@ -109,10 +94,44 @@ private extension OptionModalViewController {
     }
 
     // MARK: - UI
+    
+    func configureOptions(
+        firstOption: ModalOption,
+        secondOption: ModalOption,
+        thirdOption: ModalOption
+    ) {
+        self.firstOptionButton = self.generateOptionButton(
+            icon: firstOption.icon,
+            title: firstOption.title
+        )
+
+        self.secondOptionButton = self.generateOptionButton(
+            icon: secondOption.icon,
+            title: secondOption.title
+        )
+        
+        self.thirdOptionButton = self.generateOptionButton(
+            icon: thirdOption.icon,
+            title: thirdOption.title
+        )
+
+        firstOptionButton.addAction(firstOption.acton, for: .touchUpInside)
+        secondOptionButton.addAction(secondOption.acton, for: .touchUpInside)
+        thirdOptionButton.addAction(secondOption.acton, for: .touchUpInside)
+    }
 
     func configureUI() {
-        let defaultHeigh: CGFloat = 176
-        [firstOptionButton, dividingLineView, secondOptionButton].forEach {
+        let firstDividingLineView = generateDividingView()
+        let secondDividingLineView = generateDividingView()
+        
+        let defaultHeigh: CGFloat = 224
+        [
+            firstOptionButton,
+            firstDividingLineView,
+            secondOptionButton,
+            secondDividingLineView,
+            thirdOptionButton
+        ].forEach {
             optionStackView.addArrangedSubview($0)
         }
 
@@ -136,13 +155,22 @@ private extension OptionModalViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
 
-        dividingLineView.snp.makeConstraints {
+        firstDividingLineView.snp.makeConstraints {
+            $0.height.equalTo(2)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        secondDividingLineView.snp.makeConstraints {
             $0.height.equalTo(2)
             $0.leading.trailing.equalToSuperview()
         }
 
         firstOptionButton.snp.makeConstraints {
             $0.height.equalTo(secondOptionButton.snp.height)
+        }
+        
+        secondOptionButton.snp.makeConstraints {
+            $0.height.equalTo(thirdOptionButton.snp.height)
         }
     }
 }
@@ -165,6 +193,12 @@ private extension OptionModalViewController {
         }
 
         return button
+    }
+    
+    func generateDividingView() -> UIView {
+        let view = UIView()
+        view.backgroundColor = .gray600
+        return view
     }
 
     @objc func dismiss(_ sender: UITapGestureRecognizer? = nil) {
