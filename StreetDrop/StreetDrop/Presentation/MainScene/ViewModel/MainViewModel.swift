@@ -30,7 +30,6 @@ final class MainViewModel: ViewModel {
     private let fetchingPOIUseCase: FetchingPOIUseCase
     private let fetchingMusicCountUseCse: FetchingMusicCountUseCase
     private let fetchingMusicWithinArea: FetchingMusicWithinArea
-    private let fetchingSingleMusicUseCase: FetchingSingleMusicUseCase
     
     var locationManager = LocationManager()
     private let locationUpdated = PublishRelay<Void>()
@@ -46,7 +45,6 @@ final class MainViewModel: ViewModel {
         self.fetchingPOIUseCase = fetchingPOIUseCase
         self.fetchingMusicCountUseCse = fetchingMusicCountUseCse
         self.fetchingMusicWithinArea = fetchingMusicWithinArea
-        self.fetchingSingleMusicUseCase = fetchingSingleMusicUseCase
         self.locationManager.delegate = self
     }
 }
@@ -70,6 +68,7 @@ extension MainViewModel {
         let cameraShouldGoCurrentLocation = PublishRelay<CLLocation>()
         let tappedPOIIndex = PublishRelay<Int>()
         let showFirstComment = PublishRelay<Void>()
+        let presentSharedMusicView = PublishRelay<Int>()
     }
 }
 
@@ -93,14 +92,15 @@ extension MainViewModel {
                 owner.fetchMusicWithArea(output: output, disposedBag: disposedBag)
                 owner.fetchMyInfoAndSave(disposedBag: disposedBag)
                 owner.checkAppFirstLaunched(output: output)
+                owner.checkUniversialLinkRemained(output: output)
             }
             .disposed(by: disposedBag)
             
         input.viewWillAppearEvent // ViewWillAppear 시, fetchPois
             .skip(1) // 첫 ViewWillAppear땐 CLLocation 가져오지 못해 스킵
             .bind(with: self) { owner, _ in
-                self.fetchPois(output: output, disposedBag: disposedBag)
-                self.fetchMusicCount(
+                owner.fetchPois(output: output, disposedBag: disposedBag)
+                owner.fetchMusicCount(
                     latitude: self.location.coordinate.latitude,
                     longitude: self.location.coordinate.longitude,
                     output: output,
@@ -272,6 +272,14 @@ private extension MainViewModel {
         let isLaunchedBefore = myInfoUseCase.checkLaunchedBefore()
         if isLaunchedBefore == false {
             output.showFirstComment.accept(Void())
+        }
+    }
+    
+    func checkUniversialLinkRemained(output: Output) {
+        let itemID = UserDefaults.standard.integer(forKey: UserDefaultKey.sharedMusicItemID)
+        
+        if itemID > 0 {
+            output.presentSharedMusicView.accept(itemID)
         }
     }
 }

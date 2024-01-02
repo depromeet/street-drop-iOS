@@ -400,25 +400,24 @@ private extension MainViewController {
                     self?.dismissDial()
                 }
             })
-            .bind { [weak self] indexPath in
-                guard let self = self else { return }
+            .bind(with: self) { owner, indexPath in
                 let communityViewModel = CommunityViewModel(
-                    communityInfos: self.viewModel.musicWithinArea,
+                    communityInfos: owner.viewModel.musicWithinArea,
                     index: indexPath.row
                 )
                 communityViewModel.blockSuccessToast
-                    .bind { [weak self] toastTitle in
-                        self?.navigationController?.popToRootViewController(animated: true)
-                        self?.showSuccessNormalToast(
+                    .bind(with: self) { owner, toastTitle in
+                        owner.navigationController?.popToRootViewController(animated: true)
+                        owner.showSuccessNormalToast(
                             text: toastTitle,
                             bottomInset: 96,
-                            duration: .now()+3
+                            duration: .now() + 3
                         )
                     }.disposed(by: self.disposeBag)
 
                 let communityViewController = CommunityViewController(viewModel: communityViewModel)
 
-                self.navigationController?.pushViewController(
+                owner.navigationController?.pushViewController(
                     communityViewController,
                     animated: true
                 )
@@ -511,6 +510,20 @@ private extension MainViewController {
         output.showFirstComment
             .bind(with: self) { owner, _ in
                 owner.bubbleCommentView.isHidden = false
+            }
+            .disposed(by: disposeBag)
+        
+        output.presentSharedMusicView
+            .delay(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, itemID in
+                let communityViewModel = CommunityViewModel(
+                    communityInfos: [],
+                    index: 0
+                )
+                communityViewModel.itemID = itemID
+                
+                let communityView = CommunityViewController(viewModel: communityViewModel)
+                owner.navigationController?.pushViewController(communityView, animated: true)
             }
             .disposed(by: disposeBag)
     }
