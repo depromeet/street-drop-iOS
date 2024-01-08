@@ -6,8 +6,8 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:deeplink.street-drop.com</string>
-		<string>webcredentials:deeplink.street-drop.com</string>
+		<string>applinks:open.street-drop.com</string>
+		<string>webcredentials:open.street-drop.com</string>
 	</array>
 </dict>
 </plist>
