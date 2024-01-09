@@ -22,17 +22,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = SplashViewController()
         window?.makeKeyAndVisible()
         
-        if let userActivity = connectionOptions.userActivities.filter({ $0.activityType == NSUserActivityTypeBrowsingWeb}).first {
-            handleUniversialLink(isLaunched: true, userActivity: userActivity)
-        }
+        checkInitLinks(connectionOptions: connectionOptions)
     }
     
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         handleUniversialLink(isLaunched: false, userActivity: userActivity)
     }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else { return }
+        handleDeepLink(isLaunched: false, url: url)
+    }
 }
 
+// MARK: - Private Methods
+
 private extension SceneDelegate {
+    func checkInitLinks(connectionOptions: UIScene.ConnectionOptions) {
+        if let userActivity = connectionOptions
+            .userActivities
+            .filter({ $0.activityType == NSUserActivityTypeBrowsingWeb})
+            .first {
+            handleUniversialLink(isLaunched: true, userActivity: userActivity)
+        }
+        
+        if let url = connectionOptions.urlContexts.first?.url {
+            handleDeepLink(isLaunched: true, url: url)
+        }
+    }
+    
     func handleUniversialLink(isLaunched: Bool, userActivity: NSUserActivity) {
         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
               let incomingURL = userActivity.webpageURL,
@@ -41,14 +59,25 @@ private extension SceneDelegate {
             return
         }
         
+        guard components.path == "/music" else { return }
+        handlingSharedMusic(isLaunched: isLaunched, components: components)
+    }
+    
+    func handleDeepLink(isLaunched: Bool, url: URL) {
+        if url.scheme == "streetdrop" {
+            if url.host == "music" {
+                guard let components = URLComponents(string: url.absoluteString) else { return }
+                handlingSharedMusic(isLaunched: isLaunched, components: components)
+            }
+        }
+    }
+    
+    func handlingSharedMusic(isLaunched: Bool, components: URLComponents) {
         guard let params = components.queryItems else { return }
         let items = parseLink(queryItem: params)
         
-        guard components.path == "/music" else { return }
-        
         if let itemIDValue = items["itemID"] as? String,
-            let itemID = Int(itemIDValue) {
-            print("itemID = \(itemID)")
+           let itemID = Int(itemIDValue) {
             if isLaunched == false {
                 navigateToCommunity(with: itemID)
             } else {
@@ -74,7 +103,8 @@ private extension SceneDelegate {
         let sceneDelegate = UIApplication.shared.connectedScenes
             .first!.delegate as? SceneDelegate
         
-        if let navigationView = topViewController(base: sceneDelegate?.window!.rootViewController)?.navigationController as? UINavigationController{
+        if let navigationView = topViewController(base: sceneDelegate?.window!.rootViewController)?
+            .navigationController as? UINavigationController{
             
             let communityViewModel = CommunityViewModel(
                 communityInfos: [],
