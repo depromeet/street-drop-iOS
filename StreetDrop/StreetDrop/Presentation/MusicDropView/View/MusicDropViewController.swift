@@ -170,6 +170,8 @@ class MusicDropViewController: UIViewController, Toastable, Alertable {
         textView.keyboardAppearance = .dark
         textView.keyboardDismissMode = .interactive
         textView.showsVerticalScrollIndicator = false
+        textView.returnKeyType = .done
+        textView.delegate = self
 
         return textView
     }()
@@ -531,6 +533,19 @@ private extension MusicDropViewController {
             $0.height.equalTo(54)
             $0.centerX.equalTo(contentView)
         }
+    }
+}
+
+// MARK: - UITextViewDelegate
+
+extension MusicDropViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            view.endEditing(true)
+            return false
+        }
+        
+        return true
     }
 }
 
