@@ -5,6 +5,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>youtubemusic</string>
+		<string>spotify</string>
 	</array>
 	<key>UIAppFonts</key>
 	<array>

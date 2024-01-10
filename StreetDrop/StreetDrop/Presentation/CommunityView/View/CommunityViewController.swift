@@ -731,14 +731,19 @@ private extension CommunityViewController {
         //FIXME: app, web 여는 로직 함수분리
         if musicApp == "spotify" {
             // urlScheme을 통해 스포티파이 앱으로 이동
-//            let spotifyAppURLString = "spotify://search/\(artistName) \(musicName)"
-//            if let encodedSpotifyAppURLString =
-//                spotifyAppURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-//               let encodedSpotifyAppURL = URL(string: encodedSpotifyAppURLString),
-//               UIApplication.shared.canOpenURL(encodedSpotifyAppURL) {
-//                UIApplication.shared.open(encodedSpotifyAppURL)
-//                return
-//            }
+            let spotifyAppURLString = "spotify:search:\(artistName) \(musicName)"
+            
+            
+            if let encodedSpotifyAppURLString =
+                spotifyAppURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                if let encodedSpotifyAppURL = URL(string: encodedSpotifyAppURLString) {
+                    if UIApplication.shared.canOpenURL(encodedSpotifyAppURL) {
+                        UIApplication.shared.open(encodedSpotifyAppURL)
+                        return
+                    }
+                }
+            }
+               
 
             // urlScheme을 통해 유튜브뮤직 스포티파이 이동 실패 시, 스포티파이 웹사이트 url으로 이동
             let spotifyWebURLString = "https://open.spotify.com/search/result/\(musicName)-\(artistName)"
