@@ -133,6 +133,7 @@
 		41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FF58FB2A06B38800ABB871 /* NetworkManagerTest.swift */; };
 		41FF59022A06B3A100ABB871 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
 		41FF59032A06B3A200ABB871 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
+		6A1386AB2B4F8A5000E49BB5 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1386AA2B4F8A5000E49BB5 /* String+Base64.swift */; };
 		6A26BF322B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A26BF312B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift */; };
 		6A26BF342B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */; };
 		B46578C32B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46578C22B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift */; };
@@ -355,6 +356,7 @@
 		41FF58F92A06B38800ABB871 /* NetworkManagerTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkManagerTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41FF58FB2A06B38800ABB871 /* NetworkManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerTest.swift; sourceTree = "<group>"; };
 		642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StreetDrop.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A1386AA2B4F8A5000E49BB5 /* String+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
 		6A26BF312B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingSingleMusicUseCase.swift; sourceTree = "<group>"; };
 		6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingSingleMusicUseCase.swift; sourceTree = "<group>"; };
 		B46578C22B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -1321,6 +1323,7 @@
 				414345012A31F17B003FEE2A /* UIViewController+Constant.swift */,
 				188F90C62A39FD7D003A1B4A /* UIImage+cornerRadius.swift */,
 				082F17232ADD60BB00174D98 /* UINavigation+Gesture.swift */,
+				6A1386AA2B4F8A5000E49BB5 /* String+Base64.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1667,6 +1670,7 @@
 				1876F04E2A66EE030064B887 /* MyLevel.swift in Sources */,
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
 				C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */,
+				6A1386AB2B4F8A5000E49BB5 /* String+Base64.swift in Sources */,
 				41396D8B2A4EFB2500B69341 /* EditCommentRepository.swift in Sources */,
 				1816ED3F2A68064E005009FC /* MyPageViewModel.swift in Sources */,
 				414345212A35B92A003FEE2A /* ResponseSampleData.swift in Sources */,
