@@ -73,30 +73,25 @@ private extension SceneDelegate {
     }
     
     func handlingSharedMusic(isLaunched: Bool, components: URLComponents) {
-        guard let params = components.queryItems else { return }
-        let items = parseLink(queryItem: params)
+        guard let query = components.query,
+              let decodedParams = query.fromBase64()
+        else { return }
         
-        if let itemIDValue = items["itemID"] as? String,
-           let itemID = Int(itemIDValue) {
-            if isLaunched == false {
-                navigateToCommunity(with: itemID)
+        print(decodedParams)
+        let items = decodedParams.split(separator: "=")
+        guard items.count > 1 else { return }
+        
+        if items.first == "itemID" {
+            if let itemID = Int(items[1]) {
+                if isLaunched == false {
+                    navigateToCommunity(with: itemID)
+                } else {
+                    UserDefaults.standard.set(itemID, forKey: UserDefaultKey.sharedMusicItemID)
+                }
             } else {
-                UserDefaults.standard.set(itemID, forKey: UserDefaultKey.sharedMusicItemID)
-            }
-        } else {
-            print("itemID missing")
-        }
-    }
-    
-    func parseLink(queryItem: [URLQueryItem]) -> [String: Any] {
-        var queryData = [String: Any]()
-        queryItem.forEach {
-            if let value = $0.value {
-                queryData[$0.name] = value
+                print("itemID missing")
             }
         }
-        
-        return queryData
     }
     
     func navigateToCommunity(with itemID: Int) {

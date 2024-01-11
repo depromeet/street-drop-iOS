@@ -942,7 +942,10 @@ private extension CommunityViewController {
             debugPrint("share it")
             var shareObject = [Any]()
             
-            let shareLink = URL(string: "\(UniviersialLinkKey.sharingMusic.urlString)/music?itemID=\(itemID)")!
+            let params = "itemID=\(itemID)"
+            let encodedParams = params.toBase64()
+
+            let shareLink = URL(string: "\(UniviersialLinkKey.sharingMusic.urlString)/music?\(encodedParams)")!
             shareObject.append(shareLink)
             
             let activityView = UIActivityViewController(activityItems: shareObject, applicationActivities: nil)
