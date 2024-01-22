@@ -74,7 +74,7 @@ private extension SceneDelegate {
     
     func handlingSharedMusic(isLaunched: Bool, components: URLComponents) {
         guard let query = components.query,
-              let decodedParams = query.fromBase64()
+              let decodedParams = query.fromSafeBase64()
         else { return }
         
         print(decodedParams)
