@@ -8,15 +8,27 @@
 import Foundation
 
 extension String {
-    func fromBase64() -> String? {
+    func fromSafeBase64() -> String? {
         guard let data = Data(base64Encoded: self) else {
             return nil
         }
         
-        return String(data: data, encoding: .utf8)
+        guard var url = String(data: data, encoding: .utf8)?
+            .replacingOccurrences(of: "_", with: "/")
+            .replacingOccurrences(of: "-", with: "+")
+        else { return nil }
+        
+        if url.count % 4 != 0 {
+            url.append(String(repeating: "=", count: 4 - url.count % 4))
+        }
+        
+        return url
     }
     
-    func toBase64() -> String {
-        return Data(self.utf8).base64EncodedString()
+    func toSafeBase64() -> String {
+        let base = self.replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "=", with: "")
+        return Data(base.utf8).base64EncodedString()
     }
 }
