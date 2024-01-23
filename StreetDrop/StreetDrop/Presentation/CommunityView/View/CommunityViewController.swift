@@ -938,7 +938,7 @@ private extension CommunityViewController {
             var shareObject = [Any]()
             
             let params = "itemID=\(itemID)"
-            let encodedParams = params.toSafeBase64()
+            let encodedParams = params.toBase64SafeURL()
 
             let shareLink = URL(string: "\(UniviersialLinkKey.sharingMusic.urlString)/music?\(encodedParams)")!
             shareObject.append(shareLink)
