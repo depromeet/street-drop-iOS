@@ -152,4 +152,10 @@ struct NetworkManager {
             .retry(3)
             .map { _ in }
     }
+    
+    func getUserCircleRadius() -> Single<Data> {
+        return provider.rx.request(.userCircleRadius)
+            .retry(3)
+            .map { $0.data }
+    }
 }
