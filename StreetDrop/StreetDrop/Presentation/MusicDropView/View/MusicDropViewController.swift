@@ -15,7 +15,7 @@ class MusicDropViewController: UIViewController, Toastable, Alertable {
 
     enum Constant {
         static let textDefault = " "
-        static let commentPlaceHolder: String = "음악에 대해 하고싶은 말이 있나요?"
+        static let commentPlaceHolder: String = "노래, 현재 감정, 상황, 관련 에피소드, 거리, 가수 등 떠오르는 말을 적어보세요."
         static let dropButtonTitle: String = "드랍하기"
         static let communityButtonTitle: String = "커뮤니티 가이드"
         static let defaultCommentCount: String = "0/40"
