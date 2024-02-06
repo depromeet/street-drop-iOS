@@ -8,8 +8,12 @@
 import UIKit
 
 import Lottie
+import RxSwift
 
-final class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController, Alertable {
+    private let viewModel: SplashViewModel = .init()
+    private let disposeBag: DisposeBag = .init()
+    
     private let lottieAnimationView: LottieAnimationView = {
         let lottieAnimationView: LottieAnimationView = .init(name: "splashAndDropAnimation")
         lottieAnimationView.contentMode = .scaleAspectFit
@@ -21,23 +25,48 @@ final class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        bindAction()
+        bindViewModel()
     }
 }
 
 private extension SplashViewController {
-    func bindAction() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
-            let mainViewController = MainViewController()
-            
-            let navigationController = UINavigationController(
-                rootViewController: mainViewController
-            )
-            
-            navigationController.modalPresentationStyle = .fullScreen
-            navigationController.modalTransitionStyle = .crossDissolve
-            self?.present(navigationController, animated: true)
-        })
+    func bindViewModel() {
+        let input: SplashViewModel.Input = .init(viewDidLoadEvent: .just(Void()))
+        let output: SplashViewModel.Output = viewModel.convert(input: input, disposedBag: disposeBag)
+        
+        output.errorAlertShow
+            .bind(with: self) { owner, errorMessage in
+                let exitAction = UIAction {_ in
+                    exit(1)
+                }
+                
+                owner.showAlert(
+                    state: .primary,
+                    title: "에러 발생",
+                    subText: errorMessage,
+                    confirmButtonTitle: "확인",
+                    confirmButtonAction: exitAction
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        output.goMainScene
+            .bind(with: self) { owner, userCircleRadius in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                    let mainViewController = MainViewController(
+                        viewModel: .init(userCircleRadius: userCircleRadius)
+                    )
+                    
+                    let navigationController = UINavigationController(
+                        rootViewController: mainViewController
+                    )
+                    
+                    navigationController.modalPresentationStyle = .fullScreen
+                    navigationController.modalTransitionStyle = .crossDissolve
+                    owner.present(navigationController, animated: true)
+                })
+            }
+            .disposed(by: disposeBag)
     }
     
     func configureUI() {

@@ -16,7 +16,7 @@ import RxSwift
 final class MainViewModel: ViewModel {
     var location: CLLocation = CLLocation()
     var poisDistance: Double = 600000 // 1차 앱스토어 배포 시엔, 대한민국 전체 조회를 위해 반지름 200KM로 조회
-    var detailItemsDistance: Double = 500
+    let userCircleRadius: Double
     var currentLocationAddress: String = ""
     var musicWithinArea: Musics = []
     var currentIndex: Int = 0
@@ -35,12 +35,14 @@ final class MainViewModel: ViewModel {
     private let locationUpdated = PublishRelay<Void>()
     
     init(
+        userCircleRadius: Double,
         myInfoUseCase: MyInfoUseCase = DefaultMyInfoUseCase(),
         fetchingPOIUseCase: FetchingPOIUseCase = DefaultFetchingPOIUseCase(),
         fetchingMusicCountUseCse: FetchingMusicCountUseCase = DefaultFetchingMusicCountUseCase(),
         fetchingMusicWithinArea: FetchingMusicWithinArea = DefaultFetchingMusicWithinArea(),
         fetchingSingleMusicUseCase: FetchingSingleMusicUseCase = DefaultFetchingSingleMusicUseCase()
     ) {
+        self.userCircleRadius = userCircleRadius
         self.myInfoUseCase = myInfoUseCase
         self.fetchingPOIUseCase = fetchingPOIUseCase
         self.fetchingMusicCountUseCse = fetchingMusicCountUseCse
@@ -156,7 +158,6 @@ extension MainViewModel {
     }
     
     func isWithin(latitude: Double, longitude: Double) -> Bool {
-        let radius: Double = 500
         let distanceFromCurrentLocation: Double = location.distance(
             from: CLLocation(
                 latitude: latitude,
@@ -164,7 +165,7 @@ extension MainViewModel {
             )
         )
         
-        return distanceFromCurrentLocation <= radius
+        return distanceFromCurrentLocation <= userCircleRadius
     }
     
     func addPOIMarker(_ poi: NMFMarker) {
@@ -196,7 +197,7 @@ private extension MainViewModel {
         fetchingMusicWithinArea.execute(
             lat: self.location.coordinate.latitude,
             lon: self.location.coordinate.longitude,
-            distance: self.detailItemsDistance
+            distance: userCircleRadius
         )
         .subscribe { result in
             switch result {
