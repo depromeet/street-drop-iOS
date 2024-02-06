@@ -188,6 +188,10 @@
 		C45BF3AA2A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */; };
 		C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */; };
 		C46410F42A629820009DD88F /* MusicAppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46410F32A629820009DD88F /* MusicAppButton.swift */; };
+		C4685B362B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B352B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift */; };
+		C4685B382B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B372B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift */; };
+		C4685B3A2B72610600F514C7 /* DefaultFetchingUserCircleRadiusUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B392B72610600F514C7 /* DefaultFetchingUserCircleRadiusUsecase.swift */; };
+		C4685B3D2B7261A000F514C7 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B3C2B7261A000F514C7 /* SplashViewModel.swift */; };
 		C472B1882AC5523300482B2D /* DroppingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C472B1872AC5523300482B2D /* DroppingInfo.swift */; };
 		C475839D2A5F114000CA7335 /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839A2A5F113F00CA7335 /* GoogleService-Info-Prod.plist */; };
 		C475839F2A5F114000CA7335 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */; };
@@ -402,6 +406,10 @@
 		C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicSearchScrollView.swift; sourceTree = "<group>"; };
 		C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentQueryButton.swift; sourceTree = "<group>"; };
 		C46410F32A629820009DD88F /* MusicAppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicAppButton.swift; sourceTree = "<group>"; };
+		C4685B352B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCircleRadiusResponseDTO.swift; sourceTree = "<group>"; };
+		C4685B372B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingUserCircleRadiusUsecase.swift; sourceTree = "<group>"; };
+		C4685B392B72610600F514C7 /* DefaultFetchingUserCircleRadiusUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingUserCircleRadiusUsecase.swift; sourceTree = "<group>"; };
+		C4685B3C2B7261A000F514C7 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		C472B1872AC5523300482B2D /* DroppingInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroppingInfo.swift; sourceTree = "<group>"; };
 		C475839A2A5F113F00CA7335 /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
 		C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
@@ -711,6 +719,8 @@
 				082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */,
 				C419722D2ABD9D6F00211222 /* MyInfoUseCase.swift */,
 				C419722F2ABDAB0200211222 /* DefaultMyInfoUseCase.swift */,
+				C4685B372B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift */,
+				C4685B392B72610600F514C7 /* DefaultFetchingUserCircleRadiusUsecase.swift */,
 				C41972332ABDB36600211222 /* FetchingPOIUseCase.swift */,
 				C41972352ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift */,
 				C41972372ABDB49400211222 /* FetchingMusicCountUseCase.swift */,
@@ -950,6 +960,7 @@
 			isa = PBXGroup;
 			children = (
 				41396D862A4EFA2900B69341 /* MyInfoResponseDTO.swift */,
+				C4685B352B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift */,
 			);
 			path = MyInfo;
 			sourceTree = "<group>";
@@ -1211,10 +1222,19 @@
 			path = RecentMusicSearch;
 			sourceTree = "<group>";
 		};
+		C4685B3B2B72618D00F514C7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C4685B3C2B7261A000F514C7 /* SplashViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		C47C1D1C2A643BBF007317EA /* Splash */ = {
 			isa = PBXGroup;
 			children = (
 				C47C1D1D2A643BCA007317EA /* View */,
+				C4685B3B2B72618D00F514C7 /* ViewModel */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -1599,6 +1619,7 @@
 				C47F022A2A3869DC00F48884 /* SettingsInfo.swift in Sources */,
 				41589ABA2A474B3D0029A2EE /* CommunityGuideDetailView.swift in Sources */,
 				41F23B4E2A1B6EE80083D2EC /* DropMusicRepository.swift in Sources */,
+				C4685B382B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift in Sources */,
 				18683FE12A349109005A94AC /* PoiEntity.swift in Sources */,
 				1876F03D2A66E0330064B887 /* MyDropListResponseDTO+Mapping.swift in Sources */,
 				41D097512A191D6700C011A0 /* MusicDropViewModel.swift in Sources */,
@@ -1634,6 +1655,7 @@
 				C434A4D02A17981C00C63526 /* DefaultSearchingMusicRepository.swift in Sources */,
 				414345232A35B9A3003FEE2A /* LikeMusicRepository.swift in Sources */,
 				040685042A01539800377094 /* MainViewController.swift in Sources */,
+				C4685B362B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift in Sources */,
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
 				C47583A12A5F11BD00CA7335 /* Bundle+APIKeys.swift in Sources */,
 				C472B1882AC5523300482B2D /* DroppingInfo.swift in Sources */,
@@ -1720,11 +1742,13 @@
 				C419723E2ABDB5D600211222 /* DefaultFetchingMusicWithinArea.swift in Sources */,
 				41396D972A4F04CB00B69341 /* MyInfoStorage.swift in Sources */,
 				1824F1372A349F3700A10320 /* MusicCountEntity.swift in Sources */,
+				C4685B3A2B72610600F514C7 /* DefaultFetchingUserCircleRadiusUsecase.swift in Sources */,
 				4141398F2A1FA252005418A1 /* PaddingLabel.swift in Sources */,
 				C41972422ABDC3D600211222 /* DefaultLikingUseCase.swift in Sources */,
 				1876F0412A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift in Sources */,
 				C419724E2ABDCABD00211222 /* DefaultBlockUserUseCase.swift in Sources */,
 				1876F0412A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift in Sources */,
+				C4685B3D2B7261A000F514C7 /* SplashViewModel.swift in Sources */,
 				082F17062AB6DFEC00174D98 /* MusicDropUseCase.swift in Sources */,
 				18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */,
 				C41972442ABDC43C00211222 /* ClaimingCommentUseCase.swift in Sources */,
