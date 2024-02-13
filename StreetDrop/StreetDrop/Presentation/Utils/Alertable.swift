@@ -49,6 +49,10 @@ extension Alertable where Self: UIViewController {
         alertViewController.modalPresentationStyle = .overFullScreen
         alertViewController.modalTransitionStyle = .crossDissolve
 
-        self.navigationController?.present(alertViewController, animated: true)
+        if let navigationController = navigationController {
+            navigationController.present(alertViewController, animated: true)
+        } else {
+            present(alertViewController, animated: true)
+        }
     }
 }

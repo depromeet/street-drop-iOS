@@ -33,9 +33,9 @@ final class SplashViewModel: ViewModel {
         input.viewDidLoadEvent
             .bind(with: self) { owner, _ in
                 owner.fetchingUserCircleRadiusUsecase.execute()
-                    .subscribe { userCircleRadius in
+                    .subscribe(with: self) { owner, userCircleRadius in
                         owner.output.goMainScene.accept(userCircleRadius)
-                    } onFailure: { error in
+                    } onFailure: { owner, error in
                         owner.output.errorAlertShow.accept(error.localizedDescription)
                     }
                     .disposed(by: disposedBag)
