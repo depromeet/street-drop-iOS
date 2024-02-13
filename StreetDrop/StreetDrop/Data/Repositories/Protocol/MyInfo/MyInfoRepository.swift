@@ -15,4 +15,5 @@ protocol MyInfoRepository {
     func fetchMyUserIDFromStorage() -> Int?
     func fetchMyMusicAppFromStorage() -> String?
     func checkLaunchedBefore() -> Bool
+    func fetchUserCircleRadius() -> Single<Double>
 }

@@ -18,7 +18,6 @@ final class MainViewController: UIViewController, Toastable {
     private var viewModel: MainViewModel
     private let currentLocationMarker = NMFMarker()
     private let disposeBag = DisposeBag()
-    private let circleRadius: Double = 500
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let viewWillAppearEvent = PublishRelay<Void>()
     private let poiMarkerDidTapEvent = PublishRelay<NMFMarker>()
@@ -30,7 +29,7 @@ final class MainViewController: UIViewController, Toastable {
         return layout.itemSize.width
     }
 
-    init(viewModel: MainViewModel = MainViewModel()) {
+    init(viewModel: MainViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
@@ -83,7 +82,7 @@ final class MainViewController: UIViewController, Toastable {
         let locationOverlay = self.naverMapView.locationOverlay
         locationOverlay.hidden = false
         locationOverlay.icon = NMFOverlayImage(name: "locationOverlayIcon")
-        locationOverlay.circleRadius = circleRadius / naverMapView.projection.metersPerPixel()
+        locationOverlay.circleRadius = viewModel.userCircleRadius / naverMapView.projection.metersPerPixel()
         locationOverlay.circleColor = UIColor.primary500_16
         
         return locationOverlay
@@ -819,7 +818,7 @@ private extension MainViewController {
     func moveCameraToCurrentLocation(location: CLLocation) {
         self.naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude,lng: location.coordinate.longitude)))
         self.naverMapView.moveCamera(NMFCameraUpdate(zoomTo: 14))
-        self.locationOverlay.circleRadius = circleRadius / naverMapView.projection.metersPerPixel()
+        self.locationOverlay.circleRadius = viewModel.userCircleRadius / naverMapView.projection.metersPerPixel()
     }
     
     func combineImages(markerFrame: UIImage, album: UIImage) -> UIImage? {
@@ -923,6 +922,6 @@ extension MainViewController: NMFMapViewCameraDelegate {
     }
     
     func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
-        self.locationOverlay.circleRadius = circleRadius / naverMapView.projection.metersPerPixel()
+        self.locationOverlay.circleRadius = viewModel.userCircleRadius / naverMapView.projection.metersPerPixel()
     }
 }

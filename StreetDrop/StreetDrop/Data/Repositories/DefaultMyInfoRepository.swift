@@ -45,4 +45,13 @@ final class DefaultMyInfoRepository: MyInfoRepository {
         }
         return isLaunchedBefore
     }
+    
+    func fetchUserCircleRadius() -> Single<Double> {
+        return networkManager.getUserCircleRadius()
+            .map({ data in
+                let dto = try JSONDecoder().decode(UserCircleRadiusResponseDTO.self, from: data)
+                
+                return Double(dto.distance)
+            })
+    }
 }
