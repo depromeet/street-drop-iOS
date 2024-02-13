@@ -1960,7 +1960,7 @@
 				DEVELOPMENT_TEAM = F8M76V73YG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StreetDrop/Resource/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "스트릿드랍";
+				INFOPLIST_KEY_CFBundleDisplayName = "스트릿드랍_dev";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 정보를 기반으로 현재 위치, 주변 음악 검색, 음악 추천, 컨텐츠 검색을 제공합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 정보를 기반으로 현재 위치, 주변 음악 검색, 음악 추천, 컨텐츠 검색을 제공합니다.";
