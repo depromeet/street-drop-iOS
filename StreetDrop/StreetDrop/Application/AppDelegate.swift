@@ -10,6 +10,7 @@ import UserNotifications
 
 import Firebase
 import FirebaseMessaging
+import GoogleMobileAds
 import NMapsMap
 import RxSwift
 
@@ -25,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self
+        
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, _ in

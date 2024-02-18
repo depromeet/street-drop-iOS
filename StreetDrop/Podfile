@@ -4,5 +4,6 @@
 target 'StreetDrop' do
 
     pod 'NMapsMap'
+    pod 'Google-Mobile-Ads-SDK'
 
 end
