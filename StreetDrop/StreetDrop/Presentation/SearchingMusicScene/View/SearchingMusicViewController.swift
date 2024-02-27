@@ -282,17 +282,10 @@ private extension SearchingMusicViewController {
             self.view.addSubview($0)
         }
         
-        self.bannerView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(320)
-            $0.height.equalTo(50)
-        }
-        
         self.searchView.snp.makeConstraints {
             // TODO: 56 -> 60으로 바꼈는지 추후에 피그마 확인
             $0.height.equalTo(56)
-//            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.top.equalTo(bannerView.snp.bottom).offset(10)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
@@ -355,12 +348,12 @@ private extension SearchingMusicViewController {
             $0.bottom.equalToSuperview().inset(60)
         }
         
-//        self.bannerView.snp.makeConstraints {
-//            $0.bottom.equalToSuperview()
-//            $0.centerX.equalToSuperview()
-//            $0.width.equalTo(320)
-//            $0.height.equalTo(50)
-//        }
+        self.bannerView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(320)
+            $0.height.equalTo(50)
+        }
     }
     
     func setRecommendData(_ query: [RecommendMusicData]) {
@@ -380,7 +373,7 @@ private extension SearchingMusicViewController {
     }
     
     func configureGADBannerView() {
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.adUnitID = GADUnitID.searchMusic
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
         bannerView.delegate = self
