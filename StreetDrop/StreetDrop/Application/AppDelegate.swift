@@ -8,7 +8,6 @@
 import UIKit
 import UserNotifications
 import AppTrackingTransparency
-import AdSupport
 
 import Firebase
 import FirebaseMessaging
@@ -25,35 +24,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        FirebaseApp.configure()
-        NMFAuthManager.shared().clientId = Bundle.main.naverMapsClientID
+        self.setupAppDependencies()
+        self.requestNotificationAuthorization()
         
-        self.requestIDFA()
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
-        
-        UNUserNotificationCenter.current().delegate = self
-        Messaging.messaging().delegate = self
-        
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, _ in
-            granted ? print("알림 등록이 완료되었습니다.") : Void()
-        }
         application.registerForRemoteNotifications()
-        
+
         return true
     }
-    
-    // MARK: UISceneSession Lifecycle
-    
-    func application(
-        _ application: UIApplication, 
-        configurationForConnecting connectingSceneSession: UISceneSession,
-        options: UIScene.ConnectionOptions
-    ) -> UISceneConfiguration {
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-    
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {}
     
     func application(
         _ application: UIApplication,
@@ -115,13 +92,27 @@ extension AppDelegate: MessagingDelegate {
 // MARK: - Private Methods
 
 private extension AppDelegate {
-    func requestIDFA() {
+    func setupAppDependencies() {
+        FirebaseApp.configure()
+        NMFAuthManager.shared().clientId = Bundle.main.naverMapsClientID
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        UNUserNotificationCenter.current().delegate = self
+        Messaging.messaging().delegate = self
+    }
+    
+    func requestNotificationAuthorization() {
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { [weak self] granted, _ in
+            granted ? print("알림 등록이 완료되었습니다.") : Void()
+            self?.requestIDFAAuthorization()
+        }
+    }
+    
+    func requestIDFAAuthorization() {
         // 개인 맞춤형 광고를 제공하고 있지 않음. (Admob 추가용)
-        ATTrackingManager.requestTrackingAuthorization { status in
-            if status == .authorized {
-                print("개인 맞춤형 광고 허용")
-            } else {
-                print("개인 맞춤형 광고 거부")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            if #available(iOS 14, *) {
+                ATTrackingManager.requestTrackingAuthorization(completionHandler: { _ in })
             }
         }
     }
