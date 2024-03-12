@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+import GoogleMobileAds
 
 final class SearchingMusicViewController: UIViewController {
     private let viewModel: DefaultSearchingMusicViewModel
@@ -31,6 +32,7 @@ final class SearchingMusicViewController: UIViewController {
         bindAction()
         bindViewModel()
         configureUI()
+        configureGADBannerView()
     }
     
     // MARK: - UI
@@ -130,6 +132,11 @@ final class SearchingMusicViewController: UIViewController {
         
         return tableView
     }()
+    
+    private var bannerView: GADBannerView = {
+        let bannerView = GADBannerView(adSize: GADAdSizeBanner)
+        return bannerView
+    }()
 }
 
 private extension SearchingMusicViewController {
@@ -163,12 +170,12 @@ private extension SearchingMusicViewController {
         
         self.recommendMusicSearchCollectionView.queryButtonDidTappedEvent
             .bind { recentQuery in
-            self.searchTextField.text = recentQuery
-            self.tableView.isHidden = false
-            self.recentMusicSearchView.isHidden = true
-            self.searchTextField.resignFirstResponder()
-        }
-        .disposed(by: disposeBag)
+                self.searchTextField.text = recentQuery
+                self.tableView.isHidden = false
+                self.recentMusicSearchView.isHidden = true
+                self.searchTextField.resignFirstResponder()
+            }
+            .disposed(by: disposeBag)
         
         self.backButton.rx.tap
             .bind {
@@ -269,7 +276,8 @@ private extension SearchingMusicViewController {
         [
             self.searchView,
             self.tableView,
-            self.recentMusicSearchView
+            self.recentMusicSearchView,
+            self.bannerView
         ].forEach {
             self.view.addSubview($0)
         }
@@ -277,7 +285,8 @@ private extension SearchingMusicViewController {
         self.searchView.snp.makeConstraints {
             // TODO: 56 -> 60으로 바꼈는지 추후에 피그마 확인
             $0.height.equalTo(56)
-            $0.top.equalTo(self.view.safeAreaLayoutGuide)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(bannerView.snp.bottom).offset(10)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
         }
@@ -335,12 +344,20 @@ private extension SearchingMusicViewController {
         
         self.tableView.snp.makeConstraints {
             $0.top.equalTo(self.searchView.snp.bottom).offset(26)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(60)
+        }
+        
+        self.bannerView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(320)
+            $0.height.equalTo(50)
         }
     }
     
-    private func setRecommendData(_ query: [RecommendMusicData]) {
-        var attributedString =  NSMutableAttributedString()
+    func setRecommendData(_ query: [RecommendMusicData]) {
+        let attributedString =  NSMutableAttributedString()
         let style = NSMutableParagraphStyle()
         style.maximumLineHeight = 32
         style.minimumLineHeight = 32
@@ -354,13 +371,53 @@ private extension SearchingMusicViewController {
         }
         questionLabel.attributedText = attributedString
     }
+    
+    func configureGADBannerView() {
+        bannerView.adUnitID = GADUnitID.searchMusic
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        bannerView.delegate = self
+    }
 }
 
 // MARK: - TextField
+
 extension SearchingMusicViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+// MARK: - GADBannerViewDelegate
+
+extension SearchingMusicViewController: GADBannerViewDelegate {
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("bannerViewDidReceiveAd")
+        bannerView.alpha = 0
+        UIView.animate(withDuration: 1, animations: {
+            bannerView.alpha = 1
+        })
+    }
+    
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+    
+    func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+        print("bannerViewDidRecordImpression")
+    }
+    
+    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+        print("bannerViewWillPresentScreen")
+    }
+    
+    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+        print("bannerViewWillDIsmissScreen")
+    }
+    
+    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+        print("bannerViewDidDismissScreen")
     }
 }
 
