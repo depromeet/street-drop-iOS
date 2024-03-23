@@ -941,12 +941,19 @@ private extension CommunityViewController {
             
             debugPrint("share it")
             var shareObject = [Any]()
-            
-            let params = "itemID=\(itemID)"
-            let encodedParams = params.toBase64SafeURL()
 
-            let shareLink = URL(string: "\(UniviersialLinkKey.sharingMusic.urlString)/music?\(encodedParams)")!
-            shareObject.append(shareLink)
+            let queryKeyParam = "itemID".base64UrlEncode() ?? ""
+            let queryValueParam = String(itemID).base64UrlEncode() ?? ""
+
+            var urlComponent = URLComponents()
+            
+            URLComponents(url:URL(string : UniviersialLinkKey.sharingMusic.urlString)!,
+                                          resolvingAgainstBaseURL: false)
+            
+            urlComponent.path = "/music"
+            urlComponent.queryItems = [URLQueryItem(name: queryKeyParam, value: queryValueParam)]
+
+            shareObject.append(shareLink?.url!)
             
             let activityView = UIActivityViewController(activityItems: shareObject, applicationActivities: nil)
             activityView.popoverPresentationController?.sourceView = self.view
