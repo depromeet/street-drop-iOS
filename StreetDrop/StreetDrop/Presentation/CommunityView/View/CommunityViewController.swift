@@ -945,15 +945,12 @@ private extension CommunityViewController {
             let queryKeyParam = "itemID".base64UrlEncode() ?? ""
             let queryValueParam = String(itemID).base64UrlEncode() ?? ""
 
-            var urlComponent = URLComponents()
-            
-            URLComponents(url:URL(string : UniviersialLinkKey.sharingMusic.urlString)!,
-                                          resolvingAgainstBaseURL: false)
+            var urlComponent = URLComponents(string : UniviersialLinkKey.sharingMusic.urlString)!
             
             urlComponent.path = "/music"
             urlComponent.queryItems = [URLQueryItem(name: queryKeyParam, value: queryValueParam)]
 
-            shareObject.append(shareLink?.url!)
+            shareObject.append(urlComponent.url!)
             
             let activityView = UIActivityViewController(activityItems: shareObject, applicationActivities: nil)
             activityView.popoverPresentationController?.sourceView = self.view
