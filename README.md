@@ -1,20 +1,78 @@
+# Street Drop - 스트릿 드랍 <a href="https://apps.apple.com/kr/app/%EC%8A%A4%ED%8A%B8%EB%A6%BF%EB%93%9C%EB%9E%8D-street-drop/id6450315928"><img src="https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/app-logo.png" align="left" width="100"></a>
 
-# 🎶 스트릿드랍 - Street Drop
-###  Walk in my playlist, Street Drop
-사용자 위치 기반 음악 공유 소셜 서비스, 스트릿드랍(Street Drop) <br><br>
-석촌 호수를 걸으면서 듣는 발라드, 산책 길에 듣는 활기찬 노래를 다른 사람에게 공유하고 싶었던 경험이 있나요? <br><br>
-이제 길에서 생각나는 음악을 코멘트와 함께 남기고 유저들과 소통할 수 있어요. <br>
-스트릿드랍과 함께 음악이 들리는 거리를 걸어보세요!
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fdepromeet%2Fstreet-drop-iOS&count_bg=%2328DBE6&title_bg=%232D3540&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
----
+## 💁‍♂️ Introduction
+![intro-main](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/intro-main.jpeg?raw=true)
 
-### 📮 Contact Info
-| 📧 Email | depromeet5@gmail.com |
-| --- | --- |
-| ☎️ Phone | +821090700234 |
----
+![intro-description](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/intro-description.jpeg?raw=true)
+![home](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/home.jpeg?raw=true)
+![let's-go](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/lets-go.jpeg?raw=true)
 
-<img width="700" alt="스크린샷 2023-06-16 오후 1 26 07" src="https://github.com/depromeet/street-drop-iOS/assets/107384230/4164780e-5fac-45d2-bf96-41ab19db1290"> <br>
-<img width="700" alt="스크린샷 2023-06-16 오후 1 24 42" src="https://github.com/depromeet/street-drop-iOS/assets/107384230/0d817873-c261-4f50-858a-231d64eda48f"> <br>
-<img width="700" alt="스크린샷 2023-06-16 오후 1 24 50" src="https://github.com/depromeet/street-drop-iOS/assets/107384230/0e9729f0-5658-4a85-ba0b-79ac2de39044"> <br>
-<img width="700" alt="스크린샷 2023-06-16 오후 1 25 17" src="https://github.com/depromeet/street-drop-iOS/assets/107384230/77c581fb-eeb0-4292-9e0e-39fdca1267e8"> <br>
+
+## 🚎 Architecture
+
+- Architecture: MVVM + Repository (with RxSwift)
+- Network LayerL Moya
+
+### 🗄️ Directory Structure and Dependency
+
+#### 📂 Directory Structure
+```
+.
+└── StreetDrop
+    ├── NetworkManagerTest
+    ├── StreetDrop
+    │   ├── Application
+    │   ├── Data
+    │   │   ├── DataMapping
+    │   │   ├── FCM
+    │   │   ├── PersistentStorages
+    │   │   │   └── UserDefaultsStorage
+    │   │   └── Repositories
+    │   ├── Domain
+    │   │   ├── Entity
+    │   │   └── UseCase
+    │   ├── Network
+    │   ├── Presentation
+    │   ├── Resource
+    │   └── Util
+    │       ├── Constant
+    │       ├── Error
+    │       ├── Extensions
+    │       ├── Font
+    │       └── Service
+    └──  StreetDrop.xcodeproj
+```
+
+
+#### 📦 Dependency
+-
+
+
+
+### 🖥️ Tech Stack
+#### UI - <img src="https://img.shields.io/badge/uikit-2396F3?style=for-the-social&logo=uikit&logoColor=white">  <img src="https://img.shields.io/badge/snapKit-000000?style=for-the-social&logo=ios&logoColor=white">  <img src="https://img.shields.io/badge/NmapsMap-4285F4?style=for-the-social&logo=googlemaps&logoColor=white">
+
+#### Network - <img src="https://img.shields.io/badge/Moya-e83c90?style=for-the-social&logoColor=white"> <img src="https://img.shields.io/badge/Alamoifre-d94227?style=for-the-social&logoColor=white">
+
+#### Reactive Programming - <img src="https://img.shields.io/badge/RxSwift-F05138?style=for-the-social&logo=swift&logoColor=white">
+
+
+#### Library Management - <img src="https://img.shields.io/badge/SPM-fe4329?style=for-the-social&logoColor=white"> <img src="https://img.shields.io/badge/cocoapods-EE3322?style=for-the-social&logo=cocoapods&logoColor=white">
+
+
+
+## 👥 Contributors
+### 👜 Repository
+- [Street Drop IOS Repository](https://github.com/depromeet/street-drop-iOS)
+- [Street Drop Server Repository](https://github.com/depromeet/street-drop-server)
+- [Street Drop Design Behance](https://www.behance.net/gallery/175696753/Street-Drop-Location-based-music-community-services)
+
+### 🧑‍💻 iOS Engineers
+
+Joseph Cha                                                                                                                                                                                                                                                 |                                                                                         Taehoon Kim                                                                                          |
+|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| <img src="https://avatars.githubusercontent.com/u/35060252?v=4" width="100" height="100" style="border-radius: 50%;"><br/><a href="https://github.com/joseph704" target="_blank"><img src="https://img.shields.io/badge/joseph704-181717?style=for-the-social&logo=github&logoColor=white"/></a> | <img src="https://avatars.githubusercontent.com/u/51147838?v=4" width="100" height="100" style="border-radius: 50%;"><br/><a href="https://github.com/thoonk" target="_blank"><img src="https://img.shields.io/badge/thoonk-181717?style=for-the-social&logo=github&logoColor=white"/></a> 
+
+### 🧑‍💻 iOS Contributor
