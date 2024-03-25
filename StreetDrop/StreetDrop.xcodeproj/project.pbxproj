@@ -137,6 +137,8 @@
 		6A26BF322B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A26BF312B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift */; };
 		6A26BF342B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */; };
 		6A3AFB582B8DB399003BD144 /* GADUnitID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3AFB572B8DB399003BD144 /* GADUnitID.swift */; };
+		6A7D73D92BB11A0E009340E3 /* LevelUpGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */; };
+		6A7D73DD2BB14015009340E3 /* GradientProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */; };
 		B46578C32B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46578C22B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		B4B9EE842ADBDFFB000A6507 /* RecommendMusicSearchCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9EE832ADBDFFB000A6507 /* RecommendMusicSearchCollectionView.swift */; };
 		B4B9EE862ADEB2AC000A6507 /* RecommendKeywordItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9EE852ADEB2AC000A6507 /* RecommendKeywordItemCell.swift */; };
@@ -377,6 +379,8 @@
 		6A26BF312B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingSingleMusicUseCase.swift; sourceTree = "<group>"; };
 		6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingSingleMusicUseCase.swift; sourceTree = "<group>"; };
 		6A3AFB572B8DB399003BD144 /* GADUnitID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GADUnitID.swift; sourceTree = "<group>"; };
+		6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpGuideView.swift; sourceTree = "<group>"; };
+		6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientProgressBar.swift; sourceTree = "<group>"; };
 		B46578C22B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		B4B9EE832ADBDFFB000A6507 /* RecommendMusicSearchCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendMusicSearchCollectionView.swift; sourceTree = "<group>"; };
 		B4B9EE852ADEB2AC000A6507 /* RecommendKeywordItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendKeywordItemCell.swift; sourceTree = "<group>"; };
@@ -842,6 +846,8 @@
 				18EF9FC82A5C51FB00266D27 /* NicknameEditViewController.swift */,
 				1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */,
 				0856524F2AFBB73100FD9BCB /* MyPageType.swift */,
+				6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */,
+				6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1687,6 +1693,7 @@
 				C41972462ABDC45000211222 /* DefaultClaimingCommentUseCase.swift in Sources */,
 				C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */,
 				C41972532ABED14200211222 /* DefaultMyInfoRepository.swift in Sources */,
+				6A7D73D92BB11A0E009340E3 /* LevelUpGuideView.swift in Sources */,
 				41396DA12A51B0DF00B69341 /* EditCommentViewController.swift in Sources */,
 				C44A549A2BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift in Sources */,
 				41008EBA2A49B56F00FD4ABE /* ClaimModalViewController.swift in Sources */,
@@ -1786,6 +1793,7 @@
 				1876F0472A66EDA20064B887 /* MyPageModel.swift in Sources */,
 				18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */,
 				1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */,
+				6A7D73DD2BB14015009340E3 /* GradientProgressBar.swift in Sources */,
 				B46578C32B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				C41BD2E92A38467A0090EF2B /* UIImageView+ImageCache.swift in Sources */,
 				41D0974F2A19065B00C011A0 /* UIView+generateCircleGradientView.swift in Sources */,
