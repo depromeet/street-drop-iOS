@@ -8,39 +8,15 @@
 import UIKit
 
 final class GradientProgressBar: UIView {
+
+    private var progress: CGFloat = 0.0
     
-    var gradientColors: [UIColor] = [
-        .pointGradient_1,
-        .pointGradient_2,
-        .pointGradient_3
-    ] {
+    var gradientColors: [UIColor] = [] {
         didSet {
-            gradientLayer.colors = gradientColors
+            gradientLayer.colors = gradientColors.map { $0.cgColor }
         }
     }
     
-    var progress: CGFloat = 0.0 {
-        didSet {
-            updateMaskLayer()
-        }
-    }
-    
-    private let gradientLayer: CAGradientLayer = {
-        let layer = CAGradientLayer()
-        layer.anchorPoint = .zero
-        layer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        layer.endPoint = CGPoint(x: 1, y: 0.5)
-        
-        return layer
-    }()
-    
-    let maskLayer: CALayer = {
-        let layer = CALayer()
-        layer.backgroundColor = UIColor.gray600.cgColor
-        
-        return layer
-    }()
-        
     var cornerRadius: CGFloat = 0 {
          didSet {
              self.layer.cornerRadius = cornerRadius
@@ -48,6 +24,19 @@ final class GradientProgressBar: UIView {
          }
     }
     
+    private let gradientLayer: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        layer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        layer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        return layer
+    }()
+    
+    private let maskLayer: CALayer = {
+        let mask = CALayer()
+        mask.backgroundColor = UIColor.white.cgColor
+        return mask
+    }()
+
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -63,15 +52,12 @@ final class GradientProgressBar: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer.frame = bounds
-        updateMaskLayer()
+        makeMaskLayerAnimation(animated: false)
     }
     
-    func setProgress(_ progress: CGFloat, animated: Bool = false) {
-        if animated {
-            animateMaskLayer()
-        }
-        
-        self.progress = progress
+    func setProgress(_ newProgress: CGFloat, animated: Bool = false) {
+        progress = min(max(newProgress, 0.0), 1.0)
+        makeMaskLayerAnimation(animated: animated)
     }
 }
 
@@ -79,24 +65,21 @@ final class GradientProgressBar: UIView {
 
 private extension GradientProgressBar {
     func setup() {
-        layer.addSublayer(gradientLayer)
-        gradientLayer.colors = gradientColors
+        backgroundColor = .gray600
+        setupLayers()
+    }
+    
+    func setupLayers() {
         gradientLayer.mask = maskLayer
+        layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    func animateMaskLayer() {
-        let animation = CABasicAnimation(keyPath: "bounds.size.width")
-        animation.fromValue = maskLayer.bounds.width
-        animation.toValue = bounds.width * progress
-        animation.duration = 0.25
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        maskLayer.add(animation, forKey: "bounds.size.width")
-    }
-    
-    func updateMaskLayer() {
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        maskLayer.frame = CGRect(x: 0, y: 0, width: bounds.width * progress, height: bounds.height)
-        CATransaction.commit()
+    func makeMaskLayerAnimation(animated: Bool) {
+        var maskLayerFrame = bounds
+        maskLayerFrame.size.width *= progress
+        
+        UIView.animate(withDuration: 1.5) { [weak self] in
+            self?.maskLayer.frame = maskLayerFrame
+        }
     }
 }
