@@ -7,18 +7,21 @@
 
 import UIKit
 
+import SnapKit
+import RxSwift
+import RxCocoa
+
 final class LevelUpGuideView: UIView {
     
-    private let remainDropGuideLabel: UILabel = {
+    fileprivate let remainDropGuideLabel: UILabel = {
         let label = UILabel()
         label.font = .pretendard(size: 16, weightName: .medium)
         label.textColor = .white
-        label.text = "음악을 1개 더 드랍하면 레벨업"
         
         return label
     }()
     
-    private lazy var progressBar: GradientProgressBar = {
+    fileprivate lazy var progressBar: GradientProgressBar = {
         let progressBar = GradientProgressBar()
         progressBar.gradientColors = [
             .pointGradient_1,
@@ -30,7 +33,7 @@ final class LevelUpGuideView: UIView {
         return progressBar
     }()
     
-    private let currentDropStateLabel: UILabel = {
+    fileprivate let currentDropStateLabel: UILabel = {
         let label = UILabel()
         label.font = .pretendard(size: 14, weightName: .medium)
         label.textColor = .gray400
@@ -67,7 +70,6 @@ final class LevelUpGuideView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        progressBar.setProgress(0.8, animated: true)
     }
 }
 
@@ -101,6 +103,38 @@ private extension LevelUpGuideView {
             $0.top.equalTo(currentDropStateLabel.snp.bottom).offset(20)
             $0.leading.trailing.bottom.equalToSuperview().inset(16)
             $0.height.equalTo(40)
+        }
+    }
+}
+
+// MARK: - LevelUpGuideView + Rx
+
+extension Reactive where Base: LevelUpGuideView {
+    var setRemainDropGuideText: Binder<Int> {
+        Binder(base) { base, remainCount in
+            let originText = "음악을 \(remainCount)개 더 드랍하면 레벨업"
+            let attributedText = NSMutableAttributedString(string: originText)
+                .setColor(.primary500, of: "\(remainCount)개")
+            base.remainDropGuideLabel.attributedText = attributedText
+        }
+    }
+    
+    var setCurrentDropStateText: Binder<(Int, Int)> {
+        Binder(base) { base, state in
+            let current = state.0
+            let total = state.1
+            let originText = "\(current)/\(total)"
+            let targetText = "\(current)"
+            let attributedText = NSMutableAttributedString(string: originText)
+                .setFont(.pretendard(size: 32, weight: 700), text: targetText)
+                .setColor(.white, of: targetText)
+            base.currentDropStateLabel.attributedText = attributedText
+        }
+    }
+    
+    var setProgress: Binder<Float> {
+        Binder(base) { base, progress in
+            base.progressBar.setProgress(CGFloat(progress))
         }
     }
 }
