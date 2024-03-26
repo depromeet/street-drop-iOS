@@ -17,13 +17,6 @@ final class GradientProgressBar: UIView {
         }
     }
     
-    var cornerRadius: CGFloat = 0 {
-         didSet {
-             self.layer.cornerRadius = cornerRadius
-             self.clipsToBounds = true
-         }
-    }
-    
     private let gradientLayer: CAGradientLayer = {
         let layer = CAGradientLayer()
         layer.startPoint = CGPoint(x: 0.0, y: 0.5)

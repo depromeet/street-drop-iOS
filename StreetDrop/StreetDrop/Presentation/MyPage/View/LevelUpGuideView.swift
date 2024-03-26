@@ -25,7 +25,7 @@ final class LevelUpGuideView: UIView {
             .pointGradient_2,
             .pointGradient_3
         ]
-        progressBar.cornerRadius = 4
+        progressBar.roundCorners(.allCorners, radius: 5)
         
         return progressBar
     }()
@@ -90,7 +90,7 @@ private extension LevelUpGuideView {
         
         addSubview(currentDropStateLabel)
         currentDropStateLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(18)
+            $0.top.equalToSuperview().inset(34)
             $0.leading.equalTo(remainDropGuideLabel.snp.trailing).offset(15)
             $0.trailing.equalToSuperview().inset(16)
         }
