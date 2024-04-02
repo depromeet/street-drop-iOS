@@ -75,5 +75,18 @@ enum ResponseSampleData {
                             ]
                         }
                         """.utf8)
-
+    
+    static let getPopUpInfomationSampleData = Data("""
+                        {
+                              "data": [
+                        {
+                                        "type" : "guide",
+                                        "content": {"id": 1,
+                                      "title": "더 많은 음악을 듣고 싶다면?",
+                                      "description": "레벨업하면 음악을 들을 수 있는 반경이 200M 더 넓어져요"
+                                        }
+                        }
+                                ]
+                        }
+                        """.utf8)
 }

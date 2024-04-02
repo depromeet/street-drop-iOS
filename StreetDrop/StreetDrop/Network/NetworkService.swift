@@ -241,6 +241,8 @@ extension NetworkService: TargetType {
             return ResponseSampleData.fetchNumberOfDroppedMusicByDongSampleData
         case .getPoi:
             return ResponseSampleData.getPOISampleData
+        case .getPopUpInfomation:
+            return ResponseSampleData.getPopUpInfomationSampleData
         default:
             return Data()
         }
