@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 protocol FetchingPopUpInfomationUseCase {
-    func execute() -> Single<PopUpInfomation>
+    func execute() -> Single<[PopUpInfomation]>
 }
