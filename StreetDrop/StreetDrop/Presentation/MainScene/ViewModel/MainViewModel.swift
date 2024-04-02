@@ -30,6 +30,7 @@ final class MainViewModel: ViewModel {
     private let fetchingPOIUseCase: FetchingPOIUseCase
     private let fetchingMusicCountUseCse: FetchingMusicCountUseCase
     private let fetchingMusicWithinArea: FetchingMusicWithinArea
+    private let fetchingPopUpInfomationUseCase: FetchingPopUpInfomationUseCase
     
     var locationManager = LocationManager()
     private let locationUpdated = PublishRelay<Void>()
@@ -40,13 +41,15 @@ final class MainViewModel: ViewModel {
         fetchingPOIUseCase: FetchingPOIUseCase = DefaultFetchingPOIUseCase(),
         fetchingMusicCountUseCse: FetchingMusicCountUseCase = DefaultFetchingMusicCountUseCase(),
         fetchingMusicWithinArea: FetchingMusicWithinArea = DefaultFetchingMusicWithinArea(),
-        fetchingSingleMusicUseCase: FetchingSingleMusicUseCase = DefaultFetchingSingleMusicUseCase()
+        fetchingSingleMusicUseCase: FetchingSingleMusicUseCase = DefaultFetchingSingleMusicUseCase(),
+        fetchingPopUpInfomationUseCase: FetchingPopUpInfomationUseCase = DefaultFetchingPopUpInfomationUseCase()
     ) {
         self.userCircleRadius = userCircleRadius
         self.myInfoUseCase = myInfoUseCase
         self.fetchingPOIUseCase = fetchingPOIUseCase
         self.fetchingMusicCountUseCse = fetchingMusicCountUseCse
         self.fetchingMusicWithinArea = fetchingMusicWithinArea
+        self.fetchingPopUpInfomationUseCase = fetchingPopUpInfomationUseCase
         self.locationManager.delegate = self
     }
 }
@@ -55,6 +58,7 @@ extension MainViewModel {
     struct Input {
         let viewDidLoadEvent: PublishRelay<Void>
         let viewWillAppearEvent: PublishRelay<Void>
+        let viewDidAppearEvent: Observable<Void>
         let poiMarkerDidTapEvent: PublishRelay<NMFMarker>
         let cameraDidStopEvent: PublishRelay<(latitude: Double, longitude: Double)>
         let homeButtonDidTapEvent: ControlEvent<Void>
@@ -71,6 +75,11 @@ extension MainViewModel {
         let tappedPOIIndex = PublishRelay<Int>()
         let showFirstComment = PublishRelay<Void>()
         let presentSharedMusicView = PublishRelay<Int>()
+        
+        let tipPopUpShowRelay: PublishRelay<PopUpInfomation> = .init()
+        var tipPopUpShow: Observable<PopUpInfomation> {
+            tipPopUpShowRelay.asObservable()
+        }
     }
 }
 
@@ -97,7 +106,30 @@ extension MainViewModel {
                 owner.checkUniversialLinkRemained(output: output)
             }
             .disposed(by: disposedBag)
-            
+        
+        input.viewDidAppearEvent
+            .bind(with: self) { owner, _ in
+                owner.fetchingPopUpInfomationUseCase.execute()
+                    .subscribe(with: self) { _, popUpInfomations in
+                        popUpInfomations.forEach {
+                            switch $0.type {
+                            case "guide":
+                                output.tipPopUpShowRelay.accept($0)
+                            case "levelUp":
+                                // TODO: 레벨업 팝업 띄우기
+                                break
+                            default:
+                                break
+                            }
+                        }
+                    } onFailure: { _, error in
+                        print(error.localizedDescription)
+                    }
+                    .disposed(by: disposedBag)
+
+            }
+            .disposed(by: disposedBag)
+        
         input.viewWillAppearEvent // ViewWillAppear 시, fetchPois
             .skip(1) // 첫 ViewWillAppear땐 CLLocation 가져오지 못해 스킵
             .bind(with: self) { owner, _ in
