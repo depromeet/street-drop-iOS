@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxSwift
+
 protocol Alertable { }
 
 // POP 기본구현
@@ -53,6 +55,33 @@ extension Alertable where Self: UIViewController {
             navigationController.present(alertViewController, animated: true)
         } else {
             present(alertViewController, animated: true)
+        }
+    }
+    
+    func showTipPopUp(
+        contentTitle: String,
+        contentDescription: String,
+        nextAction: @escaping () -> (),
+        disposeBag: DisposeBag
+    ){
+        let tipPopUpViewController: TipPopUpViewController = .init(
+            contentTitle: contentTitle,
+            contentDescription: contentDescription
+        )
+
+        tipPopUpViewController.modalPresentationStyle = .overFullScreen
+        tipPopUpViewController.modalTransitionStyle = .crossDissolve
+
+        tipPopUpViewController.nextActionButtonEvent
+            .bind {
+                nextAction()
+            }
+            .disposed(by: disposeBag)
+        
+        if let navigationController = navigationController {
+            navigationController.present(tipPopUpViewController, animated: true)
+        } else {
+            present(tipPopUpViewController, animated: true)
         }
     }
 }
