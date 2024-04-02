@@ -16,14 +16,14 @@ final class DefaultPopUpRepository: PopUpRepository {
         self.networkManager = networkManager
     }
     
-    func fetchPopUpInfomation() -> Single<PopUpInfomation> {
+    func fetchPopUpInfomation() -> Single<[PopUpInfomation]> {
         return networkManager.getPopUpInfomation()
             .map { data in
                 let dto = try JSONDecoder().decode(
                     FetchingPopUpInfomationResponseDTO.self,
                     from: data
                 )
-                return dto.toEntity()
+                return dto.toEntityList()
             }
     }
 }

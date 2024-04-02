@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 protocol PopUpRepository {
-    func fetchPopUpInfomation() -> Single<PopUpInfomation>
+    func fetchPopUpInfomation() -> Single<[PopUpInfomation]>
 }

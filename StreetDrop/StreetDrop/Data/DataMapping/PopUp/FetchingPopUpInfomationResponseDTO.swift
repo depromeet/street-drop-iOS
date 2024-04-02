@@ -8,22 +8,30 @@
 import Foundation
 
 struct FetchingPopUpInfomationResponseDTO: Decodable {
-    let type: String
-    let content: Content
-    struct Content: Decodable {
-        let id: Int
-        let title: String
-        let description: String
+    let data: [Self.Data]
+    
+    struct Data: Decodable {
+        let type: String
+        let content: Content
+        struct Content: Decodable {
+            let id: Int
+            let title: String
+            let description: String
+            let remainCount: Int?
+        }
     }
 }
 
 extension FetchingPopUpInfomationResponseDTO {
-    func toEntity() -> PopUpInfomation {
-        return .init(
-            type: type,
-            contentID: content.id,
-            contentTitle: content.title,
-            contentDescription: content.description
-        )
+    func toEntityList() -> [PopUpInfomation] {
+        return data.map {
+            .init(
+                type: $0.type,
+                contentID: $0.content.id,
+                contentTitle: $0.content.title,
+                contentDescription: $0.content.description,
+                levelUpRemainCount: $0.content.remainCount
+            )
+        }
     }
 }

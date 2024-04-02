@@ -12,4 +12,5 @@ struct PopUpInfomation {
     let contentID: Int
     let contentTitle: String
     let contentDescription: String
+    let levelUpRemainCount: Int?
 }

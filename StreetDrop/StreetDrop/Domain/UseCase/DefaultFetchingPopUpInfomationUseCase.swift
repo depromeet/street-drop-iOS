@@ -16,7 +16,7 @@ final class DefaultFetchingPopUpInfomationUseCase: FetchingPopUpInfomationUseCas
         self.repository = repository
     }
     
-    func execute() -> Single<PopUpInfomation> {
+    func execute() -> Single<[PopUpInfomation]> {
         return repository.fetchPopUpInfomation()
     }
 }
