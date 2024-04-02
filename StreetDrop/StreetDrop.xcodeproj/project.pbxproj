@@ -183,6 +183,7 @@
 		C44A54982BBC08D200354F8F /* DefaultPopUpRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54972BBC08D200354F8F /* DefaultPopUpRepository.swift */; };
 		C44A549A2BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54992BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift */; };
 		C44A549C2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A549B2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift */; };
+		C44A549E2BBC0DC500354F8F /* TipPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A549D2BBC0DC500354F8F /* TipPopUpViewController.swift */; };
 		C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */; };
 		C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */; };
 		C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */; };
@@ -412,6 +413,7 @@
 		C44A54972BBC08D200354F8F /* DefaultPopUpRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPopUpRepository.swift; sourceTree = "<group>"; };
 		C44A54992BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingPopUpInfomationUseCase.swift; sourceTree = "<group>"; };
 		C44A549B2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingPopUpInfomationUseCase.swift; sourceTree = "<group>"; };
+		C44A549D2BBC0DC500354F8F /* TipPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipPopUpViewController.swift; sourceTree = "<group>"; };
 		C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheError.swift; sourceTree = "<group>"; };
 		C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKey.swift; sourceTree = "<group>"; };
 		C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRecentMusicSearches.swift; sourceTree = "<group>"; };
@@ -1073,6 +1075,7 @@
 				41BCFD442A38C099001D3E5F /* Alertable.swift */,
 				413ABEE72A39BBA500EA1010 /* Toastable.swift */,
 				41A3DDF02A593ED4004CFA2F /* AlertViewController.swift */,
+				C44A549D2BBC0DC500354F8F /* TipPopUpViewController.swift */,
 				41A3DDEA2A58428F004CFA2F /* ToastView.swift */,
 				4141398E2A1FA252005418A1 /* PaddingLabel.swift */,
 				41396D9A2A4F1C5600B69341 /* OptionModalViewController.swift */,
@@ -1737,6 +1740,7 @@
 				413ABEE82A39BBA500EA1010 /* Toastable.swift in Sources */,
 				414345022A31F17B003FEE2A /* UIViewController+Constant.swift in Sources */,
 				040685022A01539800377094 /* SceneDelegate.swift in Sources */,
+				C44A549E2BBC0DC500354F8F /* TipPopUpViewController.swift in Sources */,
 				C4D16FC92A1B9338008B076F /* UIFont+Extension.swift in Sources */,
 				41A9BEB02A4AF45300F3605C /* ClaimModalViewModel.swift in Sources */,
 				04FB1F322A021C330064B3C8 /* TestError.swift in Sources */,
