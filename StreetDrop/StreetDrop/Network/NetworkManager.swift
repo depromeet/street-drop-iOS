@@ -158,4 +158,10 @@ struct NetworkManager {
             .retry(3)
             .map { $0.data }
     }
+    
+    func getPopUpInfomation() -> Single<Data> {
+        return provider.rx.request(.getPopUpInfomation)
+            .retry(3)
+            .map { $0.data }
+    }
 }
