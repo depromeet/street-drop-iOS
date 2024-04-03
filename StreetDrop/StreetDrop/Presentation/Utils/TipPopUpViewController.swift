@@ -49,11 +49,28 @@ final class TipPopUpViewController: UIViewController {
         return imageView
     }()
     
-    // FIXME: 나중에 contentTitle을 사용한 그라데이션 UILabel로 변경바람. 바꾸면서 configureUI도 변경 필요
-    private let guidingImageView: UIImageView = {
-        let imageView: UIImageView = .init(image: .init(named: "guidingMoreMusic"))
+    private lazy var moreMusicLabel: GradientLabel = {
+        let gradientLabel: GradientLabel = .init(
+            colors: [
+                UIColor(hexString: "#B0C6FF"),
+                UIColor(hexString: "#CBB3FF"),
+                UIColor(hexString: "#71FFF6"),
+                UIColor(hexString: "#F7F7F7"),
+                UIColor(hexString: "#DCCCFF")
+            ],
+            locations: [
+                0.1034,
+                0.2517,
+                0.5688,
+                0.7459,
+                0.8941
+            ]
+        )
+        gradientLabel.text = contentTitle
+        gradientLabel.font = .pretendard(size: 20, weightName: .bold)
+        gradientLabel.setLineHeight(lineHeight: 28)
         
-        return imageView
+        return gradientLabel
     }()
     
     private let tipImageView: UIImageView = {
@@ -123,7 +140,7 @@ private extension TipPopUpViewController {
         view.addSubview(containerView)
         [
             tipBadgeImageView,
-            guidingImageView,
+            moreMusicLabel,
             tipImageView,
             descriptionLabel,
             nextActionButton,
@@ -145,17 +162,17 @@ private extension TipPopUpViewController {
             $0.centerX.equalToSuperview()
         }
         
-        guidingImageView.snp.makeConstraints {
-            $0.width.equalTo(217)
-            $0.height.equalTo(18)
-            $0.top.equalTo(tipBadgeImageView.snp.bottom).offset(13)
+        moreMusicLabel.snp.makeConstraints {
+            $0.width.equalTo(238)
+            $0.height.equalTo(28)
+            $0.top.equalTo(tipBadgeImageView.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
         }
         
         tipImageView.snp.makeConstraints {
             $0.width.equalTo(124)
             $0.height.equalTo(98.17)
-            $0.top.equalTo(guidingImageView.snp.bottom).offset(18)
+            $0.top.equalTo(moreMusicLabel.snp.bottom).offset(13)
             $0.centerX.equalToSuperview()
         }
         
