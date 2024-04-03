@@ -215,6 +215,8 @@
 		C49BA7832A1BE71700A83E95 /* SearchingMusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CB2A1796F300C63526 /* SearchingMusicViewModel.swift */; };
 		C49BA7852A1BE72900A83E95 /* RxCocoa-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = C49BA7842A1BE72900A83E95 /* RxCocoa-Dynamic */; };
 		C49BA7872A1BE72900A83E95 /* RxCocoa-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C49BA7842A1BE72900A83E95 /* RxCocoa-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		C49EDACC2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49EDACB2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift */; };
+		C49EDACE2BBD7EFE0025DB55 /* GradientLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49EDACD2BBD7EFE0025DB55 /* GradientLabel.swift */; };
 		C4A056792A6315BD00AE2F0B /* NaverMaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4A056782A6315BD00AE2F0B /* NaverMaps.plist */; };
 		C4A0567B2A631D6E00AE2F0B /* CustomSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0567A2A631D6E00AE2F0B /* CustomSwitch.swift */; };
 		C4A445902A5EF225008279C1 /* FCMTokenRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4458F2A5EF225008279C1 /* FCMTokenRequestDTO.swift */; };
@@ -435,6 +437,8 @@
 		C47F02232A38633C00F48884 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		C47F02272A3864A500F48884 /* SettingElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingElementView.swift; sourceTree = "<group>"; };
 		C47F02292A3869DC00F48884 /* SettingsInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInfo.swift; sourceTree = "<group>"; };
+		C49EDACB2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationsLevelUpPopUpViewController.swift; sourceTree = "<group>"; };
+		C49EDACD2BBD7EFE0025DB55 /* GradientLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLabel.swift; sourceTree = "<group>"; };
 		C4A056782A6315BD00AE2F0B /* NaverMaps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = NaverMaps.plist; path = "../../../../../Downloads/APIKey Plist/NaverMaps.plist"; sourceTree = "<group>"; };
 		C4A0567A2A631D6E00AE2F0B /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
 		C4A4458F2A5EF225008279C1 /* FCMTokenRequestDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMTokenRequestDTO.swift; sourceTree = "<group>"; };
@@ -1076,6 +1080,7 @@
 				413ABEE72A39BBA500EA1010 /* Toastable.swift */,
 				41A3DDF02A593ED4004CFA2F /* AlertViewController.swift */,
 				C44A549D2BBC0DC500354F8F /* TipPopUpViewController.swift */,
+				C49EDACB2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift */,
 				41A3DDEA2A58428F004CFA2F /* ToastView.swift */,
 				4141398E2A1FA252005418A1 /* PaddingLabel.swift */,
 				41396D9A2A4F1C5600B69341 /* OptionModalViewController.swift */,
@@ -1376,6 +1381,7 @@
 				188F90C62A39FD7D003A1B4A /* UIImage+cornerRadius.swift */,
 				082F17232ADD60BB00174D98 /* UINavigation+Gesture.swift */,
 				6A1386AA2B4F8A5000E49BB5 /* String+Base64.swift */,
+				C49EDACD2BBD7EFE0025DB55 /* GradientLabel.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1733,6 +1739,7 @@
 				6A1386AB2B4F8A5000E49BB5 /* String+Base64.swift in Sources */,
 				41396D8B2A4EFB2500B69341 /* EditCommentRepository.swift in Sources */,
 				1816ED3F2A68064E005009FC /* MyPageViewModel.swift in Sources */,
+				C49EDACE2BBD7EFE0025DB55 /* GradientLabel.swift in Sources */,
 				414345212A35B92A003FEE2A /* ResponseSampleData.swift in Sources */,
 				41589AB82A46D82F0029A2EE /* DropAnimationView.swift in Sources */,
 				18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */,
@@ -1775,6 +1782,7 @@
 				C4BB15982A5EC507001BC5E8 /* FCMRepository.swift in Sources */,
 				41396DA42A51B61000B69341 /* EditCommentViewModel.swift in Sources */,
 				049F50222A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift in Sources */,
+				C49EDACC2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift in Sources */,
 				41A9BEB92A4DCA4A00F3605C /* ClaimCommentRepository.swift in Sources */,
 				C45BF3A32A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */,
 				041038972A126E7B00BC5532 /* MusicCountByDongResponseDTO+Mapping.swift in Sources */,
