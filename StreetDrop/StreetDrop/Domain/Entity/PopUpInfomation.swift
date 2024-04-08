@@ -10,6 +10,7 @@ import Foundation
 struct PopUpInfomation {
     let type: String
     let contentID: Int
+    let popupName: String
     let contentTitle: String
     let contentDescription: String
     let levelUpRemainCount: Int?
