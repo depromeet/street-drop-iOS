@@ -72,7 +72,7 @@ extension Alertable where Self: UIViewController {
         tipPopUpViewController.modalPresentationStyle = .overFullScreen
         tipPopUpViewController.modalTransitionStyle = .crossDissolve
 
-        tipPopUpViewController.nextActionButtonEvent
+        tipPopUpViewController.buttonClickedEvent
             .bind {
                 nextAction()
             }
