@@ -205,10 +205,9 @@ private extension CongratulationsLevelUpPopUpViewController {
         }
         
         conffettiLottieAnimationView.snp.makeConstraints {
-            $0.width.equalTo(211.59)
-            $0.height.equalTo(69.35)
-            $0.top.equalTo(levelUpImageView).offset(24)
-            $0.centerX.equalToSuperview()
+            $0.height.equalTo(124)
+            $0.top.equalTo(congratulationLabel.snp.bottom).offset(12)
+            $0.horizontalEdges.equalToSuperview().inset(28)
         }
         
         descriptionLabel.snp.makeConstraints {
