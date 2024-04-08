@@ -31,6 +31,7 @@ final class MainViewModel: ViewModel {
     private let fetchingMusicCountUseCse: FetchingMusicCountUseCase
     private let fetchingMusicWithinArea: FetchingMusicWithinArea
     private let fetchingPopUpInfomationUseCase: FetchingPopUpInfomationUseCase
+    private let postingPopUpUserReadingUseCase: PostingPopUpUserReadingUseCase
     
     var locationManager = LocationManager()
     private let locationUpdated = PublishRelay<Void>()
@@ -42,7 +43,8 @@ final class MainViewModel: ViewModel {
         fetchingMusicCountUseCse: FetchingMusicCountUseCase = DefaultFetchingMusicCountUseCase(),
         fetchingMusicWithinArea: FetchingMusicWithinArea = DefaultFetchingMusicWithinArea(),
         fetchingSingleMusicUseCase: FetchingSingleMusicUseCase = DefaultFetchingSingleMusicUseCase(),
-        fetchingPopUpInfomationUseCase: FetchingPopUpInfomationUseCase = DefaultFetchingPopUpInfomationUseCase()
+        fetchingPopUpInfomationUseCase: FetchingPopUpInfomationUseCase = DefaultFetchingPopUpInfomationUseCase(),
+        postingPopUpUserReadingUseCase: PostingPopUpUserReadingUseCase = DefaultPostingPopUpUserReadingUseCase()
     ) {
         self.userCircleRadius = userCircleRadius
         self.myInfoUseCase = myInfoUseCase
@@ -50,6 +52,7 @@ final class MainViewModel: ViewModel {
         self.fetchingMusicCountUseCse = fetchingMusicCountUseCse
         self.fetchingMusicWithinArea = fetchingMusicWithinArea
         self.fetchingPopUpInfomationUseCase = fetchingPopUpInfomationUseCase
+        self.postingPopUpUserReadingUseCase = postingPopUpUserReadingUseCase
         self.locationManager.delegate = self
     }
 }
@@ -211,6 +214,16 @@ extension MainViewModel {
     func removeAllPOIMarkers() {
         self.poiMarkers.forEach { $0.mapView = nil }
         self.poiMarkers = []
+    }
+    
+    func postPopUpUserReading(popUpInfomation: PopUpInfomation, disposeBag: DisposeBag) {
+        postingPopUpUserReadingUseCase.execute(type: popUpInfomation.type, id: popUpInfomation.contentID)
+            .subscribe { _ in
+                print("post Popup User Reading 성공")
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
