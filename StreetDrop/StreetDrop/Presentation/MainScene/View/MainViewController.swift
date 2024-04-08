@@ -557,6 +557,21 @@ private extension MainViewController {
                 )
             }
             .disposed(by: disposeBag)
+        
+        output.congratulationsLevelUpPopUpShow
+            .bind(with: self) { owner, popUpInfomation in
+                owner.showCongratulationsLevelUpPopUp(
+                    contentTitle: popUpInfomation.contentTitle,
+                    contentDescription: popUpInfomation.contentDescription, 
+                    popupName: popUpInfomation.popupName,
+                    remainCount: popUpInfomation.levelUpRemainCount,
+                    nextAction: {
+                        
+                    },
+                    disposeBag: owner.disposeBag
+                )
+            }
+            .disposed(by: disposeBag)
     }
 }
 
