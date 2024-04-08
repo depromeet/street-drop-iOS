@@ -16,7 +16,8 @@ final class TipPopUpViewController: UIViewController {
     private let contentDescription: String
     private let nextActionButtonTitle: String
     private let disposeBag: DisposeBag = .init()
-    let buttonClickedEvent: PublishRelay<Void> = .init()
+    let nextActionButtonClickedEvent: PublishRelay<Void> = .init()
+    let cancelButtonClickedEvent: PublishRelay<Void> = .init()
     
     init(
         contentTitle: String,
@@ -119,16 +120,21 @@ final class TipPopUpViewController: UIViewController {
 
 private extension TipPopUpViewController {
     func bindAction() {
-        Observable.merge(
-            closeButton.rx.tap.asObservable(),
-            nextActionButton.rx.tap.asObservable()
-        )
-        .do(onNext: { [weak self] in
-            guard let self = self else { return }
-            dismiss(animated: true)
-        })
-        .bind(to: buttonClickedEvent)
-        .disposed(by: disposeBag)
+        nextActionButton.rx.tap
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                dismiss(animated: true)
+            })
+            .bind(to: nextActionButtonClickedEvent)
+            .disposed(by: disposeBag)
+        
+        closeButton.rx.tap
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                dismiss(animated: true)
+            })
+            .bind(to: cancelButtonClickedEvent)
+            .disposed(by: disposeBag)
     }
     
     func configureUI() {

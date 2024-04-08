@@ -62,6 +62,7 @@ extension Alertable where Self: UIViewController {
         contentTitle: String,
         contentDescription: String,
         nextAction: @escaping () -> (),
+        cancelAction: @escaping () -> (),
         disposeBag: DisposeBag
     ){
         let tipPopUpViewController: TipPopUpViewController = .init(
@@ -72,9 +73,15 @@ extension Alertable where Self: UIViewController {
         tipPopUpViewController.modalPresentationStyle = .overFullScreen
         tipPopUpViewController.modalTransitionStyle = .crossDissolve
 
-        tipPopUpViewController.buttonClickedEvent
+        tipPopUpViewController.nextActionButtonClickedEvent
             .bind {
                 nextAction()
+            }
+            .disposed(by: disposeBag)
+        
+        tipPopUpViewController.cancelButtonClickedEvent
+            .bind {
+                cancelAction()
             }
             .disposed(by: disposeBag)
         

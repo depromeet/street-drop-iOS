@@ -552,7 +552,9 @@ private extension MainViewController {
                                 searchingMusicViewController,
                                 animated: true
                             )
-                        
+                    }, 
+                    cancelAction: { [weak self] in
+                        guard let self = self else { return }
                         viewModel.postPopUpUserReading(popUpInfomation: popUpInfomation, disposeBag: disposeBag)
                     },
                     disposeBag: owner.disposeBag
