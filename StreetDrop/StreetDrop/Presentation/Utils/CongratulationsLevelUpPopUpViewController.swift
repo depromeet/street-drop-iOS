@@ -152,6 +152,10 @@ final class CongratulationsLevelUpPopUpViewController: UIViewController {
 private extension CongratulationsLevelUpPopUpViewController {
     func bindAction() {
         closeButton.rx.tap
+            .do(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                dismiss(animated: true)
+            })
             .bind(to: closeButtonEvent)
             .disposed(by: disposedBag)
     }
