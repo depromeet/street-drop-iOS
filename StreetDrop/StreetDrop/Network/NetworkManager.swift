@@ -164,4 +164,17 @@ struct NetworkManager {
             .retry(3)
             .map { $0.data }
     }
+    
+    func postPopUpUserReading(type: String, id: Int) -> Single<Void> {
+        return provider.rx.request(
+            .postPopUpUserReading(
+                requestDTO: .init(
+                    type: type,
+                    id: id
+                )
+            )
+        )
+        .retry(3)
+        .map { _ in }
+    }
 }

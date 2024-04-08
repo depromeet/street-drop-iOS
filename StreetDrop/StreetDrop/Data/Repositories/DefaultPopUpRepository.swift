@@ -26,4 +26,8 @@ final class DefaultPopUpRepository: PopUpRepository {
                 return dto.toEntityList()
             }
     }
+    
+    func postPopUpUserReading(type: String, id: Int) -> Single<Void> {
+        return networkManager.postPopUpUserReading(type: type, id: id)
+    }
 }

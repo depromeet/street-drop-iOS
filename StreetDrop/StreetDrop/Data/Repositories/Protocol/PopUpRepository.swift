@@ -11,4 +11,5 @@ import RxSwift
 
 protocol PopUpRepository {
     func fetchPopUpInfomation() -> Single<[PopUpInfomation]>
+    func postPopUpUserReading(type: String, id: Int) -> Single<Void>
 }
