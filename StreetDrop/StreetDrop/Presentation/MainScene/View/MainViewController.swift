@@ -552,6 +552,8 @@ private extension MainViewController {
                                 searchingMusicViewController,
                                 animated: true
                             )
+                        
+                        viewModel.postPopUpUserReading(popUpInfomation: popUpInfomation, disposeBag: disposeBag)
                     },
                     disposeBag: owner.disposeBag
                 )
@@ -565,8 +567,9 @@ private extension MainViewController {
                     contentDescription: popUpInfomation.contentDescription, 
                     popupName: popUpInfomation.popupName,
                     remainCount: popUpInfomation.levelUpRemainCount,
-                    nextAction: {
-                        
+                    nextAction: { [weak self] in
+                        guard let self = self else { return }
+                        viewModel.postPopUpUserReading(popUpInfomation: popUpInfomation, disposeBag: disposeBag)
                     },
                     disposeBag: owner.disposeBag
                 )
