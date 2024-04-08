@@ -88,6 +88,15 @@ final class CongratulationsLevelUpPopUpViewController: UIViewController {
         return imageView
     }()
     
+    private let conffettiLottieAnimationView: LottieAnimationView = {
+        let lottieAnimationView: LottieAnimationView = .init(name: "confetti")
+        lottieAnimationView.contentMode = .scaleAspectFill
+        lottieAnimationView.play()
+        lottieAnimationView.loopMode = .loop
+        
+        return lottieAnimationView
+    }()
+    
     private lazy var descriptionLabel: UILabel = {
         let label: UILabel = .init()
         label.font = .pretendard(size: 14, weightName: .medium)
@@ -167,6 +176,7 @@ private extension CongratulationsLevelUpPopUpViewController {
         [
             congratulationLabel,
             levelUpImageView,
+            conffettiLottieAnimationView,
             descriptionLabel,
             closeButton,
             remainCountLabel
@@ -191,6 +201,13 @@ private extension CongratulationsLevelUpPopUpViewController {
             $0.width.equalTo(129)
             $0.height.equalTo(110)
             $0.top.equalTo(congratulationLabel.snp.bottom).offset(15)
+            $0.centerX.equalToSuperview()
+        }
+        
+        conffettiLottieAnimationView.snp.makeConstraints {
+            $0.width.equalTo(211.59)
+            $0.height.equalTo(69.35)
+            $0.top.equalTo(levelUpImageView).offset(24)
             $0.centerX.equalToSuperview()
         }
         
