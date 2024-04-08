@@ -34,6 +34,7 @@ enum NetworkService {
     case editNickname(nickname: String)
     case userCircleRadius
     case getPopUpInfomation
+    case postPopUpUserReading(requestDTO: PopUpUserReadingRequestDTO)
 }
 
 extension NetworkService: TargetType {
@@ -101,6 +102,8 @@ extension NetworkService: TargetType {
             return "/users/me/distance"
         case .getPopUpInfomation:
             return "/pop-up"
+        case .postPopUpUserReading:
+            return "/pop-up/read"
         }
     }
     
@@ -126,7 +129,8 @@ extension NetworkService: TargetType {
                 .postLikeDown,
                 .claimComment,
                 .blockUser,
-                .postFCMToken:
+                .postFCMToken,
+                .postPopUpUserReading:
             return .post
         case .editComment, .patchUsersMusicApp, .editNickname:
             return .patch
@@ -223,6 +227,8 @@ extension NetworkService: TargetType {
                 parameters: ["nickname": nickname],
                 encoding: URLEncoding.queryString
             )
+        case let .postPopUpUserReading(requestDTO):
+            return .requestJSONEncodable(requestDTO)
         }
     }
     

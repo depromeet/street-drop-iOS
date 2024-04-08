@@ -178,6 +178,9 @@
 		C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
 		C434A4DD2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
 		C44980782BC37CB70001E6C3 /* NaverMaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = C44980772BC37CB70001E6C3 /* NaverMaps.plist */; };
+		C449807A2BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44980792BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift */; };
+		C449807C2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C449807B2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift */; };
+		C449807E2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C449807D2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift */; };
 		C44A54912BBC076000354F8F /* PopUpRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54902BBC076000354F8F /* PopUpRepository.swift */; };
 		C44A54932BBC07AA00354F8F /* PopUpInfomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54922BBC07AA00354F8F /* PopUpInfomation.swift */; };
 		C44A54962BBC082D00354F8F /* FetchingPopUpInfomationResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54952BBC082D00354F8F /* FetchingPopUpInfomationResponseDTO.swift */; };
@@ -410,6 +413,9 @@
 		C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicViewModelTest.swift; sourceTree = "<group>"; };
 		C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicTableViewCell.swift; sourceTree = "<group>"; };
 		C44980772BC37CB70001E6C3 /* NaverMaps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NaverMaps.plist; sourceTree = "<group>"; };
+		C44980792BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpUserReadingRequestDTO.swift; sourceTree = "<group>"; };
+		C449807B2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingPopUpUserReadingUseCase.swift; sourceTree = "<group>"; };
+		C449807D2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPostingPopUpUserReadingUseCase.swift; sourceTree = "<group>"; };
 		C44A54902BBC076000354F8F /* PopUpRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpRepository.swift; sourceTree = "<group>"; };
 		C44A54922BBC07AA00354F8F /* PopUpInfomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpInfomation.swift; sourceTree = "<group>"; };
 		C44A54952BBC082D00354F8F /* FetchingPopUpInfomationResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingPopUpInfomationResponseDTO.swift; sourceTree = "<group>"; };
@@ -765,6 +771,8 @@
 				6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */,
 				C44A54992BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift */,
 				C44A549B2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift */,
+				C449807B2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift */,
+				C449807D2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift */,
 				082F170A2AB6E42800174D98 /* MusicDrop */,
 			);
 			path = UseCase;
@@ -1200,6 +1208,7 @@
 			isa = PBXGroup;
 			children = (
 				C44A54952BBC082D00354F8F /* FetchingPopUpInfomationResponseDTO.swift */,
+				C44980792BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift */,
 			);
 			path = PopUp;
 			sourceTree = "<group>";
@@ -1703,6 +1712,7 @@
 				C47583A12A5F11BD00CA7335 /* Bundle+APIKeys.swift in Sources */,
 				C472B1882AC5523300482B2D /* DroppingInfo.swift in Sources */,
 				1876F0442A66E6E00064B887 /* MyPageRepository.swift in Sources */,
+				C449807E2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift in Sources */,
 				C41972302ABDAB0200211222 /* DefaultMyInfoUseCase.swift in Sources */,
 				41396D8F2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift in Sources */,
 				41396D822A4EF65B00B69341 /* EditCommentRequestDTO.swift in Sources */,
@@ -1801,6 +1811,7 @@
 				18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */,
 				C41972442ABDC43C00211222 /* ClaimingCommentUseCase.swift in Sources */,
 				082F17092AB6E41100174D98 /* DefaultMusicDropUseCase.swift in Sources */,
+				C449807A2BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift in Sources */,
 				412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */,
 				1816ED462A6858DE005009FC /* NicknameEditRepository.swift in Sources */,
 				C41972402ABDC3B000211222 /* LikingUseCase.swift in Sources */,
@@ -1823,6 +1834,7 @@
 				188D2C7B2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift in Sources */,
 				41396D9B2A4F1C5600B69341 /* OptionModalViewController.swift in Sources */,
 				C47C1D1F2A643C07007317EA /* SplashViewController.swift in Sources */,
+				C449807C2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
