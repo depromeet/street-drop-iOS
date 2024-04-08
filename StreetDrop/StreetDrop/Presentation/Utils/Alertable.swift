@@ -84,4 +84,35 @@ extension Alertable where Self: UIViewController {
             present(tipPopUpViewController, animated: true)
         }
     }
+    
+    func showCongratulationsLevelUpPopUp(
+        contentTitle: String,
+        contentDescription: String,
+        popupName: String,
+        remainCount: Int?,
+        nextAction: @escaping () -> (),
+        disposeBag: DisposeBag
+    ){
+        let congratulationsLevelUpPopUpViewController: CongratulationsLevelUpPopUpViewController = .init(
+            contentTitle: contentTitle,
+            contentDescription: contentDescription, 
+            popupName: popupName,
+            remainCount: remainCount
+        )
+
+        congratulationsLevelUpPopUpViewController.modalPresentationStyle = .overFullScreen
+        congratulationsLevelUpPopUpViewController.modalTransitionStyle = .crossDissolve
+
+        congratulationsLevelUpPopUpViewController.closeButtonEvent
+            .bind {
+                nextAction()
+            }
+            .disposed(by: disposeBag)
+        
+        if let navigationController = navigationController {
+            navigationController.present(congratulationsLevelUpPopUpViewController, animated: true)
+        } else {
+            present(congratulationsLevelUpPopUpViewController, animated: true)
+        }
+    }
 }

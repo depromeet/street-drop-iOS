@@ -80,6 +80,11 @@ extension MainViewModel {
         var tipPopUpShow: Observable<PopUpInfomation> {
             tipPopUpShowRelay.asObservable()
         }
+        
+        let congratulationsLevelUpPopUpShowRelay: PublishRelay<PopUpInfomation> = .init()
+        var congratulationsLevelUpPopUpShow: Observable<PopUpInfomation> {
+            congratulationsLevelUpPopUpShowRelay.asObservable()
+        }
     }
 }
 
@@ -116,8 +121,7 @@ extension MainViewModel {
                             case "guide":
                                 output.tipPopUpShowRelay.accept($0)
                             case "levelUp":
-                                // TODO: 레벨업 팝업 띄우기
-                                break
+                                output.congratulationsLevelUpPopUpShowRelay.accept($0)
                             default:
                                 break
                             }
