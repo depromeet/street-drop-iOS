@@ -74,19 +74,19 @@ private extension SceneDelegate {
     
     func handlingSharedMusic(isLaunched: Bool, components: URLComponents) {
         let items = components.queryItems ?? []
-                for item in items {
-                    if (item.name == "itemID".base64UrlEncode()){
-                        if let itemID = item.value?.base64UrlDecode(), let decodedItemID = Int(itemID){
-                            if isLaunched == false {
-                                navigateToCommunity(with: decodedItemID )
-                            } else {
-                                UserDefaults.standard.set(decodedItemID , forKey: UserDefaultKey.sharedMusicItemID)
-                            }
-                        } else {
-                            print("itemID missing")
-                        }
+        for item in items {
+            if (item.name == "itemID".base64UrlEncode()){
+                if let itemID = item.value?.base64UrlDecode(), let decodedItemID = Int(itemID){
+                    if isLaunched == false {
+                        navigateToCommunity(with: decodedItemID )
+                    } else {
+                        UserDefaults.standard.set(decodedItemID , forKey: UserDefaultKey.sharedMusicItemID)
                     }
+                } else {
+                    print("itemID missing")
+                }
             }
+        }
     }
     
     func navigateToCommunity(with itemID: Int) {
