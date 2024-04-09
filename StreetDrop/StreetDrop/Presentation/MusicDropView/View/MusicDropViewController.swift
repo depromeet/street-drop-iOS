@@ -312,11 +312,12 @@ private extension MusicDropViewController {
                 }
 
                 self?.showAlert(
+                    type: .confirm,
                     state: .gray,
                     title: "정말 나가시겠어요? 🥺",
                     subText: "음악과 코멘트 내역은\n자동으로 저장되지 않아요.",
-                    confirmButtonTitle: "나가기",
-                    confirmButtonAction: dismissAction
+                    buttonTitle: "나가기",
+                    buttonAction: dismissAction
                 )
             }
             .disposed(by: disposeBag)
