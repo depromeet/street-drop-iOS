@@ -34,27 +34,36 @@ extension Alertable where Self: UIViewController {
     }
 
     func showAlert(
+        type: AlertViewController.AlertType,
         state: AlertViewController.State,
         title: String,
         subText: String,
-        confirmButtonTitle: String,
-        confirmButtonAction: UIAction
+        image: UIImage? = nil,
+        buttonTitle: String,
+        buttonAction: UIAction
     ){
-        let alertViewController = AlertViewController(
+        let alertContent = AlertViewController.AlertContent(
+            type: type,
             state: state,
             title: title,
             subText: subText,
-            confirmButtonTitle: confirmButtonTitle,
-            confirmButtonAction: confirmButtonAction
+            image: image,
+            buttonTitle: buttonTitle,
+            buttonAction: buttonAction
         )
-
-        alertViewController.modalPresentationStyle = .overFullScreen
-        alertViewController.modalTransitionStyle = .crossDissolve
+        
+        let alertView = AlertViewController(alertContent: alertContent)
+        popupAlert(view: alertView)
+    }
+    
+    func popupAlert(view: AlertViewController) {
+        view.modalPresentationStyle = .overFullScreen
+        view.modalTransitionStyle = .crossDissolve
 
         if let navigationController = navigationController {
-            navigationController.present(alertViewController, animated: true)
+            navigationController.present(view, animated: true)
         } else {
-            present(alertViewController, animated: true)
+            present(view, animated: true)
         }
     }
     

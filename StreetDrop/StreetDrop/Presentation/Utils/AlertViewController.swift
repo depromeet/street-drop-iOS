@@ -11,11 +11,16 @@ import SnapKit
 import RxSwift
 
 final class AlertViewController: UIViewController {
-
+    
+    enum AlertType {
+        case alert
+        case confirm
+    }
+    
     enum State {
         case gray
         case primary
-
+        
         var secondButtonColor: UIColor {
             switch self {
             case .gray:
@@ -25,26 +30,26 @@ final class AlertViewController: UIViewController {
             }
         }
     }
-
-    private let disposeBag: DisposeBag = DisposeBag()
-
-    init(
-        state: State,
-        title: String,
-        subText: String,
-        confirmButtonTitle: String,
-        confirmButtonAction: UIAction
-    ) {
-        super.init(nibName: nil, bundle: nil)
-        self.mainTitleLabel.text = title
-        self.subTextLabel.text = subText
-        self.confirmButton.backgroundColor = state.secondButtonColor
-        self.confirmButton.setTitle(confirmButtonTitle, for: .normal)
-        self.addConfirmButtonAction(confirmButtonAction)
-        configureUI()
-        bindCancelButtonAction()
+    
+    struct AlertContent {
+        let type: AlertType
+        let state: State
+        let title: String
+        let subText: String
+        let image: UIImage?
+        let buttonTitle: String
+        let buttonAction: UIAction
     }
-
+    
+    private var alertContent: AlertContent
+    
+    // MARK: - Init
+    
+    init(alertContent: AlertContent) {
+        self.alertContent = alertContent
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -92,29 +97,9 @@ final class AlertViewController: UIViewController {
 
         return label
     }()
-
-    private lazy var cancelButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("취소", for: .normal)
-        button.setTitleColor(.gray100, for: .normal)
-        button.titleLabel?.font = .pretendard(size: 16, weightName: .medium)
-        button.backgroundColor = .gray500
-        button.layer.cornerRadius = 8
-        button.clipsToBounds = true
-
-        return button
-    }()
-
-    private lazy var confirmButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(.gray900, for: .normal)
-        button.titleLabel?.font = .pretendard(size: 16, weightName: .medium)
-        button.layer.cornerRadius = 8
-        button.clipsToBounds = true
-
-        return button
-    }()
-
+    
+    private lazy var imageView = UIImageView()
+    
     private lazy var buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -123,48 +108,111 @@ final class AlertViewController: UIViewController {
 
         return stackView
     }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.mainTitleLabel.text = alertContent.title
+        self.subTextLabel.text = alertContent.subText
+        self.imageView.image =  alertContent.image
+        
+        configureUI()
+        configureButtons(
+            type: alertContent.type,
+            state: alertContent.state,
+            title: alertContent.buttonTitle,
+            action: alertContent.buttonAction
+        )
+    }
 }
+
+// MARK: - Private Methods
 
 private extension AlertViewController {
     func configureUI() {
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.55)
-
-        [cancelButton, confirmButton].forEach {
-            buttonStackView.addArrangedSubview($0)
-        }
-
-        [mainTitleLabel, subTextLabel, buttonStackView].forEach {
-            containerStackView.addArrangedSubview($0)
-        }
-
-        containerView.addSubview(containerStackView)
-        self.view.addSubview(containerView)
-
-        containerStackView.setCustomSpacing(20, after: subTextLabel)
-
+        
+        view.addSubview(containerView)
         containerView.snp.makeConstraints {
             $0.width.equalTo(278)
             $0.centerX.centerY.equalToSuperview()
         }
-
+        
+        
+        containerView.addSubview(containerStackView)
         containerStackView.snp.makeConstraints {
             $0.leading.top.trailing.bottom.equalToSuperview().inset(20)
         }
-
+        
+        if imageView.image == nil {
+            [mainTitleLabel, subTextLabel, buttonStackView].forEach {
+                containerStackView.addArrangedSubview($0)
+            }
+            containerStackView.setCustomSpacing(20, after: subTextLabel)
+        } else {
+            [mainTitleLabel, imageView, buttonStackView].forEach {
+                containerStackView.addArrangedSubview($0)
+            }
+            containerStackView.setCustomSpacing(20, after: imageView)
+        }
+        
         buttonStackView.snp.makeConstraints {
             $0.height.equalTo(44)
         }
     }
-
-    func bindCancelButtonAction() {
-        cancelButton.rx.tap
-            .subscribe(onNext: {
-                self.dismiss(animated: true)
-            })
-            .disposed(by: disposeBag)
+    
+    func configureButtons(
+        type: AlertType,
+        state: State,
+        title: String,
+        action: UIAction
+    ) {
+        switch type {
+        case .alert:
+            addActionButton(
+                title: title,
+                titleColor: .gray900,
+                backgrondColor: state.secondButtonColor,
+                action: action
+            )
+        case .confirm:
+            addActionButton(
+                title: "취소",
+                titleColor: .gray100,
+                action: UIAction { _ in self.popView() }
+            )
+            addActionButton(
+                title: title,
+                titleColor: .gray900,
+                backgrondColor: state.secondButtonColor,
+                action: action
+            )
+        }
     }
-
-    private func addConfirmButtonAction(_ action: UIAction) {
-        confirmButton.addAction(action, for: .touchUpInside)
+    
+    func addActionButton(
+        title: String? = nil,
+        titleColor: UIColor = .black,
+        backgrondColor: UIColor = .gray500,
+        action: UIAction
+    ) {
+        let button = UIButton()
+        button.titleLabel?.font = .pretendard(size: 16, weightName: .medium)
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(titleColor, for: .normal)
+        button.backgroundColor = backgrondColor
+        button.layer.cornerRadius = 8
+        button.clipsToBounds = true
+        button.addAction(action, for: .touchUpInside)
+        
+        buttonStackView.addArrangedSubview(button)
+    }
+    
+    func popView() {
+        if let navigationController = navigationController {
+            navigationController.popViewController(animated: true)
+        } else {
+            dismiss(animated: true)
+        }
     }
 }
