@@ -13,5 +13,6 @@ protocol MyPageRepository {
     func fetchMyDropList() -> Single<TotalMyMusics>
     func fetchMyLikeList() -> Single<TotalMyMusics>
     func fetchMyLevel() -> Single<MyLevel>
+    func fetchMyLevelProgress() -> Single<MyLevelProgress>
     func fetchMyDropMusic(itemID: Int) -> Single<Musics>
 }
