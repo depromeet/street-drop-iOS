@@ -110,7 +110,7 @@ struct NetworkManager {
             .retry(3)
             .map { $0.data }
     }
-
+    
     func blockUser(_ blockUserID: Int) -> Single<Int> {
         return provider.rx.request(.blockUser(blockUserID: blockUserID))
             .retry(3)
@@ -145,6 +145,12 @@ struct NetworkManager {
         return provider.rx.request(.myLevel)
             .retry(3)
             .map { $0.data }
+    }
+    
+    func getMyLevelProgress() -> Single<Data> {
+        return provider.rx.request(.myLevelProgress)
+            .map { $0.data }
+            .retry(3)
     }
     
     func editNickname(nickname: String) -> Single<Void> {
