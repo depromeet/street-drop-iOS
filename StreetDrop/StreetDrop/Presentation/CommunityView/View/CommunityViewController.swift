@@ -981,20 +981,17 @@ private extension CommunityViewController {
             self.navigationController?.dismiss(animated: true)
 
             self.showAlert(
-                type: .confirm,
+                type: .confirm(onConfirm: { self.blockUser() } , onDeny: nil),
                 state: .gray,
                 title: "사용자를 차단하시겠어요?",
                 subText: "차단하는 사용자가 드랍하는\n모든 음악을 숨깁니다.",
-                buttonTitle: "차단하기",
-                buttonAction: self.blockUser()
+                buttonTitle: "차단하기"
             )
         }
     }
-
-    func blockUser() -> UIAction {
-        return UIAction { [weak self] _ in
-            self?.navigationController?.dismiss(animated: true)
-            self?.blockEvent.accept(())
-        }
+    
+    func blockUser() {
+        navigationController?.dismiss(animated: true)
+        blockEvent.accept(())
     }
 }
