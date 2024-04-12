@@ -11,6 +11,8 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+typealias CurrentDropState = (dropped: Int, total: Int)
+
 final class LevelUpGuideView: UIView {
     
     fileprivate let remainDropGuideLabel: UILabel = {
@@ -42,7 +44,7 @@ final class LevelUpGuideView: UIView {
         return label
     }()
     
-    private let tipLabel: PaddingLabel = {
+    fileprivate let tipLabel: PaddingLabel = {
         let label = PaddingLabel(padding: UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12))
         label.font = .pretendard(size: 12, weightName: .semiBold)
         label.textColor = .gray200
@@ -119,12 +121,10 @@ extension Reactive where Base: LevelUpGuideView {
         }
     }
     
-    var setCurrentDropStateText: Binder<(Int, Int)> {
+    var setCurrentDropStateText: Binder<CurrentDropState> {
         Binder(base) { base, state in
-            let current = state.0
-            let total = state.1
-            let originText = "\(current)/\(total)"
-            let targetText = "\(current)"
+            let originText = "\(state.dropped)/\(state.total)"
+            let targetText = "\(state.dropped)"
             let attributedText = NSMutableAttributedString(string: originText)
                 .setFont(.pretendard(size: 32, weight: 700), text: targetText)
                 .setColor(.white, of: targetText)
@@ -132,9 +132,18 @@ extension Reactive where Base: LevelUpGuideView {
         }
     }
     
-    var setProgress: Binder<Float> {
-        Binder(base) { base, progress in
-            base.progressBar.setProgress(CGFloat(progress))
+    var setProgress: Binder<CurrentDropState> {
+        Binder(base) { base, state in
+            let progress: CGFloat = state.total > 0 ?
+            CGFloat(state.dropped) / CGFloat(state.total) : 
+            0.0
+            base.progressBar.setProgress(progress)
+        }
+    }
+    
+    var setTipText: Binder<String> {
+        Binder(base) { base, text in
+            base.tipLabel.text = text
         }
     }
 }

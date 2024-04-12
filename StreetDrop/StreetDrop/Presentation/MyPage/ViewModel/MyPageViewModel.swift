@@ -38,6 +38,10 @@ extension MyPageViewModel: ViewModel {
         let totalLikeMusicsCount = PublishRelay<Int>()
         let pushCommunityView = PublishRelay<Musics>()
         let toast = PublishRelay<String>()
+        let isShowingLevelUpView = PublishRelay<Bool>()
+        let remainCountToLevelUp = PublishRelay<Int>()
+        let currentDropStateCount = PublishRelay<CurrentDropState>()
+        let tipText = PublishRelay<String>()
     }
     
     func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
@@ -46,6 +50,7 @@ extension MyPageViewModel: ViewModel {
         input.viewWillAppearEvent
             .bind(with: self) { owner, _ in
                 owner.fetchLevelItems(output: output, disposedBag: disposedBag)
+                owner.fetchLevelProgress(output: output, disposeBag: disposedBag)
                 owner.fetchMyDropMusicsSections(output: output, disposedBag: disposedBag)
                 owner.fetchMyLikeMusicsSections(output: output, disposedBag: disposedBag)
             }
@@ -79,6 +84,20 @@ private extension MyPageViewModel {
                 }
             }
             .disposed(by: disposedBag)
+    }
+    
+    func fetchLevelProgress(output: Output, disposeBag: DisposeBag) {
+        model.fetchMyLevelProgress()
+            .subscribe(with: self, onSuccess: { owner, progress in
+                output.isShowingLevelUpView.accept(progress.isShow)
+                output.remainCountToLevelUp.accept(progress.remainCount)
+                let currentDropState = (progress.dropCount, progress.levelUpCount)
+                output.currentDropStateCount.accept(currentDropState)
+                output.tipText.accept(progress.tip)
+            }, onFailure: { _, error in
+                print(error.localizedDescription)
+            })
+            .disposed(by: disposeBag)
     }
     
     func fetchMyDropMusicsSections(output: Output, disposedBag: DisposeBag) {

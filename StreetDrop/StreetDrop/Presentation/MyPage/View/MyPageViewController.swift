@@ -676,6 +676,27 @@ private extension MyPageViewController {
                 )
             }
             .disposed(by: disposeBag)
+        
+        output.isShowingLevelUpView
+            .map { !$0 }
+            .bind(to: levelUpGuideView.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        output.remainCountToLevelUp
+            .bind(to: levelUpGuideView.rx.setRemainDropGuideText)
+            .disposed(by: disposeBag)
+        
+        output.currentDropStateCount
+            .bind(to: levelUpGuideView.rx.setCurrentDropStateText)
+            .disposed(by: disposeBag)
+        
+        output.currentDropStateCount
+            .bind(to: levelUpGuideView.rx.setProgress)
+            .disposed(by: disposeBag)
+        
+        output.tipText
+            .bind(to: levelUpGuideView.rx.setTipText)
+            .disposed(by: disposeBag)
     }
 }
 
