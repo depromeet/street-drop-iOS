@@ -10,12 +10,23 @@ import UIKit
 import SnapKit
 import RxSwift
 
+typealias AlertCompletion = (() -> ())?
+
+enum AlertType {
+    case alert(onConfirm: AlertCompletion)
+    case confirm(onConfirm: AlertCompletion, onDeny: AlertCompletion)
+}
+
+struct AlertContent {
+    let type: AlertType
+    let state: AlertViewController.State
+    let title: String
+    let subText: String
+    let image: UIImage?
+    let buttonTitle: String
+}
+
 final class AlertViewController: UIViewController {
-    
-    enum AlertType {
-        case alert
-        case confirm
-    }
     
     enum State {
         case gray
@@ -31,17 +42,8 @@ final class AlertViewController: UIViewController {
         }
     }
     
-    struct AlertContent {
-        let type: AlertType
-        let state: State
-        let title: String
-        let subText: String
-        let image: UIImage?
-        let buttonTitle: String
-        let buttonAction: UIAction
-    }
-    
     private var alertContent: AlertContent
+    private let disposeBag = DisposeBag()
     
     // MARK: - Init
     
@@ -120,8 +122,7 @@ final class AlertViewController: UIViewController {
         configureButtons(
             type: alertContent.type,
             state: alertContent.state,
-            title: alertContent.buttonTitle,
-            action: alertContent.buttonAction
+            title: alertContent.buttonTitle
         )
     }
 }
@@ -164,38 +165,45 @@ private extension AlertViewController {
     func configureButtons(
         type: AlertType,
         state: State,
-        title: String,
-        action: UIAction
+        title: String
     ) {
         switch type {
-        case .alert:
-            addActionButton(
+        case .alert(let onConfirm):
+            let button = addActionButton(
                 title: title,
                 titleColor: .gray900,
-                backgrondColor: state.secondButtonColor,
-                action: action
+                backgrondColor: state.secondButtonColor
             )
-        case .confirm:
-            addActionButton(
+            button.rx.tap
+                .bind { onConfirm?() }
+                .disposed(by: disposeBag)
+        case .confirm(let onConfirm, let onDeny):
+            let denyButton = addActionButton(
                 title: "취소",
-                titleColor: .gray100,
-                action: UIAction { _ in self.popView() }
+                titleColor: .gray100
             )
-            addActionButton(
+            denyButton.rx.tap
+                .bind(with: self) { owner, _ in
+                    onDeny == nil ? owner.popView() : onDeny?()
+                }
+                .disposed(by: disposeBag)
+            
+            let confirmButton = addActionButton(
                 title: title,
                 titleColor: .gray900,
-                backgrondColor: state.secondButtonColor,
-                action: action
+                backgrondColor: state.secondButtonColor
             )
+            confirmButton.rx.tap
+                .bind { onConfirm?() }
+                .disposed(by: disposeBag)
         }
     }
     
     func addActionButton(
         title: String? = nil,
         titleColor: UIColor = .black,
-        backgrondColor: UIColor = .gray500,
-        action: UIAction
-    ) {
+        backgrondColor: UIColor = .gray500
+    ) -> UIButton {
         let button = UIButton()
         button.titleLabel?.font = .pretendard(size: 16, weightName: .medium)
         button.setTitle(title, for: .normal)
@@ -203,9 +211,10 @@ private extension AlertViewController {
         button.backgroundColor = backgrondColor
         button.layer.cornerRadius = 8
         button.clipsToBounds = true
-        button.addAction(action, for: .touchUpInside)
         
         buttonStackView.addArrangedSubview(button)
+        
+        return button
     }
     
     func popView() {

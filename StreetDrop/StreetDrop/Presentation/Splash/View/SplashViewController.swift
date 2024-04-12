@@ -36,7 +36,7 @@ private extension SplashViewController {
         
         output.errorAlertShow
             .bind(with: self) { owner, errorMessage in
-                let exitAction = UIAction {_ in
+                let exitAction: AlertCompletion = {
                     UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         exit(0)
@@ -44,12 +44,11 @@ private extension SplashViewController {
                 }
                 
                 owner.showAlert(
-                    type: .alert,
+                    type: .alert(onConfirm: exitAction),
                     state: .primary,
                     title: "에러 발생",
                     subText: errorMessage,
-                    buttonTitle: "확인",
-                    buttonAction: exitAction
+                    buttonTitle: "확인"
                 )
             }
             .disposed(by: disposeBag)

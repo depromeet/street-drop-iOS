@@ -34,22 +34,20 @@ extension Alertable where Self: UIViewController {
     }
 
     func showAlert(
-        type: AlertViewController.AlertType,
+        type: AlertType,
         state: AlertViewController.State,
         title: String,
         subText: String,
         image: UIImage? = nil,
-        buttonTitle: String,
-        buttonAction: UIAction
-    ){
-        let alertContent = AlertViewController.AlertContent(
+        buttonTitle: String
+    ) {
+        let alertContent = AlertContent(
             type: type,
             state: state,
             title: title,
             subText: subText,
             image: image,
-            buttonTitle: buttonTitle,
-            buttonAction: buttonAction
+            buttonTitle: buttonTitle
         )
         
         let alertView = AlertViewController(alertContent: alertContent)
