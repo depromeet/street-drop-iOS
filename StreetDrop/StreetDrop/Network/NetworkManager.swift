@@ -153,6 +153,12 @@ struct NetworkManager {
             .retry(3)
     }
     
+    func getLevelPolicy() -> Single<Data> {
+        return provider.rx.request(.levelPolicy)
+            .map { $0.data }
+            .retry(3)
+    }
+    
     func editNickname(nickname: String) -> Single<Void> {
         return provider.rx.request(.editNickname(nickname: nickname))
             .retry(3)
