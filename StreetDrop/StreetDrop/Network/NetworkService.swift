@@ -32,6 +32,7 @@ enum NetworkService {
     case myLikeList
     case myLevel
     case myLevelProgress
+    case levelPolicy
     case editNickname(nickname: String)
     case userCircleRadius
     case getPopUpInfomation
@@ -99,6 +100,8 @@ extension NetworkService: TargetType {
             return "/users/me/level"
         case .myLevelProgress:
             return "/users/me/level/progress"
+        case .levelPolicy:
+            return "/level/policy"
         case .editNickname:
             return "/users/me/nickname"
         case .userCircleRadius:
@@ -125,6 +128,7 @@ extension NetworkService: TargetType {
                 .myLikeList,
                 .myLevel,
                 .myLevelProgress,
+                .levelPolicy
                 .userCircleRadius,
                 .getPopUpInfomation:
             return .get
@@ -145,7 +149,7 @@ extension NetworkService: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .getMyInfo, .myDropList, .myLikeList, .myLevel, .myLevelProgress, .recommendMusic, .userCircleRadius, .getPopUpInfomation:
+        case .getMyInfo, .myDropList, .myLikeList, .myLevel, .myLevelProgress, .levelPolicy, .recommendMusic, .userCircleRadius, .getPopUpInfomation:
             return .requestPlain
         case .searchMusic(let keyword):
             return .requestParameters(
