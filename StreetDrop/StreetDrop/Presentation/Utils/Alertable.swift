@@ -54,6 +54,14 @@ extension Alertable where Self: UIViewController {
         popupAlert(view: alertView)
     }
     
+    func showLevelPolicy(_ levelPolicies: [LevelPolicy]) {
+        let levelPolicyPopupView = LevelPolicyPopUpViewController(levelPolicies: levelPolicies)
+        levelPolicyPopupView.modalPresentationStyle = .overFullScreen
+        levelPolicyPopupView.modalTransitionStyle = .crossDissolve
+        
+        present(levelPolicyPopupView, animated: true)
+    }
+    
     func popupAlert(view: AlertViewController) {
         view.modalPresentationStyle = .overFullScreen
         view.modalTransitionStyle = .crossDissolve
