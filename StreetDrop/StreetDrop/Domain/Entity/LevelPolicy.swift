@@ -12,4 +12,8 @@ struct LevelPolicy {
     let levelName: String
     let levelDescription: String
     let levelImage: String
+    
+    var levelImageURL: URL? {
+        return URL(string: levelImage)
+    }
 }
