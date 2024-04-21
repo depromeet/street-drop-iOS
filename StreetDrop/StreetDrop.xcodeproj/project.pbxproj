@@ -44,6 +44,7 @@
 		08810C2E2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810C2D2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift */; };
 		08810C322BD3FC57004FC6C1 /* LevelPolicySubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810C312BD3FC57004FC6C1 /* LevelPolicySubView.swift */; };
 		08B97EA52B44303C00084F66 /* UniviersialLinkKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B97EA42B44303C00084F66 /* UniviersialLinkKey.swift */; };
+		08BE57162BD4C887007EA949 /* UILabel+applyGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BE57152BD4C887007EA949 /* UILabel+applyGradient.swift */; };
 		1816ED3C2A680608005009FC /* MusicListSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */; };
 		1816ED3F2A68064E005009FC /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3E2A68064E005009FC /* MyPageViewModel.swift */; };
 		1816ED412A685704005009FC /* NicknameEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED402A685704005009FC /* NicknameEditViewModel.swift */; };
@@ -306,6 +307,7 @@
 		08810C2D2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelPolicyPopUpViewController.swift; sourceTree = "<group>"; };
 		08810C312BD3FC57004FC6C1 /* LevelPolicySubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelPolicySubView.swift; sourceTree = "<group>"; };
 		08B97EA42B44303C00084F66 /* UniviersialLinkKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniviersialLinkKey.swift; sourceTree = "<group>"; };
+		08BE57152BD4C887007EA949 /* UILabel+applyGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+applyGradient.swift"; sourceTree = "<group>"; };
 		1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListSectionHeaderView.swift; sourceTree = "<group>"; };
 		1816ED3E2A68064E005009FC /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		1816ED402A685704005009FC /* NicknameEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewModel.swift; sourceTree = "<group>"; };
@@ -1143,6 +1145,7 @@
 				6A7D73DE2BB15826009340E3 /* UIView+RoundCorners.swift */,
 				6A7D73E52BB2AE34009340E3 /* NSMutableAttributedString+.swift */,
 				6A7D73E72BB3E62E009340E3 /* UIButton+.swift */,
+				08BE57152BD4C887007EA949 /* UILabel+applyGradient.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1811,6 +1814,7 @@
 				188D2C772A1BA74E0088F49C /* LocationManager.swift in Sources */,
 				6A806F9C2BC7A41E0003649E /* MyLevelProgressResponseDTO.swift in Sources */,
 				4143452E2A373550003FEE2A /* AddressManager.swift in Sources */,
+				08BE57162BD4C887007EA949 /* UILabel+applyGradient.swift in Sources */,
 				18EF9FC92A5C51FB00266D27 /* NicknameEditViewController.swift in Sources */,
 				C44A54932BBC07AA00354F8F /* PopUpInfomation.swift in Sources */,
 				B4B9EE862ADEB2AC000A6507 /* RecommendKeywordItemCell.swift in Sources */,

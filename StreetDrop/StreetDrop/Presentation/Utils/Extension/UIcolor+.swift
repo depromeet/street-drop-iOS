@@ -188,6 +188,10 @@ public extension UIColor {
         UIColor(red: 0.408, green: 0.922, blue: 0.969, alpha: 0.75)
     }
     
+    static var darkPrimary_300: UIColor {
+        UIColor(red: 0.639, green: 0.98, blue: 1, alpha: 1)
+    }
+    
     static var darkPrimary_500: UIColor {
         UIColor(red: 0.408, green: 0.894, blue: 0.969, alpha: 0.5)
     }

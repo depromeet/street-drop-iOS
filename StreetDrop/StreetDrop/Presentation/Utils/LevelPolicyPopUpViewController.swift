@@ -108,7 +108,7 @@ private extension LevelPolicyPopUpViewController {
         }
         
         levelPolicies.forEach { levelPolicy in
-            let levelPolicySubView = LevelPolicySubView()
+            let levelPolicySubView = LevelPolicySubView(isGradient: levelPolicy.level == 3)
             bindSubView(levelPolicySubView, levelPolicy: levelPolicy)
             containerStackView.addArrangedSubview(levelPolicySubView)
         }
