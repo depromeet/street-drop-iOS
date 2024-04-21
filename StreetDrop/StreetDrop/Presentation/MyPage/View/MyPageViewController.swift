@@ -13,7 +13,7 @@ import RxRelay
 import RxSwift
 import SnapKit
 
-final class MyPageViewController: UIViewController, Toastable {
+final class MyPageViewController: UIViewController, Toastable, Alertable {
     typealias DataSource = RxTableViewSectionedReloadDataSource<MyMusicsSection>
     
     private var stickyTapListStackView: UIStackView?
@@ -24,6 +24,7 @@ final class MyPageViewController: UIViewController, Toastable {
     
     private var viewModel: MyPageViewModel
     private let viewWillAppearEvent = PublishRelay<Void>()
+    private let levelPolicyTapEvent = PublishRelay<Void>()
     private let selectedMusicEvent = PublishRelay<MusicInfo>()
     private let disposeBag = DisposeBag()
     
@@ -586,6 +587,10 @@ private extension MyPageViewController {
             }
             .disposed(by: disposeBag)
         
+        levelGuideButton.rx.tap
+            .bind(to: levelPolicyTapEvent)
+            .disposed(by: disposeBag)
+        
         dropMusicListTableView.rx.itemSelected
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, indexPath in
@@ -608,6 +613,7 @@ private extension MyPageViewController {
     private func bindViewModel() {
         let input = MyPageViewModel.Input(
             viewWillAppearEvent: self.viewWillAppearEvent,
+            levelPolicyTapEvent: levelPolicyTapEvent,
             selectedMusicEvent: selectedMusicEvent
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
@@ -696,6 +702,12 @@ private extension MyPageViewController {
         
         output.tipText
             .bind(to: levelUpGuideView.rx.setTipText)
+            .disposed(by: disposeBag)
+        
+        output.levelPolicies
+            .bind(with: self) { owner, levelPolicies in
+                owner.showLevelPolicy(levelPolicies)
+            }
             .disposed(by: disposeBag)
     }
 }

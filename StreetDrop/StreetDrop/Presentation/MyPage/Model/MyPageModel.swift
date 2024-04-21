@@ -14,6 +14,7 @@ protocol MyPageModel {
     func fetchMyLikeList() -> Single<TotalMyMusics>
     func fetchMyLevel() -> Single<MyLevel>
     func fetchMyLevelProgress() -> Single<MyLevelProgress>
+    func fetchLevelPolicy() -> Single<[LevelPolicy]>
     func fetchMyDropMusic(itemID: Int) -> Single<Musics>
 }
 
@@ -40,6 +41,10 @@ final class DefaultMyPageModel: MyPageModel {
     
     func fetchMyLevelProgress() -> Single<MyLevelProgress> {
         return repository.fetchMyLevelProgress()
+    }
+    
+    func fetchLevelPolicy() -> Single<[LevelPolicy]> {
+        return repository.fetchLevelPolicy()
     }
     
     func fetchMyDropMusic(itemID: Int) -> Single<Musics> {

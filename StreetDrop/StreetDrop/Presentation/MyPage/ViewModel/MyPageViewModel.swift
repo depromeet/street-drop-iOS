@@ -25,6 +25,7 @@ final class MyPageViewModel {
 extension MyPageViewModel: ViewModel {
     struct Input {
         let viewWillAppearEvent: PublishRelay<Void>
+        let levelPolicyTapEvent: PublishRelay<Void>
         let selectedMusicEvent: PublishRelay<MusicInfo>
     }
     
@@ -42,6 +43,10 @@ extension MyPageViewModel: ViewModel {
         let remainCountToLevelUp = PublishRelay<Int>()
         let currentDropStateCount = PublishRelay<CurrentDropState>()
         let tipText = PublishRelay<String>()
+        fileprivate let levelPoliciesRelay = PublishRelay<[LevelPolicy]>()
+        var levelPolicies: Observable<[LevelPolicy]> {
+            levelPoliciesRelay.asObservable()
+        }
     }
     
     func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
@@ -53,6 +58,12 @@ extension MyPageViewModel: ViewModel {
                 owner.fetchLevelProgress(output: output, disposeBag: disposedBag)
                 owner.fetchMyDropMusicsSections(output: output, disposedBag: disposedBag)
                 owner.fetchMyLikeMusicsSections(output: output, disposedBag: disposedBag)
+            }
+            .disposed(by: disposedBag)
+        
+        input.levelPolicyTapEvent
+            .bind(with: self) { owner, _ in
+                owner.fetchLevelPolicy(output: output, disposeBag: disposedBag)
             }
             .disposed(by: disposedBag)
         
@@ -94,6 +105,16 @@ private extension MyPageViewModel {
                 let currentDropState = (progress.dropCount, progress.levelUpCount)
                 output.currentDropStateCount.accept(currentDropState)
                 output.tipText.accept(progress.tip)
+            }, onFailure: { _, error in
+                print(error.localizedDescription)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func fetchLevelPolicy(output: Output, disposeBag: DisposeBag) {
+        model.fetchLevelPolicy()
+            .subscribe(with: self, onSuccess: { owner, levelPolicies in
+                output.levelPoliciesRelay.accept(levelPolicies)
             }, onFailure: { _, error in
                 print(error.localizedDescription)
             })
