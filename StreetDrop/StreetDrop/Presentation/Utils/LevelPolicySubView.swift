@@ -77,13 +77,35 @@ final class LevelPolicySubView: UIView {
                 UIColor(hexString: "#F7F7F7"),
                 UIColor(hexString: "#DCCCFF")
             ],
-            locations: [
-                0.1,
-                0.25,
-                0.56,
-                0.74,
-                0.89
-            ]
+            locations: [0.1034, 0.2517, 0.5668, 0.7459, 0.8941],
+            startPoint: CGPoint(x: 0.5, y: 0),
+            endPoint: CGPoint(x: 0.5, y: 1)
+        )
+        .applyGradientWith(
+            type: .conic,
+            colors: [
+                .black,
+                .white,
+                .black,
+                .white,
+                .black
+            ],
+            locations: [0, 0.08375, 0.63625, 0.8025, 1],
+            startPoint: CGPoint(x: 0.5, y: 0.5),
+            endPoint: CGPoint(x: 1, y: 0.5)
+        )
+        .applyGradientWith(
+            type: .conic,
+            colors: [
+                .black,
+                .white.withAlphaComponent(0.72),
+                .black,
+                .white.withAlphaComponent(0.72),
+                .black
+            ], 
+            locations: [0, 0.047, 0.245, 0.8025, 1],
+            startPoint: CGPoint(x: 0.5, y: 0.5),
+            endPoint: CGPoint(x: 1, y: 0.5)
         )
     }
 }

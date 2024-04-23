@@ -8,12 +8,20 @@
 import UIKit
 
 extension UILabel {
-    func applyGradientWith(colors: [UIColor], locations: [Double]) {
+    @discardableResult
+    func applyGradientWith(
+        type: CAGradientLayerType? = nil,
+        colors: [UIColor],
+        locations: [Double],
+        startPoint: CGPoint,
+        endPoint: CGPoint
+    ) -> UILabel {
         let gradientLayer = CAGradientLayer()
+        if let type = type { gradientLayer.type = type }
         gradientLayer.colors = colors.map { $0.cgColor }
         gradientLayer.locations = locations.map { NSNumber(value: $0) }
-        gradientLayer.startPoint = CGPoint(x: 0, y: 1)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+        gradientLayer.startPoint = startPoint
+        gradientLayer.endPoint = endPoint
         gradientLayer.frame = bounds
         
         let renderer = UIGraphicsImageRenderer(bounds: bounds)
@@ -27,5 +35,7 @@ extension UILabel {
         gradientLayer.mask = maskLayer
         
         layer.insertSublayer(gradientLayer, at: 0)
+        
+        return self
     }
 }
