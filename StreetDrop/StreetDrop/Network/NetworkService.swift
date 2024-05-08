@@ -128,7 +128,7 @@ extension NetworkService: TargetType {
                 .myLikeList,
                 .myLevel,
                 .myLevelProgress,
-                .levelPolicy
+                .levelPolicy,
                 .userCircleRadius,
                 .getPopUpInfomation:
             return .get
