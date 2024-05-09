@@ -116,7 +116,8 @@ private extension LevelPolicySubView {
     func configureUI() {
         addSubview(levelImageView)
         levelImageView.snp.makeConstraints {
-            $0.top.bottom.leading.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.centerY.equalToSuperview()
             $0.width.equalTo(70)
             $0.height.equalTo(56)
         }
