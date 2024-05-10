@@ -684,8 +684,9 @@ private extension MyPageViewController {
             .disposed(by: disposeBag)
         
         output.isShowingLevelUpView
-            .map { !$0 }
-            .bind(to: levelUpGuideView.rx.isHidden)
+            .bind(with: self) { owner, isShow in
+                owner.updateLevelupGuideViewConstraints(by: isShow)
+            }
             .disposed(by: disposeBag)
         
         output.remainCountToLevelUp
@@ -812,6 +813,19 @@ private extension MyPageViewController {
         let sectionData = dataSource[section]
         headerView.setData(date: sectionData.date)
         return headerView
+    }
+    
+    func updateLevelupGuideViewConstraints(by isShow: Bool) {
+        if isShow == false {
+            if levelUpGuideView.isDescendant(of: view) {
+                levelUpGuideView.removeFromSuperview()
+                
+                tapListStackView.snp.remakeConstraints { make in
+                    make.top.equalTo(levelImageView.snp.bottom).offset(24)
+                    make.leading.trailing.equalToSuperview().inset(24)
+                }
+            }
+        }
     }
 }
 
