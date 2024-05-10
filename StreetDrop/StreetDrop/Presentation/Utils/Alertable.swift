@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxSwift
+
 protocol Alertable { }
 
 // POP 기본구현
@@ -32,27 +34,107 @@ extension Alertable where Self: UIViewController {
     }
 
     func showAlert(
+        type: AlertType,
         state: AlertViewController.State,
         title: String,
         subText: String,
-        confirmButtonTitle: String,
-        confirmButtonAction: UIAction
-    ){
-        let alertViewController = AlertViewController(
+        image: UIImage? = nil,
+        buttonTitle: String
+    ) {
+        let alertContent = AlertContent(
+            type: type,
             state: state,
             title: title,
             subText: subText,
-            confirmButtonTitle: confirmButtonTitle,
-            confirmButtonAction: confirmButtonAction
+            image: image,
+            buttonTitle: buttonTitle
         )
-
-        alertViewController.modalPresentationStyle = .overFullScreen
-        alertViewController.modalTransitionStyle = .crossDissolve
+        
+        let alertView = AlertViewController(alertContent: alertContent)
+        popupAlert(view: alertView)
+    }
+    
+    func showLevelPolicy(_ levelPolicies: [LevelPolicy]) {
+        let levelPolicyPopupView = LevelPolicyPopUpViewController(levelPolicies: levelPolicies)
+        levelPolicyPopupView.modalPresentationStyle = .overFullScreen
+        levelPolicyPopupView.modalTransitionStyle = .crossDissolve
+        
+        present(levelPolicyPopupView, animated: true)
+    }
+    
+    func popupAlert(view: AlertViewController) {
+        view.modalPresentationStyle = .overFullScreen
+        view.modalTransitionStyle = .crossDissolve
 
         if let navigationController = navigationController {
-            navigationController.present(alertViewController, animated: true)
+            navigationController.present(view, animated: true)
         } else {
-            present(alertViewController, animated: true)
+            present(view, animated: true)
+        }
+    }
+    
+    func showTipPopUp(
+        contentTitle: String,
+        contentDescription: String,
+        nextAction: @escaping () -> (),
+        cancelAction: @escaping () -> (),
+        disposeBag: DisposeBag
+    ){
+        let tipPopUpViewController: TipPopUpViewController = .init(
+            contentTitle: contentTitle,
+            contentDescription: contentDescription
+        )
+
+        tipPopUpViewController.modalPresentationStyle = .overFullScreen
+        tipPopUpViewController.modalTransitionStyle = .crossDissolve
+
+        tipPopUpViewController.nextActionButtonClickedEvent
+            .bind {
+                nextAction()
+            }
+            .disposed(by: disposeBag)
+        
+        tipPopUpViewController.cancelButtonClickedEvent
+            .bind {
+                cancelAction()
+            }
+            .disposed(by: disposeBag)
+        
+        if let navigationController = navigationController {
+            navigationController.present(tipPopUpViewController, animated: true)
+        } else {
+            present(tipPopUpViewController, animated: true)
+        }
+    }
+    
+    func showCongratulationsLevelUpPopUp(
+        contentTitle: String,
+        contentDescription: String,
+        popupName: String,
+        remainCount: Int?,
+        nextAction: @escaping () -> (),
+        disposeBag: DisposeBag
+    ){
+        let congratulationsLevelUpPopUpViewController: CongratulationsLevelUpPopUpViewController = .init(
+            contentTitle: contentTitle,
+            contentDescription: contentDescription, 
+            popupName: popupName,
+            remainCount: remainCount
+        )
+
+        congratulationsLevelUpPopUpViewController.modalPresentationStyle = .overFullScreen
+        congratulationsLevelUpPopUpViewController.modalTransitionStyle = .crossDissolve
+
+        congratulationsLevelUpPopUpViewController.closeButtonEvent
+            .bind {
+                nextAction()
+            }
+            .disposed(by: disposeBag)
+        
+        if let navigationController = navigationController {
+            navigationController.present(congratulationsLevelUpPopUpViewController, animated: true)
+        } else {
+            present(congratulationsLevelUpPopUpViewController, animated: true)
         }
     }
 }

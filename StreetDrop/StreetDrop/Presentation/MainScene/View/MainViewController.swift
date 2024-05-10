@@ -14,12 +14,13 @@ import RxRelay
 import RxSwift
 import SnapKit
 
-final class MainViewController: UIViewController, Toastable {
+final class MainViewController: UIViewController, Toastable, Alertable {
     private var viewModel: MainViewModel
     private let currentLocationMarker = NMFMarker()
     private let disposeBag = DisposeBag()
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let viewWillAppearEvent = PublishRelay<Void>()
+    private let viewDidAppearEvent: PublishRelay<Void> = .init()
     private let poiMarkerDidTapEvent = PublishRelay<NMFMarker>()
     private let cameraDidStopEvent = PublishRelay<(latitude: Double, longitude: Double)>()
     private var outsideRadiusCountForRandom = 0
@@ -58,6 +59,11 @@ final class MainViewController: UIViewController, Toastable {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewDidAppearEvent.accept(Void())
     }
     
     // MARK: - UI
@@ -440,6 +446,7 @@ private extension MainViewController {
         let input = MainViewModel.Input(
             viewDidLoadEvent: self.viewDidLoadEvent,
             viewWillAppearEvent: self.viewWillAppearEvent,
+            viewDidAppearEvent: viewDidAppearEvent.asObservable(),
             poiMarkerDidTapEvent: self.poiMarkerDidTapEvent,
             cameraDidStopEvent: self.cameraDidStopEvent,
             homeButtonDidTapEvent: self.homeButton.rx.tap,
@@ -523,6 +530,51 @@ private extension MainViewController {
                 
                 let communityView = CommunityViewController(viewModel: communityViewModel)
                 owner.navigationController?.pushViewController(communityView, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.tipPopUpShow
+            .bind(with: self) { owner, popUpInfomation in
+                owner.showTipPopUp(
+                    contentTitle: popUpInfomation.contentTitle,
+                    contentDescription: popUpInfomation.contentDescription,
+                    nextAction: { [weak self] in
+                            guard let self = self,
+                                  self.viewModel.locationManager.checkAuthorizationStatus()
+                            else { return }
+                            
+                            let searchingMusicViewController = SearchingMusicViewController(
+                                viewModel: DefaultSearchingMusicViewModel(
+                                    location: self.viewModel.location
+                                )
+                            )
+                            self.navigationController?.pushViewController(
+                                searchingMusicViewController,
+                                animated: true
+                            )
+                    }, 
+                    cancelAction: { [weak self] in
+                        guard let self = self else { return }
+                        viewModel.postPopUpUserReading(popUpInfomation: popUpInfomation, disposeBag: disposeBag)
+                    },
+                    disposeBag: owner.disposeBag
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        output.congratulationsLevelUpPopUpShow
+            .bind(with: self) { owner, popUpInfomation in
+                owner.showCongratulationsLevelUpPopUp(
+                    contentTitle: popUpInfomation.contentTitle,
+                    contentDescription: popUpInfomation.contentDescription, 
+                    popupName: popUpInfomation.popupName,
+                    remainCount: popUpInfomation.levelUpRemainCount,
+                    nextAction: { [weak self] in
+                        guard let self = self else { return }
+                        viewModel.postPopUpUserReading(popUpInfomation: popUpInfomation, disposeBag: disposeBag)
+                    },
+                    disposeBag: owner.disposeBag
+                )
             }
             .disposed(by: disposeBag)
     }
@@ -908,7 +960,7 @@ private extension MainViewController {
 }
 
 //MARK: - 위치 권한 요청을 위해 설정으로 이동 유도 Alert
-extension MainViewController: Alertable {
+extension MainViewController {
     func requestLocationAuthorization() {
         showLocationServiceRequestAlert()
     }

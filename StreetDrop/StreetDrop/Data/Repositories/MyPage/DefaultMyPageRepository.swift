@@ -42,6 +42,22 @@ extension DefaultMyPageRepository: MyPageRepository {
             })
     }
     
+    func fetchMyLevelProgress() -> Single<MyLevelProgress> {
+        networkManager.getMyLevelProgress()
+            .map({ data in
+                let dto = try JSONDecoder().decode(MyLevelProgressResponseDTO.self, from: data)
+                return dto.toEntity()
+            })
+    }
+    
+    func fetchLevelPolicy() -> Single<[LevelPolicy]> {
+        networkManager.getLevelPolicy()
+            .map({ data in
+                let dto = try JSONDecoder().decode(LevelPolicyResponseDTO.self, from: data)
+                return dto.toEntity()
+            })
+    }
+    
     func fetchMyDropMusic(itemID: Int) -> Single<Musics> {
         networkManager.getSingleMusic(itemID: itemID)
             .map({ data in

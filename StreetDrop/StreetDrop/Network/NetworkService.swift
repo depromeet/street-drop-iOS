@@ -31,8 +31,12 @@ enum NetworkService {
     case myDropList
     case myLikeList
     case myLevel
+    case myLevelProgress
+    case levelPolicy
     case editNickname(nickname: String)
     case userCircleRadius
+    case getPopUpInfomation
+    case postPopUpUserReading(requestDTO: PopUpUserReadingRequestDTO)
 }
 
 extension NetworkService: TargetType {
@@ -94,10 +98,18 @@ extension NetworkService: TargetType {
             return "/users/me/items/like"
         case .myLevel:
             return "/users/me/level"
+        case .myLevelProgress:
+            return "/users/me/level/progress"
+        case .levelPolicy:
+            return "/level/policy"
         case .editNickname:
             return "/users/me/nickname"
         case .userCircleRadius:
             return "/users/me/distance"
+        case .getPopUpInfomation:
+            return "/pop-up"
+        case .postPopUpUserReading:
+            return "/pop-up/read"
         }
     }
     
@@ -115,14 +127,18 @@ extension NetworkService: TargetType {
                 .myDropList,
                 .myLikeList,
                 .myLevel,
-                .userCircleRadius:
+                .myLevelProgress,
+                .levelPolicy,
+                .userCircleRadius,
+                .getPopUpInfomation:
             return .get
         case .dropMusic,
                 .postLikeUp,
                 .postLikeDown,
                 .claimComment,
                 .blockUser,
-                .postFCMToken:
+                .postFCMToken,
+                .postPopUpUserReading:
             return .post
         case .editComment, .patchUsersMusicApp, .editNickname:
             return .patch
@@ -133,7 +149,7 @@ extension NetworkService: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .getMyInfo, .myDropList, .myLikeList, .myLevel, .recommendMusic, .userCircleRadius:
+        case .getMyInfo, .myDropList, .myLikeList, .myLevel, .myLevelProgress, .levelPolicy, .recommendMusic, .userCircleRadius, .getPopUpInfomation:
             return .requestPlain
         case .searchMusic(let keyword):
             return .requestParameters(
@@ -219,6 +235,8 @@ extension NetworkService: TargetType {
                 parameters: ["nickname": nickname],
                 encoding: URLEncoding.queryString
             )
+        case let .postPopUpUserReading(requestDTO):
+            return .requestJSONEncodable(requestDTO)
         }
     }
     
@@ -237,6 +255,8 @@ extension NetworkService: TargetType {
             return ResponseSampleData.fetchNumberOfDroppedMusicByDongSampleData
         case .getPoi:
             return ResponseSampleData.getPOISampleData
+        case .getPopUpInfomation:
+            return ResponseSampleData.getPopUpInfomationSampleData
         default:
             return Data()
         }

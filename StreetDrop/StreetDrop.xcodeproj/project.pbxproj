@@ -41,7 +41,10 @@
 		085652502AFBB73100FD9BCB /* MyPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0856524F2AFBB73100FD9BCB /* MyPageType.swift */; };
 		085652522B00B68100FD9BCB /* BubbleCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085652512B00B68100FD9BCB /* BubbleCommentView.swift */; };
 		0856525D2B1F29FD00FD9BCB /* ModalOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0856525C2B1F29FD00FD9BCB /* ModalOption.swift */; };
+		08810C2E2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810C2D2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift */; };
+		08810C322BD3FC57004FC6C1 /* LevelPolicySubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810C312BD3FC57004FC6C1 /* LevelPolicySubView.swift */; };
 		08B97EA52B44303C00084F66 /* UniviersialLinkKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B97EA42B44303C00084F66 /* UniviersialLinkKey.swift */; };
+		08BE57162BD4C887007EA949 /* UILabel+applyGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BE57152BD4C887007EA949 /* UILabel+applyGradient.swift */; };
 		1816ED3C2A680608005009FC /* MusicListSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */; };
 		1816ED3F2A68064E005009FC /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3E2A68064E005009FC /* MyPageViewModel.swift */; };
 		1816ED412A685704005009FC /* NicknameEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED402A685704005009FC /* NicknameEditViewModel.swift */; };
@@ -137,6 +140,17 @@
 		6A26BF322B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A26BF312B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift */; };
 		6A26BF342B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */; };
 		6A3AFB582B8DB399003BD144 /* GADUnitID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3AFB572B8DB399003BD144 /* GADUnitID.swift */; };
+		6A7D73D92BB11A0E009340E3 /* LevelUpGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */; };
+		6A7D73DD2BB14015009340E3 /* GradientProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */; };
+		6A7D73DF2BB15826009340E3 /* UIView+RoundCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73DE2BB15826009340E3 /* UIView+RoundCorners.swift */; };
+		6A7D73E62BB2AE34009340E3 /* NSMutableAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73E52BB2AE34009340E3 /* NSMutableAttributedString+.swift */; };
+		6A7D73E82BB3E62E009340E3 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73E72BB3E62E009340E3 /* UIButton+.swift */; };
+		6A806F9C2BC7A41E0003649E /* MyLevelProgressResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A806F9B2BC7A41E0003649E /* MyLevelProgressResponseDTO.swift */; };
+		6A806F9E2BC7A59F0003649E /* MyLevelProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A806F9D2BC7A59F0003649E /* MyLevelProgress.swift */; };
+		6AAFD9AA2BCE54DF001A6772 /* LevelPolicyResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAFD9A92BCE54DF001A6772 /* LevelPolicyResponseDTO.swift */; };
+		6AAFD9AD2BCE55A4001A6772 /* LevelPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAFD9AC2BCE55A4001A6772 /* LevelPolicy.swift */; };
+		6AAFD9AF2BCE567A001A6772 /* FetchingLevelPolicyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAFD9AE2BCE567A001A6772 /* FetchingLevelPolicyUseCase.swift */; };
+		6AAFD9B12BCE56A6001A6772 /* DefaultFetchingLevelPolicyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAFD9B02BCE56A6001A6772 /* DefaultFetchingLevelPolicyUseCase.swift */; };
 		B46578C32B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46578C22B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		B4B9EE842ADBDFFB000A6507 /* RecommendMusicSearchCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9EE832ADBDFFB000A6507 /* RecommendMusicSearchCollectionView.swift */; };
 		B4B9EE862ADEB2AC000A6507 /* RecommendKeywordItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B9EE852ADEB2AC000A6507 /* RecommendKeywordItemCell.swift */; };
@@ -177,6 +191,17 @@
 		C434A4D82A17AAAB00C63526 /* SearchingMusicViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */; };
 		C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
 		C434A4DD2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
+		C44980782BC37CB70001E6C3 /* NaverMaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = C44980772BC37CB70001E6C3 /* NaverMaps.plist */; };
+		C449807A2BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44980792BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift */; };
+		C449807C2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C449807B2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift */; };
+		C449807E2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C449807D2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift */; };
+		C44A54912BBC076000354F8F /* PopUpRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54902BBC076000354F8F /* PopUpRepository.swift */; };
+		C44A54932BBC07AA00354F8F /* PopUpInfomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54922BBC07AA00354F8F /* PopUpInfomation.swift */; };
+		C44A54962BBC082D00354F8F /* FetchingPopUpInfomationResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54952BBC082D00354F8F /* FetchingPopUpInfomationResponseDTO.swift */; };
+		C44A54982BBC08D200354F8F /* DefaultPopUpRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54972BBC08D200354F8F /* DefaultPopUpRepository.swift */; };
+		C44A549A2BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54992BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift */; };
+		C44A549C2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A549B2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift */; };
+		C44A549E2BBC0DC500354F8F /* TipPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A549D2BBC0DC500354F8F /* TipPopUpViewController.swift */; };
 		C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */; };
 		C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */; };
 		C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */; };
@@ -208,7 +233,8 @@
 		C49BA7832A1BE71700A83E95 /* SearchingMusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CB2A1796F300C63526 /* SearchingMusicViewModel.swift */; };
 		C49BA7852A1BE72900A83E95 /* RxCocoa-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = C49BA7842A1BE72900A83E95 /* RxCocoa-Dynamic */; };
 		C49BA7872A1BE72900A83E95 /* RxCocoa-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C49BA7842A1BE72900A83E95 /* RxCocoa-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		C4A056792A6315BD00AE2F0B /* NaverMaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4A056782A6315BD00AE2F0B /* NaverMaps.plist */; };
+		C49EDACC2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49EDACB2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift */; };
+		C49EDACE2BBD7EFE0025DB55 /* GradientLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49EDACD2BBD7EFE0025DB55 /* GradientLabel.swift */; };
 		C4A0567B2A631D6E00AE2F0B /* CustomSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0567A2A631D6E00AE2F0B /* CustomSwitch.swift */; };
 		C4A445902A5EF225008279C1 /* FCMTokenRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4458F2A5EF225008279C1 /* FCMTokenRequestDTO.swift */; };
 		C4A445932A5EF265008279C1 /* DefaultFCMRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A445922A5EF265008279C1 /* DefaultFCMRepository.swift */; };
@@ -278,7 +304,10 @@
 		0856524F2AFBB73100FD9BCB /* MyPageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageType.swift; sourceTree = "<group>"; };
 		085652512B00B68100FD9BCB /* BubbleCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleCommentView.swift; sourceTree = "<group>"; };
 		0856525C2B1F29FD00FD9BCB /* ModalOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalOption.swift; sourceTree = "<group>"; };
+		08810C2D2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelPolicyPopUpViewController.swift; sourceTree = "<group>"; };
+		08810C312BD3FC57004FC6C1 /* LevelPolicySubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelPolicySubView.swift; sourceTree = "<group>"; };
 		08B97EA42B44303C00084F66 /* UniviersialLinkKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniviersialLinkKey.swift; sourceTree = "<group>"; };
+		08BE57152BD4C887007EA949 /* UILabel+applyGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+applyGradient.swift"; sourceTree = "<group>"; };
 		1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListSectionHeaderView.swift; sourceTree = "<group>"; };
 		1816ED3E2A68064E005009FC /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		1816ED402A685704005009FC /* NicknameEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewModel.swift; sourceTree = "<group>"; };
@@ -365,6 +394,17 @@
 		6A26BF312B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingSingleMusicUseCase.swift; sourceTree = "<group>"; };
 		6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingSingleMusicUseCase.swift; sourceTree = "<group>"; };
 		6A3AFB572B8DB399003BD144 /* GADUnitID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GADUnitID.swift; sourceTree = "<group>"; };
+		6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpGuideView.swift; sourceTree = "<group>"; };
+		6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientProgressBar.swift; sourceTree = "<group>"; };
+		6A7D73DE2BB15826009340E3 /* UIView+RoundCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+RoundCorners.swift"; sourceTree = "<group>"; };
+		6A7D73E52BB2AE34009340E3 /* NSMutableAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+.swift"; sourceTree = "<group>"; };
+		6A7D73E72BB3E62E009340E3 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
+		6A806F9B2BC7A41E0003649E /* MyLevelProgressResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLevelProgressResponseDTO.swift; sourceTree = "<group>"; };
+		6A806F9D2BC7A59F0003649E /* MyLevelProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLevelProgress.swift; sourceTree = "<group>"; };
+		6AAFD9A92BCE54DF001A6772 /* LevelPolicyResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelPolicyResponseDTO.swift; sourceTree = "<group>"; };
+		6AAFD9AC2BCE55A4001A6772 /* LevelPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelPolicy.swift; sourceTree = "<group>"; };
+		6AAFD9AE2BCE567A001A6772 /* FetchingLevelPolicyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingLevelPolicyUseCase.swift; sourceTree = "<group>"; };
+		6AAFD9B02BCE56A6001A6772 /* DefaultFetchingLevelPolicyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingLevelPolicyUseCase.swift; sourceTree = "<group>"; };
 		B46578C22B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		B4B9EE832ADBDFFB000A6507 /* RecommendMusicSearchCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendMusicSearchCollectionView.swift; sourceTree = "<group>"; };
 		B4B9EE852ADEB2AC000A6507 /* RecommendKeywordItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendKeywordItemCell.swift; sourceTree = "<group>"; };
@@ -400,6 +440,17 @@
 		C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicRepository.swift; sourceTree = "<group>"; };
 		C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicViewModelTest.swift; sourceTree = "<group>"; };
 		C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicTableViewCell.swift; sourceTree = "<group>"; };
+		C44980772BC37CB70001E6C3 /* NaverMaps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NaverMaps.plist; sourceTree = "<group>"; };
+		C44980792BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpUserReadingRequestDTO.swift; sourceTree = "<group>"; };
+		C449807B2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingPopUpUserReadingUseCase.swift; sourceTree = "<group>"; };
+		C449807D2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPostingPopUpUserReadingUseCase.swift; sourceTree = "<group>"; };
+		C44A54902BBC076000354F8F /* PopUpRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpRepository.swift; sourceTree = "<group>"; };
+		C44A54922BBC07AA00354F8F /* PopUpInfomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpInfomation.swift; sourceTree = "<group>"; };
+		C44A54952BBC082D00354F8F /* FetchingPopUpInfomationResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingPopUpInfomationResponseDTO.swift; sourceTree = "<group>"; };
+		C44A54972BBC08D200354F8F /* DefaultPopUpRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPopUpRepository.swift; sourceTree = "<group>"; };
+		C44A54992BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingPopUpInfomationUseCase.swift; sourceTree = "<group>"; };
+		C44A549B2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingPopUpInfomationUseCase.swift; sourceTree = "<group>"; };
+		C44A549D2BBC0DC500354F8F /* TipPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipPopUpViewController.swift; sourceTree = "<group>"; };
 		C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheError.swift; sourceTree = "<group>"; };
 		C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKey.swift; sourceTree = "<group>"; };
 		C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRecentMusicSearches.swift; sourceTree = "<group>"; };
@@ -421,7 +472,8 @@
 		C47F02232A38633C00F48884 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		C47F02272A3864A500F48884 /* SettingElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingElementView.swift; sourceTree = "<group>"; };
 		C47F02292A3869DC00F48884 /* SettingsInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInfo.swift; sourceTree = "<group>"; };
-		C4A056782A6315BD00AE2F0B /* NaverMaps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = NaverMaps.plist; path = "../../../../../Downloads/APIKey Plist/NaverMaps.plist"; sourceTree = "<group>"; };
+		C49EDACB2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationsLevelUpPopUpViewController.swift; sourceTree = "<group>"; };
+		C49EDACD2BBD7EFE0025DB55 /* GradientLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLabel.swift; sourceTree = "<group>"; };
 		C4A0567A2A631D6E00AE2F0B /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
 		C4A4458F2A5EF225008279C1 /* FCMTokenRequestDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMTokenRequestDTO.swift; sourceTree = "<group>"; };
 		C4A445922A5EF265008279C1 /* DefaultFCMRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFCMRepository.swift; sourceTree = "<group>"; };
@@ -574,6 +626,7 @@
 				41396D902A4EFBF700B69341 /* DefaultEditCommentRepository.swift */,
 				41A3DDF72A5AD222004CFA2F /* DefaultBlockUserRepository.swift */,
 				C41972522ABED14200211222 /* DefaultMyInfoRepository.swift */,
+				C44A54972BBC08D200354F8F /* DefaultPopUpRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -659,7 +712,7 @@
 				040685082A01539800377094 /* Assets.xcassets */,
 				C4D16FC52A1B9184008B076F /* Font */,
 				0406850D2A01539800377094 /* Info.plist */,
-				C4A056782A6315BD00AE2F0B /* NaverMaps.plist */,
+				C44980772BC37CB70001E6C3 /* NaverMaps.plist */,
 				C475839C2A5F114000CA7335 /* GoogleService-Info-Dev.plist */,
 				C475839A2A5F113F00CA7335 /* GoogleService-Info-Prod.plist */,
 			);
@@ -681,6 +734,7 @@
 				41396D8A2A4EFB2500B69341 /* EditCommentRepository.swift */,
 				41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */,
 				41A3DDF52A5AD1C7004CFA2F /* BlockUserRepository.swift */,
+				C44A54902BBC076000354F8F /* PopUpRepository.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -743,7 +797,13 @@
 				C4E4C6B72A5ADFDB00B1C84A /* SettingsUseCase.swift */,
 				6A26BF312B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift */,
 				6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */,
+				C44A54992BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift */,
+				C44A549B2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift */,
+				C449807B2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift */,
+				C449807D2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift */,
 				082F170A2AB6E42800174D98 /* MusicDrop */,
+				6AAFD9AE2BCE567A001A6772 /* FetchingLevelPolicyUseCase.swift */,
+				6AAFD9B02BCE56A6001A6772 /* DefaultFetchingLevelPolicyUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -812,6 +872,8 @@
 				18EF9FC82A5C51FB00266D27 /* NicknameEditViewController.swift */,
 				1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */,
 				0856524F2AFBB73100FD9BCB /* MyPageType.swift */,
+				6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */,
+				6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -860,6 +922,8 @@
 			isa = PBXGroup;
 			children = (
 				1876F0402A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift */,
+				6A806F9B2BC7A41E0003649E /* MyLevelProgressResponseDTO.swift */,
+				6AAFD9A92BCE54DF001A6772 /* LevelPolicyResponseDTO.swift */,
 			);
 			path = MyLevel;
 			sourceTree = "<group>";
@@ -927,6 +991,7 @@
 				C4E094392A4DEFC5000B4513 /* VillageName */,
 				C4A4458E2A5EF203008279C1 /* FCM */,
 				0856524E2AFA781E00FD9BCB /* SingleMusic */,
+				C44A54942BBC080700354F8F /* PopUp */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -1000,6 +1065,9 @@
 				C40008E92A32012B00EA7FA9 /* Music.swift */,
 				C42361772B0CE8F800F61E3C /* RecommendMusic.swift */,
 				0856525C2B1F29FD00FD9BCB /* ModalOption.swift */,
+                6A806F9D2BC7A59F0003649E /* MyLevelProgress.swift */,
+                6AAFD9AC2BCE55A4001A6772 /* LevelPolicy.swift */,
+				C44A54922BBC07AA00354F8F /* PopUpInfomation.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1055,10 +1123,14 @@
 				41BCFD442A38C099001D3E5F /* Alertable.swift */,
 				413ABEE72A39BBA500EA1010 /* Toastable.swift */,
 				41A3DDF02A593ED4004CFA2F /* AlertViewController.swift */,
+				C44A549D2BBC0DC500354F8F /* TipPopUpViewController.swift */,
+				C49EDACB2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift */,
 				41A3DDEA2A58428F004CFA2F /* ToastView.swift */,
 				4141398E2A1FA252005418A1 /* PaddingLabel.swift */,
 				41396D9A2A4F1C5600B69341 /* OptionModalViewController.swift */,
 				085652512B00B68100FD9BCB /* BubbleCommentView.swift */,
+				08810C2D2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift */,
+				08810C312BD3FC57004FC6C1 /* LevelPolicySubView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1070,6 +1142,10 @@
 				414139962A20B434005418A1 /* UIImageView+makeCircleShape.swift */,
 				413ABEEB2A39D1E900EA1010 /* UIcolor+.swift */,
 				41008EB72A48891000FD4ABE /* UITextView+setLineSpacing.swift */,
+				6A7D73DE2BB15826009340E3 /* UIView+RoundCorners.swift */,
+				6A7D73E52BB2AE34009340E3 /* NSMutableAttributedString+.swift */,
+				6A7D73E72BB3E62E009340E3 /* UIButton+.swift */,
+				08BE57152BD4C887007EA949 /* UILabel+applyGradient.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1168,6 +1244,15 @@
 				C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */,
 			);
 			path = SearchingMusic;
+			sourceTree = "<group>";
+		};
+		C44A54942BBC080700354F8F /* PopUp */ = {
+			isa = PBXGroup;
+			children = (
+				C44A54952BBC082D00354F8F /* FetchingPopUpInfomationResponseDTO.swift */,
+				C44980792BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift */,
+			);
+			path = PopUp;
 			sourceTree = "<group>";
 		};
 		C45BF3982A1D0AE200CEDE74 /* Constant */ = {
@@ -1347,6 +1432,7 @@
 				188F90C62A39FD7D003A1B4A /* UIImage+cornerRadius.swift */,
 				082F17232ADD60BB00174D98 /* UINavigation+Gesture.swift */,
 				6A1386AA2B4F8A5000E49BB5 /* String+Base64.swift */,
+				C49EDACD2BBD7EFE0025DB55 /* GradientLabel.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1510,12 +1596,12 @@
 				C4D16FC32A1B917B008B076F /* Pretendard-ExtraLight.otf in Resources */,
 				C4D16FBC2A1B917B008B076F /* Pretendard-Regular.otf in Resources */,
 				C4D16FBE2A1B917B008B076F /* Pretendard-SemiBold.otf in Resources */,
+				C44980782BC37CB70001E6C3 /* NaverMaps.plist in Resources */,
 				C4D16FBF2A1B917B008B076F /* Pretendard-Thin.otf in Resources */,
 				C4D16FBD2A1B917B008B076F /* Pretendard-ExtraBold.otf in Resources */,
 				C475839D2A5F114000CA7335 /* GoogleService-Info-Prod.plist in Resources */,
 				C4D16FC12A1B917B008B076F /* Pretendard-Black.otf in Resources */,
 				040685092A01539800377094 /* Assets.xcassets in Resources */,
-				C4A056792A6315BD00AE2F0B /* NaverMaps.plist in Resources */,
 				C4D16FC22A1B917B008B076F /* Pretendard-Light.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1617,6 +1703,7 @@
 				18AAF83E2A137349002EF441 /* CommunityResponseDTO.swift in Sources */,
 				41396D952A4EFF7B00B69341 /* MyInfo.swift in Sources */,
 				188F90C72A39FD7D003A1B4A /* UIImage+cornerRadius.swift in Sources */,
+				6A806F9E2BC7A59F0003649E /* MyLevelProgress.swift in Sources */,
 				C41BD2EC2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */,
 				C41972322ABDAEF200211222 /* MyInfoError.swift in Sources */,
 				C47F022A2A3869DC00F48884 /* SettingsInfo.swift in Sources */,
@@ -1624,6 +1711,7 @@
 				41F23B4E2A1B6EE80083D2EC /* DropMusicRepository.swift in Sources */,
 				C4685B382B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift in Sources */,
 				18683FE12A349109005A94AC /* PoiEntity.swift in Sources */,
+				6AAFD9AF2BCE567A001A6772 /* FetchingLevelPolicyUseCase.swift in Sources */,
 				1876F03D2A66E0330064B887 /* MyDropListResponseDTO+Mapping.swift in Sources */,
 				41D097512A191D6700C011A0 /* MusicDropViewModel.swift in Sources */,
 				C4A445902A5EF225008279C1 /* FCMTokenRequestDTO.swift in Sources */,
@@ -1643,20 +1731,26 @@
 				C41972462ABDC45000211222 /* DefaultClaimingCommentUseCase.swift in Sources */,
 				C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */,
 				C41972532ABED14200211222 /* DefaultMyInfoRepository.swift in Sources */,
+				6A7D73D92BB11A0E009340E3 /* LevelUpGuideView.swift in Sources */,
 				41396DA12A51B0DF00B69341 /* EditCommentViewController.swift in Sources */,
+				C44A549A2BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift in Sources */,
 				41008EBA2A49B56F00FD4ABE /* ClaimModalViewController.swift in Sources */,
 				C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */,
 				B4B9EE842ADBDFFB000A6507 /* RecommendMusicSearchCollectionView.swift in Sources */,
 				C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */,
 				41A3DDF12A593ED4004CFA2F /* AlertViewController.swift in Sources */,
 				C47F02222A38633500F48884 /* SettingsViewController.swift in Sources */,
+				C44A54982BBC08D200354F8F /* DefaultPopUpRepository.swift in Sources */,
 				C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */,
 				18D671F62A35C5D4003B1A71 /* UIImage+Resizing.swift in Sources */,
 				C4E4C6B42A5ADC4B00B1C84A /* DefaultSettingsRepository.swift in Sources */,
 				C419724C2ABDCA6100211222 /* BlockUserUseCase.swift in Sources */,
 				C4E4C6BD2A5AE6F500B1C84A /* MusicApp.swift in Sources */,
+				C44A54962BBC082D00354F8F /* FetchingPopUpInfomationResponseDTO.swift in Sources */,
 				1816ED492A68591F005009FC /* DefaultNicknameEditRepository.swift in Sources */,
+				C44A54912BBC076000354F8F /* PopUpRepository.swift in Sources */,
 				C434A4D02A17981C00C63526 /* DefaultSearchingMusicRepository.swift in Sources */,
+				08810C322BD3FC57004FC6C1 /* LevelPolicySubView.swift in Sources */,
 				414345232A35B9A3003FEE2A /* LikeMusicRepository.swift in Sources */,
 				040685042A01539800377094 /* MainViewController.swift in Sources */,
 				C4685B362B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift in Sources */,
@@ -1664,6 +1758,7 @@
 				C47583A12A5F11BD00CA7335 /* Bundle+APIKeys.swift in Sources */,
 				C472B1882AC5523300482B2D /* DroppingInfo.swift in Sources */,
 				1876F0442A66E6E00064B887 /* MyPageRepository.swift in Sources */,
+				C449807E2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift in Sources */,
 				C41972302ABDAB0200211222 /* DefaultMyInfoUseCase.swift in Sources */,
 				41396D8F2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift in Sources */,
 				41396D822A4EF65B00B69341 /* EditCommentRequestDTO.swift in Sources */,
@@ -1681,6 +1776,7 @@
 				1816ED3C2A680608005009FC /* MusicListSectionHeaderView.swift in Sources */,
 				41A9BEB72A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift in Sources */,
 				1876F0502A66F7A30064B887 /* DefaultMyPageRepository.swift in Sources */,
+				C44A549C2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift in Sources */,
 				082F17242ADD60BB00174D98 /* UINavigation+Gesture.swift in Sources */,
 				415113272A165DC50051F809 /* MusicDropViewController.swift in Sources */,
 				1867C8242A4FFCDF00F8EC48 /* MusicTableViewCell.swift in Sources */,
@@ -1694,24 +1790,33 @@
 				C4A0567B2A631D6E00AE2F0B /* CustomSwitch.swift in Sources */,
 				6A26BF342B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift in Sources */,
 				1876F04E2A66EE030064B887 /* MyLevel.swift in Sources */,
+				6AAFD9AD2BCE55A4001A6772 /* LevelPolicy.swift in Sources */,
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
 				C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */,
 				6A1386AB2B4F8A5000E49BB5 /* String+Base64.swift in Sources */,
 				41396D8B2A4EFB2500B69341 /* EditCommentRepository.swift in Sources */,
 				1816ED3F2A68064E005009FC /* MyPageViewModel.swift in Sources */,
+				C49EDACE2BBD7EFE0025DB55 /* GradientLabel.swift in Sources */,
 				414345212A35B92A003FEE2A /* ResponseSampleData.swift in Sources */,
 				41589AB82A46D82F0029A2EE /* DropAnimationView.swift in Sources */,
 				18F76FAB2A04FF2E006CF9EF /* NetworkManager.swift in Sources */,
+				6A7D73E82BB3E62E009340E3 /* UIButton+.swift in Sources */,
 				188D2C792A1BA7C60088F49C /* LocationManagerDelegate.swift in Sources */,
 				413ABEE82A39BBA500EA1010 /* Toastable.swift in Sources */,
 				414345022A31F17B003FEE2A /* UIViewController+Constant.swift in Sources */,
+				6AAFD9AA2BCE54DF001A6772 /* LevelPolicyResponseDTO.swift in Sources */,
 				040685022A01539800377094 /* SceneDelegate.swift in Sources */,
+                6A7D73E62BB2AE34009340E3 /* NSMutableAttributedString+.swift in Sources */,
+				C44A549E2BBC0DC500354F8F /* TipPopUpViewController.swift in Sources */,
 				C4D16FC92A1B9338008B076F /* UIFont+Extension.swift in Sources */,
 				41A9BEB02A4AF45300F3605C /* ClaimModalViewModel.swift in Sources */,
 				04FB1F322A021C330064B3C8 /* TestError.swift in Sources */,
 				188D2C772A1BA74E0088F49C /* LocationManager.swift in Sources */,
+				6A806F9C2BC7A41E0003649E /* MyLevelProgressResponseDTO.swift in Sources */,
 				4143452E2A373550003FEE2A /* AddressManager.swift in Sources */,
+				08BE57162BD4C887007EA949 /* UILabel+applyGradient.swift in Sources */,
 				18EF9FC92A5C51FB00266D27 /* NicknameEditViewController.swift in Sources */,
+				C44A54932BBC07AA00354F8F /* PopUpInfomation.swift in Sources */,
 				B4B9EE862ADEB2AC000A6507 /* RecommendKeywordItemCell.swift in Sources */,
 				18683FDF2A348B25005A94AC /* MainRepository.swift in Sources */,
 				085652522B00B68100FD9BCB /* BubbleCommentView.swift in Sources */,
@@ -1733,12 +1838,14 @@
 				1876F0472A66EDA20064B887 /* MyPageModel.swift in Sources */,
 				18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */,
 				1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */,
+				6A7D73DD2BB14015009340E3 /* GradientProgressBar.swift in Sources */,
 				B46578C32B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				C41BD2E92A38467A0090EF2B /* UIImageView+ImageCache.swift in Sources */,
 				41D0974F2A19065B00C011A0 /* UIView+generateCircleGradientView.swift in Sources */,
 				C4BB15982A5EC507001BC5E8 /* FCMRepository.swift in Sources */,
 				41396DA42A51B61000B69341 /* EditCommentViewModel.swift in Sources */,
 				049F50222A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift in Sources */,
+				C49EDACC2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift in Sources */,
 				41A9BEB92A4DCA4A00F3605C /* ClaimCommentRepository.swift in Sources */,
 				C45BF3A32A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */,
 				041038972A126E7B00BC5532 /* MusicCountByDongResponseDTO+Mapping.swift in Sources */,
@@ -1757,6 +1864,8 @@
 				18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */,
 				C41972442ABDC43C00211222 /* ClaimingCommentUseCase.swift in Sources */,
 				082F17092AB6E41100174D98 /* DefaultMusicDropUseCase.swift in Sources */,
+                08810C2E2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift in Sources */,
+				C449807A2BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift in Sources */,
 				412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */,
 				1816ED462A6858DE005009FC /* NicknameEditRepository.swift in Sources */,
 				C41972402ABDC3B000211222 /* LikingUseCase.swift in Sources */,
@@ -1770,7 +1879,9 @@
 				C4E0943B2A4DF002000B4513 /* VillageNameResponseDTO.swift in Sources */,
 				0856524D2AFA77FD00FD9BCB /* SingleMusicResponseDTO.swift in Sources */,
 				41F23B4B2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift in Sources */,
+				6AAFD9B12BCE56A6001A6772 /* DefaultFetchingLevelPolicyUseCase.swift in Sources */,
 				C42361782B0CE8F800F61E3C /* RecommendMusic.swift in Sources */,
+				6A7D73DF2BB15826009340E3 /* UIView+RoundCorners.swift in Sources */,
 				08B97EA52B44303C00084F66 /* UniviersialLinkKey.swift in Sources */,
 				C4A445932A5EF265008279C1 /* DefaultFCMRepository.swift in Sources */,
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO+Mapping.swift in Sources */,
@@ -1779,6 +1890,7 @@
 				188D2C7B2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift in Sources */,
 				41396D9B2A4F1C5600B69341 /* OptionModalViewController.swift in Sources */,
 				C47C1D1F2A643C07007317EA /* SplashViewController.swift in Sources */,
+				C449807C2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1959,7 +2071,7 @@
 				CODE_SIGN_ENTITLEMENTS = StreetDrop/StreetDropDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = F8M76V73YG;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1978,7 +2090,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.StreetDropDebug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2002,7 +2114,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = F8M76V73YG;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2021,7 +2133,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.StreetDropRelease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "StreetDrop Release";

@@ -25,11 +25,15 @@ final class MainViewModel: ViewModel {
     var poiDict: [Int: NMFMarker] = [:] // POI ID로 마커를 찾기 위함입니다.
     private var poiMarkers: [NMFMarker] = []
     var markerAlbumImages: [Int: UIImage] = [:] // POI ID로 앨범 이미지를 찾기 위함입니다.
+    private var popUpInfomations: [PopUpInfomation] = []
+    private let output = Output()
     
     private let myInfoUseCase: MyInfoUseCase
     private let fetchingPOIUseCase: FetchingPOIUseCase
     private let fetchingMusicCountUseCse: FetchingMusicCountUseCase
     private let fetchingMusicWithinArea: FetchingMusicWithinArea
+    private let fetchingPopUpInfomationUseCase: FetchingPopUpInfomationUseCase
+    private let postingPopUpUserReadingUseCase: PostingPopUpUserReadingUseCase
     
     var locationManager = LocationManager()
     private let locationUpdated = PublishRelay<Void>()
@@ -40,13 +44,17 @@ final class MainViewModel: ViewModel {
         fetchingPOIUseCase: FetchingPOIUseCase = DefaultFetchingPOIUseCase(),
         fetchingMusicCountUseCse: FetchingMusicCountUseCase = DefaultFetchingMusicCountUseCase(),
         fetchingMusicWithinArea: FetchingMusicWithinArea = DefaultFetchingMusicWithinArea(),
-        fetchingSingleMusicUseCase: FetchingSingleMusicUseCase = DefaultFetchingSingleMusicUseCase()
+        fetchingSingleMusicUseCase: FetchingSingleMusicUseCase = DefaultFetchingSingleMusicUseCase(),
+        fetchingPopUpInfomationUseCase: FetchingPopUpInfomationUseCase = DefaultFetchingPopUpInfomationUseCase(),
+        postingPopUpUserReadingUseCase: PostingPopUpUserReadingUseCase = DefaultPostingPopUpUserReadingUseCase()
     ) {
         self.userCircleRadius = userCircleRadius
         self.myInfoUseCase = myInfoUseCase
         self.fetchingPOIUseCase = fetchingPOIUseCase
         self.fetchingMusicCountUseCse = fetchingMusicCountUseCse
         self.fetchingMusicWithinArea = fetchingMusicWithinArea
+        self.fetchingPopUpInfomationUseCase = fetchingPopUpInfomationUseCase
+        self.postingPopUpUserReadingUseCase = postingPopUpUserReadingUseCase
         self.locationManager.delegate = self
     }
 }
@@ -55,6 +63,7 @@ extension MainViewModel {
     struct Input {
         let viewDidLoadEvent: PublishRelay<Void>
         let viewWillAppearEvent: PublishRelay<Void>
+        let viewDidAppearEvent: Observable<Void>
         let poiMarkerDidTapEvent: PublishRelay<NMFMarker>
         let cameraDidStopEvent: PublishRelay<(latitude: Double, longitude: Double)>
         let homeButtonDidTapEvent: ControlEvent<Void>
@@ -71,41 +80,63 @@ extension MainViewModel {
         let tappedPOIIndex = PublishRelay<Int>()
         let showFirstComment = PublishRelay<Void>()
         let presentSharedMusicView = PublishRelay<Int>()
+        
+        let tipPopUpShowRelay: PublishRelay<PopUpInfomation> = .init()
+        var tipPopUpShow: Observable<PopUpInfomation> {
+            tipPopUpShowRelay.asObservable()
+        }
+        
+        let congratulationsLevelUpPopUpShowRelay: PublishRelay<PopUpInfomation> = .init()
+        var congratulationsLevelUpPopUpShow: Observable<PopUpInfomation> {
+            congratulationsLevelUpPopUpShowRelay.asObservable()
+        }
     }
 }
 
 extension MainViewModel {
     func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
-        let output = Output()
-        
         // TODO: viewDidLoadEvent, viewWillAppearEvent처리 더 괜찮은 RX연산자 있다면 리팩토링!
         input.viewDidLoadEvent
             .sample(self.locationUpdated) // 앱 실행 시, 두 이벤트 모두 들어올 경우 한번만 fetchPois
             .take(1)
             .bind(with: self) { owner, _ in
-                owner.fetchPois(output: output, disposedBag: disposedBag)
+                owner.fetchPois(output: owner.output, disposedBag: disposedBag)
                 owner.fetchMusicCount(
                     latitude: self.location.coordinate.latitude,
                     longitude: self.location.coordinate.longitude,
-                    output: output,
+                    output: owner.output,
                     disposedBag: disposedBag
                 )
-                output.cameraShouldGoCurrentLocation.accept(self.location)
-                owner.fetchMusicWithArea(output: output, disposedBag: disposedBag)
+                owner.output.cameraShouldGoCurrentLocation.accept(self.location)
+                owner.fetchMusicWithArea(output: owner.output, disposedBag: disposedBag)
                 owner.fetchMyInfoAndSave(disposedBag: disposedBag)
-                owner.checkAppFirstLaunched(output: output)
-                owner.checkUniversialLinkRemained(output: output)
+                owner.checkAppFirstLaunched(output: owner.output)
+                owner.checkUniversialLinkRemained(output: owner.output)
             }
             .disposed(by: disposedBag)
-            
+        
+        input.viewDidAppearEvent
+            .bind(with: self) { owner, _ in
+                owner.fetchingPopUpInfomationUseCase.execute()
+                    .subscribe(with: self) { owner, popUpInfomations in
+                        owner.popUpInfomations = popUpInfomations
+                        owner.showFirstPopUpInfomation()
+                    } onFailure: { _, error in
+                        print(error.localizedDescription)
+                    }
+                    .disposed(by: disposedBag)
+
+            }
+            .disposed(by: disposedBag)
+        
         input.viewWillAppearEvent // ViewWillAppear 시, fetchPois
             .skip(1) // 첫 ViewWillAppear땐 CLLocation 가져오지 못해 스킵
             .bind(with: self) { owner, _ in
-                owner.fetchPois(output: output, disposedBag: disposedBag)
+                owner.fetchPois(output: owner.output, disposedBag: disposedBag)
                 owner.fetchMusicCount(
                     latitude: self.location.coordinate.latitude,
                     longitude: self.location.coordinate.longitude,
-                    output: output,
+                    output: owner.output,
                     disposedBag: disposedBag
                 )
             }
@@ -113,11 +144,11 @@ extension MainViewModel {
         
         input.cameraDidStopEvent
             .skip(1)
-            .bind { (latitude: Double, longitude: Double) in
+            .bind(with: self) { owner, element in
                 self.fetchMusicCount(
-                    latitude: latitude,
-                    longitude: longitude,
-                    output: output,
+                    latitude: element.latitude,
+                    longitude: element.longitude,
+                    output: owner.output,
                     disposedBag: disposedBag
                 )
             }
@@ -149,8 +180,8 @@ extension MainViewModel {
             .disposed(by: disposedBag)
         
         input.myLocationButtonDidTapEvent
-            .bind {
-                output.cameraShouldGoCurrentLocation.accept(self.location)
+            .bind(with: self) { owner, _  in
+                owner.output.cameraShouldGoCurrentLocation.accept(self.location)
             }
             .disposed(by: disposedBag)
         
@@ -175,6 +206,18 @@ extension MainViewModel {
     func removeAllPOIMarkers() {
         self.poiMarkers.forEach { $0.mapView = nil }
         self.poiMarkers = []
+    }
+    
+    func postPopUpUserReading(popUpInfomation: PopUpInfomation, disposeBag: DisposeBag) {
+        showFirstPopUpInfomation()
+        
+        postingPopUpUserReadingUseCase.execute(type: popUpInfomation.type, id: popUpInfomation.contentID)
+            .subscribe(with: self) { owner, _ in
+                print("post Popup User Reading 성공")
+            } onFailure: { _, error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -281,6 +324,20 @@ private extension MainViewModel {
         
         if itemID > 0 {
             output.presentSharedMusicView.accept(itemID)
+        }
+    }
+    
+    func showFirstPopUpInfomation() {
+        if let firstPopUpInfomation = popUpInfomations.first {
+            switch firstPopUpInfomation.type {
+            case "guide":
+                output.tipPopUpShowRelay.accept(firstPopUpInfomation)
+            case "levelUp":
+                output.congratulationsLevelUpPopUpShowRelay.accept(firstPopUpInfomation)
+            default:
+                break
+            }
+            popUpInfomations.removeFirst()
         }
     }
 }

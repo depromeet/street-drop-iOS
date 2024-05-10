@@ -112,7 +112,19 @@ public extension UIColor {
     static var pointGradation_2: UIColor {
         UIColor(hexString: "#98FFDA")
     }
-
+    
+    static var pointGradient_1: UIColor {
+        UIColor(hexString: "#68EFF7")
+    }
+    
+    static var pointGradient_2: UIColor {
+        UIColor(hexString: "#6FF5E8")
+    }
+    
+    static var pointGradient_3: UIColor {
+        UIColor(hexString: "#7BFFD0")
+    }
+    
     static var gray50: UIColor {
         UIColor(hexString: "#E6EDF8")
     }
@@ -174,6 +186,10 @@ public extension UIColor {
     
     static var darkPrimary_75: UIColor {
         UIColor(red: 0.408, green: 0.922, blue: 0.969, alpha: 0.75)
+    }
+    
+    static var darkPrimary_300: UIColor {
+        UIColor(red: 0.639, green: 0.98, blue: 1, alpha: 1)
     }
     
     static var darkPrimary_500: UIColor {

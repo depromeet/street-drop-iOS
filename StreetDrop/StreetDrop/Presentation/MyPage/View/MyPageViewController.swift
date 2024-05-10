@@ -13,7 +13,7 @@ import RxRelay
 import RxSwift
 import SnapKit
 
-final class MyPageViewController: UIViewController, Toastable {
+final class MyPageViewController: UIViewController, Toastable, Alertable {
     typealias DataSource = RxTableViewSectionedReloadDataSource<MyMusicsSection>
     
     private var stickyTapListStackView: UIStackView?
@@ -24,6 +24,7 @@ final class MyPageViewController: UIViewController, Toastable {
     
     private var viewModel: MyPageViewModel
     private let viewWillAppearEvent = PublishRelay<Void>()
+    private let levelPolicyTapEvent = PublishRelay<Void>()
     private let selectedMusicEvent = PublishRelay<MusicInfo>()
     private let disposeBag = DisposeBag()
     
@@ -86,11 +87,6 @@ final class MyPageViewController: UIViewController, Toastable {
         return button
     }()
     
-    private lazy var levelImageView: UIImageView = {
-        let imageView = UIImageView()
-        return imageView
-    }()
-    
     private lazy var levelTagContainerView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.primary500.cgColor
@@ -105,6 +101,18 @@ final class MyPageViewController: UIViewController, Toastable {
         label.font = .pretendard(size: 12, weightName: .semiBold)
         label.text = "     "
         return label
+    }()
+    
+    private lazy var levelGuideButton: UIButton = {
+        let button = UIButton()
+        let image = UIImage(named: "infoIcon")?.withRenderingMode(.alwaysTemplate)
+        button.setImage(image, for: .normal)
+        button.tintColor = UIColor.gray200
+        button.setTitle("레벨 안내", for: .normal)
+        button.titleLabel?.font = .pretendard(size: 14, weightName: .medium)
+        button.setInsets(intervalPadding: 4)
+        
+        return button
     }()
     
     private lazy var profileStackView: UIStackView = {
@@ -130,6 +138,13 @@ final class MyPageViewController: UIViewController, Toastable {
         button.tintColor = UIColor.gray300
         return button
     }()
+    
+    private lazy var levelImageView: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+    
+    private lazy var levelUpGuideView = LevelUpGuideView()
     
     private lazy var tapListStackView: UIStackView = {
         let stackView = UIStackView()
@@ -270,21 +285,11 @@ private extension MyPageViewController {
             make.trailing.equalToSuperview().inset(24)
         }
         
-        // MARK: - Level ImageView
-        
-        self.containerView.addSubview(levelImageView)
-        self.levelImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(18)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(243)
-            make.height.equalTo(184)
-        }
-        
         // MARK: - Level Tag Container View
         
         self.containerView.addSubview(levelTagContainerView)
         self.levelTagContainerView.snp.makeConstraints { make in
-            make.top.equalTo(levelImageView.snp.bottom).offset(24)
+            make.top.equalTo(titleLabel.snp.bottom).offset(28)
             make.leading.equalToSuperview().offset(24)
         }
         
@@ -294,6 +299,17 @@ private extension MyPageViewController {
         self.levelTagLabel.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(6)
             make.leading.trailing.equalToSuperview().inset(12)
+        }
+        
+        // MARK: - Level Guide Button
+        
+        self.containerView
+            .addSubview(levelGuideButton)
+        self.levelGuideButton.snp.makeConstraints { make in
+            make.top.equalTo(levelTagContainerView)
+            make.leading.greaterThanOrEqualTo(levelTagContainerView.snp.trailing).offset(50)
+            make.trailing.equalToSuperview().inset(24)
+            make.height.equalTo(levelTagContainerView)
         }
         
         // MARK: - Profile StackView
@@ -331,11 +347,30 @@ private extension MyPageViewController {
             }()
         )
         
+        // MARK: - Level ImageView
+        
+        self.containerView.addSubview(levelImageView)
+        self.levelImageView.snp.makeConstraints { make in
+            make.top.equalTo(profileStackView.snp.bottom).offset(16)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(217)
+            make.height.equalTo(164)
+        }
+        
+        // MARK: - LevelUp GuideView
+        
+        containerView.addSubview(levelUpGuideView)
+        levelUpGuideView.snp.makeConstraints {
+            $0.top.equalTo(levelImageView.snp.bottom).offset(8)
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(136)
+        }
+        
         // MARK: - Tap List StackView
         
         self.containerView.addSubview(tapListStackView)
         self.tapListStackView.snp.makeConstraints { make in
-            make.top.equalTo(profileStackView.snp.bottom).offset(24)
+            make.top.equalTo(levelUpGuideView.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(24)
         }
         
@@ -552,6 +587,10 @@ private extension MyPageViewController {
             }
             .disposed(by: disposeBag)
         
+        levelGuideButton.rx.tap
+            .bind(to: levelPolicyTapEvent)
+            .disposed(by: disposeBag)
+        
         dropMusicListTableView.rx.itemSelected
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, indexPath in
@@ -574,6 +613,7 @@ private extension MyPageViewController {
     private func bindViewModel() {
         let input = MyPageViewModel.Input(
             viewWillAppearEvent: self.viewWillAppearEvent,
+            levelPolicyTapEvent: levelPolicyTapEvent,
             selectedMusicEvent: selectedMusicEvent
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
@@ -640,6 +680,33 @@ private extension MyPageViewController {
                     bottomInset: 44,
                     duration: .now() + 3
                 )
+            }
+            .disposed(by: disposeBag)
+        
+        output.isShowingLevelUpView
+            .map { !$0 }
+            .bind(to: levelUpGuideView.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        output.remainCountToLevelUp
+            .bind(to: levelUpGuideView.rx.setRemainDropGuideText)
+            .disposed(by: disposeBag)
+        
+        output.currentDropStateCount
+            .bind(to: levelUpGuideView.rx.setCurrentDropStateText)
+            .disposed(by: disposeBag)
+        
+        output.currentDropStateCount
+            .bind(to: levelUpGuideView.rx.setProgress)
+            .disposed(by: disposeBag)
+        
+        output.tipText
+            .bind(to: levelUpGuideView.rx.setTipText)
+            .disposed(by: disposeBag)
+        
+        output.levelPolicies
+            .bind(with: self) { owner, levelPolicies in
+                owner.showLevelPolicy(levelPolicies)
             }
             .disposed(by: disposeBag)
     }

@@ -305,18 +305,18 @@ private extension MusicDropViewController {
             .disposed(by: disposeBag)
 
         cancelButton.rx.tap
-            .bind { [weak self] in
-                let dismissAction = UIAction {_ in
+            .bind(with: self) { owner, _ in
+                let dismissAction: AlertCompletion = { [weak self] in
                     self?.navigationController?.dismiss(animated: true)
                     self?.navigationController?.popToRootViewController(animated: true)
                 }
 
-                self?.showAlert(
+                owner.showAlert(
+                    type: .confirm(onConfirm: dismissAction, onDeny: nil),
                     state: .gray,
                     title: "정말 나가시겠어요? 🥺",
                     subText: "음악과 코멘트 내역은\n자동으로 저장되지 않아요.",
-                    confirmButtonTitle: "나가기",
-                    confirmButtonAction: dismissAction
+                    buttonTitle: "나가기"
                 )
             }
             .disposed(by: disposeBag)
