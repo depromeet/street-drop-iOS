@@ -117,7 +117,7 @@ private extension OptionModalViewController {
 
         firstOptionButton.addAction(firstOption.acton, for: .touchUpInside)
         secondOptionButton.addAction(secondOption.acton, for: .touchUpInside)
-        thirdOptionButton.addAction(secondOption.acton, for: .touchUpInside)
+        thirdOptionButton.addAction(thirdOption.acton, for: .touchUpInside)
     }
 
     func configureUI() {
