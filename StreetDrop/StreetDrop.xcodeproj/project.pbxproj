@@ -1065,8 +1065,8 @@
 				C40008E92A32012B00EA7FA9 /* Music.swift */,
 				C42361772B0CE8F800F61E3C /* RecommendMusic.swift */,
 				0856525C2B1F29FD00FD9BCB /* ModalOption.swift */,
-                6A806F9D2BC7A59F0003649E /* MyLevelProgress.swift */,
-                6AAFD9AC2BCE55A4001A6772 /* LevelPolicy.swift */,
+				6A806F9D2BC7A59F0003649E /* MyLevelProgress.swift */,
+				6AAFD9AC2BCE55A4001A6772 /* LevelPolicy.swift */,
 				C44A54922BBC07AA00354F8F /* PopUpInfomation.swift */,
 			);
 			path = Entity;
@@ -1806,7 +1806,7 @@
 				414345022A31F17B003FEE2A /* UIViewController+Constant.swift in Sources */,
 				6AAFD9AA2BCE54DF001A6772 /* LevelPolicyResponseDTO.swift in Sources */,
 				040685022A01539800377094 /* SceneDelegate.swift in Sources */,
-                6A7D73E62BB2AE34009340E3 /* NSMutableAttributedString+.swift in Sources */,
+				6A7D73E62BB2AE34009340E3 /* NSMutableAttributedString+.swift in Sources */,
 				C44A549E2BBC0DC500354F8F /* TipPopUpViewController.swift in Sources */,
 				C4D16FC92A1B9338008B076F /* UIFont+Extension.swift in Sources */,
 				41A9BEB02A4AF45300F3605C /* ClaimModalViewModel.swift in Sources */,
@@ -1864,7 +1864,7 @@
 				18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */,
 				C41972442ABDC43C00211222 /* ClaimingCommentUseCase.swift in Sources */,
 				082F17092AB6E41100174D98 /* DefaultMusicDropUseCase.swift in Sources */,
-                08810C2E2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift in Sources */,
+				08810C2E2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift in Sources */,
 				C449807A2BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift in Sources */,
 				412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */,
 				1816ED462A6858DE005009FC /* NicknameEditRepository.swift in Sources */,
@@ -2071,7 +2071,7 @@
 				CODE_SIGN_ENTITLEMENTS = StreetDrop/StreetDropDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = F8M76V73YG;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2090,7 +2090,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.StreetDropDebug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2114,7 +2114,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = F8M76V73YG;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2133,7 +2133,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.StreetDropRelease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "StreetDrop Release";
