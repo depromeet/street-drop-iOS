@@ -26,6 +26,7 @@ final class DefaultSettingsViewModel: SettingsViewModel {
     }
     
     struct Output {
+        let defaultSettingSectionTypes: PublishRelay<[SettingSectionType]> = .init()
         let currentMusicApp: PublishRelay<MusicApp> = .init()
         let savedMusicAppInServer: PublishRelay<MusicApp> = .init()
         let changingMusicAppFailAlert: PublishRelay<String> = .init()
@@ -36,6 +37,7 @@ final class DefaultSettingsViewModel: SettingsViewModel {
         
         input.viewDidLoadEvent
             .bind { [weak self] in
+                self?.fetchDefaultSettingSectionTypes(output: output, disposeBag: disposedBag)
                 self?.fetchMymusicAppFromLocal(output: output, disposeBag: disposedBag)
             }
             .disposed(by: disposedBag)
@@ -67,6 +69,16 @@ private extension DefaultSettingsViewModel {
                 output.currentMusicApp.accept(myMusicApp)
             } onFailure: { error in
                 output.changingMusicAppFailAlert.accept("연결 앱 변경이 실패했어요!")
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func fetchDefaultSettingSectionTypes(output: Output, disposeBag: DisposeBag) {
+        self.useCase.fetchDefaultSettingSectionTypes()
+            .subscribe { settingSectionTypes in
+                output.defaultSettingSectionTypes.accept(settingSectionTypes)
+            } onFailure: { error in
+                debugPrint(error.localizedDescription)
             }
             .disposed(by: disposeBag)
     }
