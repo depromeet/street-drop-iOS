@@ -239,13 +239,11 @@ extension SettingsViewController: UICollectionViewDelegate {
             UIApplication.shared.open(url)
             
         case .notice(_):
-            // TODO: jihye
-//            let noticeListViewController = NoticeListViewController(viewModel: .init())
-//            self.navigationController?.pushViewController(
-//                noticeListViewController,
-//                animated: true
-//            )
-            return
+            let noticeListViewController = NoticeListViewController(viewModel: .init())
+            self.navigationController?.pushViewController(
+                noticeListViewController,
+                animated: true
+            )
             
         default:
             return
