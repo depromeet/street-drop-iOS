@@ -189,4 +189,16 @@ struct NetworkManager {
         .retry(3)
         .map { _ in }
     }
+    
+    func getNoticeList() -> Single<Data> {
+        return provider.rx.request(.getNoticeList)
+        .retry(3)
+        .map { $0.data }
+    }
+    
+    func getNoticeDetail(id: Int) -> Single<Data> {
+        return provider.rx.request(.getNoticeDetail(id: id))
+        .retry(3)
+        .map { $0.data }
+    }
 }

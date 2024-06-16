@@ -37,6 +37,8 @@ enum NetworkService {
     case userCircleRadius
     case getPopUpInfomation
     case postPopUpUserReading(requestDTO: PopUpUserReadingRequestDTO)
+    case getNoticeList
+    case getNoticeDetail(id: Int)
 }
 
 extension NetworkService: TargetType {
@@ -110,6 +112,10 @@ extension NetworkService: TargetType {
             return "/pop-up"
         case .postPopUpUserReading:
             return "/pop-up/read"
+        case .getNoticeList:
+            return "/announcements"
+        case .getNoticeDetail(let id):
+            return "/announcements/\(id)"
         }
     }
     
@@ -130,7 +136,9 @@ extension NetworkService: TargetType {
                 .myLevelProgress,
                 .levelPolicy,
                 .userCircleRadius,
-                .getPopUpInfomation:
+                .getPopUpInfomation,
+                .getNoticeList,
+                .getNoticeDetail:
             return .get
         case .dropMusic,
                 .postLikeUp,
@@ -149,7 +157,8 @@ extension NetworkService: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .getMyInfo, .myDropList, .myLikeList, .myLevel, .myLevelProgress, .levelPolicy, .recommendMusic, .userCircleRadius, .getPopUpInfomation:
+        case .getMyInfo, .myDropList, .myLikeList, .myLevel, .myLevelProgress, .levelPolicy, .recommendMusic, .userCircleRadius, .getPopUpInfomation,
+            .getNoticeList, .getNoticeDetail:
             return .requestPlain
         case .searchMusic(let keyword):
             return .requestParameters(
