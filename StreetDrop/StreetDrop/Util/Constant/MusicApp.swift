@@ -37,7 +37,7 @@ enum MusicApp: String, CaseIterable, Codable {
     var text: String {
         switch self {
         case .youtubeMusic:
-            return "Youtube music"
+            return "Youtube Music"
         case .spotify:
             return "Spotify"
 //        case .appleMusic:

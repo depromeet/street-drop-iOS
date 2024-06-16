@@ -28,18 +28,11 @@ final class MusicAppButton: UIControl {
     
     private let musicAppLabel: UILabel = {
         let label: UILabel = .init()
+        label.font = .pretendard(size: 14, weightName: .medium)
         label.textColor = .white
         label.setLineHeight(lineHeight: 20)
         
         return label
-    }()
-    
-    private let checkBoxImageView: UIImageView = {
-        let imageView: UIImageView = .init()
-        imageView.image = UIImage(named: "musicAppCheckBox")
-        imageView.isHidden = true
-        
-        return imageView
     }()
     
     func setData(musicApp: MusicApp) {
@@ -49,14 +42,12 @@ final class MusicAppButton: UIControl {
     }
     
     func setSelectedAppearance() {
-        self.checkBoxImageView.isHidden = false
         self.backgroundColor = .darkPrimary_500_10
         self.layer.borderColor = UIColor.darkPrimary_500.cgColor
         self.layer.borderWidth = 1
     }
     
     func setUnselectedAppearance() {
-        self.checkBoxImageView.isHidden = true
         self.backgroundColor = .clear
         self.layer.borderColor = UIColor.darkPrimary_500_10.cgColor
         self.layer.borderWidth = 1
@@ -68,8 +59,7 @@ private extension MusicAppButton {
         self.layer.cornerRadius = 12
         [
             self.musicAppLogo,
-            self.musicAppLabel,
-            self.checkBoxImageView
+            self.musicAppLabel
         ].forEach {
             self.addSubview($0)
         }
@@ -82,12 +72,6 @@ private extension MusicAppButton {
         }
         
         self.musicAppLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalTo(self.checkBoxImageView.snp.leading)
-        }
-        
-        self.checkBoxImageView.snp.makeConstraints {
-            $0.width.height.equalTo(24)
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(16)
         }

@@ -226,8 +226,8 @@
 		C47C1D1F2A643C07007317EA /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47C1D1E2A643C07007317EA /* SplashViewController.swift */; };
 		C47F02222A38633500F48884 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02212A38633500F48884 /* SettingsViewController.swift */; };
 		C47F02242A38633C00F48884 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02232A38633C00F48884 /* SettingsViewModel.swift */; };
-		C47F02282A3864A500F48884 /* SettingElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02272A3864A500F48884 /* SettingElementView.swift */; };
-		C47F022A2A3869DC00F48884 /* SettingsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02292A3869DC00F48884 /* SettingsInfo.swift */; };
+		C47F02282A3864A500F48884 /* SettingElementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02272A3864A500F48884 /* SettingElementCell.swift */; };
+		C47F022A2A3869DC00F48884 /* SettingSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02292A3869DC00F48884 /* SettingSectionType.swift */; };
 		C49BA7612A1BDFC900A83E95 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */; };
 		C49BA7622A1BDFCC00A83E95 /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */; };
 		C49BA7832A1BE71700A83E95 /* SearchingMusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CB2A1796F300C63526 /* SearchingMusicViewModel.swift */; };
@@ -257,6 +257,10 @@
 		C4E4C6BA2A5AE40900B1C84A /* UserDefaultsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */; };
 		C4E4C6BD2A5AE6F500B1C84A /* MusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
+		F48DF73A2C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48DF7392C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift */; };
+		F48DF73C2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48DF73B2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift */; };
+		F4AA84DF2C1F3B0200CADB1A /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA84DE2C1F3B0200CADB1A /* Array+Extension.swift */; };
+		F4BDF78F2C1DC57500CC6EE6 /* SettingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BDF78E2C1DC57500CC6EE6 /* SettingHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -470,8 +474,8 @@
 		C47C1D1E2A643C07007317EA /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		C47F02212A38633500F48884 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C47F02232A38633C00F48884 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		C47F02272A3864A500F48884 /* SettingElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingElementView.swift; sourceTree = "<group>"; };
-		C47F02292A3869DC00F48884 /* SettingsInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInfo.swift; sourceTree = "<group>"; };
+		C47F02272A3864A500F48884 /* SettingElementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingElementCell.swift; sourceTree = "<group>"; };
+		C47F02292A3869DC00F48884 /* SettingSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionType.swift; sourceTree = "<group>"; };
 		C49EDACB2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationsLevelUpPopUpViewController.swift; sourceTree = "<group>"; };
 		C49EDACD2BBD7EFE0025DB55 /* GradientLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLabel.swift; sourceTree = "<group>"; };
 		C4A0567A2A631D6E00AE2F0B /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
@@ -497,6 +501,10 @@
 		C4E4C6B72A5ADFDB00B1C84A /* SettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUseCase.swift; sourceTree = "<group>"; };
 		C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsError.swift; sourceTree = "<group>"; };
 		C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicApp.swift; sourceTree = "<group>"; };
+		F48DF7392C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPushNotificationCell.swift; sourceTree = "<group>"; };
+		F48DF73B2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingMusicSelectCell.swift; sourceTree = "<group>"; };
+		F4AA84DE2C1F3B0200CADB1A /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
+		F4BDF78E2C1DC57500CC6EE6 /* SettingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1260,7 +1268,7 @@
 			children = (
 				C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */,
 				6A3AFB572B8DB399003BD144 /* GADUnitID.swift */,
-				C47F02292A3869DC00F48884 /* SettingsInfo.swift */,
+				C47F02292A3869DC00F48884 /* SettingSectionType.swift */,
 				C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */,
 				08B97EA42B44303C00084F66 /* UniviersialLinkKey.swift */,
 			);
@@ -1348,7 +1356,10 @@
 			isa = PBXGroup;
 			children = (
 				C47F02212A38633500F48884 /* SettingsViewController.swift */,
-				C47F02272A3864A500F48884 /* SettingElementView.swift */,
+				F4BDF78E2C1DC57500CC6EE6 /* SettingHeaderView.swift */,
+				C47F02272A3864A500F48884 /* SettingElementCell.swift */,
+				F48DF7392C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift */,
+				F48DF73B2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift */,
 				C46410F32A629820009DD88F /* MusicAppButton.swift */,
 				C4A0567A2A631D6E00AE2F0B /* CustomSwitch.swift */,
 			);
@@ -1433,6 +1444,7 @@
 				082F17232ADD60BB00174D98 /* UINavigation+Gesture.swift */,
 				6A1386AA2B4F8A5000E49BB5 /* String+Base64.swift */,
 				C49EDACD2BBD7EFE0025DB55 /* GradientLabel.swift */,
+				F4AA84DE2C1F3B0200CADB1A /* Array+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1706,14 +1718,16 @@
 				6A806F9E2BC7A59F0003649E /* MyLevelProgress.swift in Sources */,
 				C41BD2EC2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */,
 				C41972322ABDAEF200211222 /* MyInfoError.swift in Sources */,
-				C47F022A2A3869DC00F48884 /* SettingsInfo.swift in Sources */,
+				C47F022A2A3869DC00F48884 /* SettingSectionType.swift in Sources */,
 				41589ABA2A474B3D0029A2EE /* CommunityGuideDetailView.swift in Sources */,
+				F4BDF78F2C1DC57500CC6EE6 /* SettingHeaderView.swift in Sources */,
 				41F23B4E2A1B6EE80083D2EC /* DropMusicRepository.swift in Sources */,
 				C4685B382B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift in Sources */,
 				18683FE12A349109005A94AC /* PoiEntity.swift in Sources */,
 				6AAFD9AF2BCE567A001A6772 /* FetchingLevelPolicyUseCase.swift in Sources */,
 				1876F03D2A66E0330064B887 /* MyDropListResponseDTO+Mapping.swift in Sources */,
 				41D097512A191D6700C011A0 /* MusicDropViewModel.swift in Sources */,
+				F48DF73A2C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift in Sources */,
 				C4A445902A5EF225008279C1 /* FCMTokenRequestDTO.swift in Sources */,
 				C46410F42A629820009DD88F /* MusicAppButton.swift in Sources */,
 				C41972512ABED0FE00211222 /* MyInfoRepository.swift in Sources */,
@@ -1830,11 +1844,12 @@
 				04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */,
 				18D671EF2A35A1CB003B1A71 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				41BCFD452A38C099001D3E5F /* Alertable.swift in Sources */,
-				C47F02282A3864A500F48884 /* SettingElementView.swift in Sources */,
+				F48DF73C2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift in Sources */,
+				C47F02282A3864A500F48884 /* SettingElementCell.swift in Sources */,
 				082F171A2AB7454200174D98 /* EditCommentUseCase.swift in Sources */,
 				C41972572ABED40100211222 /* DefaultFetchingMyInfoUseCase.swift in Sources */,
 				C419723A2ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift in Sources */,
-				C47F02282A3864A500F48884 /* SettingElementView.swift in Sources */,
+				C47F02282A3864A500F48884 /* SettingElementCell.swift in Sources */,
 				1876F0472A66EDA20064B887 /* MyPageModel.swift in Sources */,
 				18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */,
 				1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */,
@@ -1860,6 +1875,7 @@
 				C419724E2ABDCABD00211222 /* DefaultBlockUserUseCase.swift in Sources */,
 				1876F0412A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift in Sources */,
 				C4685B3D2B7261A000F514C7 /* SplashViewModel.swift in Sources */,
+				F4AA84DF2C1F3B0200CADB1A /* Array+Extension.swift in Sources */,
 				082F17062AB6DFEC00174D98 /* MusicDropUseCase.swift in Sources */,
 				18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */,
 				C41972442ABDC43C00211222 /* ClaimingCommentUseCase.swift in Sources */,

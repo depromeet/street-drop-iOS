@@ -1,5 +1,5 @@
 //
-//  SettingElementView.swift
+//  SettingElementCell.swift
 //  StreetDrop
 //
 //  Created by 차요셉 on 2023/06/13.
@@ -10,8 +10,7 @@ import UIKit
 import RxRelay
 import SnapKit
 
-class SettingElementView: UIView {
-    let settingElementDidTappedEvent: PublishRelay<Void> = .init()
+class SettingElementCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -20,15 +19,6 @@ class SettingElementView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been impl")
-    }
-    
-    var text: String {
-        get{
-            return InfoLabel.text ?? ""
-        }
-        set {
-            InfoLabel.text = newValue
-        }
     }
     
     private lazy var InfoLabel: UILabel = {
@@ -41,29 +31,37 @@ class SettingElementView: UIView {
         return label
     }()
     
-    private let goOutImageView: UIImageView = {
-        let imageView: UIImageView = .init(image: UIImage(named: "goOut"))
+    private let iconImageView: UIImageView = {
+        let imageView: UIImageView = .init(image: nil)
         
         return imageView
     }()
     
-    func setData(text: String) {
-        self.InfoLabel.text = text
-    }
+    private let newBadgeImageView: UIImageView = {
+        let imageView: UIImageView = .init(image: UIImage(named: "newBadge"))
+        imageView.isHidden = true
+        return imageView
+    }()
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        settingElementDidTappedEvent.accept(Void())
+    func configure(
+        with item: SettingItem,
+        showNewBadge: Bool = false
+    ) {
+        InfoLabel.text = item.title
+        iconImageView.image = item.iconImage
+        newBadgeImageView.isHidden = !showNewBadge
     }
 }
 
-private extension SettingElementView {
+private extension SettingElementCell {
     func configureUI() {
         self.layer.cornerRadius = 12
         self.backgroundColor = .gray800
         
         [
             self.InfoLabel,
-            self.goOutImageView
+            self.newBadgeImageView,
+            self.iconImageView
         ].forEach {
             self.addSubview($0)
         }
@@ -73,10 +71,16 @@ private extension SettingElementView {
             $0.leading.equalToSuperview().inset(20)
         }
         
-        self.goOutImageView.snp.makeConstraints {
+        self.newBadgeImageView.snp.makeConstraints {
             $0.width.height.equalTo(20)
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(self.InfoLabel.snp.trailing).offset(4)
+        }
+        
+        self.iconImageView.snp.makeConstraints {
+            $0.width.height.equalTo(20)
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(16)
         }
     }
 }
