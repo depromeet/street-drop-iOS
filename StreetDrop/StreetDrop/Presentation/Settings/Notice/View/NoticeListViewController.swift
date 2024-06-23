@@ -188,11 +188,10 @@ extension NoticeListViewController {
             disposedBag: disposeBag
         )
         
-        output.noticeList
-            .bind { [weak self] noticeList in
-                self?.displayNoticeList(noticeList)
-            }
-            .disposed(by: disposeBag)
+        output.noticeList.bind(with: self) { owner, noticeList in
+            owner.displayNoticeList(noticeList)
+        }
+        .disposed(by: disposeBag)
     }
     
     private func displayNoticeList(_ noticeList: [Notice]) {

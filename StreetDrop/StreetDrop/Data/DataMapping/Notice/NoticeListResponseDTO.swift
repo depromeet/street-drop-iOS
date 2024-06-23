@@ -25,7 +25,7 @@ struct NoticeDetailDTO: Decodable {
 }
 
 extension NoticeListResponseDTO {
-    func toEntity() -> [NoticeEntity] {
+    var toEntity: [NoticeEntity] {
         data.map {
             .init(
                 announcementId: $0.announcementId,
@@ -37,8 +37,8 @@ extension NoticeListResponseDTO {
 }
 
 extension NoticeDetailDTO {
-    func toEntity() -> NoticeDetailEntity {
-        return .init(
+    var toEntity: NoticeDetailEntity {
+        .init(
             announcementId: announcementId,
             title: title,
             content: content,

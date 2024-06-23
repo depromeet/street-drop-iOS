@@ -8,6 +8,7 @@
 import UIKit
 
 struct SettingSectionType: Hashable {
+    let uuid = UUID()
     let section: SettingSection
     let items: [SettingItem]
 }
