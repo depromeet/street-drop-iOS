@@ -190,15 +190,15 @@ struct NetworkManager {
         .map { _ in }
     }
     
-    func getNoticeList() -> Single<Data> {
+    func getNoticeList() -> Single<NoticeListResponseDTO> {
         return provider.rx.request(.getNoticeList)
         .retry(3)
-        .map { $0.data }
+        .map(NoticeListResponseDTO.self)
     }
     
-    func getNoticeDetail(id: Int) -> Single<Data> {
+    func getNoticeDetail(id: Int) -> Single<NoticeDetailDTO> {
         return provider.rx.request(.getNoticeDetail(id: id))
         .retry(3)
-        .map { $0.data }
+        .map(NoticeDetailDTO.self)
     }
 }

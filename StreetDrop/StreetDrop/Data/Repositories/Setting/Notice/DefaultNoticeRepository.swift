@@ -24,17 +24,11 @@ final class DefaultNoticeRepository: NoticeRepository {
     
     func fetchNoticeList() -> Single<[NoticeEntity]> {
         networkManager.getNoticeList()
-            .map({ data in
-                let dto = try JSONDecoder().decode(NoticeListResponseDTO.self, from: data)
-                return dto.toEntity()
-            })
+            .map(\.toEntity)
     }
     
     func fetchNoticeDetail(id: Int) -> Single<NoticeDetailEntity> {
         networkManager.getNoticeDetail(id: id)
-            .map({ data in
-                let dto = try JSONDecoder().decode(NoticeDetailDTO.self, from: data)
-                return dto.toEntity()
-            })
+            .map(\.toEntity)
     }
 }

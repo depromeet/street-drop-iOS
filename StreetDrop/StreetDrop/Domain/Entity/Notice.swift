@@ -8,12 +8,14 @@
 import Foundation
 
 struct Notice: Hashable {
+    let uuid = UUID()
     let announcementId: Int
     let title: String
     let createdAt: String?
 }
 
 struct NoticeDetail: Hashable {
+    let uuid = UUID()
     let announcementId: Int
     let title: String
     let content: String
