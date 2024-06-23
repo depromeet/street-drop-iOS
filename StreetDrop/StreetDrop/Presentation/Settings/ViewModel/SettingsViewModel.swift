@@ -44,7 +44,11 @@ final class DefaultSettingsViewModel: SettingsViewModel {
         
         input.musicAppButtonEvent
             .bind(onNext: { [weak self] musicAppQueryString in
-                self?.selectMusicApp(musicAppQueryString: musicAppQueryString, output: output, disposeBag: disposedBag)
+                self?.selectMusicApp(
+                    musicAppQueryString: musicAppQueryString,
+                    output: output,
+                    disposeBag: disposedBag
+                )
             })
             .disposed(by: disposedBag)
         
@@ -74,12 +78,7 @@ private extension DefaultSettingsViewModel {
     }
     
     func fetchDefaultSettingSectionTypes(output: Output, disposeBag: DisposeBag) {
-        self.useCase.fetchDefaultSettingSectionTypes()
-            .subscribe { settingSectionTypes in
-                output.defaultSettingSectionTypes.accept(settingSectionTypes)
-            } onFailure: { error in
-                debugPrint(error.localizedDescription)
-            }
-            .disposed(by: disposeBag)
+        let settingSectionTypes = self.useCase.fetchDefaultSettingSectionTypes()
+        output.defaultSettingSectionTypes.accept(settingSectionTypes)
     }
 }

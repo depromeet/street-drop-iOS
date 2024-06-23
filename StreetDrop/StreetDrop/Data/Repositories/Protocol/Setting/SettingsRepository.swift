@@ -12,5 +12,5 @@ import RxSwift
 protocol SettingsRepository {
     func fetchMymusicAppFromLocal() -> Single<MusicApp>
     func updateUsersMusicAppToServer(musicAppQueryString: String) -> Single<MusicApp>
-    func fetchDefaultSettingSectionTypes() -> Single<[SettingSectionType]>
+    func fetchDefaultSettingSectionTypes() -> [SettingSectionType]
 }
