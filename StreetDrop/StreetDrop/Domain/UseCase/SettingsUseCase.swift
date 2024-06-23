@@ -12,7 +12,7 @@ import RxSwift
 protocol SettingsUseCase {
     func updateUsersMusicApp(musicAppQueryString: String) -> Single<MusicApp>
     func fetchMyMusicApp() -> Single<MusicApp>
-    func fetchDefaultSettingSectionTypes() -> Single<[SettingSectionType]>
+    func fetchDefaultSettingSectionTypes() -> [SettingSectionType]
 }
 
 final class DefaultSettingsUseCase: SettingsUseCase {
@@ -30,7 +30,7 @@ final class DefaultSettingsUseCase: SettingsUseCase {
         return settingsRepository.fetchMymusicAppFromLocal()
     }
     
-    func fetchDefaultSettingSectionTypes() -> Single<[SettingSectionType]> {
+    func fetchDefaultSettingSectionTypes() -> [SettingSectionType] {
         return settingsRepository.fetchDefaultSettingSectionTypes()
     }
 }

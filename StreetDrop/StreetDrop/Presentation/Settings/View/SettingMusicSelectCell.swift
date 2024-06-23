@@ -23,7 +23,7 @@ class SettingMusicSelectCell: UICollectionViewCell {
         fatalError("init(coder:) has not been impl")
     }
     
-    private lazy var InfoLabel: UILabel = {
+    private lazy var infoLabel: UILabel = {
         let label: UILabel = UILabel()
         label.font = .pretendard(size: 14, weightName: .medium)
         label.setLineHeight(lineHeight: 20)
@@ -62,7 +62,7 @@ class SettingMusicSelectCell: UICollectionViewCell {
         selectedMusicApp: MusicApp,
         onMusicAppSelected: ((String) -> Void)?
     ) {
-        InfoLabel.text = item.title
+        infoLabel.text = item.title
         musicAppButtons.forEach { button in
             button.musicApp == selectedMusicApp
             ? button.setSelectedAppearance()
@@ -78,18 +78,18 @@ private extension SettingMusicSelectCell {
         self.backgroundColor = .gray800
         
         [
-            self.InfoLabel,
+            self.infoLabel,
             self.selectingMusicAppStackView
         ].forEach {
             self.contentView.addSubview($0)
         }
         
-        self.InfoLabel.snp.makeConstraints {
+        self.infoLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(20)
         }
         
         self.selectingMusicAppStackView.snp.makeConstraints {
-            $0.top.equalTo(self.InfoLabel.snp.bottom).offset(16)
+            $0.top.equalTo(self.infoLabel.snp.bottom).offset(16)
             $0.leading.trailing.bottom.equalToSuperview().inset(20)
         }
     }

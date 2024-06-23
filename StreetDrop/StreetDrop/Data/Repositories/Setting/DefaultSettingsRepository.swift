@@ -75,22 +75,16 @@ final class DefaultSettingsRepository: SettingsRepository {
         }
     }
     
-    func fetchDefaultSettingSectionTypes() -> Single<[SettingSectionType]> {
-        return Single.create { observer in
-            let settingSections = [
-                SettingSectionType(
-                    section: .appSettings,
-                    items: [.musicApp(.spotify), .pushNotifications]
-                ),
-                SettingSectionType(
-                    section: .servicePolicies,
-                    items: [.notice(false), .serviceUsageGuide, .privacyPolicy, .feedback]
-                )
-            ]
-            
-            observer(.success(settingSections))
-            
-            return Disposables.create()
-        }
+    func fetchDefaultSettingSectionTypes() -> [SettingSectionType] {
+        [
+            SettingSectionType(
+                section: .appSettings,
+                items: [.musicApp(.spotify), .pushNotifications]
+            ),
+            SettingSectionType(
+                section: .servicePolicies,
+                items: [.notice(false), .serviceUsageGuide, .privacyPolicy, .feedback]
+            )
+        ]
     }
 }

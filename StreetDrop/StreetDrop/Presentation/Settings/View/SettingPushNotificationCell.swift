@@ -28,7 +28,7 @@ class SettingPushNotificationCell: UICollectionViewCell {
         NotificationCenter.default.removeObserver(self)
     }
     
-    private lazy var InfoLabel: UILabel = {
+    private lazy var infoLabel: UILabel = {
         let label: UILabel = UILabel()
         label.font = .pretendard(size: 14, weightName: .medium)
         label.setLineHeight(lineHeight: 20)
@@ -39,23 +39,23 @@ class SettingPushNotificationCell: UICollectionViewCell {
     }()
     
     func configure(with item: SettingItem) {
-        InfoLabel.text = item.title
+        infoLabel.text = item.title
     }
 }
 
 private extension SettingPushNotificationCell {
-    private func configureUI() {
+    func configureUI() {
         self.layer.cornerRadius = 12
         self.backgroundColor = .gray800
         
         [
-            self.InfoLabel,
+            self.infoLabel,
             self.customSwitch
         ].forEach {
             self.addSubview($0)
         }
         
-        self.InfoLabel.snp.makeConstraints {
+        self.infoLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
         }
@@ -68,7 +68,7 @@ private extension SettingPushNotificationCell {
         }
     }
     
-    private func configureNotifications() {
+    func configureNotifications() {
         customSwitch.switchEvent
             .bind {
                 if let appSetting = URL(string: UIApplication.openSettingsURLString) {
@@ -86,7 +86,7 @@ private extension SettingPushNotificationCell {
         checkNotificationSettings()
     }
     
-    @objc private func checkNotificationSettings() {
+    @objc func checkNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings { [weak self] settings in
             DispatchQueue.main.async {
                 self?.customSwitch.setOnSwitchUI(isOn: settings.authorizationStatus == .authorized)

@@ -21,7 +21,7 @@ class SettingElementCell: UICollectionViewCell {
         fatalError("init(coder:) has not been impl")
     }
     
-    private lazy var InfoLabel: UILabel = {
+    private lazy var infoLabel: UILabel = {
         let label: UILabel = UILabel()
         label.font = .pretendard(size: 14, weightName: .medium)
         label.setLineHeight(lineHeight: 20)
@@ -47,7 +47,7 @@ class SettingElementCell: UICollectionViewCell {
         with item: SettingItem,
         showNewBadge: Bool = false
     ) {
-        InfoLabel.text = item.title
+        infoLabel.text = item.title
         iconImageView.image = item.iconImage
         newBadgeImageView.isHidden = !showNewBadge
     }
@@ -59,14 +59,14 @@ private extension SettingElementCell {
         self.backgroundColor = .gray800
         
         [
-            self.InfoLabel,
+            self.infoLabel,
             self.newBadgeImageView,
             self.iconImageView
         ].forEach {
             self.addSubview($0)
         }
         
-        self.InfoLabel.snp.makeConstraints {
+        self.infoLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
         }
@@ -74,7 +74,7 @@ private extension SettingElementCell {
         self.newBadgeImageView.snp.makeConstraints {
             $0.width.height.equalTo(20)
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(self.InfoLabel.snp.trailing).offset(4)
+            $0.leading.equalTo(self.infoLabel.snp.trailing).offset(4)
         }
         
         self.iconImageView.snp.makeConstraints {

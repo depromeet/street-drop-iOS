@@ -13,14 +13,14 @@ final class SettingHeaderView: UICollectionReusableView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        configureUI()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupViews() {
+    private func configureUI() {
         titleLabel.font = .pretendard(size: 14, weightName: .medium)
         titleLabel.textColor = .gray200
 
