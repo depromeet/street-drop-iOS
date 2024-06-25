@@ -12,6 +12,8 @@ import RxSwift
 import SnapKit
 
 final class NoticeDetailViewController: UIViewController, Toastable {
+    typealias ImageKeyMatch = (key: String, image: UIImage)
+    
     private let disposeBag = DisposeBag()
     private let viewModel: DefaultNoticeDetailViewModel
     private let viewDidLoadEvent = PublishRelay<Void>()
@@ -63,8 +65,11 @@ final class NoticeDetailViewController: UIViewController, Toastable {
         textView.backgroundColor = .clear
         textView.isEditable = false
         textView.isScrollEnabled = false
-        textView.font = .pretendard(size: 14, weightName: .regular)
-        textView.textColor = .white
+        textView.linkTextAttributes = [
+            .foregroundColor: UIColor(hexString: "#A3F3FA"),
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
+        textView.textContainer.lineFragmentPadding = 0
         return textView
     }()
     
@@ -230,8 +235,113 @@ extension NoticeDetailViewController {
     private func displayNoticeDetail(_ noticeDetail: NoticeDetail) {
         titleLabel.text = noticeDetail.title
         createdAtLabel.text = noticeDetail.createdAt
+        displayMardownString(noticeDetail.content)
+    }
+}
+
+// MARK: render markdown content
+
+extension NoticeDetailViewController {
+    private func displayMardownString(_ markdownString: String) {
+        Task { [weak self] in
+            guard let self else { return }
+            do {
+                let attributedText = try await self.renderMarkdownContent(in: markdownString)
+                await MainActor.run {
+                    self.markdownTextView.attributedText = attributedText
+                }
+            } catch {
+                print("Failed to convert markdown:", error)
+            }
+        }
+    }
+    
+    private func renderMarkdownContent(in markdownString: String) async throws -> NSAttributedString {
+        let (replacedMarkdownString, imageMatches) = try await loadImages(in: markdownString)
+        var options = AttributedString.MarkdownParsingOptions(
+            interpretedSyntax: .inlineOnlyPreservingWhitespace
+        )
+        options.allowsExtendedAttributes = true
+        let convertedString = try AttributedString(
+            markdown: replacedMarkdownString, 
+            options: options
+        )
+        var mutableString = NSMutableAttributedString(convertedString)
+        applyImageAttachments(to: &mutableString, with: imageMatches)
+        applyTextStyle(&mutableString)
+        return mutableString
+    }
+    
+    private func loadImages(in string: String) async throws -> (String, [ImageKeyMatch]) {
+        let regex = try NSRegularExpression(pattern: "!\\[.*?\\]\\((.*?)\\)")
+        let fullRange = NSRange(location: 0, length: string.utf16.count)
+        let matches = regex.matches(in: string, range: fullRange)
         
-        // TODO: jihye - markdown -> html?
-        markdownTextView.text = noticeDetail.content
+        let imageKeyFormat = "{StreetDrop.NoticeImage.%d}"
+        var replacedString = string
+        var imageMatches: [ImageKeyMatch] = .init()
+        for (index, match) in matches.reversed().enumerated() {
+            let imageKey = String(format: imageKeyFormat, index)
+            guard let urlRange = Range(match.range(at: 1), in: string),
+                  let image = try? await UIImage.load(with: String(string[urlRange]))
+            else { continue }
+            
+            replacedString = (replacedString as NSString).replacingCharacters(
+                in: match.range,
+                with: imageKey
+            )
+            imageMatches.append((key: imageKey, image: image))
+        }
+        return (replacedString, imageMatches)
+    }
+    
+    private func applyImageAttachments(
+        to mutableString: inout NSMutableAttributedString,
+        with imageMatches: [ImageKeyMatch]
+    ) {
+        for match in imageMatches {
+            guard let range = mutableString.string.range(of: match.key) else { continue }
+            let nsRange = NSRange(range, in: mutableString.string)
+            
+            let textAttachment = NSTextAttachment()
+            let image = imageWithRoundedCorners(image: match.image, radius: 12) ?? match.image
+            guard let cgImage = image.cgImage else {
+                mutableString.replaceCharacters(in: nsRange, with: "")
+                continue
+            }
+            textAttachment.image = UIImage(
+                cgImage: cgImage,
+                scale: image.size.width / (markdownTextView.frame.size.width),
+                orientation: .up
+            )
+            
+            let attrStringWithImage = NSAttributedString(attachment: textAttachment)
+            mutableString.replaceCharacters(in: nsRange, with: attrStringWithImage)
+        }
+    }
+    
+    private func imageWithRoundedCorners(image: UIImage, radius: CGFloat) -> UIImage? {
+        let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
+        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+        let path = UIBezierPath(roundedRect: rect, cornerRadius: radius)
+        path.addClip()
+        image.draw(in: rect)
+        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return roundedImage
+    }
+
+    private func applyTextStyle(_ mutableString: inout NSMutableAttributedString) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.minimumLineHeight = 20
+        let defaultAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.pretendard(size: 14, weightName: .regular),
+            .foregroundColor: UIColor.white,
+            .paragraphStyle: paragraphStyle
+        ]
+        mutableString.addAttributes(
+            defaultAttributes,
+            range: NSRange(location: 0, length: mutableString.length)
+        )
     }
 }
