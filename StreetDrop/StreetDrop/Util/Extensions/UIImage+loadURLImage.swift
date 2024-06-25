@@ -35,4 +35,21 @@ extension UIImage {
             return Disposables.create()
         }
     }
+    
+    static func load(with urlString: String) async throws -> UIImage {
+        guard let url = URL(string: urlString) else {
+            throw ImageCacheError.invalidURLError
+        }
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            KingfisherManager.shared.retrieveImage(with: url, options: nil, progressBlock: nil) { result in
+                switch result {
+                case .success(let value):
+                    continuation.resume(returning: value.image)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
 }
