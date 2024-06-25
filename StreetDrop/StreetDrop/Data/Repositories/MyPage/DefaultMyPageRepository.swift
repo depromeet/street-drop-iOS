@@ -19,53 +19,66 @@ final class DefaultMyPageRepository {
 
 extension DefaultMyPageRepository: MyPageRepository {
     func fetchMyDropList() -> Single<TotalMyMusics> {
-        networkManager.getMyDropList()
-            .map({ data in
-                let dto = try JSONDecoder().decode(MyDropListResponseDTO.self, from: data)
-                return dto.toEntity()
-            })
+        return networkManager.request(
+            target: .init(NetworkService.myDropList),
+            responseType: MyDropListResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntity()
+        }
     }
     
     func fetchMyLikeList() -> Single<TotalMyMusics> {
-        networkManager.getMyLikeList()
-            .map({ data in
-                let dto = try JSONDecoder().decode(MyLikeListResponseDTO.self, from: data)
-                return dto.toEntity()
-            })
+        return networkManager.request(
+            target: .init(NetworkService.myLikeList),
+            responseType: MyLikeListResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntity()
+        }
     }
     
     func fetchMyLevel() -> Single<MyLevel> {
-        networkManager.getMyLevel()
-            .map({ data in
-                let dto = try JSONDecoder().decode(MyLevelResponseDTO.self, from: data)
-                return dto.toEntity()
-            })
+        return networkManager.request(
+            target: .init(NetworkService.myLevel),
+            responseType: MyLevelResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntity()
+        }
     }
     
     func fetchMyLevelProgress() -> Single<MyLevelProgress> {
-        networkManager.getMyLevelProgress()
-            .map({ data in
-                let dto = try JSONDecoder().decode(MyLevelProgressResponseDTO.self, from: data)
-                return dto.toEntity()
-            })
+        return networkManager.request(
+            target: .init(NetworkService.myLevelProgress),
+            responseType: MyLevelProgressResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntity()
+        }
     }
     
     func fetchLevelPolicy() -> Single<[LevelPolicy]> {
-        networkManager.getLevelPolicy()
-            .map({ data in
-                let dto = try JSONDecoder().decode(LevelPolicyResponseDTO.self, from: data)
-                return dto.toEntity()
-            })
+        return networkManager.request(
+            target: .init(NetworkService.levelPolicy),
+            responseType: LevelPolicyResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntity()
+        }
     }
     
     func fetchMyDropMusic(itemID: Int) -> Single<Musics> {
-        networkManager.getSingleMusic(itemID: itemID)
-            .map({ data in
-                let dto = try JSONDecoder().decode(
-                    SingleMusicResponseDTO.self,
-                    from: data
+        return networkManager.request(
+            target: .init(
+                NetworkService.getSingleMusic(
+                    itemID: itemID
                 )
-                return dto.toEntity()
-            })
+            ),
+            responseType: SingleMusicResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntity()
+        }
     }
 }

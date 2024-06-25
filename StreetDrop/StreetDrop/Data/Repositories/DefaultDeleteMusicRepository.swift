@@ -19,6 +19,12 @@ final class DefaultDeleteMusicRepository: DeleteMusicRepository {
 
 extension DefaultDeleteMusicRepository {
     func deleteMusic(itemID: Int) -> Single<Int> {
-        return networkManager.deleteMusic(itemID: itemID)
+        return networkManager.requestStatusCode(
+            target: .init(
+                NetworkService.deleteMusic(
+                    itemID: itemID
+                )
+            )
+        )
     }
 }

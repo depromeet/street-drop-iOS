@@ -256,6 +256,7 @@
 		C4E4C6B82A5ADFDB00B1C84A /* SettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B72A5ADFDB00B1C84A /* SettingsUseCase.swift */; };
 		C4E4C6BA2A5AE40900B1C84A /* UserDefaultsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */; };
 		C4E4C6BD2A5AE6F500B1C84A /* MusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */; };
+		C4E68C852C2A996000742464 /* AsynchronousError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E68C842C2A996000742464 /* AsynchronousError.swift */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
 		F48DF73A2C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48DF7392C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift */; };
 		F48DF73C2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48DF73B2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift */; };
@@ -512,6 +513,7 @@
 		C4E4C6B72A5ADFDB00B1C84A /* SettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUseCase.swift; sourceTree = "<group>"; };
 		C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsError.swift; sourceTree = "<group>"; };
 		C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicApp.swift; sourceTree = "<group>"; };
+		C4E68C842C2A996000742464 /* AsynchronousError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsynchronousError.swift; sourceTree = "<group>"; };
 		F48DF7392C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPushNotificationCell.swift; sourceTree = "<group>"; };
 		F48DF73B2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingMusicSelectCell.swift; sourceTree = "<group>"; };
 		F4AA84D82C1F030F00CADB1A /* NoticeListResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeListResponseDTO.swift; sourceTree = "<group>"; };
@@ -776,6 +778,7 @@
 				C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */,
 				C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */,
 				C41972312ABDAEF200211222 /* MyInfoError.swift */,
+				C4E68C842C2A996000742464 /* AsynchronousError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -1793,6 +1796,7 @@
 			files = (
 				C41972362ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift in Sources */,
 				C41972552ABED3EC00211222 /* FetchingMyInfoUseCase.swift in Sources */,
+				C4E68C852C2A996000742464 /* AsynchronousError.swift in Sources */,
 				18AAF83E2A137349002EF441 /* CommunityResponseDTO.swift in Sources */,
 				41396D952A4EFF7B00B69341 /* MyInfo.swift in Sources */,
 				188F90C72A39FD7D003A1B4A /* UIImage+cornerRadius.swift in Sources */,

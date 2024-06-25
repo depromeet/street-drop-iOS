@@ -17,6 +17,12 @@ final class DefaultFCMRepository: FCMRepository {
     }
     
     func enrollFCMToken(token: String) -> Single<Int> {
-        return networkManager.postFCMToken(token: FCMTokenRequestDTO(token: token))
+        return networkManager.requestStatusCode(
+            target: .init(
+                NetworkService.postFCMToken(
+                    token: .init(token: token)
+                )
+            )
+        )
     }
 }

@@ -19,7 +19,13 @@ final class DefaultBlockUserRepository: BlockUserRepository {
 
 extension DefaultBlockUserRepository {
     func blockUser(_ blockUserID: Int) -> Single<Int> {
-        return networkManager.blockUser(blockUserID)
+        return networkManager.requestStatusCode(
+            target: .init(
+                NetworkService.blockUser(
+                    blockUserID: blockUserID
+                )
+            )
+        )
     }
 }
 

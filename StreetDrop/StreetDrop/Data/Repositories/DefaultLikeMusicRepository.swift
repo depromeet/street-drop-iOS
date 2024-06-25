@@ -19,10 +19,22 @@ final class DefaultLikeMusicRepository: LikeMusicRepository {
 
 extension DefaultLikeMusicRepository {
     func likeUp(itemID: Int) -> Single<Int> {
-        return networkManager.postLikeUp(itemID: itemID)
+        return networkManager.requestStatusCode(
+            target: .init(
+                NetworkService.postLikeUp(
+                    itemID: itemID
+                )
+            )
+        )
     }
 
     func likeDown(itemID: Int) -> Single<Int> {
-        return networkManager.postLikeDown(itemID: itemID)
+        return networkManager.requestStatusCode(
+            target: .init(
+                NetworkService.postLikeDown(
+                    itemID: itemID
+                )
+            )
+        )
     }
 }

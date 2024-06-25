@@ -18,20 +18,26 @@ final class DefaultDropMusicRepository {
 
 extension DefaultDropMusicRepository: DropMusicRepository {
     func dropMusic(droppingInfo: DroppingInfo, content: String) -> Single<Int> {
-        return networkManager.dropMusic(requestDTO: DropMusicRequestDTO(
-            location: DropMusicRequestDTO.Location(
-                latitude: droppingInfo.location.latitude,
-                longitude: droppingInfo.location.longitude,
-                address: droppingInfo.location.address
-            ),
-            music: DropMusicRequestDTO.Music(
-                title: droppingInfo.music.songName,
-                artist: droppingInfo.music.artistName,
-                albumName: droppingInfo.music.albumName,
-                albumImage: droppingInfo.music.albumImage,
-                genre: droppingInfo.music.genre
-            ),
-            content: content
-        ))
+        return networkManager.requestStatusCode(
+            target: .init(
+                NetworkService.dropMusic(
+                    requestDTO: .init(
+                        location: DropMusicRequestDTO.Location(
+                            latitude: droppingInfo.location.latitude,
+                            longitude: droppingInfo.location.longitude,
+                            address: droppingInfo.location.address
+                        ),
+                        music: DropMusicRequestDTO.Music(
+                            title: droppingInfo.music.songName,
+                            artist: droppingInfo.music.artistName,
+                            albumName: droppingInfo.music.albumName,
+                            albumImage: droppingInfo.music.albumImage,
+                            genre: droppingInfo.music.genre
+                        ),
+                        content: content
+                    )
+                )
+            )
+        )
     }
 }

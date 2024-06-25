@@ -21,26 +21,49 @@ final class DefaultMainRepository: MainRepository {
 
 extension DefaultMainRepository {
     func fetchPoi(lat: Double, lon: Double, distacne: Double) -> Single<Pois> {
-        networkManager.getPoi(latitude: lat, longitude: lon, distance: distacne)
-            .map({ data in
-                let dto = try JSONDecoder().decode(PoiResponseDTO.self, from: data)
-                return dto.toEntity()
-            })
+        return networkManager.request(
+            target: .init(
+                NetworkService.getPoi(
+                    latitude: lat,
+                    longitude: lon,
+                    distance: distacne
+                )
+            ),
+            responseType: PoiResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntity()
+        }
     }
     
     func fetchMusicCountByDong(lat: Double, lon: Double) -> Single<MusicCountEntity> {
-        networkManager.getMusicCountByDong(latitude: lat, longitude: lon)
-            .map({ data in
-                let dto = try JSONDecoder().decode(MusicCountByDongResponseDTO.self, from: data)
-                return dto.toEntity()
-            })
+        return networkManager.request(
+            target: .init(
+                NetworkService.getMusicCountByDong(
+                    latitude: lat,
+                    longitude: lon
+                )
+            ),
+            responseType: MusicCountByDongResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntity()
+        }
     }
     
     func fetchMusicWithinArea(lat: Double, lon: Double, distacne: Double) -> Single<Musics> {
-        networkManager.getMusicWithinArea(latitude: lat, longitude: lon, distance: distacne)
-            .map({ data in
-                let dto = try JSONDecoder().decode(MusicWithinAreaResponseDTO.self, from: data)
-                return dto.toEntity()
-            })
+        return networkManager.request(
+            target: .init(
+                NetworkService.getMusicWithinArea(
+                    latitude: lat,
+                    longitude: lon,
+                    distance: distacne
+                )
+            ),
+            responseType: MusicWithinAreaResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntity()
+        }
     }
 }
