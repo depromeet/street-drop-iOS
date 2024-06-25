@@ -19,12 +19,15 @@ final class DefaultClaimCommentRepository: ClaimCommentRepository {
 
 extension DefaultClaimCommentRepository {
     func claimComment(itemID: Int, reason: String) -> Single<Int> {
-        let claimCommentRequestDTO = ClaimCommentRequestDTO(
-            itemID: itemID,
-            reason: reason
+        return networkManager.requestStatusCode(
+            target: .init(
+                NetworkService.claimComment(
+                    requestDTO: .init(
+                        itemID: itemID,
+                        reason: reason
+                    )
+                )
+            )
         )
-
-        return networkManager.claimComment(requestDTO: claimCommentRequestDTO)
     }
 }
-

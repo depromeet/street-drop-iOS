@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 
 final class DefaultPopUpRepository: PopUpRepository {
+    private struct EmptyResponse: Decodable {} // editNickName 메소드 responseType이 Void인데 해당 데이터타입이 Decodable를 준수하지 않아, 임의의 Decodable Struct 생성
     private let networkManager: NetworkManager
 
     init(networkManager: NetworkManager = .init()) {
@@ -17,17 +18,24 @@ final class DefaultPopUpRepository: PopUpRepository {
     }
     
     func fetchPopUpInfomation() -> Single<[PopUpInfomation]> {
-        return networkManager.getPopUpInfomation()
-            .map { data in
-                let dto = try JSONDecoder().decode(
-                    FetchingPopUpInfomationResponseDTO.self,
-                    from: data
-                )
-                return dto.toEntityList()
-            }
+        return networkManager.request(
+            target: .init(NetworkService.getPopUpInfomation),
+            responseType: FetchingPopUpInfomationResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntityList()
+        }
     }
     
     func postPopUpUserReading(type: String, id: Int) -> Single<Void> {
-        return networkManager.postPopUpUserReading(type: type, id: id)
+        return networkManager.request(
+            target: .init(
+                NetworkService.postPopUpUserReading(
+                    requestDTO: .init(type: type, id: id)
+                )
+            ),
+            responseType: EmptyResponse.self
+        )
+        .map { _ in Void() }
     }
 }

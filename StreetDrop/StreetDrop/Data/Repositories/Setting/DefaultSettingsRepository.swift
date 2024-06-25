@@ -16,9 +16,7 @@ final class DefaultSettingsRepository: SettingsRepository {
     private let disposeBag: DisposeBag = .init()
     
     init(
-        networkManager: NetworkManager = NetworkManager(
-            provider: MoyaProvider<NetworkService>()
-        ),
+        networkManager: NetworkManager = .init(),
         myInfoStorage: MyInfoStorage = UserDefaultsMyInfoStorage()
     ) {
         self.networkManager = networkManager
@@ -38,40 +36,27 @@ final class DefaultSettingsRepository: SettingsRepository {
     }
     
     func updateUsersMusicAppToServer(musicAppQueryString: String) -> Single<MusicApp> {
-        return Single.create { [weak self] observer in
-            guard let self = self else { return Disposables.create()}
-            networkManager.patchUsersMusicApp(musicAppQueryString: musicAppQueryString)
-                .subscribe { data in
-                    do {
-                        let dto = try JSONDecoder().decode(MyInfoResponseDTO.self, from: data)
-                        
-                        self.myInfoStorage.saveMyInfo(myInfo: dto.toEntity())
-                            .subscribe(onSuccess: {
-                                var savedMusicApp: MusicApp = .youtubeMusic
-                                switch dto.musicApp {
-                                case "youtubemusic":
-                                    savedMusicApp = MusicApp.youtubeMusic
-                                case "spotify":
-                                    savedMusicApp = MusicApp.spotify
-//                                case "applemusic":
-//                                    savedMusicApp = MusicApp.appleMusic
-                                default:
-                                    savedMusicApp = MusicApp.youtubeMusic
-                                }
-                                observer(.success(savedMusicApp))
-                            }, onFailure: { error in
-                                observer(.failure(error))
-                            })
-                            .disposed(by: self.disposeBag)
-                    } catch {
-                        observer(.failure(error))
+        return networkManager.request(
+            target: .init(
+                NetworkService.patchUsersMusicApp(musicAppQuery: musicAppQueryString)
+            ),
+            responseType: MyInfoResponseDTO.self
+        )
+        .flatMap { [weak self] dto in
+            guard let self = self else { throw AsynchronousError.closureSelfDeInitiation }
+            return myInfoStorage.saveMyInfo(myInfo: dto.toEntity())
+                .map {
+                    var savedMusicApp: MusicApp = .youtubeMusic
+                    switch dto.musicApp {
+                    case "youtubemusic":
+                        savedMusicApp = MusicApp.youtubeMusic
+                    case "spotify":
+                        savedMusicApp = MusicApp.spotify
+                    default:
+                        savedMusicApp = MusicApp.youtubeMusic
                     }
-                } onFailure: { error in
-                    observer(.failure(error))
+                    return savedMusicApp
                 }
-                .disposed(by: disposeBag)
-            
-            return Disposables.create()
         }
     }
     

@@ -17,9 +17,7 @@ final class DefaultNoticeRepository: NoticeRepository {
     private let disposeBag: DisposeBag = .init()
     
     init(
-        networkManager: NetworkManager = NetworkManager(
-            provider: MoyaProvider<NetworkService>()
-        ),
+        networkManager: NetworkManager = .init(),
         myInfoStorage: MyInfoStorage = UserDefaultsMyInfoStorage()
     ) {
         self.networkManager = networkManager
@@ -27,21 +25,27 @@ final class DefaultNoticeRepository: NoticeRepository {
     }
     
     func fetchNoticeList() -> Single<[NoticeEntity]> {
-        networkManager.getNoticeList()
-            .map { [weak self] noticeListDTO in
-                let notices = noticeListDTO.toEntity
-                
-                if let self,
-                   let lastNotice = notices.last {
-                    self.myInfoStorage.saveLastSeenNoticeId(lastNotice.noticeId)
-                }
-                
-                return notices
+        return networkManager.request(
+            target: .init(NetworkService.getNoticeList),
+            responseType: NoticeListResponseDTO.self
+        )
+        .map { [weak self] noticeListDTO in
+            let notices = noticeListDTO.toEntity
+            
+            if let self,
+               let lastNotice = notices.last {
+                self.myInfoStorage.saveLastSeenNoticeId(lastNotice.noticeId)
             }
+            
+            return notices
+        }
     }
     
     func fetchNoticeDetail(id: Int) -> Single<NoticeDetailEntity> {
-        networkManager.getNoticeDetail(id: id)
-            .map(\.toEntity)
+        return networkManager.request(
+            target: .init(NetworkService.getNoticeDetail(id: id)),
+            responseType: NoticeDetailDTO.self
+        )
+        .map(\.toEntity)
     }
 }

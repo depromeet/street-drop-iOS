@@ -19,9 +19,15 @@ final class DefaultEditCommentRepository: EditCommentRepository {
 
 extension DefaultEditCommentRepository {
     func editComment(itemID: Int, comment: String) -> Single<Int> {
-        return networkManager.editComment(
-            itemID: itemID,
-            requestDTO: EditCommentRequestDTO(content: comment)
+        return networkManager.requestStatusCode(
+            target: .init(
+                NetworkService.editComment(
+                    itemID: itemID,
+                    requestDTO: .init(
+                        content: comment
+                    )
+                )
+            )
         )
     }
 }

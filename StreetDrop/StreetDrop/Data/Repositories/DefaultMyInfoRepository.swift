@@ -19,11 +19,15 @@ final class DefaultMyInfoRepository: MyInfoRepository {
     }
     
     func fetchMyInfoFromServer() -> Single<MyInfo> {
-        return networkManager.getMyInfo()
-            .map({ data in
-                let dto = try JSONDecoder().decode(MyInfoResponseDTO.self, from: data)
-                return dto.toEntity()
-            })
+        return networkManager.request(
+            target: .init(
+                NetworkService.getMyInfo
+            ),
+            responseType: MyInfoResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntity()
+        }
     }
     
     func saveMyInfo(_ myInfo: MyInfo) -> Single<Void> {
@@ -47,11 +51,12 @@ final class DefaultMyInfoRepository: MyInfoRepository {
     }
     
     func fetchUserCircleRadius() -> Single<Double> {
-        return networkManager.getUserCircleRadius()
-            .map({ data in
-                let dto = try JSONDecoder().decode(UserCircleRadiusResponseDTO.self, from: data)
-                
-                return Double(dto.distance)
-            })
+        return networkManager.request(
+            target: .init(NetworkService.userCircleRadius),
+            responseType: UserCircleRadiusResponseDTO.self
+        )
+        .map { dto in
+            return Double(dto.distance)
+        }
     }
 }

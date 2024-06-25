@@ -17,7 +17,7 @@ final class DefaultSearchingMusicRepository: SearchingMusicRepository {
     //FIXME: 서버 API 구현 완료되면, MoyaProvider<NetworkService>(stubClosure: MoyaProvider.immediatelyStub) -> MoyaProvider<NetworkService>()
     init(
         networkManager: NetworkManager = NetworkManager(
-            provider: MoyaProvider<NetworkService>()
+            provider: MoyaProvider<MultiTarget>()
         ),
         recentMusicQueriesPersistentStorage: RecentMusicQueriesStorage = UserDefaultsRecentMusicQueriesStorage(maxStorageLimit: 10)
     ) {
@@ -27,14 +27,13 @@ final class DefaultSearchingMusicRepository: SearchingMusicRepository {
     
     // FIXME: 클린아키텍처로 리팩토링 시, 반환값을 [SearchedMusicResponseDTO.Music]가 아닌 Music이라는 Entity를 만들어 반환하도록 함
     func fetchMusic(keyword: String) -> Single<[Music]> {
-        return networkManager.searchMusic(keyword: keyword)
-            .map { musicData -> [Music] in
-                let searchedMusic = try JSONDecoder().decode(
-                    SearchedMusicResponseDTO.self,
-                    from: musicData
-                )
-                return searchedMusic.toEntity()
-            }
+        return networkManager.request(
+            target: .init(NetworkService.searchMusic(keyword: keyword)),
+            responseType: SearchedMusicResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntity()
+        }
     }
     
     func saveMusic(keyword: String) {
@@ -64,21 +63,21 @@ final class DefaultSearchingMusicRepository: SearchingMusicRepository {
     }
     
     func fetchRecommendMusicQueries() -> RxSwift.Single<RecommendMusic> {
-        return networkManager.getRecommendMusic()
-            .map { recommendData -> RecommendMusic in
-                let recommendMusic = try JSONDecoder().decode(
-                    RecommendMusic.self,
-                    from: recommendData
-                )
-                return recommendMusic
-            }
+        return networkManager.request(
+            target: .init(NetworkService.recommendMusic),
+            responseType: RecommendMusic.self
+        )
     }
     
     func fetchVillageName(latitude: Double, longitude: Double) -> Single<String> {
-        networkManager.getVillageName(latitude: latitude, longitude: longitude)
-            .map { data in
-                let dto = try JSONDecoder().decode(VillageNameResponseDTO.self, from: data)
-                return dto.villageName
-            }
+        return networkManager.request(
+            target: .init(
+                NetworkService.getVillageName(
+                    latitude: latitude,
+                    longitude: longitude
+                )
+            ),
+            responseType: String.self
+        )
     }
 }

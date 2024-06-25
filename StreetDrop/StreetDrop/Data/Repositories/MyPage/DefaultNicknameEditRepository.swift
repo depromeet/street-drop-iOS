@@ -18,7 +18,13 @@ final class DefaultNicknameEditRepository: NicknameEditRepository {
 }
 
 extension DefaultNicknameEditRepository {
+    private struct EmptyResponse: Decodable {} // editNickName 메소드 responseType이 Void인데 해당 데이터타입이 Decodable를 준수하지 않아, 임의의 Decodable Struct 생성
+    
     func editNickname(nickname: String) -> Single<Void> {
-        networkManager.editNickname(nickname: nickname)
+        return networkManager.request(
+            target: .init(NetworkService.editNickname(nickname: nickname)),
+            responseType: EmptyResponse.self
+        )
+        .map { _ in Void() }
     }
 }
