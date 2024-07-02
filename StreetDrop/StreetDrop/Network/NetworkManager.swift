@@ -201,4 +201,10 @@ struct NetworkManager {
         .retry(3)
         .map(NoticeDetailDTO.self)
     }
+    
+    func checkNewNotice(lastNoticeId: Int?) -> Single<NoticeUpdateDTO> {
+        return provider.rx.request(.checkNewNotice(lastNoticeId: lastNoticeId))
+        .retry(3)
+        .map(NoticeUpdateDTO.self)
+    }
 }

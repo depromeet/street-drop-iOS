@@ -13,4 +13,6 @@ protocol SettingsRepository {
     func fetchMymusicAppFromLocal() -> Single<MusicApp>
     func updateUsersMusicAppToServer(musicAppQueryString: String) -> Single<MusicApp>
     func fetchDefaultSettingSectionTypes() -> [SettingSectionType]
+    func fetchLastSeenNoticeIdFromLocal() -> Single<Int?>
+    func checkNewNotice(lastNoticeId: Int?) -> Single<Bool>
 }

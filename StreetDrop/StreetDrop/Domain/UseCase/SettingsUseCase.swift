@@ -13,6 +13,8 @@ protocol SettingsUseCase {
     func updateUsersMusicApp(musicAppQueryString: String) -> Single<MusicApp>
     func fetchMyMusicApp() -> Single<MusicApp>
     func fetchDefaultSettingSectionTypes() -> [SettingSectionType]
+    func fetchLastSeenNoticeId() -> Single<Int?>
+    func checkNewNotice(lastNoticeId: Int?) -> Single<Bool>
 }
 
 final class DefaultSettingsUseCase: SettingsUseCase {
@@ -32,5 +34,13 @@ final class DefaultSettingsUseCase: SettingsUseCase {
     
     func fetchDefaultSettingSectionTypes() -> [SettingSectionType] {
         return settingsRepository.fetchDefaultSettingSectionTypes()
+    }
+    
+    func fetchLastSeenNoticeId() -> Single<Int?> {
+        return settingsRepository.fetchLastSeenNoticeIdFromLocal()
+    }
+    
+    func checkNewNotice(lastNoticeId: Int?) -> Single<Bool> {
+        return settingsRepository.checkNewNotice(lastNoticeId: lastNoticeId)
     }
 }

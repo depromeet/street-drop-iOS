@@ -50,4 +50,12 @@ extension UserDefaultsMyInfoStorage: MyInfoStorage {
     func saveLauchedBefore(_ launchedBefore: Bool) {
         userDefaults.set(launchedBefore, forKey: UserDefaultKey.launchedBefore)
     }
+    
+    func fetchLastSeenNoticeId() -> Int? {
+        userDefaults.integer(forKey: UserDefaultKey.lastSeenNoticeId)
+    }
+    
+    func saveLastSeenNoticeId(_ noticeId: Int) {
+        userDefaults.set(noticeId, forKey: UserDefaultKey.lastSeenNoticeId)
+    }
 }

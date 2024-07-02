@@ -240,6 +240,7 @@ extension SettingsViewController: UICollectionViewDelegate {
             
         case .notice(_):
             let noticeListViewController = NoticeListViewController(viewModel: .init())
+            self.displayNewBadge(false)
             self.navigationController?.pushViewController(
                 noticeListViewController,
                 animated: true
@@ -305,6 +306,12 @@ extension SettingsViewController {
                 self?.displaySettingSections(settingSectionTypes)
             }
             .disposed(by: disposeBag)
+        
+        output.hasNewNotice
+            .bind { [weak self] hasNewNotice in
+                self?.displayNewBadge(hasNewNotice)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func displaySettingSections(_ settingSectionTypes: [SettingSectionType]) {
@@ -339,5 +346,25 @@ extension SettingsViewController {
         }
         
         self.dataSource?.apply(snapshot, animatingDifferences: false)
+    }
+    
+    private func displayNewBadge(_ showNewBadge: Bool) {
+        guard var snapshot = self.dataSource?.snapshot() else { return }
+        
+        if snapshot.sectionIdentifiers.contains(.servicePolicies) {
+            let items = snapshot.itemIdentifiers(
+                inSection: .servicePolicies
+            ).map { item -> SettingItem in
+                if case .notice(_) = item {
+                    return .notice(showNewBadge)
+                }
+                return item
+            }
+            
+            snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .servicePolicies))
+            snapshot.appendItems(items, toSection: .servicePolicies)
+        }
+        
+        dataSource?.apply(snapshot, animatingDifferences: false)
     }
 }
