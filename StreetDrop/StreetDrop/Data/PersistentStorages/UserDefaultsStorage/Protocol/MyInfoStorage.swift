@@ -14,4 +14,6 @@ protocol MyInfoStorage {
     func saveMyInfo(myInfo: MyInfo) -> Single<Void>
     func fetchLaunchedBefore() -> Bool
     func saveLauchedBefore(_ launchedBefore: Bool)
+    func fetchLastSeenNoticeId() -> Int?
+    func saveLastSeenNoticeId(_ noticeId: Int)
 }

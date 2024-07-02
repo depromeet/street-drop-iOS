@@ -87,4 +87,23 @@ final class DefaultSettingsRepository: SettingsRepository {
             )
         ]
     }
+    
+    func fetchLastSeenNoticeIdFromLocal() -> Single<Int?> {
+        Single.create { [weak self] observer in
+            if let noticeId = self?.myInfoStorage.fetchLastSeenNoticeId() {
+                observer(.success(noticeId))
+            } else {
+                observer(.success(nil))
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func checkNewNotice(lastNoticeId: Int?) -> Single<Bool> {
+        networkManager.checkNewNotice(lastNoticeId: lastNoticeId)
+            .map({ noticeUpdate in
+                return noticeUpdate.hasNewNotice
+            })
+    }
 }

@@ -9,27 +9,27 @@ import Foundation
 
 struct Notice: Hashable {
     let uuid = UUID()
-    let announcementId: Int
+    let noticeId: Int
     let title: String
     let createdAt: String?
 }
 
 struct NoticeDetail: Hashable {
     let uuid = UUID()
-    let announcementId: Int
+    let noticeId: Int
     let title: String
     let content: String
     let createdAt: String?
 }
 
 struct NoticeEntity {
-    let announcementId: Int
+    let noticeId: Int
     let title: String
     let createdAt: String
 }
 
 struct NoticeDetailEntity {
-    let announcementId: Int
+    let noticeId: Int
     let title: String
     let content: String
     let createdAt: String

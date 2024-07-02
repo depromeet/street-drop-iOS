@@ -39,6 +39,7 @@ enum NetworkService {
     case postPopUpUserReading(requestDTO: PopUpUserReadingRequestDTO)
     case getNoticeList
     case getNoticeDetail(id: Int)
+    case checkNewNotice(lastNoticeId: Int?)
 }
 
 extension NetworkService: TargetType {
@@ -113,9 +114,11 @@ extension NetworkService: TargetType {
         case .postPopUpUserReading:
             return "/pop-up/read"
         case .getNoticeList:
-            return "/announcements"
+            return "/notices"
         case .getNoticeDetail(let id):
-            return "/announcements/\(id)"
+            return "/notices/\(id)"
+        case .checkNewNotice:
+            return "/notices/new"
         }
     }
     
@@ -138,7 +141,8 @@ extension NetworkService: TargetType {
                 .userCircleRadius,
                 .getPopUpInfomation,
                 .getNoticeList,
-                .getNoticeDetail:
+                .getNoticeDetail,
+                .checkNewNotice:
             return .get
         case .dropMusic,
                 .postLikeUp,
@@ -158,7 +162,7 @@ extension NetworkService: TargetType {
     var task: Moya.Task {
         switch self {
         case .getMyInfo, .myDropList, .myLikeList, .myLevel, .myLevelProgress, .levelPolicy, .recommendMusic, .userCircleRadius, .getPopUpInfomation,
-            .getNoticeList, .getNoticeDetail:
+                .getNoticeList, .getNoticeDetail:
             return .requestPlain
         case .searchMusic(let keyword):
             return .requestParameters(
@@ -246,6 +250,15 @@ extension NetworkService: TargetType {
             )
         case let .postPopUpUserReading(requestDTO):
             return .requestJSONEncodable(requestDTO)
+        case .checkNewNotice(let lastNoticeId):
+            if let lastNoticeId {
+                return .requestParameters(
+                    parameters: ["lastNoticeId": lastNoticeId],
+                    encoding: URLEncoding.queryString
+                )
+            } else {
+                return .requestPlain
+            }
         }
     }
     

@@ -12,23 +12,29 @@ struct NoticeListResponseDTO: Decodable {
 }
 
 struct NoticeDTO: Decodable {
-    let announcementId: Int
+    let noticeId: Int
     let title: String
     let createdAt: String
 }
 
 struct NoticeDetailDTO: Decodable {
-    let announcementId: Int
+    let noticeId: Int
     let title: String
     let content: String
     let createdAt: String
 }
 
+struct NoticeUpdateDTO: Decodable {
+    let hasNewNotice: Bool
+}
+
+// MARK: entity
+
 extension NoticeListResponseDTO {
     var toEntity: [NoticeEntity] {
         data.map {
             .init(
-                announcementId: $0.announcementId,
+                noticeId: $0.noticeId,
                 title: $0.title,
                 createdAt: $0.createdAt
             )
@@ -39,7 +45,7 @@ extension NoticeListResponseDTO {
 extension NoticeDetailDTO {
     var toEntity: NoticeDetailEntity {
         .init(
-            announcementId: announcementId,
+            noticeId: noticeId,
             title: title,
             content: content,
             createdAt: createdAt

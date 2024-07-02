@@ -63,7 +63,7 @@ private extension DefaultNoticeDetailViewModel {
     
     private func convertToNoticeDetail(_ noticeDetail: NoticeDetailEntity) -> NoticeDetail {
         .init(
-            announcementId: noticeDetail.announcementId,
+            noticeId: noticeDetail.noticeId,
             title: noticeDetail.title,
             content: noticeDetail.content,
             createdAt: dateManager.convertToformattedString(noticeDetail.createdAt)

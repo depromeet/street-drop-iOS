@@ -158,7 +158,7 @@ extension NoticeListViewController: UICollectionViewDelegate {
         guard let notice = self.dataSource.itemIdentifier(for: indexPath) else { return }
         
         let noticeDetailViewController = NoticeDetailViewController(
-            viewModel: .init(noticeId: notice.announcementId)
+            viewModel: .init(noticeId: notice.noticeId)
         )
         self.navigationController?.pushViewController(
             noticeDetailViewController,
