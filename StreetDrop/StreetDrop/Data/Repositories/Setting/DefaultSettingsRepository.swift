@@ -90,12 +90,8 @@ final class DefaultSettingsRepository: SettingsRepository {
     
     func fetchLastSeenNoticeIdFromLocal() -> Single<Int?> {
         Single.create { [weak self] observer in
-            if let noticeId = self?.myInfoStorage.fetchLastSeenNoticeId() {
-                observer(.success(noticeId))
-            } else {
-                observer(.success(nil))
-            }
-            
+            let noticeId = self?.myInfoStorage.fetchLastSeenNoticeId()
+            observer(.success(noticeId))
             return Disposables.create()
         }
     }

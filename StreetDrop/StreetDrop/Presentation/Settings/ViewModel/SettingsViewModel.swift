@@ -106,7 +106,7 @@ private extension DefaultSettingsViewModel {
             .asObservable()
     }
     
-    private func fetchMyMusicApp(output: Output) -> Observable<MusicApp> {
+    func fetchMyMusicApp(output: Output) -> Observable<MusicApp> {
         self.useCase.fetchMyMusicApp()
             .asObservable()
             .do(onError: { error in
