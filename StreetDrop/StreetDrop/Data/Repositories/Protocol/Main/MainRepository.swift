@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol MainRepository {
-    func fetchPoi(lat: Double, lon: Double, distacne: Double) -> Single<Pois>
+    func fetchPoi(lat: Double, lon: Double, distance: Double) -> Single<Pois>
     func fetchMusicCountByDong(lat: Double, lon: Double) -> Single<MusicCountEntity>
-    func fetchMusicWithinArea(lat: Double, lon: Double, distacne: Double) -> Single<Musics>
+    func fetchMusicWithinArea(lat: Double, lon: Double, distance: Double) -> Single<Musics>
 }

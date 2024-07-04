@@ -20,6 +20,6 @@ final class DefaultFetchingPOIUseCase: FetchingPOIUseCase {
     }
     
     func execute(lat: Double, lon: Double, distance: Double) -> Single<Pois> {
-        return mainRepository.fetchPoi(lat: lat, lon: lon, distacne: distance)
+        return mainRepository.fetchPoi(lat: lat, lon: lon, distance: distance)
     }
 }
