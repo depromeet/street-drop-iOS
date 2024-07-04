@@ -20,6 +20,6 @@ final class DefaultFetchingMusicWithinArea: FetchingMusicWithinArea {
     }
     
     func execute(lat: Double, lon: Double, distance: Double) -> Single<Musics> {
-        return mainRepository.fetchMusicWithinArea(lat: lat, lon: lon, distacne: distance)
+        return mainRepository.fetchMusicWithinArea(lat: lat, lon: lon, distance: distance)
     }
 }

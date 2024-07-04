@@ -20,13 +20,13 @@ final class DefaultMainRepository: MainRepository {
 }
 
 extension DefaultMainRepository {
-    func fetchPoi(lat: Double, lon: Double, distacne: Double) -> Single<Pois> {
+    func fetchPoi(lat: Double, lon: Double, distance: Double) -> Single<Pois> {
         return networkManager.request(
             target: .init(
                 NetworkService.getPoi(
                     latitude: lat,
                     longitude: lon,
-                    distance: distacne
+                    distance: distance
                 )
             ),
             responseType: PoiResponseDTO.self
@@ -51,13 +51,13 @@ extension DefaultMainRepository {
         }
     }
     
-    func fetchMusicWithinArea(lat: Double, lon: Double, distacne: Double) -> Single<Musics> {
+    func fetchMusicWithinArea(lat: Double, lon: Double, distance: Double) -> Single<Musics> {
         return networkManager.request(
             target: .init(
                 NetworkService.getMusicWithinArea(
                     latitude: lat,
                     longitude: lon,
-                    distance: distacne
+                    distance: distance
                 )
             ),
             responseType: MusicWithinAreaResponseDTO.self
