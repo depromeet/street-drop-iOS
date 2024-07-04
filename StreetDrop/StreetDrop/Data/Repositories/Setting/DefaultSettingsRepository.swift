@@ -82,9 +82,14 @@ final class DefaultSettingsRepository: SettingsRepository {
     }
     
     func checkNewNotice(lastNoticeId: Int?) -> Single<Bool> {
-        networkManager.checkNewNotice(lastNoticeId: lastNoticeId)
-            .map({ noticeUpdate in
-                return noticeUpdate.hasNewNotice
-            })
+        return networkManager.request(
+            target: .init(
+                NetworkService.checkNewNotice(
+                    lastNoticeId: lastNoticeId
+                )
+            ),
+            responseType: NoticeUpdateDTO.self
+        )
+        .map(\.hasNewNotice)
     }
 }
