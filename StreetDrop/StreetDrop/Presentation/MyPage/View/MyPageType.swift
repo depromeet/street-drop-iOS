@@ -7,9 +7,7 @@
 
 import Foundation
 
-enum MyPageType: Int {
-    case dropMusic = 100
-    case likeMusic = 101
+enum MyMusicType {
+    case drop
+    case like
 }
-
-typealias MusicInfo = (type: MyPageType, itemID: Int)

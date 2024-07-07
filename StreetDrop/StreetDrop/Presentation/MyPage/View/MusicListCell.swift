@@ -11,13 +11,14 @@ import SnapKit
 import RxCocoa
 import RxSwift
 
-final class MusicTableViewCell: UITableViewCell {
+final class MusicListCell: UICollectionViewCell {
     static let identifier = "MusicTableViewCell"
     private var disposeBag: DisposeBag = DisposeBag()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.configureUI()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        configureUI()
     }
     
     @available(*, unavailable)
@@ -138,7 +139,9 @@ final class MusicTableViewCell: UITableViewCell {
     }()
 }
 
-private extension MusicTableViewCell {
+// MARK: - Private Methods
+
+private extension MusicListCell {
     
     // MARK: - UI
     
@@ -147,7 +150,6 @@ private extension MusicTableViewCell {
         // MARK: - Cell
         
         self.backgroundColor = UIColor.gray900
-        self.selectionStyle = .none
         
         // MARK: - Container StackView
         
@@ -289,15 +291,5 @@ struct UIViewPreview<View: UIView>: UIViewRepresentable {
     func updateUIView(_ view: UIView, context: Context) {
         view.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         view.setContentHuggingPriority(.defaultHigh, for: .vertical)
-    }
-}
-
-@available(iOS 13.0.0, *)
-struct MusicTableViewCellPreview: PreviewProvider{
-    static var previews: some View {
-        UIViewPreview {
-            return MusicTableViewCell()
-        }
-        .previewLayout(.fixed(width: 327, height: 92))
     }
 }

@@ -8,7 +8,17 @@
 import Foundation
 import RxDataSources
 
-struct MyMusic {
+struct TotalMyMusics {
+    let musics: [MyMusics]
+    let totalCount: Int
+}
+
+struct MyMusics {
+    let date: String
+    let musics: [MyMusic]
+}
+
+struct MyMusic: Hashable {
     let id: Int
     let userId: Int
     var userName: String
@@ -22,33 +32,33 @@ struct MyMusic {
     let createdAt: String
     let location: String
     let likeCount: Int
-}
-
-struct MyMusics {
-    let date: String
-    let musics: [MyMusic]
-}
-
-struct TotalMyMusics {
-    let musics: [MyMusics]
-    let totalCount: Int
-}
-
-struct MyMusicsSection {
-    var date: String
-    var items: [Item]
     
-    init(date: String, items: [MyMusic]) {
-        self.date = date
-        self.items = items
+    private let identifier = UUID()
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
+    
+    static func == (lhs: MyMusic, rhs: MyMusic) -> Bool {
+        return lhs.identifier == rhs.identifier
     }
 }
 
-extension MyMusicsSection: SectionModelType {
-    typealias Item = MyMusic
+struct MyMusicsSectionType: Hashable {
+    let section: MyMusicsSection
+    let items: [MyMusic]
     
-    init(original: MyMusicsSection, items: [MyMusic]) {
-        self = original
-        self.items = items
+    private let identifier = UUID()
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
     }
+    
+    static func == (lhs: MyMusicsSectionType, rhs: MyMusicsSectionType) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+}
+
+enum MyMusicsSection: Hashable {
+    case musics(date: String)
 }

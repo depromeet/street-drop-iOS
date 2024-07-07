@@ -18,23 +18,23 @@ final class MyPageViewModel {
         )
     )
     
-    var myDropMusicList: [[MyMusic]] = []
-    var myLikeMusicList: [[MyMusic]] = []
+    private var myDropMusicSections: [MyMusicsSectionType] = .init()
+    private var myLikeMusicSections: [MyMusicsSectionType] = .init()
 }
 
 extension MyPageViewModel: ViewModel {
     struct Input {
         let viewWillAppearEvent: PublishRelay<Void>
+        let listTypeTapEvent: PublishRelay<MyMusicType>
         let levelPolicyTapEvent: PublishRelay<Void>
-        let selectedMusicEvent: PublishRelay<MusicInfo>
+        let selectedMusicEvent: PublishRelay<Int>
     }
     
     struct Output {
         let levelImageURL = PublishRelay<String>()
         let levelName = PublishRelay<String>()
         let nickName = PublishRelay<String>()
-        let myDropMusicsSections = PublishRelay<[MyMusicsSection]>()
-        let myLikeMusicsSections = PublishRelay<[MyMusicsSection]>()
+        let myMusicsSections = PublishRelay<[MyMusicsSectionType]>()
         let totalDropMusicsCount = PublishRelay<Int>()
         let totalLikeMusicsCount = PublishRelay<Int>()
         let pushCommunityView = PublishRelay<Musics>()
@@ -61,6 +61,17 @@ extension MyPageViewModel: ViewModel {
             }
             .disposed(by: disposedBag)
         
+        input.listTypeTapEvent
+            .bind(with: self) { owner, type in
+                switch type {
+                case .drop:
+                    output.myMusicsSections.accept(owner.myDropMusicSections)
+                case .like:
+                    output.myMusicsSections.accept(owner.myLikeMusicSections)
+                }
+            }
+            .disposed(by: disposedBag)
+        
         input.levelPolicyTapEvent
             .bind(with: self) { owner, _ in
                 owner.fetchLevelPolicy(output: output, disposeBag: disposedBag)
@@ -68,9 +79,9 @@ extension MyPageViewModel: ViewModel {
             .disposed(by: disposedBag)
         
         input.selectedMusicEvent
-            .bind(with: self) { owner, musicInfo in
+            .bind(with: self) { owner, itemID in
                 owner.fetchMyDropMusic(
-                    itemID: musicInfo.itemID,
+                    itemID: itemID,
                     output: output,
                     disposedBag: disposedBag
                 )
@@ -80,6 +91,8 @@ extension MyPageViewModel: ViewModel {
         return output
     }
 }
+
+// MARK: - Private Methods
 
 private extension MyPageViewModel {
     func fetchLevelItems(output: Output, disposedBag: DisposeBag) {
@@ -121,19 +134,17 @@ private extension MyPageViewModel {
             .disposed(by: disposeBag)
     }
     
-    func fetchMyDropMusicsSections(output: Output, disposedBag: DisposeBag) {
+    func fetchMyDropMusicsSections(
+        output: Output,
+        disposedBag: DisposeBag
+    ) {
         model.fetchMyDropList()
             .subscribe(with: self, onSuccess: { owner, totalMusics in
                 output.totalDropMusicsCount.accept(totalMusics.totalCount)
-                output.myDropMusicsSections.accept(
-                    totalMusics.musics.map {
-                        .init(date: $0.date, items: $0.musics)
-                    }
-                )
-                
-                owner.myDropMusicList = totalMusics.musics.map { $0.musics }
-            }, onFailure: { _, _ in
-                output.myDropMusicsSections.accept([])
+                owner.myDropMusicSections = owner.convertToSectionTypes(from: totalMusics)
+                output.myMusicsSections.accept(owner.myDropMusicSections)
+            }, onFailure: { _, error in
+                print("❌Fetching My Drop List Error: \(error.localizedDescription)")
             })
             .disposed(by: disposedBag)
     }
@@ -142,15 +153,9 @@ private extension MyPageViewModel {
         model.fetchMyLikeList()
             .subscribe(with: self, onSuccess: { owner, totalMusics in
                 output.totalLikeMusicsCount.accept(totalMusics.totalCount)
-                output.myLikeMusicsSections.accept(
-                    totalMusics.musics.map {
-                        .init(date: $0.date, items: $0.musics)
-                    }
-                )
-                
-                owner.myLikeMusicList = totalMusics.musics.map { $0.musics }
-            }, onFailure: { _, _ in
-                output.myLikeMusicsSections.accept([])
+                owner.myLikeMusicSections = owner.convertToSectionTypes(from: totalMusics)
+            }, onFailure: { _, error in
+                print("❌Fetching My Like List Error: \(error.localizedDescription)")
             })
             .disposed(by: disposedBag)
     }
@@ -172,5 +177,14 @@ private extension MyPageViewModel {
                 output.toast.accept("네트워크를 확인해 주세요")
             })
             .disposed(by: disposedBag)
+    }
+    
+    func convertToSectionTypes(from totalMusics: TotalMyMusics) -> [MyMusicsSectionType] {
+        return totalMusics.musics.map { myMusics in
+            MyMusicsSectionType(
+                section: .musics(date: myMusics.date),
+                items: myMusics.musics
+            )
+        }
     }
 }
