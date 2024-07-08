@@ -46,7 +46,6 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
         self.configureUI()
         self.bindAction()
         self.bindViewModel()
-        self.configureSupplementaryViewRegistration()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -387,6 +386,8 @@ private extension MyPageViewController {
             self.collectionViewHeightConstraint = $0.height.equalTo(1).constraint
         }
         
+        configureSupplementaryViewRegistration()
+        
         // MARK: - Scroll To Top Button
         
         self.view.addSubview(scrollToTopButton)
@@ -572,6 +573,7 @@ private extension MyPageViewController {
         
         output.myMusicsSections
             .bind(with: self) { owner, sections in
+                owner.updateCollectionViewHeight()
                 owner.displayMusicList(sections)
             }
             .disposed(by: disposeBag)
@@ -790,7 +792,7 @@ private extension MyPageViewController {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.musicListCollectionView.layoutIfNeeded()
-            let contentHeight = self.musicListCollectionView.contentSize.height + 50
+            let contentHeight = self.musicListCollectionView.contentSize.height
             self.collectionViewHeightConstraint?.update(offset: contentHeight)
             
             UIView.animate(withDuration: 0.3) {
