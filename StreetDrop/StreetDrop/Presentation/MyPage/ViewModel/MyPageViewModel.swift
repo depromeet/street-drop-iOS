@@ -24,10 +24,10 @@ final class MyPageViewModel {
 
 extension MyPageViewModel: ViewModel {
     struct Input {
-        let viewWillAppearEvent: PublishRelay<Void>
-        let listTypeTapEvent: PublishRelay<MyMusicType>
-        let levelPolicyTapEvent: PublishRelay<Void>
-        let selectedMusicEvent: PublishRelay<Int>
+        let viewWillAppearEvent: Observable<Void>
+        let listTypeTapEvent: Observable<MyMusicType>
+        let levelPolicyTapEvent: Observable<Void>
+        let selectedMusicEvent: Observable<Int>
     }
     
     struct Output {
@@ -51,23 +51,28 @@ extension MyPageViewModel: ViewModel {
     
     func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
         let output = Output()
+        let lastestListType =  BehaviorRelay<MyMusicType>(value: .drop)
             
         input.viewWillAppearEvent
             .bind(with: self) { owner, _ in
                 owner.fetchLevelItems(output: output, disposedBag: disposedBag)
                 owner.fetchLevelProgress(output: output, disposeBag: disposedBag)
-                owner.fetchMyDropMusicsSections(output: output, disposedBag: disposedBag)
-                owner.fetchMyLikeMusicsSections(output: output, disposedBag: disposedBag)
+                
+                lastestListType.accept(lastestListType.value)
             }
             .disposed(by: disposedBag)
         
         input.listTypeTapEvent
+            .bind(to: lastestListType)
+            .disposed(by: disposedBag)
+        
+        lastestListType
             .bind(with: self) { owner, type in
                 switch type {
                 case .drop:
-                    output.myMusicsSections.accept(owner.myDropMusicSections)
+                    owner.fetchMyDropMusicsSections(output: output, disposedBag: disposedBag)
                 case .like:
-                    output.myMusicsSections.accept(owner.myLikeMusicSections)
+                    owner.fetchMyLikeMusicsSections(output: output, disposedBag: disposedBag)
                 }
             }
             .disposed(by: disposedBag)
@@ -141,8 +146,8 @@ private extension MyPageViewModel {
         model.fetchMyDropList()
             .subscribe(with: self, onSuccess: { owner, totalMusics in
                 output.totalDropMusicsCount.accept(totalMusics.totalCount)
-                owner.myDropMusicSections = owner.convertToSectionTypes(from: totalMusics)
-                output.myMusicsSections.accept(owner.myDropMusicSections)
+                let myMusicsSections = owner.convertToSectionTypes(from: totalMusics)
+                output.myMusicsSections.accept(myMusicsSections)
             }, onFailure: { _, error in
                 print("❌Fetching My Drop List Error: \(error.localizedDescription)")
             })
@@ -153,7 +158,8 @@ private extension MyPageViewModel {
         model.fetchMyLikeList()
             .subscribe(with: self, onSuccess: { owner, totalMusics in
                 output.totalLikeMusicsCount.accept(totalMusics.totalCount)
-                owner.myLikeMusicSections = owner.convertToSectionTypes(from: totalMusics)
+                let myMusicsSections = owner.convertToSectionTypes(from: totalMusics)
+                output.myMusicsSections.accept(myMusicsSections)
             }, onFailure: { _, error in
                 print("❌Fetching My Like List Error: \(error.localizedDescription)")
             })

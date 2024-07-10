@@ -20,7 +20,6 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
     private var stickyTopDimmedView: UIView?
     
     private lazy var musicDataSource: MusicDataSource = configureMusicDataSource()
-    private var myMusicType: MyMusicType = .drop
     private var collectionViewHeightConstraint: Constraint?
     
     private var viewModel: MyPageViewModel
@@ -57,7 +56,6 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = UIColor.gray900
-        scrollView.delegate = self
         return scrollView
     }()
     
@@ -420,7 +418,7 @@ private extension MyPageViewController {
         return dimmedView
     }
     
-    func createTapListStackView() -> UIStackView {
+    func createTapListStackView(with type: MyMusicType) -> UIStackView {
         let newStackView = UIStackView()
         newStackView.axis = .horizontal
         newStackView.spacing = 8
@@ -435,7 +433,7 @@ private extension MyPageViewController {
         newLikeButton.setTitle("좋아요", for: .normal)
         newLikeButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
         
-        if myMusicType == .like {
+        if type == .like {
             newDropButton.setTitleColor(UIColor.gray400, for: .normal)
             newDropButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
             
@@ -452,7 +450,7 @@ private extension MyPageViewController {
         let newLabel = UILabel()
         newLabel.textColor = UIColor.gray400
         newLabel.font = .pretendard(size: 14, weightName: .regular)
-        if myMusicType == .like {
+        if type == .like {
             newLabel.text = likeCountLabel.text
         } else {
             newLabel.text = dropCountLabel.text
@@ -483,7 +481,6 @@ private extension MyPageViewController {
             .bind(with: self) { owner, _ in
                 owner.listTypeTapEvent.accept(.drop)
                 owner.updateTapListUI(by: .drop)
-                owner.myMusicType = .drop
             }
             .disposed(by: disposeBag)
         
@@ -491,7 +488,6 @@ private extension MyPageViewController {
             .bind(with: self) { owner, _ in
                 owner.listTypeTapEvent.accept(.like)
                 owner.updateTapListUI(by: .like)
-                owner.myMusicType = .like
             }
             .disposed(by: disposeBag)
     }
@@ -538,16 +534,25 @@ private extension MyPageViewController {
                 owner.selectedMusicEvent.accept(item.id)
             }
             .disposed(by: disposeBag)
+        
+        typealias ScrollViewState = (contentOffset: CGPoint, type: MyMusicType)
+        
+        scrollView.rx.contentOffset
+            .withLatestFrom(listTypeTapEvent) {  (contentOffset: $0, type: $1) }
+            .bind(with: self) { owner, state in
+                owner.handleScrollEvent(contentOffset: state.contentOffset, type: state.type)
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Data Binding
     
     private func bindViewModel() {
         let input = MyPageViewModel.Input(
-            viewWillAppearEvent: viewWillAppearEvent,
-            listTypeTapEvent: listTypeTapEvent,
-            levelPolicyTapEvent: levelPolicyTapEvent,
-            selectedMusicEvent: selectedMusicEvent
+            viewWillAppearEvent: viewWillAppearEvent.asObservable(),
+            listTypeTapEvent: listTypeTapEvent.asObservable(),
+            levelPolicyTapEvent: levelPolicyTapEvent.asObservable(),
+            selectedMusicEvent: selectedMusicEvent.asObservable()
         )
         
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
@@ -648,22 +653,20 @@ private extension MyPageViewController {
 
 // MARK: - ScrollView Delegate
 
-extension MyPageViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+extension MyPageViewController {
+    func handleScrollEvent(contentOffset: CGPoint, type: MyMusicType) {
         // 맨 위로 스크롤하기 버튼 활성화
-        if scrollView == self.scrollView {
-            let offsetY = scrollView.contentOffset.y
-            if offsetY > 400 {
-                scrollToTopButton.isHidden = false
-            } else {
-                scrollToTopButton.isHidden = true
-            }
+        let offsetY = contentOffset.y
+        if offsetY > 400 {
+            scrollToTopButton.isHidden = false
+        } else {
+            scrollToTopButton.isHidden = true
         }
         
         // 드랍, 좋아요 탭 상단에 고정시키기
-        if scrollView.contentOffset.y > 343 {
+        if contentOffset.y > 343 {
             if self.stickyTapListStackView == nil {
-                self.stickyTapListStackView = createTapListStackView()
+                self.stickyTapListStackView = createTapListStackView(with: type)
                 self.stickyTopDimmedView = createDimmedView(isFromTop: true)
                 
                 guard let stickyTapListStackView = stickyTapListStackView else { return }
