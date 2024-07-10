@@ -24,7 +24,7 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
     
     private var viewModel: MyPageViewModel
     private let viewWillAppearEvent = PublishRelay<Void>()
-    private let listTypeTapEvent = PublishRelay<MyMusicType>()
+    private let listTypeTapEvent = BehaviorRelay<MyMusicType>(value: .drop)
     private let levelPolicyTapEvent = PublishRelay<Void>()
     private let selectedMusicEvent = PublishRelay<Int>()
     private let disposeBag = DisposeBag()
