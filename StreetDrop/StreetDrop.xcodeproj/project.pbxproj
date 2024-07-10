@@ -140,6 +140,8 @@
 		6A26BF322B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A26BF312B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift */; };
 		6A26BF342B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */; };
 		6A3AFB582B8DB399003BD144 /* GADUnitID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3AFB572B8DB399003BD144 /* GADUnitID.swift */; };
+		6A51EC3C2C3E52FE00DEF6F3 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A51EC3B2C3E52FE00DEF6F3 /* UIViewController+Rx.swift */; };
+		6A51EC3E2C3E536000DEF6F3 /* Map+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A51EC3D2C3E536000DEF6F3 /* Map+Rx.swift */; };
 		6A7D73D92BB11A0E009340E3 /* LevelUpGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */; };
 		6A7D73DD2BB14015009340E3 /* GradientProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */; };
 		6A7D73DF2BB15826009340E3 /* UIView+RoundCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73DE2BB15826009340E3 /* UIView+RoundCorners.swift */; };
@@ -410,6 +412,8 @@
 		6A26BF312B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingSingleMusicUseCase.swift; sourceTree = "<group>"; };
 		6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingSingleMusicUseCase.swift; sourceTree = "<group>"; };
 		6A3AFB572B8DB399003BD144 /* GADUnitID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GADUnitID.swift; sourceTree = "<group>"; };
+		6A51EC3B2C3E52FE00DEF6F3 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
+		6A51EC3D2C3E536000DEF6F3 /* Map+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Map+Rx.swift"; sourceTree = "<group>"; };
 		6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpGuideView.swift; sourceTree = "<group>"; };
 		6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientProgressBar.swift; sourceTree = "<group>"; };
 		6A7D73DE2BB15826009340E3 /* UIView+RoundCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+RoundCorners.swift"; sourceTree = "<group>"; };
@@ -1475,6 +1479,8 @@
 				6A1386AA2B4F8A5000E49BB5 /* String+Base64.swift */,
 				C49EDACD2BBD7EFE0025DB55 /* GradientLabel.swift */,
 				F4AA84DE2C1F3B0200CADB1A /* Array+Extension.swift */,
+				6A51EC3B2C3E52FE00DEF6F3 /* UIViewController+Rx.swift */,
+				6A51EC3D2C3E536000DEF6F3 /* Map+Rx.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1954,6 +1960,7 @@
 				41396DA42A51B61000B69341 /* EditCommentViewModel.swift in Sources */,
 				049F50222A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift in Sources */,
 				C49EDACC2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift in Sources */,
+				6A51EC3C2C3E52FE00DEF6F3 /* UIViewController+Rx.swift in Sources */,
 				F4C996AF2C1EF6C100FF7B9A /* Notice.swift in Sources */,
 				41A9BEB92A4DCA4A00F3605C /* ClaimCommentRepository.swift in Sources */,
 				C45BF3A32A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */,
@@ -2002,6 +2009,7 @@
 				188D2C7B2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift in Sources */,
 				41396D9B2A4F1C5600B69341 /* OptionModalViewController.swift in Sources */,
 				C47C1D1F2A643C07007317EA /* SplashViewController.swift in Sources */,
+				6A51EC3E2C3E536000DEF6F3 /* Map+Rx.swift in Sources */,
 				C449807C2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

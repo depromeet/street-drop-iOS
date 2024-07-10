@@ -17,9 +17,6 @@ final class MyPageViewModel {
             networkManager: NetworkManager()
         )
     )
-    
-    private var myDropMusicSections: [MyMusicsSectionType] = .init()
-    private var myLikeMusicSections: [MyMusicsSectionType] = .init()
 }
 
 extension MyPageViewModel: ViewModel {
