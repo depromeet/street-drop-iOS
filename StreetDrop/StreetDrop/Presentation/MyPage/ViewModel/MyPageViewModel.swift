@@ -147,6 +147,7 @@ private extension MyPageViewModel {
                 output.myMusicsSections.accept(myMusicsSections)
             }, onFailure: { _, error in
                 print("❌Fetching My Drop List Error: \(error.localizedDescription)")
+                output.toast.accept("네트워크를 확인해 주세요")
             })
             .disposed(by: disposedBag)
     }
@@ -159,6 +160,7 @@ private extension MyPageViewModel {
                 output.myMusicsSections.accept(myMusicsSections)
             }, onFailure: { _, error in
                 print("❌Fetching My Like List Error: \(error.localizedDescription)")
+                output.toast.accept("네트워크를 확인해 주세요")
             })
             .disposed(by: disposedBag)
     }

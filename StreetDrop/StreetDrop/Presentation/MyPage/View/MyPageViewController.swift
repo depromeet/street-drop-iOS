@@ -531,6 +531,7 @@ private extension MyPageViewController {
 private extension MyPageViewController {
     func bindTapButtonAction(dropTapButton: UIButton, likeTapButton: UIButton) {
         dropTapButton.rx.tap
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.listTypeTapEvent.accept(.drop)
                 owner.updateTapListUI(by: .drop)
@@ -538,6 +539,7 @@ private extension MyPageViewController {
             .disposed(by: disposeBag)
         
         likeTapButton.rx.tap
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.listTypeTapEvent.accept(.like)
                 owner.updateTapListUI(by: .like)
@@ -634,6 +636,7 @@ private extension MyPageViewController {
         
         output.myMusicsSections
             .bind(with: self) { owner, sections in
+                owner.updateCollectionViewHeight()
                 owner.displayMusicList(sections)
             }
             .disposed(by: disposeBag)

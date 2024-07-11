@@ -267,9 +267,9 @@ private extension MusicListCell {
         // MARK: - Separator View
         
         self.addSubview(separatorView)
-        self.separatorView.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.bottom)
+        separatorView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
             make.height.equalTo(1)
         }
     }
