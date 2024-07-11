@@ -17,6 +17,8 @@ final class MyPageViewModel {
             networkManager: NetworkManager()
         )
     )
+    
+    private var myMusicType: MyMusicType = .drop
 }
 
 extension MyPageViewModel: ViewModel {
@@ -48,14 +50,14 @@ extension MyPageViewModel: ViewModel {
     
     func convert(input: Input, disposedBag: RxSwift.DisposeBag) -> Output {
         let output = Output()
-        let lastestListType =  BehaviorRelay<MyMusicType>(value: .drop)
+        let lastestListType =  PublishRelay<MyMusicType>()
             
         input.viewWillAppearEvent
             .bind(with: self) { owner, _ in
                 owner.fetchLevelItems(output: output, disposedBag: disposedBag)
                 owner.fetchLevelProgress(output: output, disposeBag: disposedBag)
                 
-                lastestListType.accept(lastestListType.value)
+                lastestListType.accept(owner.myMusicType)
             }
             .disposed(by: disposedBag)
         
@@ -65,6 +67,8 @@ extension MyPageViewModel: ViewModel {
         
         lastestListType
             .bind(with: self) { owner, type in
+                owner.myMusicType = type
+                
                 switch type {
                 case .drop:
                     owner.fetchMyDropMusicsSections(output: output, disposedBag: disposedBag)
