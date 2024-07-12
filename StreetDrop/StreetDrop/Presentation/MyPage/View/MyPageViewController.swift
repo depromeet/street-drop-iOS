@@ -784,7 +784,7 @@ private extension MyPageViewController {
             snapshot.appendItems(sectionType.items, toSection: sectionType.section)
         }
         
-        musicDataSource.apply(snapshot, animatingDifferences: false)
+        musicDataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
