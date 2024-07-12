@@ -11,14 +11,14 @@ import SnapKit
 import RxCocoa
 import RxSwift
 
-final class MusicListCell: UICollectionViewCell {
-    static let identifier = "MusicTableViewCell"
+final class MusicListCell: UITableViewCell {
+    static let identifier = "MusicListCell"
     private var disposeBag: DisposeBag = DisposeBag()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        configureUI()
+        self.configureUI()
     }
     
     @available(*, unavailable)
@@ -150,6 +150,7 @@ private extension MusicListCell {
         // MARK: - Cell
         
         self.backgroundColor = UIColor.gray900
+        self.selectionStyle = .none
         
         // MARK: - Container StackView
         

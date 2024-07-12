@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class MusicListSectionHeaderView: UICollectionReusableView {
+final class MusicListSectionHeaderView: UITableViewHeaderFooterView {
     static let identifier = "MusicListSectionHeaderView"
     
     private lazy var dateLabel: UILabel = {
@@ -19,10 +19,10 @@ final class MusicListSectionHeaderView: UICollectionReusableView {
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         
-        configureUI()
+        self.configureUI()
     }
     
     @available(*, unavailable)

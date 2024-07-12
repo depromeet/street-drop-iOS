@@ -14,13 +14,12 @@ import RxSwift
 import SnapKit
 
 final class MyPageViewController: UIViewController, Toastable, Alertable {
-    fileprivate typealias MusicDataSource = UICollectionViewDiffableDataSource<MyMusicsSection, MyMusic>
+    fileprivate typealias MusicDataSource = UITableViewDiffableDataSource<MyMusicsSection, MyMusic>
     
     private var stickyTapListStackView: UIStackView?
     private var stickyTopDimmedView: UIView?
     
     private lazy var musicDataSource: MusicDataSource = configureMusicDataSource()
-    private var collectionViewHeightConstraint: Constraint?
     
     private var viewModel: MyPageViewModel
     private let viewWillAppearEvent = PublishRelay<Void>()
@@ -187,16 +186,26 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
         return label
     }()
 
-    private lazy var musicListCollectionView: UICollectionView = {
-        let collectionView = UICollectionView (
-            frame: .zero,
-            collectionViewLayout: createMusicListLayout()
-        )
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.isScrollEnabled = false
-        collectionView.backgroundColor = .clear
+    private lazy var musicListTableView: MusicListTableView = {
+        let tableView = MusicListTableView(frame: .zero, style: .grouped)
+        tableView.isScrollEnabled = false
+        tableView.backgroundColor = .clear
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
+        tableView.delegate = self
+        tableView.sectionFooterHeight = 0
+        tableView.separatorStyle = .none
         
-        return collectionView
+        tableView.register(
+            MusicListCell.self,
+            forCellReuseIdentifier: MusicListCell.identifier
+        )
+        tableView.register(
+            MusicListSectionHeaderView.self,
+            forHeaderFooterViewReuseIdentifier: MusicListSectionHeaderView.identifier
+        )
+        
+        return tableView
     }()
     
     private lazy var scrollToTopButton: UIButton = {
@@ -377,15 +386,12 @@ private extension MyPageViewController {
         
         // MARK: - Music List CollectionView
         
-        containerView.addSubview(musicListCollectionView)
-        musicListCollectionView.snp.makeConstraints {
+        containerView.addSubview(musicListTableView)
+        musicListTableView.snp.makeConstraints {
             $0.top.equalTo(tapListStackView.snp.bottom).offset(8)
             $0.leading.trailing.bottom.equalToSuperview()
-            self.collectionViewHeightConstraint = $0.height.equalTo(1).constraint
         }
-        
-        configureSupplementaryViewRegistration()
-        
+                
         // MARK: - Scroll To Top Button
         
         self.view.addSubview(scrollToTopButton)
@@ -587,7 +593,7 @@ private extension MyPageViewController {
             .bind(to: levelPolicyTapEvent)
             .disposed(by: disposeBag)
         
-        musicListCollectionView.rx.itemSelected
+        musicListTableView.rx.itemSelected
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, indexPath in
                 guard let item = owner.musicDataSource.itemIdentifier(for: indexPath) else { return }
@@ -636,7 +642,6 @@ private extension MyPageViewController {
         
         output.myMusicsSections
             .bind(with: self) { owner, sections in
-                owner.updateCollectionViewHeight()
                 owner.displayMusicList(sections)
             }
             .disposed(by: disposeBag)
@@ -759,81 +764,16 @@ private extension MyPageViewController {
 
 private extension MyPageViewController {
     func configureMusicDataSource() -> MusicDataSource {
-        typealias MusicListCellRegistration = UICollectionView.CellRegistration<MusicListCell, MyMusic>
-
-        let musicCellRegistration = MusicListCellRegistration { cell, _ , item in
+        return MusicDataSource(tableView: musicListTableView, cellProvider:  { tableView, indexPath, item -> UITableViewCell? in
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: MusicListCell.identifier,
+                for: indexPath
+            ) as? MusicListCell else { return nil }
+            
             cell.setData(item: item)
-        }
-        
-        return MusicDataSource(collectionView: musicListCollectionView) { collectionView, indexPath, item in
             
-            return collectionView.dequeueConfiguredReusableCell(
-                using: musicCellRegistration,
-                for: indexPath,
-                item: item
-            )
-        }
-    }
-    
-    func configureSupplementaryViewRegistration() {
-        typealias MusicListHeaderRegistration = UICollectionView.SupplementaryRegistration<MusicListSectionHeaderView>
-        
-        let headerRegistration = MusicListHeaderRegistration(elementKind: UICollectionView.elementKindSectionHeader) { [weak self] headerView, elementKind, indexPath in
-            guard let self else { return }
-            
-            let section = self.musicDataSource.snapshot().sectionIdentifiers[safe: indexPath.section]
-            if case let .musics(date) = section {
-                headerView.setData(date: date)
-            }
-        }
-        
-        musicDataSource.supplementaryViewProvider = { [weak self] _, kind, index in
-            switch kind {
-            case UICollectionView.elementKindSectionHeader:
-                return self?.musicListCollectionView.dequeueConfiguredReusableSupplementary(
-                    using: headerRegistration,
-                    for: index
-                )
-            default:
-                return UICollectionReusableView()
-            }
-        }
-    }
-    
-    func createMusicListLayout() -> UICollectionViewLayout {
-        return UICollectionViewCompositionalLayout { [weak self] section, env -> NSCollectionLayoutSection? in
-            guard let self else { return nil }
-            let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(100)
-            )
-            
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
-            let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(100)
-            )
-            
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-            
-            let section = NSCollectionLayoutSection(group: group)
-            let sectionHeader = self.configureSectionHeader()
-            section.boundarySupplementaryItems = [sectionHeader]
-            
-            return section
-        }
-    }
-    
-    func configureSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
-        return NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(32)
-            ),
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
+            return cell
+        })
     }
     
     func displayMusicList(_ sectionTypes: [MyMusicsSectionType]) {
@@ -844,21 +784,25 @@ private extension MyPageViewController {
             snapshot.appendItems(sectionType.items, toSection: sectionType.section)
         }
         
-        musicDataSource.apply(snapshot, animatingDifferences: true) { [weak self] in
-            self?.updateCollectionViewHeight()
+        musicDataSource.apply(snapshot, animatingDifferences: false)
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension MyPageViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let section = self.musicDataSource.snapshot().sectionIdentifiers[safe: section]
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: MusicListSectionHeaderView.identifier) as? MusicListSectionHeaderView
+        
+        if case let .musics(date) = section {
+            headerView?.setData(date: date)
         }
+        
+        return headerView
     }
     
-    func updateCollectionViewHeight() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.musicListCollectionView.layoutIfNeeded()
-            let contentHeight = self.musicListCollectionView.contentSize.height
-            self.collectionViewHeightConstraint?.update(offset: contentHeight)
-            
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
-        }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 20
     }
 }

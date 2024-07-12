@@ -142,6 +142,7 @@
 		6A3AFB582B8DB399003BD144 /* GADUnitID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3AFB572B8DB399003BD144 /* GADUnitID.swift */; };
 		6A51EC3C2C3E52FE00DEF6F3 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A51EC3B2C3E52FE00DEF6F3 /* UIViewController+Rx.swift */; };
 		6A51EC3E2C3E536000DEF6F3 /* Map+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A51EC3D2C3E536000DEF6F3 /* Map+Rx.swift */; };
+		6A51EC402C411FB000DEF6F3 /* MusicListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A51EC3F2C411FB000DEF6F3 /* MusicListTableView.swift */; };
 		6A7D73D92BB11A0E009340E3 /* LevelUpGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */; };
 		6A7D73DD2BB14015009340E3 /* GradientProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */; };
 		6A7D73DF2BB15826009340E3 /* UIView+RoundCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73DE2BB15826009340E3 /* UIView+RoundCorners.swift */; };
@@ -414,6 +415,7 @@
 		6A3AFB572B8DB399003BD144 /* GADUnitID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GADUnitID.swift; sourceTree = "<group>"; };
 		6A51EC3B2C3E52FE00DEF6F3 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
 		6A51EC3D2C3E536000DEF6F3 /* Map+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Map+Rx.swift"; sourceTree = "<group>"; };
+		6A51EC3F2C411FB000DEF6F3 /* MusicListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListTableView.swift; sourceTree = "<group>"; };
 		6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpGuideView.swift; sourceTree = "<group>"; };
 		6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientProgressBar.swift; sourceTree = "<group>"; };
 		6A7D73DE2BB15826009340E3 /* UIView+RoundCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+RoundCorners.swift"; sourceTree = "<group>"; };
@@ -912,6 +914,7 @@
 				0856524F2AFBB73100FD9BCB /* MyPageType.swift */,
 				6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */,
 				6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */,
+				6A51EC3F2C411FB000DEF6F3 /* MusicListTableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1875,6 +1878,7 @@
 				F4C996A12C1E15CD00FF7B9A /* NoticeListViewController.swift in Sources */,
 				1867C8202A4DDB8C00F8EC48 /* MyPageViewController.swift in Sources */,
 				1816ED432A685865005009FC /* NicknameEditModel.swift in Sources */,
+				6A51EC402C411FB000DEF6F3 /* MusicListTableView.swift in Sources */,
 				C40008EA2A32012B00EA7FA9 /* Music.swift in Sources */,
 				413ABEEC2A39D1E900EA1010 /* UIcolor+.swift in Sources */,
 				41A9BEBB2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift in Sources */,
