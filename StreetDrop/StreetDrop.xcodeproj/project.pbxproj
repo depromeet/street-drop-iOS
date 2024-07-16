@@ -23,8 +23,8 @@
 		049F50222A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049F50212A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift */; };
 		04FB1F262A0215BC0064B3C8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F252A0215BC0064B3C8 /* MainViewModel.swift */; };
 		04FB1F322A021C330064B3C8 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F312A021C330064B3C8 /* TestError.swift */; };
-		082F17062AB6DFEC00174D98 /* MusicDropUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17052AB6DFEC00174D98 /* MusicDropUseCase.swift */; };
-		082F17092AB6E41100174D98 /* DefaultMusicDropUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17082AB6E41100174D98 /* DefaultMusicDropUseCase.swift */; };
+		082F17062AB6DFEC00174D98 /* DropMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17052AB6DFEC00174D98 /* DropMusicUseCase.swift */; };
+		082F17092AB6E41100174D98 /* DefaultDropMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17082AB6E41100174D98 /* DefaultDropMusicUseCase.swift */; };
 		082F171A2AB7454200174D98 /* EditCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17192AB7454200174D98 /* EditCommentUseCase.swift */; };
 		082F171C2AB7455400174D98 /* DefaultEditCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */; };
 		082F17242ADD60BB00174D98 /* UINavigation+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17232ADD60BB00174D98 /* UINavigation+Gesture.swift */; };
@@ -45,6 +45,12 @@
 		08810C322BD3FC57004FC6C1 /* LevelPolicySubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810C312BD3FC57004FC6C1 /* LevelPolicySubView.swift */; };
 		08B97EA52B44303C00084F66 /* UniviersialLinkKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B97EA42B44303C00084F66 /* UniviersialLinkKey.swift */; };
 		08BE57162BD4C887007EA949 /* UILabel+applyGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BE57152BD4C887007EA949 /* UILabel+applyGradient.swift */; };
+		08F574512C4696AC00635B54 /* FetchingMyDropListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F574502C4696AC00635B54 /* FetchingMyDropListUseCase.swift */; };
+		08F574532C4696C600635B54 /* DefaultFetchingMyDropListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F574522C4696C600635B54 /* DefaultFetchingMyDropListUseCase.swift */; };
+		08F574562C4697E100635B54 /* FetchingMyLikeListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F574552C4697E100635B54 /* FetchingMyLikeListUseCase.swift */; };
+		08F574582C46985300635B54 /* DefaultFetchingMyLikeListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F574572C46985300635B54 /* DefaultFetchingMyLikeListUseCase.swift */; };
+		08F5745B2C4698B300635B54 /* FetchingMyLevelUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F5745A2C4698B300635B54 /* FetchingMyLevelUseCase.swift */; };
+		08F5745D2C46992500635B54 /* DefaultFetchingMyLevelUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F5745C2C46992500635B54 /* DefaultFetchingMyLevelUseCase.swift */; };
 		1816ED3C2A680608005009FC /* MusicListSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */; };
 		1816ED3F2A68064E005009FC /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED3E2A68064E005009FC /* MyPageViewModel.swift */; };
 		1816ED412A685704005009FC /* NicknameEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED402A685704005009FC /* NicknameEditViewModel.swift */; };
@@ -165,8 +171,8 @@
 		C41972362ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972352ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift */; };
 		C41972382ABDB49400211222 /* FetchingMusicCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972372ABDB49400211222 /* FetchingMusicCountUseCase.swift */; };
 		C419723A2ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972392ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift */; };
-		C419723C2ABDB5AF00211222 /* FetchingMusicWithinArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419723B2ABDB5AF00211222 /* FetchingMusicWithinArea.swift */; };
-		C419723E2ABDB5D600211222 /* DefaultFetchingMusicWithinArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419723D2ABDB5D600211222 /* DefaultFetchingMusicWithinArea.swift */; };
+		C419723C2ABDB5AF00211222 /* FetchingMusicWithinAreaUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419723B2ABDB5AF00211222 /* FetchingMusicWithinAreaUseCase.swift */; };
+		C419723E2ABDB5D600211222 /* DefaultFetchingMusicWithinAreaUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419723D2ABDB5D600211222 /* DefaultFetchingMusicWithinAreaUseCase.swift */; };
 		C41972402ABDC3B000211222 /* LikingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419723F2ABDC3B000211222 /* LikingUseCase.swift */; };
 		C41972422ABDC3D600211222 /* DefaultLikingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972412ABDC3D600211222 /* DefaultLikingUseCase.swift */; };
 		C41972442ABDC43C00211222 /* ClaimingCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972432ABDC43C00211222 /* ClaimingCommentUseCase.swift */; };
@@ -314,8 +320,8 @@
 		049F50212A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DropMusicRequestDTO+Mapping.swift"; sourceTree = "<group>"; };
 		04FB1F252A0215BC0064B3C8 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		04FB1F312A021C330064B3C8 /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
-		082F17052AB6DFEC00174D98 /* MusicDropUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDropUseCase.swift; sourceTree = "<group>"; };
-		082F17082AB6E41100174D98 /* DefaultMusicDropUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMusicDropUseCase.swift; sourceTree = "<group>"; };
+		082F17052AB6DFEC00174D98 /* DropMusicUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropMusicUseCase.swift; sourceTree = "<group>"; };
+		082F17082AB6E41100174D98 /* DefaultDropMusicUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDropMusicUseCase.swift; sourceTree = "<group>"; };
 		082F17192AB7454200174D98 /* EditCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentUseCase.swift; sourceTree = "<group>"; };
 		082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEditCommentUseCase.swift; sourceTree = "<group>"; };
 		082F17232ADD60BB00174D98 /* UINavigation+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigation+Gesture.swift"; sourceTree = "<group>"; };
@@ -327,6 +333,12 @@
 		08810C312BD3FC57004FC6C1 /* LevelPolicySubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelPolicySubView.swift; sourceTree = "<group>"; };
 		08B97EA42B44303C00084F66 /* UniviersialLinkKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniviersialLinkKey.swift; sourceTree = "<group>"; };
 		08BE57152BD4C887007EA949 /* UILabel+applyGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+applyGradient.swift"; sourceTree = "<group>"; };
+		08F574502C4696AC00635B54 /* FetchingMyDropListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingMyDropListUseCase.swift; sourceTree = "<group>"; };
+		08F574522C4696C600635B54 /* DefaultFetchingMyDropListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingMyDropListUseCase.swift; sourceTree = "<group>"; };
+		08F574552C4697E100635B54 /* FetchingMyLikeListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingMyLikeListUseCase.swift; sourceTree = "<group>"; };
+		08F574572C46985300635B54 /* DefaultFetchingMyLikeListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingMyLikeListUseCase.swift; sourceTree = "<group>"; };
+		08F5745A2C4698B300635B54 /* FetchingMyLevelUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingMyLevelUseCase.swift; sourceTree = "<group>"; };
+		08F5745C2C46992500635B54 /* DefaultFetchingMyLevelUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingMyLevelUseCase.swift; sourceTree = "<group>"; };
 		1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListSectionHeaderView.swift; sourceTree = "<group>"; };
 		1816ED3E2A68064E005009FC /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		1816ED402A685704005009FC /* NicknameEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewModel.swift; sourceTree = "<group>"; };
@@ -438,8 +450,8 @@
 		C41972352ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingPOIUseCase.swift; sourceTree = "<group>"; };
 		C41972372ABDB49400211222 /* FetchingMusicCountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingMusicCountUseCase.swift; sourceTree = "<group>"; };
 		C41972392ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingMusicCountUseCase.swift; sourceTree = "<group>"; };
-		C419723B2ABDB5AF00211222 /* FetchingMusicWithinArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingMusicWithinArea.swift; sourceTree = "<group>"; };
-		C419723D2ABDB5D600211222 /* DefaultFetchingMusicWithinArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingMusicWithinArea.swift; sourceTree = "<group>"; };
+		C419723B2ABDB5AF00211222 /* FetchingMusicWithinAreaUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingMusicWithinAreaUseCase.swift; sourceTree = "<group>"; };
+		C419723D2ABDB5D600211222 /* DefaultFetchingMusicWithinAreaUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingMusicWithinAreaUseCase.swift; sourceTree = "<group>"; };
 		C419723F2ABDC3B000211222 /* LikingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikingUseCase.swift; sourceTree = "<group>"; };
 		C41972412ABDC3D600211222 /* DefaultLikingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLikingUseCase.swift; sourceTree = "<group>"; };
 		C41972432ABDC43C00211222 /* ClaimingCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimingCommentUseCase.swift; sourceTree = "<group>"; };
@@ -789,13 +801,13 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		082F170A2AB6E42800174D98 /* MusicDrop */ = {
+		082F170A2AB6E42800174D98 /* DropMusic */ = {
 			isa = PBXGroup;
 			children = (
-				082F17052AB6DFEC00174D98 /* MusicDropUseCase.swift */,
-				082F17082AB6E41100174D98 /* DefaultMusicDropUseCase.swift */,
+				082F17052AB6DFEC00174D98 /* DropMusicUseCase.swift */,
+				082F17082AB6E41100174D98 /* DefaultDropMusicUseCase.swift */,
 			);
-			path = MusicDrop;
+			path = DropMusic;
 			sourceTree = "<group>";
 		};
 		082F17182AB7451A00174D98 /* Domain */ = {
@@ -810,40 +822,28 @@
 		082F171D2AB7465A00174D98 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				082F17192AB7454200174D98 /* EditCommentUseCase.swift */,
-				082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */,
-				C419722D2ABD9D6F00211222 /* MyInfoUseCase.swift */,
-				C419722F2ABDAB0200211222 /* DefaultMyInfoUseCase.swift */,
-				C4685B372B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift */,
-				C4685B392B72610600F514C7 /* DefaultFetchingUserCircleRadiusUsecase.swift */,
-				C41972332ABDB36600211222 /* FetchingPOIUseCase.swift */,
-				C41972352ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift */,
-				C41972372ABDB49400211222 /* FetchingMusicCountUseCase.swift */,
-				C41972392ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift */,
-				C419723B2ABDB5AF00211222 /* FetchingMusicWithinArea.swift */,
-				C419723D2ABDB5D600211222 /* DefaultFetchingMusicWithinArea.swift */,
-				C419723F2ABDC3B000211222 /* LikingUseCase.swift */,
-				C41972412ABDC3D600211222 /* DefaultLikingUseCase.swift */,
-				C41972432ABDC43C00211222 /* ClaimingCommentUseCase.swift */,
-				C41972452ABDC45000211222 /* DefaultClaimingCommentUseCase.swift */,
-				C41972472ABDC4C700211222 /* DeletingMusicUseCase.swift */,
-				C41972492ABDC94A00211222 /* DefaultDeletingMusicUseCase.swift */,
-				C419724B2ABDCA6100211222 /* BlockUserUseCase.swift */,
-				C419724D2ABDCABD00211222 /* DefaultBlockUserUseCase.swift */,
-				C41972542ABED3EC00211222 /* FetchingMyInfoUseCase.swift */,
-				C41972562ABED40100211222 /* DefaultFetchingMyInfoUseCase.swift */,
-				C434A4CD2A17970A00C63526 /* SearchMusicUsecase.swift */,
-				C4E4C6B72A5ADFDB00B1C84A /* SettingsUseCase.swift */,
-				6A26BF312B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift */,
-				6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */,
-				C44A54992BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift */,
-				C44A549B2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift */,
-				C449807B2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift */,
-				C449807D2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift */,
-				082F170A2AB6E42800174D98 /* MusicDrop */,
-				6AAFD9AE2BCE567A001A6772 /* FetchingLevelPolicyUseCase.swift */,
-				6AAFD9B02BCE56A6001A6772 /* DefaultFetchingLevelPolicyUseCase.swift */,
-				F4C996A62C1EEC8600FF7B9A /* NoticeUseCase.swift */,
+				08F5746F2C469E7B00635B54 /* EditComment */,
+				08F5746E2C469E7400635B54 /* MyInfo */,
+				08F5746D2C469E5C00635B54 /* FetchingUserCircleRadius */,
+				08F5746C2C469E5200635B54 /* FetchingPOI */,
+				08F5746B2C469E4000635B54 /* FetchingMusicCount */,
+				08F5746A2C469D9E00635B54 /* FetchingMusicWithinArea */,
+				08F574692C469D9500635B54 /* Liking */,
+				08F574682C469D8300635B54 /* ClaimingComment */,
+				08F574672C469D7B00635B54 /* DeletingMusic */,
+				08F574662C469D6F00635B54 /* BlockUser */,
+				08F574652C469D6500635B54 /* FetchingMyInfo */,
+				08F574712C469F2100635B54 /* SearchingMusic */,
+				08F574722C469F2800635B54 /* Settings */,
+				08F574642C469D4A00635B54 /* FetchingPopUpInfomation */,
+				08F574632C469D2800635B54 /* PostingPopUpUserReading */,
+				08F574622C469CFF00635B54 /* FetchingSingleMusic */,
+				082F170A2AB6E42800174D98 /* DropMusic */,
+				08F574702C469F1900635B54 /* FetchingNotice */,
+				08F5745F2C46999800635B54 /* FetchingLevelPolicy */,
+				08F5745E2C46993800635B54 /* FetchingMyLevel */,
+				08F574592C46987B00635B54 /* FetchingMyLikeList */,
+				08F574542C46979700635B54 /* FetchingMyDropList */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -854,6 +854,192 @@
 				0856524C2AFA77FD00FD9BCB /* SingleMusicResponseDTO.swift */,
 			);
 			path = SingleMusic;
+			sourceTree = "<group>";
+		};
+		08F574542C46979700635B54 /* FetchingMyDropList */ = {
+			isa = PBXGroup;
+			children = (
+				08F574502C4696AC00635B54 /* FetchingMyDropListUseCase.swift */,
+				08F574522C4696C600635B54 /* DefaultFetchingMyDropListUseCase.swift */,
+			);
+			path = FetchingMyDropList;
+			sourceTree = "<group>";
+		};
+		08F574592C46987B00635B54 /* FetchingMyLikeList */ = {
+			isa = PBXGroup;
+			children = (
+				08F574552C4697E100635B54 /* FetchingMyLikeListUseCase.swift */,
+				08F574572C46985300635B54 /* DefaultFetchingMyLikeListUseCase.swift */,
+			);
+			path = FetchingMyLikeList;
+			sourceTree = "<group>";
+		};
+		08F5745E2C46993800635B54 /* FetchingMyLevel */ = {
+			isa = PBXGroup;
+			children = (
+				08F5745A2C4698B300635B54 /* FetchingMyLevelUseCase.swift */,
+				08F5745C2C46992500635B54 /* DefaultFetchingMyLevelUseCase.swift */,
+			);
+			path = FetchingMyLevel;
+			sourceTree = "<group>";
+		};
+		08F5745F2C46999800635B54 /* FetchingLevelPolicy */ = {
+			isa = PBXGroup;
+			children = (
+				6AAFD9AE2BCE567A001A6772 /* FetchingLevelPolicyUseCase.swift */,
+				6AAFD9B02BCE56A6001A6772 /* DefaultFetchingLevelPolicyUseCase.swift */,
+			);
+			path = FetchingLevelPolicy;
+			sourceTree = "<group>";
+		};
+		08F574622C469CFF00635B54 /* FetchingSingleMusic */ = {
+			isa = PBXGroup;
+			children = (
+				6A26BF312B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift */,
+				6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */,
+			);
+			path = FetchingSingleMusic;
+			sourceTree = "<group>";
+		};
+		08F574632C469D2800635B54 /* PostingPopUpUserReading */ = {
+			isa = PBXGroup;
+			children = (
+				C449807B2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift */,
+				C449807D2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift */,
+			);
+			path = PostingPopUpUserReading;
+			sourceTree = "<group>";
+		};
+		08F574642C469D4A00635B54 /* FetchingPopUpInfomation */ = {
+			isa = PBXGroup;
+			children = (
+				C44A54992BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift */,
+				C44A549B2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift */,
+			);
+			path = FetchingPopUpInfomation;
+			sourceTree = "<group>";
+		};
+		08F574652C469D6500635B54 /* FetchingMyInfo */ = {
+			isa = PBXGroup;
+			children = (
+				C41972542ABED3EC00211222 /* FetchingMyInfoUseCase.swift */,
+				C41972562ABED40100211222 /* DefaultFetchingMyInfoUseCase.swift */,
+			);
+			path = FetchingMyInfo;
+			sourceTree = "<group>";
+		};
+		08F574662C469D6F00635B54 /* BlockUser */ = {
+			isa = PBXGroup;
+			children = (
+				C419724B2ABDCA6100211222 /* BlockUserUseCase.swift */,
+				C419724D2ABDCABD00211222 /* DefaultBlockUserUseCase.swift */,
+			);
+			path = BlockUser;
+			sourceTree = "<group>";
+		};
+		08F574672C469D7B00635B54 /* DeletingMusic */ = {
+			isa = PBXGroup;
+			children = (
+				C41972472ABDC4C700211222 /* DeletingMusicUseCase.swift */,
+				C41972492ABDC94A00211222 /* DefaultDeletingMusicUseCase.swift */,
+			);
+			path = DeletingMusic;
+			sourceTree = "<group>";
+		};
+		08F574682C469D8300635B54 /* ClaimingComment */ = {
+			isa = PBXGroup;
+			children = (
+				C41972432ABDC43C00211222 /* ClaimingCommentUseCase.swift */,
+				C41972452ABDC45000211222 /* DefaultClaimingCommentUseCase.swift */,
+			);
+			path = ClaimingComment;
+			sourceTree = "<group>";
+		};
+		08F574692C469D9500635B54 /* Liking */ = {
+			isa = PBXGroup;
+			children = (
+				C419723F2ABDC3B000211222 /* LikingUseCase.swift */,
+				C41972412ABDC3D600211222 /* DefaultLikingUseCase.swift */,
+			);
+			path = Liking;
+			sourceTree = "<group>";
+		};
+		08F5746A2C469D9E00635B54 /* FetchingMusicWithinArea */ = {
+			isa = PBXGroup;
+			children = (
+				C419723B2ABDB5AF00211222 /* FetchingMusicWithinAreaUseCase.swift */,
+				C419723D2ABDB5D600211222 /* DefaultFetchingMusicWithinAreaUseCase.swift */,
+			);
+			path = FetchingMusicWithinArea;
+			sourceTree = "<group>";
+		};
+		08F5746B2C469E4000635B54 /* FetchingMusicCount */ = {
+			isa = PBXGroup;
+			children = (
+				C41972372ABDB49400211222 /* FetchingMusicCountUseCase.swift */,
+				C41972392ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift */,
+			);
+			path = FetchingMusicCount;
+			sourceTree = "<group>";
+		};
+		08F5746C2C469E5200635B54 /* FetchingPOI */ = {
+			isa = PBXGroup;
+			children = (
+				C41972332ABDB36600211222 /* FetchingPOIUseCase.swift */,
+				C41972352ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift */,
+			);
+			path = FetchingPOI;
+			sourceTree = "<group>";
+		};
+		08F5746D2C469E5C00635B54 /* FetchingUserCircleRadius */ = {
+			isa = PBXGroup;
+			children = (
+				C4685B372B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift */,
+				C4685B392B72610600F514C7 /* DefaultFetchingUserCircleRadiusUsecase.swift */,
+			);
+			path = FetchingUserCircleRadius;
+			sourceTree = "<group>";
+		};
+		08F5746E2C469E7400635B54 /* MyInfo */ = {
+			isa = PBXGroup;
+			children = (
+				C419722D2ABD9D6F00211222 /* MyInfoUseCase.swift */,
+				C419722F2ABDAB0200211222 /* DefaultMyInfoUseCase.swift */,
+			);
+			path = MyInfo;
+			sourceTree = "<group>";
+		};
+		08F5746F2C469E7B00635B54 /* EditComment */ = {
+			isa = PBXGroup;
+			children = (
+				082F17192AB7454200174D98 /* EditCommentUseCase.swift */,
+				082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */,
+			);
+			path = EditComment;
+			sourceTree = "<group>";
+		};
+		08F574702C469F1900635B54 /* FetchingNotice */ = {
+			isa = PBXGroup;
+			children = (
+				F4C996A62C1EEC8600FF7B9A /* NoticeUseCase.swift */,
+			);
+			path = FetchingNotice;
+			sourceTree = "<group>";
+		};
+		08F574712C469F2100635B54 /* SearchingMusic */ = {
+			isa = PBXGroup;
+			children = (
+				C434A4CD2A17970A00C63526 /* SearchMusicUsecase.swift */,
+			);
+			path = SearchingMusic;
+			sourceTree = "<group>";
+		};
+		08F574722C469F2800635B54 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C4E4C6B72A5ADFDB00B1C84A /* SettingsUseCase.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		1816ED3D2A680640005009FC /* ViewModel */ = {
@@ -1825,6 +2011,7 @@
 				F48DF73A2C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift in Sources */,
 				C4A445902A5EF225008279C1 /* FCMTokenRequestDTO.swift in Sources */,
 				C46410F42A629820009DD88F /* MusicAppButton.swift in Sources */,
+				08F574532C4696C600635B54 /* DefaultFetchingMyDropListUseCase.swift in Sources */,
 				C41972512ABED0FE00211222 /* MyInfoRepository.swift in Sources */,
 				C41972382ABDB49400211222 /* FetchingMusicCountUseCase.swift in Sources */,
 				41396D872A4EFA2900B69341 /* MyInfoResponseDTO.swift in Sources */,
@@ -1839,10 +2026,12 @@
 				C419724A2ABDC94A00211222 /* DefaultDeletingMusicUseCase.swift in Sources */,
 				C41972462ABDC45000211222 /* DefaultClaimingCommentUseCase.swift in Sources */,
 				C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */,
+				08F5745D2C46992500635B54 /* DefaultFetchingMyLevelUseCase.swift in Sources */,
 				C41972532ABED14200211222 /* DefaultMyInfoRepository.swift in Sources */,
 				6A7D73D92BB11A0E009340E3 /* LevelUpGuideView.swift in Sources */,
 				41396DA12A51B0DF00B69341 /* EditCommentViewController.swift in Sources */,
 				C44A549A2BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift in Sources */,
+				08F574562C4697E100635B54 /* FetchingMyLikeListUseCase.swift in Sources */,
 				41008EBA2A49B56F00FD4ABE /* ClaimModalViewController.swift in Sources */,
 				C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */,
 				B4B9EE842ADBDFFB000A6507 /* RecommendMusicSearchCollectionView.swift in Sources */,
@@ -1863,6 +2052,7 @@
 				414345232A35B9A3003FEE2A /* LikeMusicRepository.swift in Sources */,
 				040685042A01539800377094 /* MainViewController.swift in Sources */,
 				C4685B362B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift in Sources */,
+				08F574582C46985300635B54 /* DefaultFetchingMyLikeListUseCase.swift in Sources */,
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
 				C47583A12A5F11BD00CA7335 /* Bundle+APIKeys.swift in Sources */,
 				C472B1882AC5523300482B2D /* DroppingInfo.swift in Sources */,
@@ -1895,6 +2085,7 @@
 				040685002A01539800377094 /* AppDelegate.swift in Sources */,
 				18CB7BED2A359F53002B31FB /* MusicWithinAreaEntity.swift in Sources */,
 				C41972482ABDC4C700211222 /* DeletingMusicUseCase.swift in Sources */,
+				08F5745B2C4698B300635B54 /* FetchingMyLevelUseCase.swift in Sources */,
 				C4E4C6B82A5ADFDB00B1C84A /* SettingsUseCase.swift in Sources */,
 				41396D912A4EFBF700B69341 /* DefaultEditCommentRepository.swift in Sources */,
 				C419722E2ABD9D6F00211222 /* MyInfoUseCase.swift in Sources */,
@@ -1936,7 +2127,7 @@
 				085652522B00B68100FD9BCB /* BubbleCommentView.swift in Sources */,
 				41A3DDF62A5AD1C7004CFA2F /* BlockUserRepository.swift in Sources */,
 				085652502AFBB73100FD9BCB /* MyPageType.swift in Sources */,
-				C419723C2ABDB5AF00211222 /* FetchingMusicWithinArea.swift in Sources */,
+				C419723C2ABDB5AF00211222 /* FetchingMusicWithinAreaUseCase.swift in Sources */,
 				C434A4CE2A17970A00C63526 /* SearchMusicUsecase.swift in Sources */,
 				414345252A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift in Sources */,
 				1816ED412A685704005009FC /* NicknameEditViewModel.swift in Sources */,
@@ -1970,7 +2161,7 @@
 				C45BF3A32A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */,
 				041038972A126E7B00BC5532 /* MusicCountByDongResponseDTO+Mapping.swift in Sources */,
 				41396D992A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift in Sources */,
-				C419723E2ABDB5D600211222 /* DefaultFetchingMusicWithinArea.swift in Sources */,
+				C419723E2ABDB5D600211222 /* DefaultFetchingMusicWithinAreaUseCase.swift in Sources */,
 				F4C996AA2C1EEF0B00FF7B9A /* DefaultNoticeRepository.swift in Sources */,
 				41396D972A4F04CB00B69341 /* MyInfoStorage.swift in Sources */,
 				1824F1372A349F3700A10320 /* MusicCountEntity.swift in Sources */,
@@ -1982,10 +2173,10 @@
 				1876F0412A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift in Sources */,
 				C4685B3D2B7261A000F514C7 /* SplashViewModel.swift in Sources */,
 				F4AA84DF2C1F3B0200CADB1A /* Array+Extension.swift in Sources */,
-				082F17062AB6DFEC00174D98 /* MusicDropUseCase.swift in Sources */,
+				082F17062AB6DFEC00174D98 /* DropMusicUseCase.swift in Sources */,
 				18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */,
 				C41972442ABDC43C00211222 /* ClaimingCommentUseCase.swift in Sources */,
-				082F17092AB6E41100174D98 /* DefaultMusicDropUseCase.swift in Sources */,
+				082F17092AB6E41100174D98 /* DefaultDropMusicUseCase.swift in Sources */,
 				08810C2E2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift in Sources */,
 				C449807A2BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift in Sources */,
 				412D668A2A1E14B600BA4A1B /* CommunityViewController.swift in Sources */,
@@ -1996,6 +2187,7 @@
 				41E008CE2A1442A000F5D99C /* PoiResponseDTO+Mapping.swift in Sources */,
 				41008EB82A48891000FD4ABE /* UITextView+setLineSpacing.swift in Sources */,
 				C434A4CC2A1796F300C63526 /* SearchingMusicViewModel.swift in Sources */,
+				08F574512C4696AC00635B54 /* FetchingMyDropListUseCase.swift in Sources */,
 				0856525D2B1F29FD00FD9BCB /* ModalOption.swift in Sources */,
 				C4E4C6B22A5ADC2C00B1C84A /* SettingsRepository.swift in Sources */,
 				C4E0943B2A4DF002000B4513 /* VillageNameResponseDTO.swift in Sources */,

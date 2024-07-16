@@ -14,12 +14,12 @@ protocol NoticeDetailViewModel: ViewModel { }
 
 final class DefaultNoticeDetailViewModel: NoticeDetailViewModel {
     private let noticeId: Int
-    private let useCase: NoticeUseCase
+    private let useCase: FetchingNoticeUseCase
     private let dateManager: DateManager
     
     init(
         noticeId: Int,
-        useCase: NoticeUseCase = DefaultNoticeUseCase(),
+        useCase: FetchingNoticeUseCase = DefaultFetchingNoticeUseCase(),
         dateManager: DateManager = DefaultDateManager()
     ) {
         self.noticeId = noticeId

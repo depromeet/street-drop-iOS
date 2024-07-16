@@ -13,11 +13,11 @@ import RxSwift
 protocol NoticeListViewModel: ViewModel { }
 
 final class DefaultNoticeListViewModel: NoticeListViewModel {
-    private let useCase: NoticeUseCase
+    private let useCase: FetchingNoticeUseCase
     private let dateManager: DateManager
     
     init(
-        useCase: NoticeUseCase = DefaultNoticeUseCase(),
+        useCase: FetchingNoticeUseCase = DefaultFetchingNoticeUseCase(),
         dateManager: DateManager = DefaultDateManager()
     ) {
         self.useCase = useCase
