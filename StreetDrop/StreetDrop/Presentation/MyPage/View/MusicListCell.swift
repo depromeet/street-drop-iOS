@@ -11,12 +11,13 @@ import SnapKit
 import RxCocoa
 import RxSwift
 
-final class MusicTableViewCell: UITableViewCell {
-    static let identifier = "MusicTableViewCell"
+final class MusicListCell: UITableViewCell {
+    static let identifier = "MusicListCell"
     private var disposeBag: DisposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         self.configureUI()
     }
     
@@ -138,7 +139,9 @@ final class MusicTableViewCell: UITableViewCell {
     }()
 }
 
-private extension MusicTableViewCell {
+// MARK: - Private Methods
+
+private extension MusicListCell {
     
     // MARK: - UI
     
@@ -265,9 +268,9 @@ private extension MusicTableViewCell {
         // MARK: - Separator View
         
         self.addSubview(separatorView)
-        self.separatorView.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.bottom)
+        separatorView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
             make.height.equalTo(1)
         }
     }
@@ -289,15 +292,5 @@ struct UIViewPreview<View: UIView>: UIViewRepresentable {
     func updateUIView(_ view: UIView, context: Context) {
         view.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         view.setContentHuggingPriority(.defaultHigh, for: .vertical)
-    }
-}
-
-@available(iOS 13.0.0, *)
-struct MusicTableViewCellPreview: PreviewProvider{
-    static var previews: some View {
-        UIViewPreview {
-            return MusicTableViewCell()
-        }
-        .previewLayout(.fixed(width: 327, height: 92))
     }
 }

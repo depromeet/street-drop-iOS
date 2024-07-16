@@ -31,7 +31,7 @@ final class MainViewModel: ViewModel {
     private let myInfoUseCase: MyInfoUseCase
     private let fetchingPOIUseCase: FetchingPOIUseCase
     private let fetchingMusicCountUseCse: FetchingMusicCountUseCase
-    private let fetchingMusicWithinArea: FetchingMusicWithinArea
+    private let fetchingMusicWithinAreaUseCase: FetchingMusicWithinAreaUseCase
     private let fetchingPopUpInfomationUseCase: FetchingPopUpInfomationUseCase
     private let postingPopUpUserReadingUseCase: PostingPopUpUserReadingUseCase
     
@@ -43,7 +43,7 @@ final class MainViewModel: ViewModel {
         myInfoUseCase: MyInfoUseCase = DefaultMyInfoUseCase(),
         fetchingPOIUseCase: FetchingPOIUseCase = DefaultFetchingPOIUseCase(),
         fetchingMusicCountUseCse: FetchingMusicCountUseCase = DefaultFetchingMusicCountUseCase(),
-        fetchingMusicWithinArea: FetchingMusicWithinArea = DefaultFetchingMusicWithinArea(),
+        fetchingMusicWithinAreaUseCase: FetchingMusicWithinAreaUseCase = DefaultFetchingMusicWithinAreaUseCase(),
         fetchingSingleMusicUseCase: FetchingSingleMusicUseCase = DefaultFetchingSingleMusicUseCase(),
         fetchingPopUpInfomationUseCase: FetchingPopUpInfomationUseCase = DefaultFetchingPopUpInfomationUseCase(),
         postingPopUpUserReadingUseCase: PostingPopUpUserReadingUseCase = DefaultPostingPopUpUserReadingUseCase()
@@ -52,7 +52,7 @@ final class MainViewModel: ViewModel {
         self.myInfoUseCase = myInfoUseCase
         self.fetchingPOIUseCase = fetchingPOIUseCase
         self.fetchingMusicCountUseCse = fetchingMusicCountUseCse
-        self.fetchingMusicWithinArea = fetchingMusicWithinArea
+        self.fetchingMusicWithinAreaUseCase = fetchingMusicWithinAreaUseCase
         self.fetchingPopUpInfomationUseCase = fetchingPopUpInfomationUseCase
         self.postingPopUpUserReadingUseCase = postingPopUpUserReadingUseCase
         self.locationManager.delegate = self
@@ -237,7 +237,7 @@ private extension MainViewModel {
     }
 
     func fetchMusicWithArea(output: Output, disposedBag: DisposeBag) {
-        fetchingMusicWithinArea.execute(
+        fetchingMusicWithinAreaUseCase.execute(
             lat: self.location.coordinate.latitude,
             lon: self.location.coordinate.longitude,
             distance: userCircleRadius

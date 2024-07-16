@@ -1,5 +1,5 @@
 //
-//  DefaultMusicDropUseCase.swift
+//  DefaultDropMusicUseCase.swift
 //  StreetDrop
 //
 //  Created by thoonk on 2023/09/17.
@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-final class DefaultMusicDropUseCase: MusicDropUseCase {
+final class DefaultDropMusicUseCase: DropMusicUseCase {
     private let dropMusicRepository: DropMusicRepository
     
     init(dropMusicRepository: DropMusicRepository = DefaultDropMusicRepository()) {

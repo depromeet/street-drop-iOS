@@ -21,6 +21,7 @@ final class MusicListSectionHeaderView: UITableViewHeaderFooterView {
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
+        
         self.configureUI()
     }
     
@@ -38,12 +39,7 @@ extension MusicListSectionHeaderView {
     // MARK: - UI
     
     func configureUI() {
-        
-        // MARK: - View
-        
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColor.gray900
-        self.backgroundView = backgroundView
+        backgroundColor = UIColor.gray900
         
         // MARK: - Date Label
         

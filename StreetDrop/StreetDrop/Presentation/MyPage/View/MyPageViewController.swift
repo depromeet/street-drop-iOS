@@ -14,19 +14,21 @@ import RxSwift
 import SnapKit
 
 final class MyPageViewController: UIViewController, Toastable, Alertable {
-    typealias DataSource = RxTableViewSectionedReloadDataSource<MyMusicsSection>
+    fileprivate typealias MusicDataSource = UITableViewDiffableDataSource<MyMusicsSection, MyMusic>
     
     private var stickyTapListStackView: UIStackView?
     private var stickyTopDimmedView: UIView?
     
-    private lazy var dropMusicDataSource: DataSource = configureDataSource()
-    private lazy var likeMusicDataSource: DataSource = configureDataSource()
+    private lazy var musicDataSource: MusicDataSource = configureMusicDataSource()
     
     private var viewModel: MyPageViewModel
     private let viewWillAppearEvent = PublishRelay<Void>()
+    private let listTypeTapEvent = BehaviorRelay<MyMusicType>(value: .drop)
     private let levelPolicyTapEvent = PublishRelay<Void>()
-    private let selectedMusicEvent = PublishRelay<MusicInfo>()
+    private let selectedMusicEvent = PublishRelay<Int>()
     private let disposeBag = DisposeBag()
+    
+    // MARK: - Init
     
     init(viewModel: MyPageViewModel = MyPageViewModel()) {
         self.viewModel = viewModel
@@ -46,16 +48,11 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
         self.bindViewModel()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.viewWillAppearEvent.accept(Void())
-    }
-    
     // MARK: - UI
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = UIColor.gray900
-        scrollView.delegate = self
         return scrollView
     }()
     
@@ -188,37 +185,26 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
         label.isHidden = true
         return label
     }()
-    
-    private lazy var dropMusicListTableView: MusicListTableView = {
-        let tableView = MusicListTableView()
-        tableView.backgroundColor = .gray900
+
+    private lazy var musicListTableView: MusicListTableView = {
+        let tableView = MusicListTableView(frame: .zero, style: .grouped)
         tableView.isScrollEnabled = false
+        tableView.backgroundColor = .clear
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
-        tableView.register(MusicTableViewCell.self, forCellReuseIdentifier: MusicTableViewCell.identifier)
-        tableView.register(MusicListSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: MusicListSectionHeaderView.identifier)
+        tableView.delegate = self
         tableView.sectionFooterHeight = 0
-        tableView.tableFooterView = UIView()
-        tableView.tag = MyPageType.dropMusic.rawValue
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-        return tableView
-    }()
-    
-    private lazy var likeMusicListTableView: MusicListTableView = {
-        let tableView = MusicListTableView()
-        tableView.backgroundColor = .gray900
-        tableView.isHidden = true
-        tableView.isScrollEnabled = false
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 100
-        tableView.register(MusicTableViewCell.self, forCellReuseIdentifier: MusicTableViewCell.identifier)
-        tableView.register(MusicListSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: MusicListSectionHeaderView.identifier)
-        tableView.sectionFooterHeight = 0
-        tableView.tableFooterView = UIView()
-        tableView.tag = MyPageType.likeMusic.rawValue
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
+        tableView.separatorStyle = .none
+        
+        tableView.register(
+            MusicListCell.self,
+            forCellReuseIdentifier: MusicListCell.identifier
+        )
+        tableView.register(
+            MusicListSectionHeaderView.self,
+            forHeaderFooterViewReuseIdentifier: MusicListSectionHeaderView.identifier
+        )
+        
         return tableView
     }()
     
@@ -234,6 +220,8 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
     
     private lazy var bottomDimmedView: UIView = self.createDimmedView(isFromTop: false)
 }
+
+// MARK: - UI Methods
 
 private extension MyPageViewController {
     // MARK: - UI
@@ -396,22 +384,14 @@ private extension MyPageViewController {
         
         self.tapListStackView.addArrangedSubview(dropCountLabel)
         
-        // MARK: - Drop Music List TableView
+        // MARK: - Music List CollectionView
         
-        self.containerView.addSubview(dropMusicListTableView)
-        self.dropMusicListTableView.snp.makeConstraints { make in
-            make.top.equalTo(tapListStackView.snp.bottom).offset(8)
-            make.leading.trailing.bottom.equalToSuperview()
+        containerView.addSubview(musicListTableView)
+        musicListTableView.snp.makeConstraints {
+            $0.top.equalTo(tapListStackView.snp.bottom).offset(8)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
-        
-        // MARK: - Like Music List TableView
-        
-        self.containerView.addSubview(likeMusicListTableView)
-        self.likeMusicListTableView.snp.makeConstraints { make in
-            make.top.equalTo(tapListStackView.snp.bottom).offset(8)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
-        
+                
         // MARK: - Scroll To Top Button
         
         self.view.addSubview(scrollToTopButton)
@@ -444,7 +424,7 @@ private extension MyPageViewController {
         return dimmedView
     }
     
-    func createTapListStackView() -> UIStackView {
+    func createTapListStackView(with type: MyMusicType) -> UIStackView {
         let newStackView = UIStackView()
         newStackView.axis = .horizontal
         newStackView.spacing = 8
@@ -459,7 +439,7 @@ private extension MyPageViewController {
         newLikeButton.setTitle("좋아요", for: .normal)
         newLikeButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
         
-        if self.dropMusicListTableView.isHidden {
+        if type == .like {
             newDropButton.setTitleColor(UIColor.gray400, for: .normal)
             newDropButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
             
@@ -476,7 +456,7 @@ private extension MyPageViewController {
         let newLabel = UILabel()
         newLabel.textColor = UIColor.gray400
         newLabel.font = .pretendard(size: 14, weightName: .regular)
-        if self.dropMusicListTableView.isHidden {
+        if type == .like {
             newLabel.text = likeCountLabel.text
         } else {
             newLabel.text = dropCountLabel.text
@@ -500,63 +480,85 @@ private extension MyPageViewController {
         return newStackView
     }
     
-    // MARK: - Action Binding
-    
-    private func bindTapButtonAction(dropTapButton: UIButton, likeTapButton: UIButton) {
-        dropTapButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.dropMusicListTableView.isHidden = false
-                self.likeMusicListTableView.isHidden = true
+    func updateLevelupGuideViewConstraints(by isShow: Bool) {
+        if isShow == false {
+            if levelUpGuideView.isDescendant(of: view) {
+                levelUpGuideView.removeFromSuperview()
                 
-                self.tapListStackView.removeArrangedSubview(self.likeCountLabel)
-                self.likeCountLabel.isHidden = true
-                self.tapListStackView.addArrangedSubview(self.dropCountLabel)
-                self.dropCountLabel.isHidden = false
-                
-                dropTapButton.setTitleColor(.white, for: .normal)
-                dropTapButton.setTitleColor(.lightGray, for: .highlighted)
-                self.dropTapButton.setTitleColor(.white, for: .normal)
-                self.dropTapButton.setTitleColor(.lightGray, for: .highlighted)
-                likeTapButton.setTitleColor(UIColor.gray400, for: .normal)
-                likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-                self.likeTapButton.setTitleColor(UIColor.gray400, for: .normal)
-                self.likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-                
-                if self.scrollView.contentOffset.y > 343 {
-                    self.scrollView.setContentOffset(CGPoint(x: 0, y: 343), animated: true)
+                tapListStackView.snp.remakeConstraints { make in
+                    make.top.equalTo(levelImageView.snp.bottom).offset(24)
+                    make.leading.trailing.equalToSuperview().inset(24)
                 }
-            })
+            }
+        }
+    }
+    
+    func updateTapListUI(by type: MyMusicType) {
+        switch type {
+        case .drop:
+            tapListStackView.removeArrangedSubview(self.likeCountLabel)
+            likeCountLabel.isHidden = true
+            tapListStackView.addArrangedSubview(self.dropCountLabel)
+            dropCountLabel.isHidden = false
+            
+            dropTapButton.setTitleColor(.white, for: .normal)
+            dropTapButton.setTitleColor(.lightGray, for: .highlighted)
+            dropTapButton.setTitleColor(.white, for: .normal)
+            dropTapButton.setTitleColor(.lightGray, for: .highlighted)
+            likeTapButton.setTitleColor(UIColor.gray400, for: .normal)
+            likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+            likeTapButton.setTitleColor(UIColor.gray400, for: .normal)
+            likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+            
+        case.like:
+            tapListStackView.removeArrangedSubview(self.dropCountLabel)
+            dropCountLabel.isHidden = true
+            tapListStackView.addArrangedSubview(self.likeCountLabel)
+            likeCountLabel.isHidden = false
+            
+            dropTapButton.setTitleColor(UIColor.gray400, for: .normal)
+            dropTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+            dropTapButton.setTitleColor(UIColor.gray400, for: .normal)
+            dropTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+            likeTapButton.setTitleColor(.white, for: .normal)
+            likeTapButton.setTitleColor(.lightGray, for: .highlighted)
+            likeTapButton.setTitleColor(.white, for: .normal)
+            likeTapButton.setTitleColor(.lightGray, for: .highlighted)
+        }
+        
+        if scrollView.contentOffset.y > 343 {
+            scrollView.setContentOffset(CGPoint(x: 0, y: 343), animated: true)
+        }
+    }
+}
+
+// MARK: - Binding Methods
+
+private extension MyPageViewController {
+    func bindTapButtonAction(dropTapButton: UIButton, likeTapButton: UIButton) {
+        dropTapButton.rx.tap
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.listTypeTapEvent.accept(.drop)
+                owner.updateTapListUI(by: .drop)
+            }
             .disposed(by: disposeBag)
         
         likeTapButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.dropMusicListTableView.isHidden = true
-                self.likeMusicListTableView.isHidden = false
-                
-                self.tapListStackView.removeArrangedSubview(self.dropCountLabel)
-                self.dropCountLabel.isHidden = true
-                self.tapListStackView.addArrangedSubview(self.likeCountLabel)
-                self.likeCountLabel.isHidden = false
-                
-                dropTapButton.setTitleColor(UIColor.gray400, for: .normal)
-                dropTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-                self.dropTapButton.setTitleColor(UIColor.gray400, for: .normal)
-                self.dropTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-                likeTapButton.setTitleColor(.white, for: .normal)
-                likeTapButton.setTitleColor(.lightGray, for: .highlighted)
-                self.likeTapButton.setTitleColor(.white, for: .normal)
-                self.likeTapButton.setTitleColor(.lightGray, for: .highlighted)
-                
-                if self.scrollView.contentOffset.y > 343 {
-                    self.scrollView.setContentOffset(CGPoint(x: 0, y: 343), animated: true)
-                }
-            })
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.listTypeTapEvent.accept(.like)
+                owner.updateTapListUI(by: .like)
+            }
             .disposed(by: disposeBag)
     }
     
-    private func bindAction() {
+    func bindAction() {
+        rx.viewWillAppear
+            .mapVoid()
+            .bind(to: viewWillAppearEvent)
+            .disposed(by: disposeBag)
+        
         bindTapButtonAction(dropTapButton: self.dropTapButton, likeTapButton: self.likeTapButton)
         
         scrollToTopButton.rx.tap
@@ -591,31 +593,32 @@ private extension MyPageViewController {
             .bind(to: levelPolicyTapEvent)
             .disposed(by: disposeBag)
         
-        dropMusicListTableView.rx.itemSelected
+        musicListTableView.rx.itemSelected
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, indexPath in
-                let itemID = owner.viewModel.myDropMusicList[indexPath.section][indexPath.row].id
-                owner.selectedMusicEvent.accept((MyPageType.dropMusic ,itemID))
+                guard let item = owner.musicDataSource.itemIdentifier(for: indexPath) else { return }
+                owner.selectedMusicEvent.accept(item.id)
             }
             .disposed(by: disposeBag)
         
-        likeMusicListTableView.rx.itemSelected
-            .throttle(.seconds(2), scheduler: MainScheduler.instance)
-            .bind(with: self) { owner, indexPath in
-                let itemID = owner.viewModel.myLikeMusicList[indexPath.section][indexPath.row].id
-                owner.selectedMusicEvent.accept((MyPageType.likeMusic ,itemID))
+        typealias ScrollViewState = (contentOffset: CGPoint, type: MyMusicType)
+        
+        scrollView.rx.contentOffset
+            .withLatestFrom(listTypeTapEvent) {  (contentOffset: $0, type: $1) }
+            .bind(with: self) { owner, state in
+                owner.handleScrollEvent(contentOffset: state.contentOffset, type: state.type)
             }
             .disposed(by: disposeBag)
     }
-    
-    // MARK: - Data Binding
-    
-    private func bindViewModel() {
+        
+    func bindViewModel() {
         let input = MyPageViewModel.Input(
-            viewWillAppearEvent: self.viewWillAppearEvent,
-            levelPolicyTapEvent: levelPolicyTapEvent,
-            selectedMusicEvent: selectedMusicEvent
+            viewWillAppearEvent: viewWillAppearEvent.asObservable(),
+            listTypeTapEvent: listTypeTapEvent.asObservable(),
+            levelPolicyTapEvent: levelPolicyTapEvent.asObservable(),
+            selectedMusicEvent: selectedMusicEvent.asObservable()
         )
+        
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
         
         output.levelName
@@ -637,12 +640,10 @@ private extension MyPageViewController {
             })
             .disposed(by: disposeBag)
         
-        output.myDropMusicsSections
-            .bind(to: dropMusicListTableView.rx.items(dataSource: dropMusicDataSource))
-            .disposed(by: disposeBag)
-        
-        output.myLikeMusicsSections
-            .bind(to: likeMusicListTableView.rx.items(dataSource: likeMusicDataSource))
+        output.myMusicsSections
+            .bind(with: self) { owner, sections in
+                owner.displayMusicList(sections)
+            }
             .disposed(by: disposeBag)
         
         output.totalDropMusicsCount
@@ -713,24 +714,22 @@ private extension MyPageViewController {
     }
 }
 
-// MARK: - ScrollView Delegate
+// MARK: - ScrollView Methods
 
-extension MyPageViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+private extension MyPageViewController {
+    func handleScrollEvent(contentOffset: CGPoint, type: MyMusicType) {
         // 맨 위로 스크롤하기 버튼 활성화
-        if scrollView == self.scrollView {
-            let offsetY = scrollView.contentOffset.y
-            if offsetY > 400 {
-                scrollToTopButton.isHidden = false
-            } else {
-                scrollToTopButton.isHidden = true
-            }
+        let offsetY = contentOffset.y
+        if offsetY > 400 {
+            scrollToTopButton.isHidden = false
+        } else {
+            scrollToTopButton.isHidden = true
         }
         
         // 드랍, 좋아요 탭 상단에 고정시키기
-        if scrollView.contentOffset.y > 343 {
+        if contentOffset.y > 343 {
             if self.stickyTapListStackView == nil {
-                self.stickyTapListStackView = createTapListStackView()
+                self.stickyTapListStackView = createTapListStackView(with: type)
                 self.stickyTopDimmedView = createDimmedView(isFromTop: true)
                 
                 guard let stickyTapListStackView = stickyTapListStackView else { return }
@@ -761,106 +760,49 @@ extension MyPageViewController: UIScrollViewDelegate {
     }
 }
 
-// MARK: - TableView Delegate
+// MARK: - UICollectionView Methods
 
-extension MyPageViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 32
+private extension MyPageViewController {
+    func configureMusicDataSource() -> MusicDataSource {
+        return MusicDataSource(tableView: musicListTableView, cellProvider:  { tableView, indexPath, item -> UITableViewCell? in
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: MusicListCell.identifier,
+                for: indexPath
+            ) as? MusicListCell else { return nil }
+            
+            cell.setData(item: item)
+            
+            return cell
+        })
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let type = MyPageType(rawValue: tableView.tag) {
-            return configureHeaderView(
-                type: type,
-                tableView: tableView,
-                section: section
-            )
-        } else {
-            return nil
+    func displayMusicList(_ sectionTypes: [MyMusicsSectionType]) {
+        var snapshot = NSDiffableDataSourceSnapshot<MyMusicsSection, MyMusic>()
+        
+        sectionTypes.forEach { sectionType in
+            snapshot.appendSections([sectionType.section])
+            snapshot.appendItems(sectionType.items, toSection: sectionType.section)
         }
+        
+        musicDataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
-// MARK: - Private Methods
+// MARK: - UITableViewDelegate
 
-private extension MyPageViewController {
-    func configureDataSource() -> DataSource {
-        return DataSource(
-            configureCell: { _, tableView, indexPath, item in
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: MusicTableViewCell.identifier, for: indexPath) as? MusicTableViewCell else { return UITableViewCell() }
-                cell.setData(item: item)
-                return cell
-            })
-    }
-    
-    func configureHeaderView(
-        type: MyPageType,
-        tableView: UITableView,
-        section: Int
-    ) -> UIView? {
-        var dataSource: DataSource
+extension MyPageViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let section = self.musicDataSource.snapshot().sectionIdentifiers[safe: section]
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: MusicListSectionHeaderView.identifier) as? MusicListSectionHeaderView
         
-        switch type {
-        case .dropMusic:
-            dataSource = dropMusicDataSource
-        case .likeMusic:
-            dataSource = likeMusicDataSource
+        if case let .musics(date) = section {
+            headerView?.setData(date: date)
         }
         
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: MusicListSectionHeaderView.identifier) as? MusicListSectionHeaderView
-        else { return UIView() }
-        
-        let sectionData = dataSource[section]
-        headerView.setData(date: sectionData.date)
         return headerView
     }
     
-    func updateLevelupGuideViewConstraints(by isShow: Bool) {
-        if isShow == false {
-            if levelUpGuideView.isDescendant(of: view) {
-                levelUpGuideView.removeFromSuperview()
-                
-                tapListStackView.snp.remakeConstraints { make in
-                    make.top.equalTo(levelImageView.snp.bottom).offset(24)
-                    make.leading.trailing.equalToSuperview().inset(24)
-                }
-            }
-        }
-    }
-}
-
-// MARK: - 커스텀 테이블뷰
-
-private final class MusicListTableView: UITableView {
-    override var contentSize:CGSize {
-        didSet {
-            invalidateIntrinsicContentSize()
-        }
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        layoutIfNeeded()
-        return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
-    }
-}
-
-
-//MARK: - for canvas
-import SwiftUI
-struct MyPageViewControllerRepresentable: UIViewControllerRepresentable {
-    typealias UIViewControllerType = MyPageViewController
-    
-    func makeUIViewController(context: Context) -> MyPageViewController {
-        return MyPageViewController()
-    }
-    
-    func updateUIViewController(_ uiViewController: MyPageViewController, context: Context) {
-    }
-}
-
-@available(iOS 13.0.0, *)
-struct MyPageViewControllerPreview: PreviewProvider {
-    static var previews: some View {
-        MyPageViewControllerRepresentable()
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 20
     }
 }

@@ -9,12 +9,12 @@ import Foundation
 
 import RxSwift
 
-protocol NoticeUseCase {
+protocol FetchingNoticeUseCase {
     func fetchNoticeList() -> Single<[NoticeEntity]>
     func fetchNoticeDetail(id: Int) -> Single<NoticeDetailEntity>
 }
 
-final class DefaultNoticeUseCase: NoticeUseCase {
+final class DefaultFetchingNoticeUseCase: FetchingNoticeUseCase {
     private let noticeRepository: NoticeRepository
     
     init(noticeRepository: NoticeRepository = DefaultNoticeRepository()) {

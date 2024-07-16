@@ -9,6 +9,6 @@ import Foundation
 
 import RxSwift
 
-protocol FetchingMusicWithinArea {
+protocol FetchingMusicWithinAreaUseCase {
     func execute(lat: Double, lon: Double, distance: Double) -> Single<Musics>
 }
