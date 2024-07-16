@@ -72,7 +72,6 @@
 		1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F03E2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift */; };
 		1876F0412A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0402A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift */; };
 		1876F0442A66E6E00064B887 /* MyPageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0432A66E6E00064B887 /* MyPageRepository.swift */; };
-		1876F0472A66EDA20064B887 /* MyPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0462A66EDA20064B887 /* MyPageModel.swift */; };
 		1876F04A2A66EDF10064B887 /* MyMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0492A66EDF10064B887 /* MyMusic.swift */; };
 		1876F04E2A66EE030064B887 /* MyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F04D2A66EE030064B887 /* MyLevel.swift */; };
 		1876F0502A66F7A30064B887 /* DefaultMyPageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F04F2A66F7A30064B887 /* DefaultMyPageRepository.swift */; };
@@ -356,7 +355,6 @@
 		1876F03E2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyLikeListResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		1876F0402A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyLevelResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		1876F0432A66E6E00064B887 /* MyPageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageRepository.swift; sourceTree = "<group>"; };
-		1876F0462A66EDA20064B887 /* MyPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageModel.swift; sourceTree = "<group>"; };
 		1876F0492A66EDF10064B887 /* MyMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMusic.swift; sourceTree = "<group>"; };
 		1876F04D2A66EE030064B887 /* MyLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLevel.swift; sourceTree = "<group>"; };
 		1876F04F2A66F7A30064B887 /* DefaultMyPageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyPageRepository.swift; sourceTree = "<group>"; };
@@ -1159,7 +1157,6 @@
 			isa = PBXGroup;
 			children = (
 				1876F0482A66EDE60064B887 /* Entites */,
-				1876F0462A66EDA20064B887 /* MyPageModel.swift */,
 				1816ED422A685865005009FC /* NicknameEditModel.swift */,
 			);
 			path = Model;
@@ -2144,7 +2141,6 @@
 				F4C996AD2C1EEF2500FF7B9A /* NoticeRepository.swift in Sources */,
 				F4AA84DB2C1F106300CADB1A /* NoticeDetailViewController.swift in Sources */,
 				C47F02282A3864A500F48884 /* SettingElementCell.swift in Sources */,
-				1876F0472A66EDA20064B887 /* MyPageModel.swift in Sources */,
 				18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */,
 				1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */,
 				6A7D73DD2BB14015009340E3 /* GradientProgressBar.swift in Sources */,

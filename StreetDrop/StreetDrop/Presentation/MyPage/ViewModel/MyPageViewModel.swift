@@ -12,13 +12,27 @@ import RxRelay
 import RxSwift
 
 final class MyPageViewModel {
-    private let model = DefaultMyPageModel(
-        repository: DefaultMyPageRepository(
-            networkManager: NetworkManager()
-        )
-    )
+    private let fetchingMyLevelUseCase: FetchingMyLevelUseCase
+    private let fetchingLevelPolicyUseCase: FetchingLevelPolicyUseCase
+    private let fetchingMyDropListUseCase: FetchingMyDropListUseCase
+    private let fetchingMyLikeListUseCase: FetchingMyLikeListUseCase
+    private let fetchingSingleMusicUseCase: FetchingSingleMusicUseCase
     
     private var myMusicType: MyMusicType = .drop
+    
+    init(
+        fetchingMyLevelUseCase: FetchingMyLevelUseCase = DefaultFetchingMyLevelUseCase(),
+        fetchingLevelPolicyUseCase: FetchingLevelPolicyUseCase = DefaultFetchingLevelPolicyUseCase(),
+        fetchingMyDropListUseCase: FetchingMyDropListUseCase = DefaultFetchingMyDropListUseCase(),
+        fetchingMyLikeListUseCase: FetchingMyLikeListUseCase = DefaultFetchingMyLikeListUseCase(),
+        fetchingSingleMusicUseCase: FetchingSingleMusicUseCase = DefaultFetchingSingleMusicUseCase()
+    ) {
+        self.fetchingMyLevelUseCase = fetchingMyLevelUseCase
+        self.fetchingLevelPolicyUseCase = fetchingLevelPolicyUseCase
+        self.fetchingMyDropListUseCase = fetchingMyDropListUseCase
+        self.fetchingMyLikeListUseCase = fetchingMyLikeListUseCase
+        self.fetchingSingleMusicUseCase = fetchingSingleMusicUseCase
+    }
 }
 
 extension MyPageViewModel: ViewModel {
@@ -102,7 +116,7 @@ extension MyPageViewModel: ViewModel {
 
 private extension MyPageViewModel {
     func fetchLevelItems(output: Output, disposedBag: DisposeBag) {
-        model.fetchMyLevel()
+        fetchingMyLevelUseCase.fetchMyLevel()
             .subscribe { result in
                 switch result {
                 case .success(let levelItem):
@@ -117,7 +131,7 @@ private extension MyPageViewModel {
     }
     
     func fetchLevelProgress(output: Output, disposeBag: DisposeBag) {
-        model.fetchMyLevelProgress()
+        fetchingMyLevelUseCase.fetchMyLevelProgress()
             .subscribe(with: self, onSuccess: { owner, progress in
                 output.isShowingLevelUpView.accept(progress.isShow)
                 output.remainCountToLevelUp.accept(progress.remainCount)
@@ -131,7 +145,7 @@ private extension MyPageViewModel {
     }
     
     func fetchLevelPolicy(output: Output, disposeBag: DisposeBag) {
-        model.fetchLevelPolicy()
+        fetchingLevelPolicyUseCase.fetchLevelPolicy()
             .subscribe(with: self, onSuccess: { owner, levelPolicies in
                 output.levelPoliciesRelay.accept(levelPolicies)
             }, onFailure: { _, error in
@@ -144,7 +158,7 @@ private extension MyPageViewModel {
         output: Output,
         disposedBag: DisposeBag
     ) {
-        model.fetchMyDropList()
+        fetchingMyDropListUseCase.fetchMyDropList()
             .subscribe(with: self, onSuccess: { owner, totalMusics in
                 output.totalDropMusicsCount.accept(totalMusics.totalCount)
                 let myMusicsSections = owner.convertToSectionTypes(from: totalMusics)
@@ -157,7 +171,7 @@ private extension MyPageViewModel {
     }
     
     func fetchMyLikeMusicsSections(output: Output, disposedBag: DisposeBag) {
-        model.fetchMyLikeList()
+        fetchingMyLikeListUseCase.fetchMyLikeList()
             .subscribe(with: self, onSuccess: { owner, totalMusics in
                 output.totalLikeMusicsCount.accept(totalMusics.totalCount)
                 let myMusicsSections = owner.convertToSectionTypes(from: totalMusics)
@@ -174,7 +188,7 @@ private extension MyPageViewModel {
         output: Output,
         disposedBag: DisposeBag
     ) {
-        model.fetchMyDropMusic(itemID: itemID)
+        fetchingSingleMusicUseCase.fetchSingleMusic(itemID: itemID)
             .subscribe(onSuccess: { musics in
                 if musics.isEmpty == false {
                     output.pushCommunityView.accept(musics)
