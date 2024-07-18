@@ -16,7 +16,7 @@ import SnapKit
 final class MyPageViewController: UIViewController, Toastable, Alertable {
     fileprivate typealias MusicDataSource = UITableViewDiffableDataSource<MyMusicsSection, MyMusic>
     
-    private var stickyTapListStackView: UIStackView?
+    private var stickyTapBarView: UIView?
     private var stickyTopDimmedView: UIView?
     
     private lazy var musicDataSource: MusicDataSource = configureMusicDataSource()
@@ -27,6 +27,7 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
     private let levelPolicyTapEvent = PublishRelay<Void>()
     private let selectedMusicEvent = PublishRelay<Int>()
     private let disposeBag = DisposeBag()
+    private let totalMusicsCountRelay: ReplayRelay<Int> = .create(bufferSize: 1)
     
     // MARK: - Init
     
@@ -143,49 +144,8 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
     
     private lazy var levelUpGuideView = LevelUpGuideView()
     
-    private lazy var tapListStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 8
-        stackView.alignment = .bottom
-        return stackView
-    }()
+    private lazy var tapBarView: UIView = createTapBarView(with: .drop)
     
-    private lazy var dropTapButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("드랍", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(.lightGray, for: .highlighted)
-        button.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
-        return button
-    }()
-    
-    private lazy var likeTapButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("좋아요", for: .normal)
-        button.setTitleColor(UIColor.gray400, for: .normal)
-        button.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-        button.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
-        return button
-    }()
-    
-    private lazy var dropCountLabel: UILabel = {
-        let label = UILabel()
-        label.text = "전체 0개"
-        label.textColor = UIColor.gray400
-        label.font = .pretendard(size: 14, weightName: .regular)
-        return label
-    }()
-    
-    private lazy var likeCountLabel: UILabel = {
-        let label = UILabel()
-        label.text = "전체 0개"
-        label.textColor = UIColor.gray400
-        label.font = .pretendard(size: 14, weightName: .regular)
-        label.isHidden = true
-        return label
-    }()
-
     private lazy var musicListTableView: MusicListTableView = {
         let tableView = MusicListTableView(frame: .zero, style: .grouped)
         tableView.isScrollEnabled = false
@@ -356,39 +316,17 @@ private extension MyPageViewController {
         
         // MARK: - Tap List StackView
         
-        self.containerView.addSubview(tapListStackView)
-        self.tapListStackView.snp.makeConstraints { make in
+        self.containerView.addSubview(tapBarView)
+        self.tapBarView.snp.makeConstraints { make in
             make.top.equalTo(levelUpGuideView.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview().inset(24)
+            make.leading.trailing.equalToSuperview()
         }
-        
-        // MARK: - Drop Tap Button
-        
-        self.tapListStackView.addArrangedSubview(dropTapButton)
-        
-        // MARK: - Like Tap Button
-        
-        self.tapListStackView.addArrangedSubview(likeTapButton)
-        
-        // MARK: - Count Label
-        
-        self.tapListStackView.addArrangedSubview(
-            {
-                let spacerView = UIView()
-                spacerView.translatesAutoresizingMaskIntoConstraints = false
-                spacerView.backgroundColor = UIColor.clear
-                spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-                return spacerView
-            }()
-        )
-        
-        self.tapListStackView.addArrangedSubview(dropCountLabel)
-        
+                
         // MARK: - Music List CollectionView
         
         containerView.addSubview(musicListTableView)
         musicListTableView.snp.makeConstraints {
-            $0.top.equalTo(tapListStackView.snp.bottom).offset(8)
+            $0.top.equalTo(tapBarView.snp.bottom).offset(8)
             $0.leading.trailing.bottom.equalToSuperview()
         }
                 
@@ -424,60 +362,45 @@ private extension MyPageViewController {
         return dimmedView
     }
     
-    func createTapListStackView(with type: MyMusicType) -> UIStackView {
-        let newStackView = UIStackView()
-        newStackView.axis = .horizontal
-        newStackView.spacing = 8
-        newStackView.alignment = .bottom
-        newStackView.backgroundColor = UIColor.gray900
+    func createTapBarView(with type: MyMusicType) -> UIView {
+        let tabBarView = UIView()
+        tabBarView.backgroundColor = .gray900
         
-        let newDropButton = UIButton()
-        newDropButton.setTitle("드랍", for: .normal)
-        newDropButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
+        let tapListView: TapListView = .init()
+        tapListView.updateTapListUI(by: type)
         
-        let newLikeButton = UIButton()
-        newLikeButton.setTitle("좋아요", for: .normal)
-        newLikeButton.titleLabel?.font = .pretendard(size: 20, weightName: .bold)
+        let musicListFilterView: MusicListFilterView = .init()
         
-        if type == .like {
-            newDropButton.setTitleColor(UIColor.gray400, for: .normal)
-            newDropButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-            
-            newLikeButton.setTitleColor(.white, for: .normal)
-            newLikeButton.setTitleColor(.lightGray, for: .highlighted)
-        } else {
-            newDropButton.setTitleColor(.white, for: .normal)
-            newDropButton.setTitleColor(.lightGray, for: .highlighted)
-            
-            newLikeButton.setTitleColor(UIColor.gray400, for: .normal)
-            newLikeButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
+        let separatorView = UIView()
+        separatorView.backgroundColor = .gray600
+        
+        tabBarView.addSubview(tapListView)
+        tapListView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(44)
         }
         
-        let newLabel = UILabel()
-        newLabel.textColor = UIColor.gray400
-        newLabel.font = .pretendard(size: 14, weightName: .regular)
-        if type == .like {
-            newLabel.text = likeCountLabel.text
-        } else {
-            newLabel.text = dropCountLabel.text
+        tabBarView.addSubview(musicListFilterView)
+        musicListFilterView.snp.makeConstraints {
+            $0.top.equalTo(tapListView.snp.bottom)
+            $0.leading.trailing.bottom  .equalToSuperview()
+            $0.height.equalTo(44)
         }
         
-        newStackView.addArrangedSubview(newDropButton)
-        newStackView.addArrangedSubview(newLikeButton)
-        newStackView.addArrangedSubview(
-            {
-                let spacerView = UIView()
-                spacerView.translatesAutoresizingMaskIntoConstraints = false
-                spacerView.backgroundColor = UIColor.clear
-                spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-                return spacerView
-            }()
-        )
-        newStackView.addArrangedSubview(newLabel)
+        tabBarView.addSubview(separatorView)
+        separatorView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(1)
+        }
         
-        bindTapButtonAction(dropTapButton: newDropButton, likeTapButton: newLikeButton)
+        totalMusicsCountRelay
+            .bind(to: musicListFilterView.rx.setMusicCountText)
+            .disposed(by: disposeBag)
         
-        return newStackView
+        bindTapButtonAction(in: tapListView)
+        
+        return tabBarView
     }
     
     func updateLevelupGuideViewConstraints(by isShow: Bool) {
@@ -485,47 +408,15 @@ private extension MyPageViewController {
             if levelUpGuideView.isDescendant(of: view) {
                 levelUpGuideView.removeFromSuperview()
                 
-                tapListStackView.snp.remakeConstraints { make in
+                tapBarView.snp.remakeConstraints { make in
                     make.top.equalTo(levelImageView.snp.bottom).offset(24)
-                    make.leading.trailing.equalToSuperview().inset(24)
+                    make.leading.trailing.equalToSuperview()
                 }
             }
         }
     }
     
-    func updateTapListUI(by type: MyMusicType) {
-        switch type {
-        case .drop:
-            tapListStackView.removeArrangedSubview(self.likeCountLabel)
-            likeCountLabel.isHidden = true
-            tapListStackView.addArrangedSubview(self.dropCountLabel)
-            dropCountLabel.isHidden = false
-            
-            dropTapButton.setTitleColor(.white, for: .normal)
-            dropTapButton.setTitleColor(.lightGray, for: .highlighted)
-            dropTapButton.setTitleColor(.white, for: .normal)
-            dropTapButton.setTitleColor(.lightGray, for: .highlighted)
-            likeTapButton.setTitleColor(UIColor.gray400, for: .normal)
-            likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-            likeTapButton.setTitleColor(UIColor.gray400, for: .normal)
-            likeTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-            
-        case.like:
-            tapListStackView.removeArrangedSubview(self.dropCountLabel)
-            dropCountLabel.isHidden = true
-            tapListStackView.addArrangedSubview(self.likeCountLabel)
-            likeCountLabel.isHidden = false
-            
-            dropTapButton.setTitleColor(UIColor.gray400, for: .normal)
-            dropTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-            dropTapButton.setTitleColor(UIColor.gray400, for: .normal)
-            dropTapButton.setTitleColor(UIColor(hexString: "#43464B"), for: .highlighted)
-            likeTapButton.setTitleColor(.white, for: .normal)
-            likeTapButton.setTitleColor(.lightGray, for: .highlighted)
-            likeTapButton.setTitleColor(.white, for: .normal)
-            likeTapButton.setTitleColor(.lightGray, for: .highlighted)
-        }
-        
+    func updateScrollOffset() {
         if scrollView.contentOffset.y > 343 {
             scrollView.setContentOffset(CGPoint(x: 0, y: 343), animated: true)
         }
@@ -535,22 +426,25 @@ private extension MyPageViewController {
 // MARK: - Binding Methods
 
 private extension MyPageViewController {
-    func bindTapButtonAction(dropTapButton: UIButton, likeTapButton: UIButton) {
-        dropTapButton.rx.tap
+    func bindTapButtonAction(in tapListView: TapListView) {
+        tapListView.rx.onDropTap
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.listTypeTapEvent.accept(.drop)
-                owner.updateTapListUI(by: .drop)
+                tapListView.updateTapListUI(by: .drop)
+                owner.updateScrollOffset()
             }
             .disposed(by: disposeBag)
         
-        likeTapButton.rx.tap
+        tapListView.rx.onLikeTap
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.listTypeTapEvent.accept(.like)
-                owner.updateTapListUI(by: .like)
+                tapListView.updateTapListUI(by: .like)
+                owner.updateScrollOffset()
             }
             .disposed(by: disposeBag)
+
     }
     
     func bindAction() {
@@ -558,8 +452,6 @@ private extension MyPageViewController {
             .mapVoid()
             .bind(to: viewWillAppearEvent)
             .disposed(by: disposeBag)
-        
-        bindTapButtonAction(dropTapButton: self.dropTapButton, likeTapButton: self.likeTapButton)
         
         scrollToTopButton.rx.tap
             .bind{ [weak self] in
@@ -646,16 +538,8 @@ private extension MyPageViewController {
             }
             .disposed(by: disposeBag)
         
-        output.totalDropMusicsCount
-            .bind(onNext: { [weak self] count in
-                self?.dropCountLabel.text = "전체 \(count)개"
-            })
-            .disposed(by: disposeBag)
-        
-        output.totalLikeMusicsCount
-            .bind(onNext: { [weak self] count in
-                self?.likeCountLabel.text = "전체 \(count)개"
-            })
+        output.totalMusicsCount
+            .bind(to: totalMusicsCountRelay)
             .disposed(by: disposeBag)
         
         output.pushCommunityView
@@ -728,33 +612,34 @@ private extension MyPageViewController {
         
         // 드랍, 좋아요 탭 상단에 고정시키기
         if contentOffset.y > 343 {
-            if self.stickyTapListStackView == nil {
-                self.stickyTapListStackView = createTapListStackView(with: type)
+            if self.stickyTapBarView == nil {
+                self.stickyTapBarView = createTapBarView(with: type)
                 self.stickyTopDimmedView = createDimmedView(isFromTop: true)
                 
-                guard let stickyTapListStackView = stickyTapListStackView else { return }
-                guard let stickyDimmedView = stickyTopDimmedView else { return }
+                guard let stickyTapBarView,
+                      let stickyDimmedView = stickyTopDimmedView
+                else { return }
                 
-                self.view.addSubview(stickyTapListStackView)
-                stickyTapListStackView.snp.makeConstraints { make in
+                self.view.addSubview(stickyTapBarView)
+                stickyTapBarView.snp.makeConstraints { make in
                     make.top.equalTo(self.view.safeAreaLayoutGuide)
-                    make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(24)
+                    make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
                 }
                 
                 self.view.addSubview(stickyDimmedView)
                 stickyDimmedView.snp.makeConstraints { make in
-                    make.top.equalTo(stickyTapListStackView.snp.bottom)
+                    make.top.equalTo(stickyTapBarView.snp.bottom)
                     make.height.equalTo(24)
                     make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
                 }
             }
         } else {
-            if let stickyTapListStackView = self.stickyTapListStackView,
+            if let stickyTapBarView,
                let stickyDimmedView = self.stickyTopDimmedView {
-                stickyTapListStackView.removeFromSuperview()
+                stickyTapBarView.removeFromSuperview()
                 stickyDimmedView.removeFromSuperview()
             }
-            self.stickyTapListStackView = nil
+            self.stickyTapBarView = nil
             self.stickyTopDimmedView = nil
         }
     }

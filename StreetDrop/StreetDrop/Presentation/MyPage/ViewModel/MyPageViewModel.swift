@@ -48,8 +48,7 @@ extension MyPageViewModel: ViewModel {
         let levelName = PublishRelay<String>()
         let nickName = PublishRelay<String>()
         let myMusicsSections = PublishRelay<[MyMusicsSectionType]>()
-        let totalDropMusicsCount = PublishRelay<Int>()
-        let totalLikeMusicsCount = PublishRelay<Int>()
+        let totalMusicsCount = PublishRelay<Int>()
         let pushCommunityView = PublishRelay<Musics>()
         let toast = PublishRelay<String>()
         let isShowingLevelUpView = PublishRelay<Bool>()
@@ -160,7 +159,7 @@ private extension MyPageViewModel {
     ) {
         fetchingMyDropListUseCase.fetchMyDropList()
             .subscribe(with: self, onSuccess: { owner, totalMusics in
-                output.totalDropMusicsCount.accept(totalMusics.totalCount)
+                output.totalMusicsCount.accept(totalMusics.totalCount)
                 let myMusicsSections = owner.convertToSectionTypes(from: totalMusics)
                 output.myMusicsSections.accept(myMusicsSections)
             }, onFailure: { _, error in
@@ -173,7 +172,7 @@ private extension MyPageViewModel {
     func fetchMyLikeMusicsSections(output: Output, disposedBag: DisposeBag) {
         fetchingMyLikeListUseCase.fetchMyLikeList()
             .subscribe(with: self, onSuccess: { owner, totalMusics in
-                output.totalLikeMusicsCount.accept(totalMusics.totalCount)
+                output.totalMusicsCount.accept(totalMusics.totalCount)
                 let myMusicsSections = owner.convertToSectionTypes(from: totalMusics)
                 output.myMusicsSections.accept(myMusicsSections)
             }, onFailure: { _, error in
