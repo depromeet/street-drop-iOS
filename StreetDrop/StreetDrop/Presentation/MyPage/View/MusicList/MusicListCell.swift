@@ -13,17 +13,24 @@ import RxSwift
 
 final class MusicListCell: UITableViewCell {
     static let identifier = "MusicListCell"
+    
     private var disposeBag: DisposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.configureUI()
+        configureUI()
     }
     
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        updateLikeViewCornerRadius()
     }
     
     func setData(item: MyMusic) {
@@ -33,71 +40,31 @@ final class MusicListCell: UITableViewCell {
         self.commentLabel.text = item.comment
         self.locationLabel.text = item.location
         self.likeLabel.text = String(item.likeCount)
+        self.userNameLabel.text = item.userName
+        
+        layoutIfNeeded()
     }
     
     // MARK: - UI
     
-    private lazy var containerStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 16
-        stackView.alignment = .top
-        return stackView
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
     }()
     
-    private lazy var albumCoverImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .gray
-        imageView.layer.cornerRadius = 10
-        imageView.layer.masksToBounds = true
-        return imageView
-    }()
-    
-    private lazy var infoStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 8
-        return stackView
-    }()
-    
-    private lazy var musicSingerStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 8
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        return stackView
-    }()
-    
-    private lazy var musicTitleLabel: UILabel = {
+    private lazy var userNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "음악 이름"
+        label.text = "유저"
         label.textColor = .white
-        label.font = .pretendard(size: 14, weightName: .bold)
+        label.font = .pretendard(size: 14, weightName: .medium)
         return label
     }()
     
-    private lazy var singerNameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "가수 이름"
-        label.textColor = .gray200
-        label.font = .pretendard(size: 14, weightName: .regular)
-        return label
-    }()
-    
-    private lazy var commentLabel: UILabel = {
-        let label = UILabel()
-        label.text = "코멘트"
-        label.textColor = .gray100
-        label.font = .pretendard(size: 16, weightName: .medium)
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    private lazy var locaitonLikeStackView: UIStackView = {
+    private lazy var locationTimeAgoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 0
+        stackView.spacing = 4
         stackView.distribution = .fill
         return stackView
     }()
@@ -117,6 +84,56 @@ final class MusicListCell: UITableViewCell {
         return label
     }()
     
+    private lazy var timeAgoLabel: UILabel = {
+        let label = UILabel()
+        label.text = "1 초 전"
+        label.textColor = .gray200
+        label.font = .pretendard(size: 12, weightName: .regular)
+        return label
+    }()
+    
+    private lazy var commentLabel: UILabel = {
+        let label = UILabel()
+        label.text = "코멘트"
+        label.textColor = .gray100
+        label.font = .pretendard(size: 14, weightName: .regular)
+        label.numberOfLines = 4
+        return label
+    }()
+    
+    private lazy var albumCoverImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .gray200
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
+    
+    private lazy var musicTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "음악 이름"
+        label.textColor = .white
+        label.font = .pretendard(size: 12, weightName: .semiBold)
+        return label
+    }()
+    
+    private lazy var singerNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "가수 이름"
+        label.textColor = .gray200
+        label.font = .pretendard(size: 12, weightName: .semiBold)
+        return label
+    }()
+    
+    private lazy var likeView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.layer.borderColor = UIColor.gray400.cgColor
+        view.layer.borderWidth = 1
+        
+        return view
+    }()
+    
     private lazy var likeIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "likeFillIcon")?.withRenderingMode(.alwaysTemplate)
@@ -130,12 +147,6 @@ final class MusicListCell: UITableViewCell {
         label.textColor = UIColor.darkPrimary_75
         label.font = .pretendard(size: 12, weightName: .regular)
         return label
-    }()
-    
-    private lazy var separatorView: UIView = {
-       let view = UIView()
-        view.backgroundColor = UIColor.gray700
-        return view
     }()
 }
 
@@ -152,127 +163,153 @@ private extension MusicListCell {
         self.backgroundColor = UIColor.gray900
         self.selectionStyle = .none
         
-        // MARK: - Container StackView
+        // MARK: - Root View
+        let rootView = UIView()
+        rootView.backgroundColor = .gray800
+        rootView.roundCorners(.allCorners, radius: 20)
         
-        self.addSubview(self.containerStackView)
-        self.containerStackView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalToSuperview().inset(24)
+        contentView.addSubview(rootView)
+        rootView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(8)
+            $0.leading.trailing.equalToSuperview().inset(24)
         }
         
-        // MARK: - Album Cover ImageView
+        // MARK: - Container View
         
-        self.containerStackView.addArrangedSubview(albumCoverImageView)
-        self.albumCoverImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(48)
+        rootView.addSubview(containerView)
+        containerView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         
-        // MARK: - Info StackView
+        // MARK: - User Name Label
         
-        self.containerStackView.addArrangedSubview(infoStackView)
-        
-        // MARK: - Music Singer StackView
-        
-        self.infoStackView.addArrangedSubview(musicSingerStackView)
-        self.musicSingerStackView.snp.makeConstraints { make in
-            make.trailing.equalToSuperview()
+        containerView.addSubview(userNameLabel)
+        userNameLabel.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(20)
         }
         
-        // MARK: - Muisc Title Label
+        // MARK: - Location TimeAgo StackView
         
-        self.musicSingerStackView.addArrangedSubview(musicTitleLabel)
+        containerView.addSubview(locationTimeAgoStackView)
+        locationTimeAgoStackView.snp.makeConstraints {
+            $0.top.equalTo(userNameLabel.snp.bottom).offset(2)
+            $0.leading.equalToSuperview()
+            $0.height.equalTo(16)
+        }
         
-        // MARK: - Singer Name Label
+        let dotLabel = UILabel()
+        dotLabel.text = "·"
+        dotLabel.textColor = .gray200
+        dotLabel.textAlignment = .center
         
-        self.musicSingerStackView.addArrangedSubview(singerNameLabel)
-        
-        self.musicSingerStackView.addArrangedSubview(
-            {
-                let spacerView = UIView()
-                spacerView.translatesAutoresizingMaskIntoConstraints = false
-                spacerView.backgroundColor = UIColor.clear
-                spacerView.widthAnchor.constraint(equalToConstant: 1).isActive = true
-                spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-                return spacerView
-            }()
-        )
-        
-        self.musicSingerStackView.addArrangedSubview(
-            {
-                let spacerView = UIView()
-                spacerView.backgroundColor = UIColor.clear
-                return spacerView
-            }()
-        )
+        [
+            locationIconImageView,
+            locationLabel,
+            dotLabel,
+            timeAgoLabel
+        ]
+            .forEach { view in
+                locationTimeAgoStackView.addArrangedSubview(view)
+            }
         
         // MARK: - Comment Label
         
-        self.infoStackView.addArrangedSubview(commentLabel)
-        
-        // MARK: - Location Like StackView
-        
-        self.infoStackView.addArrangedSubview(locaitonLikeStackView)
-        self.locaitonLikeStackView.snp.makeConstraints { make in
-            make.trailing.equalToSuperview()
+        containerView.addSubview(commentLabel)
+        commentLabel.snp.makeConstraints {
+            $0.top.equalTo(locationTimeAgoStackView.snp.bottom).offset(8)
+            $0.leading.trailing.equalToSuperview()
         }
-        
-        // MARK: - Location Icon ImageView
-        
-        self.locaitonLikeStackView.addArrangedSubview(locationIconImageView)
-        self.locationIconImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(16)
-        }
-        
-        // MARK: - Location Label
-        
-        self.locaitonLikeStackView.addArrangedSubview(locationLabel)
-        
-        // MARK: - Like Icon ImageView
-        
-        self.locaitonLikeStackView.addArrangedSubview(
-            {
-                let spacerView = UIView()
-                spacerView.translatesAutoresizingMaskIntoConstraints = false
-                spacerView.backgroundColor = UIColor.clear
-                spacerView.widthAnchor.constraint(equalToConstant: 8).isActive = true
-                return spacerView
-            }()
-        )
-        self.locaitonLikeStackView.addArrangedSubview(likeIconImageView)
-        self.likeIconImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(16)
-        }
-        
-        // MARK: - Like Label
-        
-        self.locaitonLikeStackView.addArrangedSubview(likeLabel)
-        
-        self.locaitonLikeStackView.addArrangedSubview(
-            {
-                let spacerView = UIView()
-                spacerView.translatesAutoresizingMaskIntoConstraints = false
-                spacerView.backgroundColor = UIColor.clear
-                spacerView.widthAnchor.constraint(equalToConstant: 1).isActive = true
-                spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-                return spacerView
-            }()
-        )
-        
-        self.locaitonLikeStackView.addArrangedSubview(
-            {
-                let spacerView = UIView()
-                spacerView.backgroundColor = UIColor.clear
-                return spacerView
-            }()
-        )
         
         // MARK: - Separator View
         
-        self.addSubview(separatorView)
-        separatorView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(1)
+        let separatorView = UIView()
+        separatorView.backgroundColor = .gray600
+        
+        containerView.addSubview(separatorView)
+        separatorView.snp.makeConstraints {
+            $0.top.equalTo(commentLabel.snp.bottom).offset(12)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1)
         }
+        
+        // MARK: - Bottom Content View
+        
+        let bottomContentView = UIView()
+        bottomContentView.backgroundColor = .clear
+        
+        containerView.addSubview(bottomContentView)
+        bottomContentView.snp.makeConstraints {
+            $0.top.equalTo(separatorView.snp.bottom).offset(12)
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(42)
+        }
+        
+        // MARK: - Album Cover Image View
+        
+        bottomContentView.addSubview(albumCoverImageView)
+        albumCoverImageView.snp.makeConstraints {
+            $0.top.leading.bottom.equalToSuperview()
+            $0.width.equalTo(42)
+        }
+        
+        // MARK: - Muisc Singer View
+        
+        let musicSingerView = UIView()
+        musicSingerView.backgroundColor = .clear
+        
+        bottomContentView.addSubview(musicSingerView)
+        musicSingerView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalTo(albumCoverImageView.snp.trailing).offset(16)
+        }
+        
+        // MARK: - Music Title Label
+        
+        musicSingerView.addSubview(musicTitleLabel)
+        musicTitleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(7)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        // MARK: - Singer Name Label
+        
+        musicSingerView.addSubview(singerNameLabel)
+        singerNameLabel.snp.makeConstraints {
+            $0.top.equalTo(musicTitleLabel.snp.bottom).offset(2)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(7)
+        }
+                
+        // MARK: - Like Stack View
+        
+        bottomContentView.addSubview(likeView)
+        likeView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(7)
+            $0.leading.greaterThanOrEqualTo(musicSingerView.snp.trailing).offset(16)
+            $0.trailing.equalToSuperview()
+        }
+        
+        likeView.addSubview(likeIconImageView)
+        likeIconImageView.snp.makeConstraints {
+            $0.top.bottom.leading.equalToSuperview().inset(4)
+            $0.width.equalTo(20)
+        }
+        
+        likeView.addSubview(likeLabel)
+        likeLabel.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(6)
+            $0.leading.equalTo(likeIconImageView.snp.trailing).offset(2)
+            $0.trailing.equalToSuperview().inset(8)
+        }
+    }
+    
+    func updateLikeViewCornerRadius() {
+        let labelSize = likeLabel.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: likeView.bounds.height))
+        let viewHeight = likeView.bounds.height
+        let cornerRadius = min(viewHeight, labelSize.width + 24) / 2
+        likeView.roundCorners(.allCorners, radius: cornerRadius)
     }
 }
 

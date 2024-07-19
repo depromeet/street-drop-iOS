@@ -152,7 +152,7 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
         tableView.isScrollEnabled = false
         tableView.backgroundColor = .clear
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 100
+        tableView.estimatedRowHeight = 258
         tableView.delegate = self
         tableView.sectionFooterHeight = 0
         tableView.separatorStyle = .none
@@ -753,6 +753,6 @@ extension MyPageViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
+        return 0
     }
 }
