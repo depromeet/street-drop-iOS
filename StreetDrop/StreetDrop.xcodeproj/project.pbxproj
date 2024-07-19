@@ -150,6 +150,7 @@
 		6A51EC402C411FB000DEF6F3 /* MusicListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A51EC3F2C411FB000DEF6F3 /* MusicListTableView.swift */; };
 		6A51EC672C48F22600DEF6F3 /* TapListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A51EC662C48F22600DEF6F3 /* TapListView.swift */; };
 		6A51EC692C48F53400DEF6F3 /* MusicListFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A51EC682C48F53400DEF6F3 /* MusicListFilterView.swift */; };
+		6A51EC6D2C49F2FA00DEF6F3 /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A51EC6C2C49F2FA00DEF6F3 /* FilterType.swift */; };
 		6A7D73D92BB11A0E009340E3 /* LevelUpGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */; };
 		6A7D73DD2BB14015009340E3 /* GradientProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */; };
 		6A7D73DF2BB15826009340E3 /* UIView+RoundCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73DE2BB15826009340E3 /* UIView+RoundCorners.swift */; };
@@ -430,6 +431,7 @@
 		6A51EC3F2C411FB000DEF6F3 /* MusicListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListTableView.swift; sourceTree = "<group>"; };
 		6A51EC662C48F22600DEF6F3 /* TapListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapListView.swift; sourceTree = "<group>"; };
 		6A51EC682C48F53400DEF6F3 /* MusicListFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListFilterView.swift; sourceTree = "<group>"; };
+		6A51EC6C2C49F2FA00DEF6F3 /* FilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
 		6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpGuideView.swift; sourceTree = "<group>"; };
 		6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientProgressBar.swift; sourceTree = "<group>"; };
 		6A7D73DE2BB15826009340E3 /* UIView+RoundCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+RoundCorners.swift"; sourceTree = "<group>"; };
@@ -1096,15 +1098,12 @@
 			isa = PBXGroup;
 			children = (
 				1867C81F2A4DDB8C00F8EC48 /* MyPageViewController.swift */,
-				6A51EC662C48F22600DEF6F3 /* TapListView.swift */,
-				6A51EC682C48F53400DEF6F3 /* MusicListFilterView.swift */,
-				1867C8232A4FFCDF00F8EC48 /* MusicListCell.swift */,
 				18EF9FC82A5C51FB00266D27 /* NicknameEditViewController.swift */,
-				1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */,
-				0856524F2AFBB73100FD9BCB /* MyPageType.swift */,
+				6A51EC6A2C49F29C00DEF6F3 /* TabBar */,
+				6A51EC6B2C49F2BA00DEF6F3 /* MusicList */,
 				6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */,
 				6A7D73DC2BB14015009340E3 /* GradientProgressBar.swift */,
-				6A51EC3F2C411FB000DEF6F3 /* MusicListTableView.swift */,
+				6A51EC6C2C49F2FA00DEF6F3 /* FilterType.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1414,6 +1413,26 @@
 				C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */,
 			);
 			path = NetworkManagerTest;
+			sourceTree = "<group>";
+		};
+		6A51EC6A2C49F29C00DEF6F3 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				6A51EC662C48F22600DEF6F3 /* TapListView.swift */,
+				6A51EC682C48F53400DEF6F3 /* MusicListFilterView.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		6A51EC6B2C49F2BA00DEF6F3 /* MusicList */ = {
+			isa = PBXGroup;
+			children = (
+				6A51EC3F2C411FB000DEF6F3 /* MusicListTableView.swift */,
+				1867C8232A4FFCDF00F8EC48 /* MusicListCell.swift */,
+				1816ED3B2A680608005009FC /* MusicListSectionHeaderView.swift */,
+				0856524F2AFBB73100FD9BCB /* MyPageType.swift */,
+			);
+			path = MusicList;
 			sourceTree = "<group>";
 		};
 		9AF428BDAA5509AEF1F4FB64 /* Frameworks */ = {
@@ -2027,6 +2046,7 @@
 				C4D16FCC2A1B98B0008B076F /* UILabel+LineHeight.swift in Sources */,
 				1876F04A2A66EDF10064B887 /* MyMusic.swift in Sources */,
 				C419724A2ABDC94A00211222 /* DefaultDeletingMusicUseCase.swift in Sources */,
+				6A51EC6D2C49F2FA00DEF6F3 /* FilterType.swift in Sources */,
 				C41972462ABDC45000211222 /* DefaultClaimingCommentUseCase.swift in Sources */,
 				C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */,
 				08F5745D2C46992500635B54 /* DefaultFetchingMyLevelUseCase.swift in Sources */,

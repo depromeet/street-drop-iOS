@@ -11,4 +11,5 @@ struct ModalOption {
     let icon: UIImage?
     let title: String
     let acton: UIAction
+    var isSelected: Bool = false
 }

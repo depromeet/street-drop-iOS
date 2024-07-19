@@ -870,6 +870,7 @@ private extension CommunityViewController {
         )
         
         let modalView = OptionModalViewController(
+            type: .music,
             firstOption: shareOption,
             secondOption: claimOption,
             thirdOption: blockOption
@@ -924,6 +925,7 @@ private extension CommunityViewController {
         )
         
         let modalView = OptionModalViewController(
+            type: .music,
             firstOption: shareOption,
             secondOption: claimOption,
             thirdOption: blockOption

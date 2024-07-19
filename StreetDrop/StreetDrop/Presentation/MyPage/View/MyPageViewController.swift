@@ -28,6 +28,7 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
     private let selectedMusicEvent = PublishRelay<Int>()
     private let disposeBag = DisposeBag()
     private let totalMusicsCountRelay: ReplayRelay<Int> = .create(bufferSize: 1)
+    private let selectedFilterType: BehaviorRelay<FilterType> = .init(value: .newest)
     
     // MARK: - Init
     
@@ -399,6 +400,7 @@ private extension MyPageViewController {
             .disposed(by: disposeBag)
         
         bindTapButtonAction(in: tapListView)
+        bindFilterButtonAction(in: musicListFilterView)
         
         return tabBarView
     }
@@ -444,7 +446,25 @@ private extension MyPageViewController {
                 owner.updateScrollOffset()
             }
             .disposed(by: disposeBag)
-
+    }
+    
+    func bindFilterButtonAction(in musicListFilterView: MusicListFilterView) {
+        musicListFilterView.rx.onSortFilterTap
+            .withLatestFrom(selectedFilterType)
+            .bind(with: self) { owner, type in
+                owner.showFilteringOptionsModal(with: type)
+            }
+            .disposed(by: disposeBag)
+        
+        musicListFilterView.rx.onRegionFilterTap
+            .bind(with: self) { owner, _ in
+                
+            }
+            .disposed(by: disposeBag)
+        
+        selectedFilterType
+            .bind(to: musicListFilterView.rx.setSortButtonText)
+            .disposed(by: disposeBag)
     }
     
     func bindAction() {
@@ -645,7 +665,7 @@ private extension MyPageViewController {
     }
 }
 
-// MARK: - UICollectionView Methods
+// MARK: - Private Methods
 
 private extension MyPageViewController {
     func configureMusicDataSource() -> MusicDataSource {
@@ -670,6 +690,51 @@ private extension MyPageViewController {
         }
         
         musicDataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    func showFilteringOptionsModal(with selectedType: FilterType) {
+        let newestOption = ModalOption(
+            icon: UIImage(named: "icon-selected"),
+            title: FilterType.newest.title,
+            acton: filterMusicList(by: .newest),
+            isSelected: selectedType == .newest
+        )
+        
+        let oldestOption = ModalOption(
+            icon: UIImage(named: "icon-selected"),
+            title: FilterType.oldest.title,
+            acton: filterMusicList(by: .oldest),
+            isSelected: selectedType == .oldest
+        )
+        
+        let mostPopularOption = ModalOption(
+            icon: UIImage(named: "icon-selected"),
+            title: FilterType.mostPopular.title,
+            acton: filterMusicList(by: .mostPopular),
+            isSelected: selectedType == .mostPopular
+        )
+        
+        let modalView = OptionModalViewController(
+            type: .filterMusicList,
+            firstOption: newestOption,
+            secondOption: oldestOption,
+            thirdOption: mostPopularOption
+        )
+        
+        modalView.modalPresentationStyle = .overCurrentContext
+        self.navigationController?.present(modalView, animated: true)
+    }
+    
+    func filterMusicList(by type: FilterType) -> UIAction {
+        return UIAction { [weak self] _ in
+            self?.selectedFilterType.accept(type)
+            self?.navigationController?.dismiss(animated: true)
+            
+            /*
+             TODO:
+             - API 개발후 작업 예정
+             */
+        }
     }
 }
 

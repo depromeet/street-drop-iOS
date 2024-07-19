@@ -11,15 +11,23 @@ import SnapKit
 import RxSwift
 import RxRelay
 
+enum OptionModalType {
+    case music
+    case filterMusicList
+}
+
 final class OptionModalViewController: UIViewController {
 
-    //MARK: - Life Cycle
+    private let type: OptionModalType
 
     init(
+        type: OptionModalType,
         firstOption: ModalOption,
         secondOption: ModalOption,
         thirdOption: ModalOption
     ) {
+        self.type = type
+        
         super.init(nibName: nil, bundle: nil)
         
         configureOptions(
@@ -34,7 +42,8 @@ final class OptionModalViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - UI
+    // MARK: - UI
+    
     private var firstOptionButton: UIButton = UIButton()
     private var secondOptionButton: UIButton = UIButton()
     private var thirdOptionButton: UIButton = UIButton()
@@ -104,16 +113,19 @@ private extension OptionModalViewController {
             icon: firstOption.icon,
             title: firstOption.title
         )
+        firstOptionButton.isSelected = firstOption.isSelected
 
         self.secondOptionButton = self.generateOptionButton(
             icon: secondOption.icon,
             title: secondOption.title
         )
+        secondOptionButton.isSelected = secondOption.isSelected
         
         self.thirdOptionButton = self.generateOptionButton(
             icon: thirdOption.icon,
             title: thirdOption.title
         )
+        thirdOptionButton.isSelected = thirdOption.isSelected
 
         firstOptionButton.addAction(firstOption.acton, for: .touchUpInside)
         secondOptionButton.addAction(secondOption.acton, for: .touchUpInside)
@@ -121,22 +133,8 @@ private extension OptionModalViewController {
     }
 
     func configureUI() {
-        let firstDividingLineView = generateDividingView()
-        let secondDividingLineView = generateDividingView()
+        let defaultHeight: CGFloat = type == .music ? 224 : 232
         
-        let defaultHeigh: CGFloat = 224
-        [
-            firstOptionButton,
-            firstDividingLineView,
-            secondOptionButton,
-            secondDividingLineView,
-            thirdOptionButton
-        ].forEach {
-            optionStackView.addArrangedSubview($0)
-        }
-
-        containerView.addSubview(optionStackView)
-
         [dimmedView, containerView].forEach {
             view.addSubview($0)
         }
@@ -147,30 +145,65 @@ private extension OptionModalViewController {
 
         containerView.snp.makeConstraints {
             $0.leading.bottom.trailing.equalToSuperview()
-            $0.height.equalTo(defaultHeigh)
-        }
-
-        optionStackView.snp.makeConstraints {
-            $0.leading.top.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
-        }
-
-        firstDividingLineView.snp.makeConstraints {
-            $0.height.equalTo(2)
-            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(defaultHeight)
         }
         
-        secondDividingLineView.snp.makeConstraints {
-            $0.height.equalTo(2)
-            $0.leading.trailing.equalToSuperview()
-        }
+        switch type {
+        case .music:
+            let firstDividingLineView = generateDividingView()
+            let secondDividingLineView = generateDividingView()
+            
+            [
+                firstOptionButton,
+                firstDividingLineView,
+                secondOptionButton,
+                secondDividingLineView,
+                thirdOptionButton
+            ].forEach {
+                optionStackView.addArrangedSubview($0)
+            }
 
-        firstOptionButton.snp.makeConstraints {
-            $0.height.equalTo(secondOptionButton.snp.height)
-        }
-        
-        secondOptionButton.snp.makeConstraints {
-            $0.height.equalTo(thirdOptionButton.snp.height)
+            containerView.addSubview(optionStackView)
+            optionStackView.snp.makeConstraints {
+                $0.leading.top.trailing.equalToSuperview().inset(16)
+                $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
+            }
+
+            firstDividingLineView.snp.makeConstraints {
+                $0.height.equalTo(2)
+                $0.leading.trailing.equalToSuperview()
+            }
+            
+            secondDividingLineView.snp.makeConstraints {
+                $0.height.equalTo(2)
+                $0.leading.trailing.equalToSuperview()
+            }
+
+            firstOptionButton.snp.makeConstraints {
+                $0.height.equalTo(secondOptionButton.snp.height)
+            }
+            
+            secondOptionButton.snp.makeConstraints {
+                $0.height.equalTo(thirdOptionButton.snp.height)
+            }
+            
+        case .filterMusicList:
+            optionStackView.distribution = .fillEqually
+            optionStackView.alignment = .leading
+            
+            containerView.addSubview(optionStackView)
+            optionStackView.snp.makeConstraints {
+                $0.leading.top.trailing.equalToSuperview().inset(24)
+                $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
+            }
+            
+            [
+                firstOptionButton,
+                secondOptionButton,
+                thirdOptionButton
+            ].forEach {
+                optionStackView.addArrangedSubview($0)
+            }
         }
     }
 }
@@ -180,7 +213,13 @@ private extension OptionModalViewController {
     func generateOptionButton(icon: UIImage?, title: String) -> UIButton {
         //ui
         let button = UIButton()
-        button.setImage(icon, for: .normal)
+        switch type {
+        case .music:
+            button.setImage(icon, for: .normal)
+        case .filterMusicList:
+            button.setImage(icon, for: .selected)
+        }
+        
         button.setTitle(title, for: .normal)
         button.setTitleColor(.gray100, for: .normal)
         button.titleLabel?.font = .pretendard(size: 16, weightName: .medium)
@@ -200,7 +239,7 @@ private extension OptionModalViewController {
         view.backgroundColor = .gray600
         return view
     }
-
+    
     @objc func dismiss(_ sender: UITapGestureRecognizer? = nil) {
         UIView.animate(withDuration: 0.1) {
             self.dimmedView.alpha = 0

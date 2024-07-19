@@ -26,6 +26,7 @@ final class MusicListFilterView: UIView {
         button.titleLabel?.font = .pretendard(size: 14, weightName: .regular)
         button.setImage(UIImage(named: "icon-arrow-down"), for: .normal)
         button.semanticContentAttribute = .forceRightToLeft
+//        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -10)
 
         return button
     }()
@@ -86,6 +87,12 @@ extension Reactive where Base: MusicListFilterView {
     var setMusicCountText: Binder<Int> {
         Binder(base) { base, totalCount in
             base.musicCountLabel.text = "총 \(totalCount)개"
+        }
+    }
+    
+    var setSortButtonText: Binder<FilterType> {
+        Binder(base) { base, type in
+            base.sortFilterButton.setTitle(type.title, for: .normal)
         }
     }
     
