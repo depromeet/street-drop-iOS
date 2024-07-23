@@ -85,7 +85,7 @@ final class OptionModalViewController: UIViewController {
 
         //나타날때 모달 뒤 화면 뿌옇게
         UIView.animate(withDuration: 0.4) {
-            self.dimmedView.alpha = 0.25
+            self.dimmedView.alpha = 0.5
         }
     }
 }

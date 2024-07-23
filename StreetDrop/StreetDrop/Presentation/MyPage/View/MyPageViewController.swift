@@ -327,7 +327,7 @@ private extension MyPageViewController {
         
         containerView.addSubview(musicListTableView)
         musicListTableView.snp.makeConstraints {
-            $0.top.equalTo(tapBarView.snp.bottom).offset(8)
+            $0.top.equalTo(tapBarView.snp.bottom).offset(16)
             $0.leading.trailing.bottom.equalToSuperview()
         }
                 

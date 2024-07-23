@@ -86,7 +86,7 @@ final class MusicListCell: UITableViewCell {
     
     private lazy var timeAgoLabel: UILabel = {
         let label = UILabel()
-        label.text = "1 초 전"
+        label.text = "1초 전"
         label.textColor = .gray200
         label.font = .pretendard(size: 12, weightName: .regular)
         return label
