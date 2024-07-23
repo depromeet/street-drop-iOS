@@ -170,8 +170,9 @@ private extension MusicListCell {
         
         contentView.addSubview(rootView)
         rootView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(8)
+            $0.top.equalToSuperview().inset(8)
             $0.leading.trailing.equalToSuperview().inset(24)
+            $0.bottom.lessThanOrEqualToSuperview().inset(8).priority(.high)
         }
         
         // MARK: - Container View
