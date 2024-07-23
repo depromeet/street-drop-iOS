@@ -433,7 +433,6 @@ private extension MyPageViewController {
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.listTypeTapEvent.accept(.drop)
-                tapListView.updateTapListUI(by: .drop)
                 owner.updateScrollOffset()
             }
             .disposed(by: disposeBag)
@@ -442,8 +441,13 @@ private extension MyPageViewController {
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.listTypeTapEvent.accept(.like)
-                tapListView.updateTapListUI(by: .like)
                 owner.updateScrollOffset()
+            }
+            .disposed(by: disposeBag)
+        
+        listTypeTapEvent
+            .bind { type in
+                tapListView.updateTapListUI(by: type)
             }
             .disposed(by: disposeBag)
     }
