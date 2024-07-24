@@ -24,20 +24,28 @@ final class MusicListFilterView: UIView {
         button.setTitle("최신순", for: .normal)
         button.setTitleColor(.gray200, for: .normal)
         button.titleLabel?.font = .pretendard(size: 14, weightName: .regular)
-        button.setImage(UIImage(named: "icon-arrow-down"), for: .normal)
+        let image = UIImage(named: "icon-arrow-down")?.withRenderingMode(.alwaysTemplate)
+        button.setImage(image, for: .normal)
+        button.tintColor = .gray150
         button.semanticContentAttribute = .forceRightToLeft
-//        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -10)
-
+        
         return button
     }()
 
     fileprivate let regionFilterButton: UIButton = {
         let button = UIButton()
         button.setTitle("필터", for: .normal)
-        button.setTitleColor(.gray200, for: .normal)
+        button.setTitleColor(.primary400, for: .normal)
         button.titleLabel?.font = .pretendard(size: 14, weightName: .regular)
-        button.setImage(UIImage(named: "icon-filter"), for: .normal)
+        button.tintColor = .primary400
+        
+        let image = UIImage(named: "icon-filter")?.withRenderingMode(.alwaysTemplate)
+        button.setImage(image, for: .normal)
         button.semanticContentAttribute = .forceRightToLeft
+        button.layer.borderColor = UIColor.primary400.cgColor
+        button.layer.borderWidth = 1.0
+        button.roundCorners(.allCorners, radius: 12)
+        button.contentEdgeInsets = .init(top: 6, left: 8, bottom: 6, right: 4)
         
         return button
     }()

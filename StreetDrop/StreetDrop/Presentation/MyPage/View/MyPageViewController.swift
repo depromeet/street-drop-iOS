@@ -698,21 +698,21 @@ private extension MyPageViewController {
     
     func showFilteringOptionsModal(with selectedType: FilterType) {
         let newestOption = ModalOption(
-            icon: UIImage(named: "icon-selected"),
+            icon: UIImage(named: "icon-check"),
             title: FilterType.newest.title,
             acton: filterMusicList(by: .newest),
             isSelected: selectedType == .newest
         )
         
         let oldestOption = ModalOption(
-            icon: UIImage(named: "icon-selected"),
+            icon: UIImage(named: "icon-check"),
             title: FilterType.oldest.title,
             acton: filterMusicList(by: .oldest),
             isSelected: selectedType == .oldest
         )
         
         let mostPopularOption = ModalOption(
-            icon: UIImage(named: "icon-selected"),
+            icon: UIImage(named: "icon-check"),
             title: FilterType.mostPopular.title,
             acton: filterMusicList(by: .mostPopular),
             isSelected: selectedType == .mostPopular
