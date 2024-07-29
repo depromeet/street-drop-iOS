@@ -635,7 +635,7 @@ private extension MyPageViewController {
         }
         
         // 드랍, 좋아요 탭 상단에 고정시키기
-        if contentOffset.y > 343 {
+        if contentOffset.y > 500 {
             if self.stickyTapBarView == nil {
                 self.stickyTapBarView = createTapBarView(with: type)
                 self.stickyTopDimmedView = createDimmedView(isFromTop: true)
