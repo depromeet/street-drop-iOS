@@ -41,6 +41,12 @@ final class MusicListCell: UITableViewCell {
         self.locationLabel.text = item.location
         self.likeLabel.text = String(item.likeCount)
         self.userNameLabel.text = item.userName
+        /*
+         TODO:
+         - 백엔드 개발 완료 후 내가 좋아요한 뮤직 노출 처리
+         */
+//                likeIconImageView.tintColor = .primary400
+//                likeIconImageView.image = UIImage(named: "icon-heart-fill")?.withRenderingMode(.alwaysTemplate)
         
         layoutIfNeeded()
     }
@@ -136,15 +142,15 @@ final class MusicListCell: UITableViewCell {
     
     private lazy var likeIconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "likeFillIcon")?.withRenderingMode(.alwaysTemplate)
-        imageView.tintColor = UIColor.darkPrimary_75
+        imageView.image = UIImage(named: "icon-heart-empty")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = .gray400
         return imageView
     }()
     
     private lazy var likeLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
-        label.textColor = UIColor.darkPrimary_75
+        label.textColor = .white
         label.font = .pretendard(size: 12, weightName: .regular)
         return label
     }()
