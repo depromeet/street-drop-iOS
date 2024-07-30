@@ -249,6 +249,10 @@
 		C4A0567B2A631D6E00AE2F0B /* CustomSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0567A2A631D6E00AE2F0B /* CustomSwitch.swift */; };
 		C4A445902A5EF225008279C1 /* FCMTokenRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4458F2A5EF225008279C1 /* FCMTokenRequestDTO.swift */; };
 		C4A445932A5EF265008279C1 /* DefaultFCMRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A445922A5EF265008279C1 /* DefaultFCMRepository.swift */; };
+		C4AA82602C590A2A004B8934 /* RegionFilteringModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA825F2C590A2A004B8934 /* RegionFilteringModalViewController.swift */; };
+		C4AA82612C590A2A004B8934 /* RegionFilteringModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA825F2C590A2A004B8934 /* RegionFilteringModalViewController.swift */; };
+		C4AA826B2C5911FB004B8934 /* ModalPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA826A2C5911FB004B8934 /* ModalPresentable.swift */; };
+		C4AA826C2C5911FB004B8934 /* ModalPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA826A2C5911FB004B8934 /* ModalPresentable.swift */; };
 		C4BB15982A5EC507001BC5E8 /* FCMRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BB15972A5EC507001BC5E8 /* FCMRepository.swift */; };
 		C4D16FBC2A1B917B008B076F /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB32A1B917B008B076F /* Pretendard-Regular.otf */; };
 		C4D16FBD2A1B917B008B076F /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB42A1B917B008B076F /* Pretendard-ExtraBold.otf */; };
@@ -515,6 +519,8 @@
 		C4A0567A2A631D6E00AE2F0B /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
 		C4A4458F2A5EF225008279C1 /* FCMTokenRequestDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMTokenRequestDTO.swift; sourceTree = "<group>"; };
 		C4A445922A5EF265008279C1 /* DefaultFCMRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFCMRepository.swift; sourceTree = "<group>"; };
+		C4AA825F2C590A2A004B8934 /* RegionFilteringModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionFilteringModalViewController.swift; sourceTree = "<group>"; };
+		C4AA826A2C5911FB004B8934 /* ModalPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentable.swift; sourceTree = "<group>"; };
 		C4BB15972A5EC507001BC5E8 /* FCMRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMRepository.swift; sourceTree = "<group>"; };
 		C4D16FB32A1B917B008B076F /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		C4D16FB42A1B917B008B076F /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
@@ -741,6 +747,7 @@
 		04FB1F222A0214A20064B3C8 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				C4AA82692C5911EA004B8934 /* Modal */,
 				4143452C2A373520003FEE2A /* Service */,
 				C4D16FCA2A1B985F008B076F /* Extensions */,
 				C4D16FC72A1B931E008B076F /* Font */,
@@ -1099,6 +1106,7 @@
 			children = (
 				1867C81F2A4DDB8C00F8EC48 /* MyPageViewController.swift */,
 				18EF9FC82A5C51FB00266D27 /* NicknameEditViewController.swift */,
+				C4AA825E2C5909D8004B8934 /* FilterModal */,
 				6A51EC6A2C49F29C00DEF6F3 /* TabBar */,
 				6A51EC6B2C49F2BA00DEF6F3 /* MusicList */,
 				6A7D73D82BB11A0E009340E3 /* LevelUpGuideView.swift */,
@@ -1636,6 +1644,22 @@
 			path = FCM;
 			sourceTree = "<group>";
 		};
+		C4AA825E2C5909D8004B8934 /* FilterModal */ = {
+			isa = PBXGroup;
+			children = (
+				C4AA825F2C590A2A004B8934 /* RegionFilteringModalViewController.swift */,
+			);
+			path = FilterModal;
+			sourceTree = "<group>";
+		};
+		C4AA82692C5911EA004B8934 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				C4AA826A2C5911FB004B8934 /* ModalPresentable.swift */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
 		C4BB15992A5EC50D001BC5E8 /* FCM */ = {
 			isa = PBXGroup;
 			children = (
@@ -2089,6 +2113,7 @@
 				C47F02242A38633C00F48884 /* SettingsViewModel.swift in Sources */,
 				C41972342ABDB36600211222 /* FetchingPOIUseCase.swift in Sources */,
 				F4C996A12C1E15CD00FF7B9A /* NoticeListViewController.swift in Sources */,
+				C4AA82602C590A2A004B8934 /* RegionFilteringModalViewController.swift in Sources */,
 				1867C8202A4DDB8C00F8EC48 /* MyPageViewController.swift in Sources */,
 				1816ED432A685865005009FC /* NicknameEditModel.swift in Sources */,
 				6A51EC402C411FB000DEF6F3 /* MusicListTableView.swift in Sources */,
@@ -2135,6 +2160,7 @@
 				040685022A01539800377094 /* SceneDelegate.swift in Sources */,
 				6A7D73E62BB2AE34009340E3 /* NSMutableAttributedString+.swift in Sources */,
 				C44A549E2BBC0DC500354F8F /* TipPopUpViewController.swift in Sources */,
+				C4AA826B2C5911FB004B8934 /* ModalPresentable.swift in Sources */,
 				F4C996A32C1E1B3400FF7B9A /* NoticeListCell.swift in Sources */,
 				C4D16FC92A1B9338008B076F /* UIFont+Extension.swift in Sources */,
 				41A9BEB02A4AF45300F3605C /* ClaimModalViewModel.swift in Sources */,
@@ -2249,8 +2275,10 @@
 				41B953692A10E5B800BEC0AB /* SearchedMusicResponseDTO+Mapping.swift in Sources */,
 				C434A4D82A17AAAB00C63526 /* SearchingMusicViewModelTest.swift in Sources */,
 				C45BF3A72A1D19CC00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */,
+				C4AA826C2C5911FB004B8934 /* ModalPresentable.swift in Sources */,
 				C434A4D12A17981C00C63526 /* DefaultSearchingMusicRepository.swift in Sources */,
 				18AAF8422A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */,
+				C4AA82612C590A2A004B8934 /* RegionFilteringModalViewController.swift in Sources */,
 				1824F13A2A34A4B700A10320 /* MusicCountEntity.swift in Sources */,
 				C49BA7622A1BDFCC00A83E95 /* UILabel+LineHeight.swift in Sources */,
 				1824F1392A34A4AE00A10320 /* MusicCountByDongResponseDTO+Mapping.swift in Sources */,
