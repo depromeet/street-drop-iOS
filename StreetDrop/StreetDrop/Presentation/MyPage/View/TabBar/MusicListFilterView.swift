@@ -8,8 +8,14 @@
 import UIKit
 
 import RxSwift
+import RxRelay
 
 final class MusicListFilterView: UIView {
+    private let regionFilterButtonClickEventRelay: PublishRelay<Void> = .init()
+    var regionFilterButtonClickEvent: Observable<Void> {
+        regionFilterButtonClickEventRelay.asObservable()
+    }
+    private let disposeBag: DisposeBag = .init()
     
     fileprivate let musicCountLabel: UILabel = {
         let label = UILabel()
@@ -52,7 +58,7 @@ final class MusicListFilterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        bindAction()
         configureUI()
     }
     
@@ -65,6 +71,12 @@ final class MusicListFilterView: UIView {
 // MARK: - Private Methods
 
 private extension MusicListFilterView {
+    func bindAction() {
+        regionFilterButton.rx.tap
+            .bind(to: regionFilterButtonClickEventRelay)
+            .disposed(by: disposeBag)
+    }
+    
     func configureUI() {
         backgroundColor = .gray900
         

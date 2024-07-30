@@ -29,6 +29,7 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
     private let disposeBag = DisposeBag()
     private let totalMusicsCountRelay: ReplayRelay<Int> = .create(bufferSize: 1)
     private let selectedFilterType: BehaviorRelay<FilterType> = .init(value: .newest)
+    private let regionFilterButtonClickEvent: PublishRelay<Void> = .init()
     
     // MARK: - Init
     
@@ -371,6 +372,9 @@ private extension MyPageViewController {
         tapListView.updateTapListUI(by: type)
         
         let musicListFilterView: MusicListFilterView = .init()
+        musicListFilterView.regionFilterButtonClickEvent
+            .bind(to: regionFilterButtonClickEvent)
+            .disposed(by: disposeBag)
         
         let separatorView = UIView()
         separatorView.backgroundColor = .gray600
@@ -523,6 +527,16 @@ private extension MyPageViewController {
             .withLatestFrom(listTypeTapEvent) {  (contentOffset: $0, type: $1) }
             .bind(with: self) { owner, state in
                 owner.handleScrollEvent(contentOffset: state.contentOffset, type: state.type)
+            }
+            .disposed(by: disposeBag)
+        
+        regionFilterButtonClickEvent
+            .bind(with: self) { owner, _ in
+                let regionFilteringModalViewController = RegionFilteringModalViewController()
+                regionFilteringModalViewController.modalPresentationStyle = .overFullScreen
+                owner.present(regionFilteringModalViewController, animated: false) {
+                    regionFilteringModalViewController.animatePresentation()
+                }
             }
             .disposed(by: disposeBag)
     }
