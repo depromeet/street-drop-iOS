@@ -21,4 +21,5 @@ protocol MyPageRepository {
     func fetchRegionFilteredDropCount(state: String, city: String) -> Single<Int>
     func fetchRegionFilteredDropList(state: String, city: String) -> Single<TotalMyMusics>
     func fetchRegionFilteredLikeCount(state: String, city: String) -> Single<Int>
+    func fetchRegionFilteredLikeList(state: String, city: String) -> Single<TotalMyMusics>
 }

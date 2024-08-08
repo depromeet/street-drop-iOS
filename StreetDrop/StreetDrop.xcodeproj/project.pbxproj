@@ -228,6 +228,8 @@
 		C46293CA2C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293C82C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift */; };
 		C46293D02C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293CF2C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift */; };
 		C46293D12C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293CF2C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift */; };
+		C46293D42C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293D32C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift */; };
+		C46293D52C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293D32C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift */; };
 		C46410F42A629820009DD88F /* MusicAppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46410F32A629820009DD88F /* MusicAppButton.swift */; };
 		C4685B362B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B352B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift */; };
 		C4685B382B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B372B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift */; };
@@ -527,6 +529,7 @@
 		C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentQueryButton.swift; sourceTree = "<group>"; };
 		C46293C82C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionFilteredLikeCountResponseDTO.swift; sourceTree = "<group>"; };
 		C46293CF2C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingRegionFilteredLikeCountUseCase.swift; sourceTree = "<group>"; };
+		C46293D32C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingRegionFilteredLikeUseCase.swift; sourceTree = "<group>"; };
 		C46410F32A629820009DD88F /* MusicAppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicAppButton.swift; sourceTree = "<group>"; };
 		C4685B352B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCircleRadiusResponseDTO.swift; sourceTree = "<group>"; };
 		C4685B372B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingUserCircleRadiusUsecase.swift; sourceTree = "<group>"; };
@@ -872,8 +875,9 @@
 		082F171D2AB7465A00174D98 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				C46293D22C649B5D00FF4A7A /* FetchingRegionFilteredLikeList */,
 				C46293CB2C64962200FF4A7A /* FetchingRegionFilteredLikeCount */,
-				C4A4E3BE2C645A2F00283C37 /* FetchingRegionFilteredDrop */,
+				C4A4E3BE2C645A2F00283C37 /* FetchingRegionFilteredDropList */,
 				C4A4E3BA2C64479300283C37 /* FetchingRegionFilteredDropCount */,
 				08F5746F2C469E7B00635B54 /* EditComment */,
 				08F5746E2C469E7400635B54 /* MyInfo */,
@@ -1625,6 +1629,14 @@
 			path = FetchingRegionFilteredLikeCount;
 			sourceTree = "<group>";
 		};
+		C46293D22C649B5D00FF4A7A /* FetchingRegionFilteredLikeList */ = {
+			isa = PBXGroup;
+			children = (
+				C46293D32C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift */,
+			);
+			path = FetchingRegionFilteredLikeList;
+			sourceTree = "<group>";
+		};
 		C4685B3B2B72618D00F514C7 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1716,12 +1728,12 @@
 			path = FetchingRegionFilteredDropCount;
 			sourceTree = "<group>";
 		};
-		C4A4E3BE2C645A2F00283C37 /* FetchingRegionFilteredDrop */ = {
+		C4A4E3BE2C645A2F00283C37 /* FetchingRegionFilteredDropList */ = {
 			isa = PBXGroup;
 			children = (
 				C4A4E3C22C645A5000283C37 /* FetchingRegionFilteredDropUseCase.swift */,
 			);
-			path = FetchingRegionFilteredDrop;
+			path = FetchingRegionFilteredDropList;
 			sourceTree = "<group>";
 		};
 		C4AA825E2C5909D8004B8934 /* FilterModal */ = {
@@ -2164,6 +2176,7 @@
 				C46410F42A629820009DD88F /* MusicAppButton.swift in Sources */,
 				08F574532C4696C600635B54 /* DefaultFetchingMyDropListUseCase.swift in Sources */,
 				C41972512ABED0FE00211222 /* MyInfoRepository.swift in Sources */,
+				C46293D42C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift in Sources */,
 				C41972382ABDB49400211222 /* FetchingMusicCountUseCase.swift in Sources */,
 				41396D872A4EFA2900B69341 /* MyInfoResponseDTO.swift in Sources */,
 				412D668C2A1E173A00BA4A1B /* AlbumCollectionViewCell.swift in Sources */,
@@ -2404,6 +2417,7 @@
 				1824F1392A34A4AE00A10320 /* MusicCountByDongResponseDTO+Mapping.swift in Sources */,
 				C46293D12C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift in Sources */,
 				1824F13B2A34A4C900A10320 /* PoiEntity.swift in Sources */,
+				C46293D52C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift in Sources */,
 				41E008D02A14493A00F5D99C /* PoiResponseDTO+Mapping.swift in Sources */,
 				C45BF3A42A1D19BF00CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */,
 				C4F5D3F02C5B4830008AF976 /* FetchingCityAndDistrictsUseCase.swift in Sources */,

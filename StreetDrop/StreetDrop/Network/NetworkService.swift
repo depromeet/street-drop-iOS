@@ -43,6 +43,7 @@ enum NetworkService {
     case getRegionFilteredDropCount(state: String, city: String)
     case getRegionFilteredDropList(state: String, city: String)
     case getRegionFilteredLikeCount(state: String, city: String)
+    case getRegionFilteredLikeList(state: String, city: String)
 }
 
 extension NetworkService: TargetType {
@@ -128,6 +129,8 @@ extension NetworkService: TargetType {
             return "/users/me/items/drop"
         case .getRegionFilteredLikeCount:
             return "/users/me/items/like/count"
+        case .getRegionFilteredLikeList:
+            return "/users/me/items/like"
         }
     }
     
@@ -154,7 +157,8 @@ extension NetworkService: TargetType {
                 .checkNewNotice,
                 .getRegionFilteredDropCount,
                 .getRegionFilteredDropList,
-                .getRegionFilteredLikeCount:
+                .getRegionFilteredLikeCount,
+                .getRegionFilteredLikeList:
             return .get
         case .dropMusic,
                 .postLikeUp,
@@ -288,6 +292,14 @@ extension NetworkService: TargetType {
                 encoding: URLEncoding.queryString
             )
         case let .getRegionFilteredLikeCount(state, city):
+            return .requestParameters(
+                parameters: [
+                    "state": state,
+                    "city": city
+                ],
+                encoding: URLEncoding.queryString
+            )
+        case let .getRegionFilteredLikeList(state, city):
             return .requestParameters(
                 parameters: [
                     "state": state,
