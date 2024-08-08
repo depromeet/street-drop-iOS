@@ -122,4 +122,16 @@ extension DefaultMyPageRepository: MyPageRepository {
             return dto.toEntity()
         }
     }
+    
+    func fetchRegionFilteredLikeCount(state: String, city: String) -> Single<Int> {
+        return networkManager.request(
+            target: .init(
+                NetworkService.getRegionFilteredLikeCount(state: state, city: city)
+            ),
+            responseType: RegionFilteredLikeCountResponseDTO.self
+        )
+        .map { dto in
+            return dto.numberOfDroppedItem
+        }
+    }
 }

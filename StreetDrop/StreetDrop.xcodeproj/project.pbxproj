@@ -224,6 +224,10 @@
 		C45BF3A82A1D19D100CEDE74 /* RecentMusicQueryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A02A1D133000CEDE74 /* RecentMusicQueryDTO.swift */; };
 		C45BF3AA2A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */; };
 		C45BF3AC2A1EF64300CEDE74 /* RecentQueryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */; };
+		C46293C92C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293C82C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift */; };
+		C46293CA2C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293C82C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift */; };
+		C46293D02C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293CF2C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift */; };
+		C46293D12C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293CF2C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift */; };
 		C46410F42A629820009DD88F /* MusicAppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46410F32A629820009DD88F /* MusicAppButton.swift */; };
 		C4685B362B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B352B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift */; };
 		C4685B382B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B372B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift */; };
@@ -521,6 +525,8 @@
 		C45BF3A22A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicQueriesStorage.swift; sourceTree = "<group>"; };
 		C45BF3A92A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicSearchScrollView.swift; sourceTree = "<group>"; };
 		C45BF3AB2A1EF64300CEDE74 /* RecentQueryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentQueryButton.swift; sourceTree = "<group>"; };
+		C46293C82C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionFilteredLikeCountResponseDTO.swift; sourceTree = "<group>"; };
+		C46293CF2C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingRegionFilteredLikeCountUseCase.swift; sourceTree = "<group>"; };
 		C46410F32A629820009DD88F /* MusicAppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicAppButton.swift; sourceTree = "<group>"; };
 		C4685B352B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCircleRadiusResponseDTO.swift; sourceTree = "<group>"; };
 		C4685B372B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingUserCircleRadiusUsecase.swift; sourceTree = "<group>"; };
@@ -866,6 +872,7 @@
 		082F171D2AB7465A00174D98 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				C46293CB2C64962200FF4A7A /* FetchingRegionFilteredLikeCount */,
 				C4A4E3BE2C645A2F00283C37 /* FetchingRegionFilteredDrop */,
 				C4A4E3BA2C64479300283C37 /* FetchingRegionFilteredDropCount */,
 				08F5746F2C469E7B00635B54 /* EditComment */,
@@ -1610,6 +1617,14 @@
 			path = RecentMusicSearch;
 			sourceTree = "<group>";
 		};
+		C46293CB2C64962200FF4A7A /* FetchingRegionFilteredLikeCount */ = {
+			isa = PBXGroup;
+			children = (
+				C46293CF2C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift */,
+			);
+			path = FetchingRegionFilteredLikeCount;
+			sourceTree = "<group>";
+		};
 		C4685B3B2B72618D00F514C7 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1688,6 +1703,7 @@
 			isa = PBXGroup;
 			children = (
 				C4A4E3B72C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift */,
+				C46293C82C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift */,
 			);
 			path = RegionFiltering;
 			sourceTree = "<group>";
@@ -2174,6 +2190,7 @@
 				B4B9EE842ADBDFFB000A6507 /* RecommendMusicSearchCollectionView.swift in Sources */,
 				C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */,
 				41A3DDF12A593ED4004CFA2F /* AlertViewController.swift in Sources */,
+				C46293D02C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift in Sources */,
 				C47F02222A38633500F48884 /* SettingsViewController.swift in Sources */,
 				C44A54982BBC08D200354F8F /* DefaultPopUpRepository.swift in Sources */,
 				C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */,
@@ -2237,6 +2254,7 @@
 				C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */,
 				6A1386AB2B4F8A5000E49BB5 /* String+Base64.swift in Sources */,
 				6A51EC692C48F53400DEF6F3 /* MusicListFilterView.swift in Sources */,
+				C46293C92C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift in Sources */,
 				41396D8B2A4EFB2500B69341 /* EditCommentRepository.swift in Sources */,
 				C4FDF55D2C60982800551A16 /* RegionCollectionViewCell.swift in Sources */,
 				F4AA84E12C1F732800CADB1A /* DateManager.swift in Sources */,
@@ -2371,6 +2389,7 @@
 				C4A4E3C42C645A5000283C37 /* FetchingRegionFilteredDropUseCase.swift in Sources */,
 				C49BA7612A1BDFC900A83E95 /* UIFont+Extension.swift in Sources */,
 				41B953692A10E5B800BEC0AB /* SearchedMusicResponseDTO+Mapping.swift in Sources */,
+				C46293CA2C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift in Sources */,
 				C434A4D82A17AAAB00C63526 /* SearchingMusicViewModelTest.swift in Sources */,
 				C45BF3A72A1D19CC00CEDE74 /* RecentMusicQueriesStorage.swift in Sources */,
 				C4F5D3F32C5B4850008AF976 /* DefaultFetchingCityAndDistrictsUseCase.swift in Sources */,
@@ -2383,6 +2402,7 @@
 				1824F13A2A34A4B700A10320 /* MusicCountEntity.swift in Sources */,
 				C49BA7622A1BDFCC00A83E95 /* UILabel+LineHeight.swift in Sources */,
 				1824F1392A34A4AE00A10320 /* MusicCountByDongResponseDTO+Mapping.swift in Sources */,
+				C46293D12C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift in Sources */,
 				1824F13B2A34A4C900A10320 /* PoiEntity.swift in Sources */,
 				41E008D02A14493A00F5D99C /* PoiResponseDTO+Mapping.swift in Sources */,
 				C45BF3A42A1D19BF00CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */,
