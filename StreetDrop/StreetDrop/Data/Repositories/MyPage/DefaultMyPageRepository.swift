@@ -109,6 +109,17 @@ extension DefaultMyPageRepository: MyPageRepository {
         .map { dto in
             return dto.numberOfDroppedItem
         }
-        
+    }
+    
+    func fetchRegionFilteredDropList(state: String, city: String) -> Single<TotalMyMusics> {
+        return networkManager.request(
+            target: .init(
+                NetworkService.getRegionFilteredDropList(state: state, city: city)
+            ),
+            responseType: MyDropListResponseDTO.self
+        )
+        .map { dto in
+            return dto.toEntity()
+        }
     }
 }

@@ -253,6 +253,8 @@
 		C4A4E3B92C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4E3B72C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift */; };
 		C4A4E3BC2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4E3BB2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift */; };
 		C4A4E3BD2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4E3BB2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift */; };
+		C4A4E3C32C645A5000283C37 /* FetchingRegionFilteredDropUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4E3C22C645A5000283C37 /* FetchingRegionFilteredDropUseCase.swift */; };
+		C4A4E3C42C645A5000283C37 /* FetchingRegionFilteredDropUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4E3C22C645A5000283C37 /* FetchingRegionFilteredDropUseCase.swift */; };
 		C4AA82602C590A2A004B8934 /* RegionFilteringModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA825F2C590A2A004B8934 /* RegionFilteringModalViewController.swift */; };
 		C4AA82612C590A2A004B8934 /* RegionFilteringModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA825F2C590A2A004B8934 /* RegionFilteringModalViewController.swift */; };
 		C4AA826B2C5911FB004B8934 /* ModalPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA826A2C5911FB004B8934 /* ModalPresentable.swift */; };
@@ -540,6 +542,7 @@
 		C4A445922A5EF265008279C1 /* DefaultFCMRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFCMRepository.swift; sourceTree = "<group>"; };
 		C4A4E3B72C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionFilteredDropCountResponseDTO.swift; sourceTree = "<group>"; };
 		C4A4E3BB2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingRegionFilteredDropCountUseCase.swift; sourceTree = "<group>"; };
+		C4A4E3C22C645A5000283C37 /* FetchingRegionFilteredDropUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingRegionFilteredDropUseCase.swift; sourceTree = "<group>"; };
 		C4AA825F2C590A2A004B8934 /* RegionFilteringModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionFilteringModalViewController.swift; sourceTree = "<group>"; };
 		C4AA826A2C5911FB004B8934 /* ModalPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentable.swift; sourceTree = "<group>"; };
 		C4BB15972A5EC507001BC5E8 /* FCMRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMRepository.swift; sourceTree = "<group>"; };
@@ -863,6 +866,7 @@
 		082F171D2AB7465A00174D98 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				C4A4E3BE2C645A2F00283C37 /* FetchingRegionFilteredDrop */,
 				C4A4E3BA2C64479300283C37 /* FetchingRegionFilteredDropCount */,
 				08F5746F2C469E7B00635B54 /* EditComment */,
 				08F5746E2C469E7400635B54 /* MyInfo */,
@@ -1696,6 +1700,14 @@
 			path = FetchingRegionFilteredDropCount;
 			sourceTree = "<group>";
 		};
+		C4A4E3BE2C645A2F00283C37 /* FetchingRegionFilteredDrop */ = {
+			isa = PBXGroup;
+			children = (
+				C4A4E3C22C645A5000283C37 /* FetchingRegionFilteredDropUseCase.swift */,
+			);
+			path = FetchingRegionFilteredDrop;
+			sourceTree = "<group>";
+		};
 		C4AA825E2C5909D8004B8934 /* FilterModal */ = {
 			isa = PBXGroup;
 			children = (
@@ -2334,6 +2346,7 @@
 				C4A445932A5EF265008279C1 /* DefaultFCMRepository.swift in Sources */,
 				41B953682A10E39D00BEC0AB /* SearchedMusicResponseDTO+Mapping.swift in Sources */,
 				C434A4CA2A1796E400C63526 /* SearchingMusicViewController.swift in Sources */,
+				C4A4E3C32C645A5000283C37 /* FetchingRegionFilteredDropUseCase.swift in Sources */,
 				C45BF3AA2A1E11F200CEDE74 /* RecentMusicSearchScrollView.swift in Sources */,
 				188D2C7B2A1E448C0088F49C /* DroppedMusicWithinAreaCollectionViewCell.swift in Sources */,
 				41396D9B2A4F1C5600B69341 /* OptionModalViewController.swift in Sources */,
@@ -2355,6 +2368,7 @@
 				41FF59032A06B3A200ABB871 /* NetworkService.swift in Sources */,
 				0410388E2A12688A00BC5532 /* DropMusicRequestDTO+Mapping.swift in Sources */,
 				C45BF3A82A1D19D100CEDE74 /* RecentMusicQueryDTO.swift in Sources */,
+				C4A4E3C42C645A5000283C37 /* FetchingRegionFilteredDropUseCase.swift in Sources */,
 				C49BA7612A1BDFC900A83E95 /* UIFont+Extension.swift in Sources */,
 				41B953692A10E5B800BEC0AB /* SearchedMusicResponseDTO+Mapping.swift in Sources */,
 				C434A4D82A17AAAB00C63526 /* SearchingMusicViewModelTest.swift in Sources */,
