@@ -272,6 +272,7 @@
 		C4E4C6BA2A5AE40900B1C84A /* UserDefaultsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */; };
 		C4E4C6BD2A5AE6F500B1C84A /* MusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */; };
 		C4E68C852C2A996000742464 /* AsynchronousError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E68C842C2A996000742464 /* AsynchronousError.swift */; };
+		C4FDF5612C60C4D700551A16 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = C4FDF5602C60C4D700551A16 /* OrderedCollections */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
 		F48DF73A2C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48DF7392C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift */; };
 		F48DF73C2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48DF73B2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift */; };
@@ -569,6 +570,7 @@
 				049BC4382A02845900071A12 /* RxMoya in Frameworks */,
 				0856523B2AF6A2AD00FD9BCB /* FirebaseAnalytics in Frameworks */,
 				0856523D2AF6A2AD00FD9BCB /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				C4FDF5612C60C4D700551A16 /* OrderedCollections in Frameworks */,
 				0856523F2AF6A2AD00FD9BCB /* FirebaseAnalyticsSwift in Frameworks */,
 				C47C1D1B2A643B38007317EA /* Lottie in Frameworks */,
 				049BC42A2A02826400071A12 /* RxSwift in Frameworks */,
@@ -1847,6 +1849,7 @@
 				085652462AF6A2AD00FD9BCB /* FirebaseInAppMessaging-Beta */,
 				085652482AF6A2AD00FD9BCB /* FirebaseInAppMessagingSwift-Beta */,
 				0856524A2AF6A2AD00FD9BCB /* FirebaseMessaging */,
+				C4FDF5602C60C4D700551A16 /* OrderedCollections */,
 			);
 			productName = StreetDrop;
 			productReference = 040684FC2A01539800377094 /* StreetDrop.app */;
@@ -1910,6 +1913,7 @@
 				1886829F2A6711AF006C11E1 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				C41972582ABEDE0200211222 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				085652392AF6A2AD00FD9BCB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C4FDF55F2C60C4D700551A16 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = 040684FD2A01539800377094 /* Products */;
 			projectDirPath = "";
@@ -2654,6 +2658,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		C4FDF55F2C60C4D700551A16 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2756,6 +2768,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 049BC4242A02826400071A12 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = "RxCocoa-Dynamic";
+		};
+		C4FDF5602C60C4D700551A16 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C4FDF55F2C60C4D700551A16 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
