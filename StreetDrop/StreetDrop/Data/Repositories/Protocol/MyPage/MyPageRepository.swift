@@ -18,4 +18,5 @@ protocol MyPageRepository {
     func fetchLevelPolicy() -> Single<[LevelPolicy]>
     func fetchMyDropMusic(itemID: Int) -> Single<Musics>
     func fetchCityAndDistricts() throws -> OrderedDictionary<String, [String]>
+    func fetchRegionFilteredDropCount(state: String, city: String) -> Single<Int>
 }

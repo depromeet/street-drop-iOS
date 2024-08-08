@@ -249,6 +249,10 @@
 		C4A0567B2A631D6E00AE2F0B /* CustomSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0567A2A631D6E00AE2F0B /* CustomSwitch.swift */; };
 		C4A445902A5EF225008279C1 /* FCMTokenRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4458F2A5EF225008279C1 /* FCMTokenRequestDTO.swift */; };
 		C4A445932A5EF265008279C1 /* DefaultFCMRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A445922A5EF265008279C1 /* DefaultFCMRepository.swift */; };
+		C4A4E3B82C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4E3B72C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift */; };
+		C4A4E3B92C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4E3B72C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift */; };
+		C4A4E3BC2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4E3BB2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift */; };
+		C4A4E3BD2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4E3BB2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift */; };
 		C4AA82602C590A2A004B8934 /* RegionFilteringModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA825F2C590A2A004B8934 /* RegionFilteringModalViewController.swift */; };
 		C4AA82612C590A2A004B8934 /* RegionFilteringModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA825F2C590A2A004B8934 /* RegionFilteringModalViewController.swift */; };
 		C4AA826B2C5911FB004B8934 /* ModalPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA826A2C5911FB004B8934 /* ModalPresentable.swift */; };
@@ -534,6 +538,8 @@
 		C4A0567A2A631D6E00AE2F0B /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
 		C4A4458F2A5EF225008279C1 /* FCMTokenRequestDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMTokenRequestDTO.swift; sourceTree = "<group>"; };
 		C4A445922A5EF265008279C1 /* DefaultFCMRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFCMRepository.swift; sourceTree = "<group>"; };
+		C4A4E3B72C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionFilteredDropCountResponseDTO.swift; sourceTree = "<group>"; };
+		C4A4E3BB2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingRegionFilteredDropCountUseCase.swift; sourceTree = "<group>"; };
 		C4AA825F2C590A2A004B8934 /* RegionFilteringModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionFilteringModalViewController.swift; sourceTree = "<group>"; };
 		C4AA826A2C5911FB004B8934 /* ModalPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentable.swift; sourceTree = "<group>"; };
 		C4BB15972A5EC507001BC5E8 /* FCMRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMRepository.swift; sourceTree = "<group>"; };
@@ -857,6 +863,7 @@
 		082F171D2AB7465A00174D98 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				C4A4E3BA2C64479300283C37 /* FetchingRegionFilteredDropCount */,
 				08F5746F2C469E7B00635B54 /* EditComment */,
 				08F5746E2C469E7400635B54 /* MyInfo */,
 				08F5746D2C469E5C00635B54 /* FetchingUserCircleRadius */,
@@ -1239,6 +1246,7 @@
 		18F76FAE2A050110006CF9EF /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				C4A4E3B62C6444D400283C37 /* RegionFiltering */,
 				C4F5D3E62C5B237A008AF976 /* MyPage */,
 				F4AA84D72C1F030300CADB1A /* Notice */,
 				1876F03B2A66E01C0064B887 /* MyLevel */,
@@ -1672,6 +1680,22 @@
 			path = FCM;
 			sourceTree = "<group>";
 		};
+		C4A4E3B62C6444D400283C37 /* RegionFiltering */ = {
+			isa = PBXGroup;
+			children = (
+				C4A4E3B72C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift */,
+			);
+			path = RegionFiltering;
+			sourceTree = "<group>";
+		};
+		C4A4E3BA2C64479300283C37 /* FetchingRegionFilteredDropCount */ = {
+			isa = PBXGroup;
+			children = (
+				C4A4E3BB2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift */,
+			);
+			path = FetchingRegionFilteredDropCount;
+			sourceTree = "<group>";
+		};
 		C4AA825E2C5909D8004B8934 /* FilterModal */ = {
 			isa = PBXGroup;
 			children = (
@@ -2088,6 +2112,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C41972362ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift in Sources */,
+				C4A4E3B82C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift in Sources */,
 				C41972552ABED3EC00211222 /* FetchingMyInfoUseCase.swift in Sources */,
 				C4E68C852C2A996000742464 /* AsynchronousError.swift in Sources */,
 				18AAF83E2A137349002EF441 /* CommunityResponseDTO.swift in Sources */,
@@ -2191,6 +2216,7 @@
 				C4E4C6B82A5ADFDB00B1C84A /* SettingsUseCase.swift in Sources */,
 				41396D912A4EFBF700B69341 /* DefaultEditCommentRepository.swift in Sources */,
 				C419722E2ABD9D6F00211222 /* MyInfoUseCase.swift in Sources */,
+				C4A4E3BC2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift in Sources */,
 				C4A0567B2A631D6E00AE2F0B /* CustomSwitch.swift in Sources */,
 				6A26BF342B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift in Sources */,
 				1876F04E2A66EE030064B887 /* MyLevel.swift in Sources */,
@@ -2347,7 +2373,9 @@
 				41E008D02A14493A00F5D99C /* PoiResponseDTO+Mapping.swift in Sources */,
 				C45BF3A42A1D19BF00CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */,
 				C4F5D3F02C5B4830008AF976 /* FetchingCityAndDistrictsUseCase.swift in Sources */,
+				C4A4E3BD2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift in Sources */,
 				18AAF83F2A137435002EF441 /* CommunityResponseDTO.swift in Sources */,
+				C4A4E3B92C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift in Sources */,
 				C41BD2ED2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */,
 				41FF58FC2A06B38800ABB871 /* NetworkManagerTest.swift in Sources */,
 				C434A4D42A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,

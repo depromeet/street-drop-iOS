@@ -98,4 +98,17 @@ extension DefaultMyPageRepository: MyPageRepository {
             throw error
         }
     }
+    
+    func fetchRegionFilteredDropCount(state: String, city: String) -> Single<Int> {
+        return networkManager.request(
+            target: .init(
+                NetworkService.getRegionFilteredDropCount(state: state, city: city)
+            ),
+            responseType: RegionFilteredDropCountResponseDTO.self
+        )
+        .map { dto in
+            return dto.numberOfDroppedItem
+        }
+        
+    }
 }

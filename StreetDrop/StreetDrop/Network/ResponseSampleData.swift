@@ -101,4 +101,9 @@ enum ResponseSampleData {
                         ]
                         }
                         """.utf8)
+    static let getRegionFilteredDropCountSampleData = Data("""
+                        {
+                        "numberOfDroppedItem": 17
+                        }
+                        """.utf8)
 }
