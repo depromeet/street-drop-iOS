@@ -8,6 +8,7 @@
 import Foundation
 
 import RxSwift
+import OrderedCollections
 
 final class DefaultMyPageRepository {
     private let networkManager: NetworkManager
@@ -79,6 +80,22 @@ extension DefaultMyPageRepository: MyPageRepository {
         )
         .map { dto in
             return dto.toEntity()
+        }
+    }
+    
+    func fetchCityAndDistricts() throws -> OrderedDictionary<String, [String]> {
+        guard let url = Bundle.main.url(forResource: "CityAndDistrictsData", withExtension: "json") else {
+            throw JSONLoadError.noBundleURL
+        }
+        
+        guard let data = try? Data(contentsOf: url) else { throw JSONLoadError.convertingURLToDataError }
+        
+        let decoder: JSONDecoder = .init()
+        do {
+            let cityAndDistricts = try decoder.decode(CityAndDistrictsDTO.self, from: data)
+            return cityAndDistricts.toDictionary()
+        } catch {
+            throw error
         }
     }
 }
