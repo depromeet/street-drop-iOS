@@ -191,6 +191,10 @@
 		C41BD2E92A38467A0090EF2B /* UIImageView+ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41BD2E82A38467A0090EF2B /* UIImageView+ImageCache.swift */; };
 		C41BD2EC2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41BD2EB2A3848880090EF2B /* UIImage+loadURLImage.swift */; };
 		C41BD2ED2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41BD2EB2A3848880090EF2B /* UIImage+loadURLImage.swift */; };
+		C42182BD2C697F9700B73A99 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42182BC2C697F9700B73A99 /* ShareViewController.swift */; };
+		C42182C02C697F9700B73A99 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = C42182BF2C697F9700B73A99 /* Base */; };
+		C42182C42C697F9700B73A99 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C42182BA2C697F9700B73A99 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C42182CC2C69C41800B73A99 /* ShareViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42182CB2C69C41800B73A99 /* ShareViewModel.swift */; };
 		C42361782B0CE8F800F61E3C /* RecommendMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42361772B0CE8F800F61E3C /* RecommendMusic.swift */; };
 		C434A4CA2A1796E400C63526 /* SearchingMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4C92A1796E400C63526 /* SearchingMusicViewController.swift */; };
 		C434A4CC2A1796F300C63526 /* SearchingMusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CB2A1796F300C63526 /* SearchingMusicViewModel.swift */; };
@@ -325,9 +329,27 @@
 			remoteGlobalIDString = 040684FB2A01539800377094;
 			remoteInfo = StreetDrop;
 		};
+		C42182C22C697F9700B73A99 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 040684F42A01539800377094 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C42182B92C697F9700B73A99;
+			remoteInfo = ShareExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		C42182C52C697F9700B73A99 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C42182C42C697F9700B73A99 /* ShareExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C49BA7862A1BE72900A83E95 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -501,6 +523,11 @@
 		C41972562ABED40100211222 /* DefaultFetchingMyInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingMyInfoUseCase.swift; sourceTree = "<group>"; };
 		C41BD2E82A38467A0090EF2B /* UIImageView+ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageCache.swift"; sourceTree = "<group>"; };
 		C41BD2EB2A3848880090EF2B /* UIImage+loadURLImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+loadURLImage.swift"; sourceTree = "<group>"; };
+		C42182BA2C697F9700B73A99 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C42182BC2C697F9700B73A99 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		C42182BF2C697F9700B73A99 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		C42182C12C697F9700B73A99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C42182CB2C69C41800B73A99 /* ShareViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewModel.swift; sourceTree = "<group>"; };
 		C42361772B0CE8F800F61E3C /* RecommendMusic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendMusic.swift; sourceTree = "<group>"; };
 		C434A4C92A1796E400C63526 /* SearchingMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicViewController.swift; sourceTree = "<group>"; };
 		C434A4CB2A1796F300C63526 /* SearchingMusicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicViewModel.swift; sourceTree = "<group>"; };
@@ -636,6 +663,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C42182B72C697F9700B73A99 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -644,6 +678,7 @@
 			children = (
 				040684FE2A01539800377094 /* StreetDrop */,
 				41FF58FA2A06B38800ABB871 /* NetworkManagerTest */,
+				C42182BB2C697F9700B73A99 /* ShareExtension */,
 				040684FD2A01539800377094 /* Products */,
 				DD24191EB8D98350CCDA3174 /* Pods */,
 				9AF428BDAA5509AEF1F4FB64 /* Frameworks */,
@@ -655,6 +690,7 @@
 			children = (
 				040684FC2A01539800377094 /* StreetDrop.app */,
 				41FF58F92A06B38800ABB871 /* NetworkManagerTest.xctest */,
+				C42182BA2C697F9700B73A99 /* ShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1510,6 +1546,33 @@
 			path = MyInfo;
 			sourceTree = "<group>";
 		};
+		C42182BB2C697F9700B73A99 /* ShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				C42182C12C697F9700B73A99 /* Info.plist */,
+				C42182C92C69C3FD00B73A99 /* View */,
+				C42182CA2C69C40300B73A99 /* ViewModel */,
+			);
+			path = ShareExtension;
+			sourceTree = "<group>";
+		};
+		C42182C92C69C3FD00B73A99 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C42182BC2C697F9700B73A99 /* ShareViewController.swift */,
+				C42182BE2C697F9700B73A99 /* MainInterface.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C42182CA2C69C40300B73A99 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C42182CB2C69C41800B73A99 /* ShareViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		C434A4C52A17962700C63526 /* SearchingMusicScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -1931,10 +1994,12 @@
 				D7AAC29D93F6B0DD182BBCE1 /* [CP] Embed Pods Frameworks */,
 				C4E25A8D2A57DD1E00E6A236 /* Firebase plist */,
 				086B01C72ADFFFCC00A6F1F2 /* Crashlytics */,
+				C42182C52C697F9700B73A99 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C42182C32C697F9700B73A99 /* PBXTargetDependency */,
 			);
 			name = StreetDrop;
 			packageProductDependencies = (
@@ -1985,6 +2050,23 @@
 			productReference = 41FF58F92A06B38800ABB871 /* NetworkManagerTest.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		C42182B92C697F9700B73A99 /* ShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C42182C82C697F9700B73A99 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
+			buildPhases = (
+				C42182B62C697F9700B73A99 /* Sources */,
+				C42182B72C697F9700B73A99 /* Frameworks */,
+				C42182B82C697F9700B73A99 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShareExtension;
+			productName = ShareExtension;
+			productReference = C42182BA2C697F9700B73A99 /* ShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1992,7 +2074,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					040684FB2A01539800377094 = {
@@ -2001,6 +2083,9 @@
 					41FF58F82A06B38700ABB871 = {
 						CreatedOnToolsVersion = 14.2;
 						TestTargetID = 040684FB2A01539800377094;
+					};
+					C42182B92C697F9700B73A99 = {
+						CreatedOnToolsVersion = 15.4;
 					};
 				};
 			};
@@ -2029,6 +2114,7 @@
 			targets = (
 				040684FB2A01539800377094 /* StreetDrop */,
 				41FF58F82A06B38700ABB871 /* NetworkManagerTest */,
+				C42182B92C697F9700B73A99 /* ShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -2061,6 +2147,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4F5D3E22C5B2265008AF976 /* CityAndDistrictsData.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C42182B82C697F9700B73A99 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C42182C02C697F9700B73A99 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2434,6 +2528,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C42182B62C697F9700B73A99 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C42182CC2C69C41800B73A99 /* ShareViewModel.swift in Sources */,
+				C42182BD2C697F9700B73A99 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2441,6 +2544,11 @@
 			isa = PBXTargetDependency;
 			target = 040684FB2A01539800377094 /* StreetDrop */;
 			targetProxy = 41FF58FD2A06B38800ABB871 /* PBXContainerItemProxy */;
+		};
+		C42182C32C697F9700B73A99 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C42182B92C697F9700B73A99 /* ShareExtension */;
+			targetProxy = C42182C22C697F9700B73A99 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2451,6 +2559,14 @@
 				0406850B2A01539800377094 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		C42182BE2C697F9700B73A99 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C42182BF2C697F9700B73A99 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2574,6 +2690,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 33C6E9256EDABFB58F83B1C8 /* Pods-StreetDrop.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = StreetDrop/StreetDropDebug.entitlements;
@@ -2617,6 +2734,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2611E7411DB7C5436A272A27 /* Pods-StreetDrop.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = StreetDrop/StreetDropRelease.entitlements;
@@ -2705,6 +2823,70 @@
 			};
 			name = Release;
 		};
+		C42182C62C697F9700B73A99 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F8M76V73YG;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.StreetDropRelease.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C42182C72C697F9700B73A99 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.StreetDropRelease.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2731,6 +2913,15 @@
 			buildConfigurations = (
 				41FF58FF2A06B38800ABB871 /* Debug */,
 				41FF59002A06B38800ABB871 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C42182C82C697F9700B73A99 /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C42182C62C697F9700B73A99 /* Debug */,
+				C42182C72C697F9700B73A99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
