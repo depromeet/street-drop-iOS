@@ -191,11 +191,184 @@
 		C41BD2E92A38467A0090EF2B /* UIImageView+ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41BD2E82A38467A0090EF2B /* UIImageView+ImageCache.swift */; };
 		C41BD2EC2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41BD2EB2A3848880090EF2B /* UIImage+loadURLImage.swift */; };
 		C41BD2ED2A3848880090EF2B /* UIImage+loadURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41BD2EB2A3848880090EF2B /* UIImage+loadURLImage.swift */; };
-		C42182BD2C697F9700B73A99 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42182BC2C697F9700B73A99 /* ShareViewController.swift */; };
 		C42182C02C697F9700B73A99 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = C42182BF2C697F9700B73A99 /* Base */; };
 		C42182C42C697F9700B73A99 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C42182BA2C697F9700B73A99 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C42182CC2C69C41800B73A99 /* ShareViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42182CB2C69C41800B73A99 /* ShareViewModel.swift */; };
 		C42361782B0CE8F800F61E3C /* RecommendMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42361772B0CE8F800F61E3C /* RecommendMusic.swift */; };
+		C432DE052C69D963003DBA18 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C432DE042C69D963003DBA18 /* RxCocoa */; };
+		C432DE072C69D963003DBA18 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = C432DE062C69D963003DBA18 /* RxRelay */; };
+		C432DE092C69D963003DBA18 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C432DE082C69D963003DBA18 /* RxSwift */; };
+		C432DEF22C69F6C4003DBA18 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = C432DEF12C69F6C4003DBA18 /* OrderedCollections */; };
+		C432DEF32C69F7F3003DBA18 /* AddressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4143452D2A373550003FEE2A /* AddressManager.swift */; };
+		C432DEF42C69F7F3003DBA18 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA84E02C1F732800CADB1A /* DateManager.swift */; };
+		C432DEF52C69F7F3003DBA18 /* Bundle+APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47583A02A5F11BD00CA7335 /* Bundle+APIKeys.swift */; };
+		C432DEF62C69F7F3003DBA18 /* UIImageView+ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41BD2E82A38467A0090EF2B /* UIImageView+ImageCache.swift */; };
+		C432DEF72C69F7F3003DBA18 /* UIImage+Resizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D671F52A35C5D4003B1A71 /* UIImage+Resizing.swift */; };
+		C432DEF82C69F7F3003DBA18 /* UIImage+loadURLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41BD2EB2A3848880090EF2B /* UIImage+loadURLImage.swift */; };
+		C432DEF92C69F7F3003DBA18 /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */; };
+		C432DEFA2C69F7F3003DBA18 /* UIViewController+Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414345012A31F17B003FEE2A /* UIViewController+Constant.swift */; };
+		C432DEFB2C69F7F3003DBA18 /* UIImage+cornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F90C62A39FD7D003A1B4A /* UIImage+cornerRadius.swift */; };
+		C432DEFC2C69F7F3003DBA18 /* UINavigation+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17232ADD60BB00174D98 /* UINavigation+Gesture.swift */; };
+		C432DEFD2C69F7F3003DBA18 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1386AA2B4F8A5000E49BB5 /* String+Base64.swift */; };
+		C432DEFE2C69F7F3003DBA18 /* GradientLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49EDACD2BBD7EFE0025DB55 /* GradientLabel.swift */; };
+		C432DEFF2C69F7F3003DBA18 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA84DE2C1F3B0200CADB1A /* Array+Extension.swift */; };
+		C432DF002C69F7F3003DBA18 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A51EC3B2C3E52FE00DEF6F3 /* UIViewController+Rx.swift */; };
+		C432DF012C69F7F3003DBA18 /* Map+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A51EC3D2C3E536000DEF6F3 /* Map+Rx.swift */; };
+		C432DF022C69F7F3003DBA18 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */; };
+		C432DF032C69F7F3003DBA18 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB1F312A021C330064B3C8 /* TestError.swift */; };
+		C432DF042C69F7F3003DBA18 /* ImageCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */; };
+		C432DF052C69F7F3003DBA18 /* UserDefaultsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */; };
+		C432DF062C69F7F3003DBA18 /* MyInfoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972312ABDAEF200211222 /* MyInfoError.swift */; };
+		C432DF072C69F7F3003DBA18 /* AsynchronousError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E68C842C2A996000742464 /* AsynchronousError.swift */; };
+		C432DF082C69F7F3003DBA18 /* JSONLoadError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F5D3EA2C5B43BB008AF976 /* JSONLoadError.swift */; };
+		C432DF092C69F7F3003DBA18 /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */; };
+		C432DF0A2C69F7F3003DBA18 /* GADUnitID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3AFB572B8DB399003BD144 /* GADUnitID.swift */; };
+		C432DF0B2C69F7F3003DBA18 /* SettingSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02292A3869DC00F48884 /* SettingSectionType.swift */; };
+		C432DF0C2C69F7F3003DBA18 /* MusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */; };
+		C432DF0D2C69F7F3003DBA18 /* UniviersialLinkKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B97EA42B44303C00084F66 /* UniviersialLinkKey.swift */; };
+		C432DF0E2C69F7F3003DBA18 /* RegionFilteredDropCountResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4E3B72C64451400283C37 /* RegionFilteredDropCountResponseDTO.swift */; };
+		C432DF0F2C69F7F3003DBA18 /* RegionFilteredLikeCountResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293C82C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift */; };
+		C432DF102C69F7F3003DBA18 /* CityAndDistrictsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F5D3E32C5B22D9008AF976 /* CityAndDistrictsDTO.swift */; };
+		C432DF112C69F7F3003DBA18 /* NoticeListResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA84D82C1F030F00CADB1A /* NoticeListResponseDTO.swift */; };
+		C432DF122C69F7F3003DBA18 /* MyLevelResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0402A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift */; };
+		C432DF132C69F7F3003DBA18 /* MyLevelProgressResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A806F9B2BC7A41E0003649E /* MyLevelProgressResponseDTO.swift */; };
+		C432DF142C69F7F3003DBA18 /* LevelPolicyResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAFD9A92BCE54DF001A6772 /* LevelPolicyResponseDTO.swift */; };
+		C432DF152C69F7F3003DBA18 /* MyLikeListResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F03E2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift */; };
+		C432DF162C69F7F3003DBA18 /* MyDropListResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F03C2A66E0330064B887 /* MyDropListResponseDTO+Mapping.swift */; };
+		C432DF172C69F7F3003DBA18 /* MyInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D862A4EFA2900B69341 /* MyInfoResponseDTO.swift */; };
+		C432DF182C69F7F3003DBA18 /* UserCircleRadiusResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B352B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift */; };
+		C432DF192C69F7F3003DBA18 /* EditCommentRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D812A4EF65B00B69341 /* EditCommentRequestDTO.swift */; };
+		C432DF1A2C69F7F3003DBA18 /* ClaimCommentRequestDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEB62A4DC6CE00F3605C /* ClaimCommentRequestDTO+Mapping.swift */; };
+		C432DF1B2C69F7F3003DBA18 /* DropMusicRequestDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049F50212A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift */; };
+		C432DF1C2C69F7F3003DBA18 /* PoiResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E008CD2A1442A000F5D99C /* PoiResponseDTO+Mapping.swift */; };
+		C432DF1D2C69F7F3003DBA18 /* MusicCountByDongResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041038962A126E7B00BC5532 /* MusicCountByDongResponseDTO+Mapping.swift */; };
+		C432DF1E2C69F7F3003DBA18 /* SearchedMusicResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B953672A10E39D00BEC0AB /* SearchedMusicResponseDTO+Mapping.swift */; };
+		C432DF1F2C69F7F3003DBA18 /* CommunityResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF83D2A137349002EF441 /* CommunityResponseDTO.swift */; };
+		C432DF202C69F7F3003DBA18 /* MusicWithinAreaResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF8402A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift */; };
+		C432DF212C69F7F3003DBA18 /* RecentMusicQueryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A02A1D133000CEDE74 /* RecentMusicQueryDTO.swift */; };
+		C432DF222C69F7F3003DBA18 /* VillageNameResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0943A2A4DF002000B4513 /* VillageNameResponseDTO.swift */; };
+		C432DF232C69F7F3003DBA18 /* FCMTokenRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4458F2A5EF225008279C1 /* FCMTokenRequestDTO.swift */; };
+		C432DF242C69F7F3003DBA18 /* SingleMusicResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0856524C2AFA77FD00FD9BCB /* SingleMusicResponseDTO.swift */; };
+		C432DF252C69F7F3003DBA18 /* FetchingPopUpInfomationResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54952BBC082D00354F8F /* FetchingPopUpInfomationResponseDTO.swift */; };
+		C432DF262C69F7F3003DBA18 /* PopUpUserReadingRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44980792BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift */; };
+		C432DF272C69F7F3003DBA18 /* MyInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972502ABED0FE00211222 /* MyInfoRepository.swift */; };
+		C432DF282C69F7F3003DBA18 /* FCMRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BB15972A5EC507001BC5E8 /* FCMRepository.swift */; };
+		C432DF292C69F7F3003DBA18 /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18683FDE2A348B25005A94AC /* MainRepository.swift */; };
+		C432DF2A2C69F7F3003DBA18 /* SearchingMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */; };
+		C432DF2B2C69F7F3003DBA18 /* NoticeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C996AC2C1EEF2500FF7B9A /* NoticeRepository.swift */; };
+		C432DF2C2C69F7F3003DBA18 /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B12A5ADC2C00B1C84A /* SettingsRepository.swift */; };
+		C432DF2D2C69F7F3003DBA18 /* MyPageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0432A66E6E00064B887 /* MyPageRepository.swift */; };
+		C432DF2E2C69F7F3003DBA18 /* NicknameEditRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED452A6858DE005009FC /* NicknameEditRepository.swift */; };
+		C432DF2F2C69F7F3003DBA18 /* DropMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F23B4D2A1B6EE80083D2EC /* DropMusicRepository.swift */; };
+		C432DF302C69F7F3003DBA18 /* LikeMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414345222A35B9A3003FEE2A /* LikeMusicRepository.swift */; };
+		C432DF312C69F7F3003DBA18 /* ClaimCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEB82A4DCA4A00F3605C /* ClaimCommentRepository.swift */; };
+		C432DF322C69F7F3003DBA18 /* EditCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8A2A4EFB2500B69341 /* EditCommentRepository.swift */; };
+		C432DF332C69F7F3003DBA18 /* DeleteMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8C2A4EFB3300B69341 /* DeleteMusicRepository.swift */; };
+		C432DF342C69F7F3003DBA18 /* BlockUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A3DDF52A5AD1C7004CFA2F /* BlockUserRepository.swift */; };
+		C432DF352C69F7F3003DBA18 /* PopUpRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54902BBC076000354F8F /* PopUpRepository.swift */; };
+		C432DF362C69F7F3003DBA18 /* DefaultMainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18683FDB2A348B15005A94AC /* DefaultMainRepository.swift */; };
+		C432DF372C69F7F3003DBA18 /* DefaultSearchingMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CF2A17981C00C63526 /* DefaultSearchingMusicRepository.swift */; };
+		C432DF382C69F7F3003DBA18 /* DefaultFCMRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A445922A5EF265008279C1 /* DefaultFCMRepository.swift */; };
+		C432DF392C69F7F3003DBA18 /* DefaultNoticeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C996A92C1EEF0B00FF7B9A /* DefaultNoticeRepository.swift */; };
+		C432DF3A2C69F7F3003DBA18 /* DefaultSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B32A5ADC4B00B1C84A /* DefaultSettingsRepository.swift */; };
+		C432DF3B2C69F7F3003DBA18 /* DefaultMyPageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F04F2A66F7A30064B887 /* DefaultMyPageRepository.swift */; };
+		C432DF3C2C69F7F3003DBA18 /* DefaultNicknameEditRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816ED482A68591F005009FC /* DefaultNicknameEditRepository.swift */; };
+		C432DF3D2C69F7F3003DBA18 /* DefaultDropMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F23B4A2A1B6EC20083D2EC /* DefaultDropMusicRepository.swift */; };
+		C432DF3E2C69F7F3003DBA18 /* DefaultLikeMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414345242A35B9C3003FEE2A /* DefaultLikeMusicRepository.swift */; };
+		C432DF3F2C69F7F3003DBA18 /* DefaultClaimCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A9BEBA2A4DCBDA00F3605C /* DefaultClaimCommentRepository.swift */; };
+		C432DF402C69F7F3003DBA18 /* DefaultDeleteMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D8E2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift */; };
+		C432DF412C69F7F3003DBA18 /* DefaultEditCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D902A4EFBF700B69341 /* DefaultEditCommentRepository.swift */; };
+		C432DF422C69F7F3003DBA18 /* DefaultBlockUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A3DDF72A5AD222004CFA2F /* DefaultBlockUserRepository.swift */; };
+		C432DF432C69F7F3003DBA18 /* DefaultMyInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972522ABED14200211222 /* DefaultMyInfoRepository.swift */; };
+		C432DF442C69F7F3003DBA18 /* DefaultPopUpRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54972BBC08D200354F8F /* DefaultPopUpRepository.swift */; };
+		C432DF452C69F7F3003DBA18 /* RecentMusicQueriesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3A22A1D179C00CEDE74 /* RecentMusicQueriesStorage.swift */; };
+		C432DF462C69F7F3003DBA18 /* MyInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D962A4F04CB00B69341 /* MyInfoStorage.swift */; };
+		C432DF472C69F7F3003DBA18 /* UserDefaultsRecentMusicSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */; };
+		C432DF482C69F7F3003DBA18 /* UserDefaultsMyInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D982A4F04D800B69341 /* UserDefaultsMyInfoStorage.swift */; };
+		C432DF492C69F7F3003DBA18 /* DroppingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C472B1872AC5523300482B2D /* DroppingInfo.swift */; };
+		C432DF4A2C69F7F3003DBA18 /* EditInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396DA82A51B8F700B69341 /* EditInfo.swift */; };
+		C432DF4B2C69F7F3003DBA18 /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40008E92A32012B00EA7FA9 /* Music.swift */; };
+		C432DF4C2C69F7F3003DBA18 /* RecommendMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42361772B0CE8F800F61E3C /* RecommendMusic.swift */; };
+		C432DF4D2C69F7F3003DBA18 /* ModalOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0856525C2B1F29FD00FD9BCB /* ModalOption.swift */; };
+		C432DF4E2C69F7F3003DBA18 /* MyLevelProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A806F9D2BC7A59F0003649E /* MyLevelProgress.swift */; };
+		C432DF4F2C69F7F3003DBA18 /* LevelPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAFD9AC2BCE55A4001A6772 /* LevelPolicy.swift */; };
+		C432DF502C69F7F3003DBA18 /* PopUpInfomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54922BBC07AA00354F8F /* PopUpInfomation.swift */; };
+		C432DF512C69F7F3003DBA18 /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C996AE2C1EF6C100FF7B9A /* Notice.swift */; };
+		C432DF522C69F7F3003DBA18 /* FetchingRegionFilteredLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293D32C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift */; };
+		C432DF532C69F7F3003DBA18 /* FetchingRegionFilteredLikeCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293CF2C64971100FF4A7A /* FetchingRegionFilteredLikeCountUseCase.swift */; };
+		C432DF542C69F7F3003DBA18 /* FetchingRegionFilteredDropUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4E3C22C645A5000283C37 /* FetchingRegionFilteredDropUseCase.swift */; };
+		C432DF552C69F7F3003DBA18 /* FetchingRegionFilteredDropCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4E3BB2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift */; };
+		C432DF562C69F7F3003DBA18 /* EditCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17192AB7454200174D98 /* EditCommentUseCase.swift */; };
+		C432DF572C69F7F3003DBA18 /* DefaultEditCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F171B2AB7455400174D98 /* DefaultEditCommentUseCase.swift */; };
+		C432DF582C69F7F3003DBA18 /* MyInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419722D2ABD9D6F00211222 /* MyInfoUseCase.swift */; };
+		C432DF592C69F7F3003DBA18 /* DefaultMyInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419722F2ABDAB0200211222 /* DefaultMyInfoUseCase.swift */; };
+		C432DF5A2C69F7F3003DBA18 /* FetchingUserCircleRadiusUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B372B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift */; };
+		C432DF5B2C69F7F3003DBA18 /* DefaultFetchingUserCircleRadiusUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B392B72610600F514C7 /* DefaultFetchingUserCircleRadiusUsecase.swift */; };
+		C432DF5C2C69F7F3003DBA18 /* FetchingPOIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972332ABDB36600211222 /* FetchingPOIUseCase.swift */; };
+		C432DF5D2C69F7F3003DBA18 /* DefaultFetchingPOIUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972352ABDB3C000211222 /* DefaultFetchingPOIUseCase.swift */; };
+		C432DF5E2C69F7F3003DBA18 /* FetchingMusicCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972372ABDB49400211222 /* FetchingMusicCountUseCase.swift */; };
+		C432DF5F2C69F7F3003DBA18 /* DefaultFetchingMusicCountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972392ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift */; };
+		C432DF602C69F7F3003DBA18 /* FetchingMusicWithinAreaUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419723B2ABDB5AF00211222 /* FetchingMusicWithinAreaUseCase.swift */; };
+		C432DF612C69F7F3003DBA18 /* DefaultFetchingMusicWithinAreaUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419723D2ABDB5D600211222 /* DefaultFetchingMusicWithinAreaUseCase.swift */; };
+		C432DF622C69F7F3003DBA18 /* LikingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419723F2ABDC3B000211222 /* LikingUseCase.swift */; };
+		C432DF632C69F7F3003DBA18 /* DefaultLikingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972412ABDC3D600211222 /* DefaultLikingUseCase.swift */; };
+		C432DF642C69F7F3003DBA18 /* ClaimingCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972432ABDC43C00211222 /* ClaimingCommentUseCase.swift */; };
+		C432DF652C69F7F3003DBA18 /* DefaultClaimingCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972452ABDC45000211222 /* DefaultClaimingCommentUseCase.swift */; };
+		C432DF662C69F7F3003DBA18 /* DeletingMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972472ABDC4C700211222 /* DeletingMusicUseCase.swift */; };
+		C432DF672C69F7F3003DBA18 /* DefaultDeletingMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972492ABDC94A00211222 /* DefaultDeletingMusicUseCase.swift */; };
+		C432DF682C69F7F3003DBA18 /* BlockUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419724B2ABDCA6100211222 /* BlockUserUseCase.swift */; };
+		C432DF692C69F7F3003DBA18 /* DefaultBlockUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419724D2ABDCABD00211222 /* DefaultBlockUserUseCase.swift */; };
+		C432DF6A2C69F7F3003DBA18 /* FetchingMyInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972542ABED3EC00211222 /* FetchingMyInfoUseCase.swift */; };
+		C432DF6B2C69F7F3003DBA18 /* DefaultFetchingMyInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972562ABED40100211222 /* DefaultFetchingMyInfoUseCase.swift */; };
+		C432DF6C2C69F7F3003DBA18 /* SearchMusicUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CD2A17970A00C63526 /* SearchMusicUsecase.swift */; };
+		C432DF6D2C69F7F3003DBA18 /* SettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6B72A5ADFDB00B1C84A /* SettingsUseCase.swift */; };
+		C432DF6E2C69F7F3003DBA18 /* FetchingPopUpInfomationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54992BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift */; };
+		C432DF6F2C69F7F3003DBA18 /* DefaultFetchingPopUpInfomationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A549B2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift */; };
+		C432DF702C69F7F3003DBA18 /* PostingPopUpUserReadingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C449807B2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift */; };
+		C432DF712C69F7F3003DBA18 /* DefaultPostingPopUpUserReadingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C449807D2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift */; };
+		C432DF722C69F7F3003DBA18 /* FetchingSingleMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A26BF312B33D1E40007B6B7 /* FetchingSingleMusicUseCase.swift */; };
+		C432DF732C69F7F3003DBA18 /* DefaultFetchingSingleMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A26BF332B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift */; };
+		C432DF742C69F7F3003DBA18 /* DropMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17052AB6DFEC00174D98 /* DropMusicUseCase.swift */; };
+		C432DF752C69F7F3003DBA18 /* DefaultDropMusicUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082F17082AB6E41100174D98 /* DefaultDropMusicUseCase.swift */; };
+		C432DF762C69F7F3003DBA18 /* NoticeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C996A62C1EEC8600FF7B9A /* NoticeUseCase.swift */; };
+		C432DF772C69F7F3003DBA18 /* FetchingLevelPolicyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAFD9AE2BCE567A001A6772 /* FetchingLevelPolicyUseCase.swift */; };
+		C432DF782C69F7F3003DBA18 /* DefaultFetchingLevelPolicyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAFD9B02BCE56A6001A6772 /* DefaultFetchingLevelPolicyUseCase.swift */; };
+		C432DF792C69F7F3003DBA18 /* FetchingMyLevelUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F5745A2C4698B300635B54 /* FetchingMyLevelUseCase.swift */; };
+		C432DF7A2C69F7F3003DBA18 /* DefaultFetchingMyLevelUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F5745C2C46992500635B54 /* DefaultFetchingMyLevelUseCase.swift */; };
+		C432DF7B2C69F7F3003DBA18 /* FetchingMyLikeListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F574552C4697E100635B54 /* FetchingMyLikeListUseCase.swift */; };
+		C432DF7C2C69F7F3003DBA18 /* DefaultFetchingMyLikeListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F574572C46985300635B54 /* DefaultFetchingMyLikeListUseCase.swift */; };
+		C432DF7D2C69F7F3003DBA18 /* FetchingMyDropListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F574502C4696AC00635B54 /* FetchingMyDropListUseCase.swift */; };
+		C432DF7E2C69F7F3003DBA18 /* DefaultFetchingMyDropListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F574522C4696C600635B54 /* DefaultFetchingMyDropListUseCase.swift */; };
+		C432DF7F2C69F7F3003DBA18 /* FetchingCityAndDistrictsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F5D3EE2C5B4830008AF976 /* FetchingCityAndDistrictsUseCase.swift */; };
+		C432DF802C69F7F3003DBA18 /* DefaultFetchingCityAndDistrictsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F5D3F12C5B4850008AF976 /* DefaultFetchingCityAndDistrictsUseCase.swift */; };
+		C432DF812C69F7F3003DBA18 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAA2A04FF2E006CF9EF /* NetworkManager.swift */; };
+		C432DF822C69F7F3003DBA18 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F76FAC2A04FF3D006CF9EF /* NetworkService.swift */; };
+		C432DF832C69F7F3003DBA18 /* ResponseSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414345202A35B92A003FEE2A /* ResponseSampleData.swift */; };
+		C432DF842C69F7F3003DBA18 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42182BC2C697F9700B73A99 /* ShareViewController.swift */; };
+		C432DF852C69F7F3003DBA18 /* ShareViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42182CB2C69C41800B73A99 /* ShareViewModel.swift */; };
+		C432DF862C69F867003DBA18 /* MyMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F0492A66EDF10064B887 /* MyMusic.swift */; };
+		C432DF872C69F867003DBA18 /* MyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F04D2A66EE030064B887 /* MyLevel.swift */; };
+		C432DF882C69F89A003DBA18 /* UIView+generateCircleGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D0974E2A19065B00C011A0 /* UIView+generateCircleGradientView.swift */; };
+		C432DF892C69F89A003DBA18 /* UIImageView+makeCircleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414139962A20B434005418A1 /* UIImageView+makeCircleShape.swift */; };
+		C432DF8A2C69F89A003DBA18 /* UIcolor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEEB2A39D1E900EA1010 /* UIcolor+.swift */; };
+		C432DF8B2C69F89A003DBA18 /* UITextView+setLineSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41008EB72A48891000FD4ABE /* UITextView+setLineSpacing.swift */; };
+		C432DF8C2C69F89A003DBA18 /* UIView+RoundCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73DE2BB15826009340E3 /* UIView+RoundCorners.swift */; };
+		C432DF8D2C69F89A003DBA18 /* NSMutableAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73E52BB2AE34009340E3 /* NSMutableAttributedString+.swift */; };
+		C432DF8E2C69F89A003DBA18 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7D73E72BB3E62E009340E3 /* UIButton+.swift */; };
+		C432DF8F2C69F89A003DBA18 /* UILabel+applyGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BE57152BD4C887007EA949 /* UILabel+applyGradient.swift */; };
+		C432DF912C69F89A003DBA18 /* Toastable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413ABEE72A39BBA500EA1010 /* Toastable.swift */; };
+		C432DF922C69F89A003DBA18 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A3DDF02A593ED4004CFA2F /* AlertViewController.swift */; };
+		C432DF932C69F89A003DBA18 /* TipPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A549D2BBC0DC500354F8F /* TipPopUpViewController.swift */; };
+		C432DF942C69F89A003DBA18 /* CongratulationsLevelUpPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49EDACB2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift */; };
+		C432DF952C69F89A003DBA18 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A3DDEA2A58428F004CFA2F /* ToastView.swift */; };
+		C432DF962C69F89A003DBA18 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4141398E2A1FA252005418A1 /* PaddingLabel.swift */; };
+		C432DF972C69F89A003DBA18 /* OptionModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D9A2A4F1C5600B69341 /* OptionModalViewController.swift */; };
+		C432DF982C69F89A003DBA18 /* BubbleCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085652512B00B68100FD9BCB /* BubbleCommentView.swift */; };
+		C432DF992C69F89A003DBA18 /* LevelPolicyPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810C2D2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift */; };
+		C432DF9A2C69F89A003DBA18 /* LevelPolicySubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810C312BD3FC57004FC6C1 /* LevelPolicySubView.swift */; };
+		C432DF9B2C69F89A003DBA18 /* MyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41396D942A4EFF7B00B69341 /* MyInfo.swift */; };
+		C432DF9C2C69F89A003DBA18 /* PoiEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18683FE02A349109005A94AC /* PoiEntity.swift */; };
+		C432DF9D2C69F89A003DBA18 /* MusicCountEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1824F1362A349F3700A10320 /* MusicCountEntity.swift */; };
+		C432DF9E2C69F89A003DBA18 /* MusicWithinAreaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CB7BEC2A359F53002B31FB /* MusicWithinAreaEntity.swift */; };
 		C434A4CA2A1796E400C63526 /* SearchingMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4C92A1796E400C63526 /* SearchingMusicViewController.swift */; };
 		C434A4CC2A1796F300C63526 /* SearchingMusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CB2A1796F300C63526 /* SearchingMusicViewModel.swift */; };
 		C434A4CE2A17970A00C63526 /* SearchMusicUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CD2A17970A00C63526 /* SearchMusicUsecase.swift */; };
@@ -270,6 +443,12 @@
 		C4AA826B2C5911FB004B8934 /* ModalPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA826A2C5911FB004B8934 /* ModalPresentable.swift */; };
 		C4AA826C2C5911FB004B8934 /* ModalPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA826A2C5911FB004B8934 /* ModalPresentable.swift */; };
 		C4BB15982A5EC507001BC5E8 /* FCMRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BB15972A5EC507001BC5E8 /* FCMRepository.swift */; };
+		C4C9D5A42C69FBCB005D90C4 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = C4C9D5A32C69FBCB005D90C4 /* Moya */; };
+		C4C9D5A62C69FBCB005D90C4 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = C4C9D5A52C69FBCB005D90C4 /* ReactiveMoya */; };
+		C4C9D5A82C69FBCB005D90C4 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = C4C9D5A72C69FBCB005D90C4 /* RxMoya */; };
+		C4C9D5AA2C69FBCB005D90C4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C4C9D5A92C69FBCB005D90C4 /* SnapKit */; };
+		C4C9D5AC2C69FBEB005D90C4 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C4C9D5AB2C69FBEB005D90C4 /* Kingfisher */; };
+		C4C9D5AE2C69FBF8005D90C4 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C4C9D5AD2C69FBF8005D90C4 /* Lottie */; };
 		C4D16FBC2A1B917B008B076F /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB32A1B917B008B076F /* Pretendard-Regular.otf */; };
 		C4D16FBD2A1B917B008B076F /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB42A1B917B008B076F /* Pretendard-ExtraBold.otf */; };
 		C4D16FBE2A1B917B008B076F /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB52A1B917B008B076F /* Pretendard-SemiBold.otf */; };
@@ -667,6 +846,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C432DE092C69D963003DBA18 /* RxSwift in Frameworks */,
+				C4C9D5AA2C69FBCB005D90C4 /* SnapKit in Frameworks */,
+				C432DE072C69D963003DBA18 /* RxRelay in Frameworks */,
+				C4C9D5AC2C69FBEB005D90C4 /* Kingfisher in Frameworks */,
+				C432DEF22C69F6C4003DBA18 /* OrderedCollections in Frameworks */,
+				C4C9D5AE2C69FBF8005D90C4 /* Lottie in Frameworks */,
+				C4C9D5A42C69FBCB005D90C4 /* Moya in Frameworks */,
+				C4C9D5A82C69FBCB005D90C4 /* RxMoya in Frameworks */,
+				C432DE052C69D963003DBA18 /* RxCocoa in Frameworks */,
+				C4C9D5A62C69FBCB005D90C4 /* ReactiveMoya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2063,6 +2252,18 @@
 			dependencies = (
 			);
 			name = ShareExtension;
+			packageProductDependencies = (
+				C432DE042C69D963003DBA18 /* RxCocoa */,
+				C432DE062C69D963003DBA18 /* RxRelay */,
+				C432DE082C69D963003DBA18 /* RxSwift */,
+				C432DEF12C69F6C4003DBA18 /* OrderedCollections */,
+				C4C9D5A32C69FBCB005D90C4 /* Moya */,
+				C4C9D5A52C69FBCB005D90C4 /* ReactiveMoya */,
+				C4C9D5A72C69FBCB005D90C4 /* RxMoya */,
+				C4C9D5A92C69FBCB005D90C4 /* SnapKit */,
+				C4C9D5AB2C69FBEB005D90C4 /* Kingfisher */,
+				C4C9D5AD2C69FBF8005D90C4 /* Lottie */,
+			);
 			productName = ShareExtension;
 			productReference = C42182BA2C697F9700B73A99 /* ShareExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -2532,8 +2733,177 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C42182CC2C69C41800B73A99 /* ShareViewModel.swift in Sources */,
-				C42182BD2C697F9700B73A99 /* ShareViewController.swift in Sources */,
+				C432DF882C69F89A003DBA18 /* UIView+generateCircleGradientView.swift in Sources */,
+				C432DF892C69F89A003DBA18 /* UIImageView+makeCircleShape.swift in Sources */,
+				C432DF8A2C69F89A003DBA18 /* UIcolor+.swift in Sources */,
+				C432DF8B2C69F89A003DBA18 /* UITextView+setLineSpacing.swift in Sources */,
+				C432DF8C2C69F89A003DBA18 /* UIView+RoundCorners.swift in Sources */,
+				C432DF8D2C69F89A003DBA18 /* NSMutableAttributedString+.swift in Sources */,
+				C432DF8E2C69F89A003DBA18 /* UIButton+.swift in Sources */,
+				C432DF8F2C69F89A003DBA18 /* UILabel+applyGradient.swift in Sources */,
+				C432DF912C69F89A003DBA18 /* Toastable.swift in Sources */,
+				C432DF922C69F89A003DBA18 /* AlertViewController.swift in Sources */,
+				C432DF932C69F89A003DBA18 /* TipPopUpViewController.swift in Sources */,
+				C432DF942C69F89A003DBA18 /* CongratulationsLevelUpPopUpViewController.swift in Sources */,
+				C432DF952C69F89A003DBA18 /* ToastView.swift in Sources */,
+				C432DF962C69F89A003DBA18 /* PaddingLabel.swift in Sources */,
+				C432DF972C69F89A003DBA18 /* OptionModalViewController.swift in Sources */,
+				C432DF982C69F89A003DBA18 /* BubbleCommentView.swift in Sources */,
+				C432DF992C69F89A003DBA18 /* LevelPolicyPopUpViewController.swift in Sources */,
+				C432DF9A2C69F89A003DBA18 /* LevelPolicySubView.swift in Sources */,
+				C432DF9B2C69F89A003DBA18 /* MyInfo.swift in Sources */,
+				C432DF9C2C69F89A003DBA18 /* PoiEntity.swift in Sources */,
+				C432DF9D2C69F89A003DBA18 /* MusicCountEntity.swift in Sources */,
+				C432DF9E2C69F89A003DBA18 /* MusicWithinAreaEntity.swift in Sources */,
+				C432DF862C69F867003DBA18 /* MyMusic.swift in Sources */,
+				C432DF872C69F867003DBA18 /* MyLevel.swift in Sources */,
+				C432DEF32C69F7F3003DBA18 /* AddressManager.swift in Sources */,
+				C432DEF42C69F7F3003DBA18 /* DateManager.swift in Sources */,
+				C432DEF52C69F7F3003DBA18 /* Bundle+APIKeys.swift in Sources */,
+				C432DEF62C69F7F3003DBA18 /* UIImageView+ImageCache.swift in Sources */,
+				C432DEF72C69F7F3003DBA18 /* UIImage+Resizing.swift in Sources */,
+				C432DEF82C69F7F3003DBA18 /* UIImage+loadURLImage.swift in Sources */,
+				C432DEF92C69F7F3003DBA18 /* UILabel+LineHeight.swift in Sources */,
+				C432DEFA2C69F7F3003DBA18 /* UIViewController+Constant.swift in Sources */,
+				C432DEFB2C69F7F3003DBA18 /* UIImage+cornerRadius.swift in Sources */,
+				C432DEFC2C69F7F3003DBA18 /* UINavigation+Gesture.swift in Sources */,
+				C432DEFD2C69F7F3003DBA18 /* String+Base64.swift in Sources */,
+				C432DEFE2C69F7F3003DBA18 /* GradientLabel.swift in Sources */,
+				C432DEFF2C69F7F3003DBA18 /* Array+Extension.swift in Sources */,
+				C432DF002C69F7F3003DBA18 /* UIViewController+Rx.swift in Sources */,
+				C432DF012C69F7F3003DBA18 /* Map+Rx.swift in Sources */,
+				C432DF022C69F7F3003DBA18 /* UIFont+Extension.swift in Sources */,
+				C432DF032C69F7F3003DBA18 /* TestError.swift in Sources */,
+				C432DF042C69F7F3003DBA18 /* ImageCacheError.swift in Sources */,
+				C432DF052C69F7F3003DBA18 /* UserDefaultsError.swift in Sources */,
+				C432DF062C69F7F3003DBA18 /* MyInfoError.swift in Sources */,
+				C432DF072C69F7F3003DBA18 /* AsynchronousError.swift in Sources */,
+				C432DF082C69F7F3003DBA18 /* JSONLoadError.swift in Sources */,
+				C432DF092C69F7F3003DBA18 /* UserDefaultKey.swift in Sources */,
+				C432DF0A2C69F7F3003DBA18 /* GADUnitID.swift in Sources */,
+				C432DF0B2C69F7F3003DBA18 /* SettingSectionType.swift in Sources */,
+				C432DF0C2C69F7F3003DBA18 /* MusicApp.swift in Sources */,
+				C432DF0D2C69F7F3003DBA18 /* UniviersialLinkKey.swift in Sources */,
+				C432DF0E2C69F7F3003DBA18 /* RegionFilteredDropCountResponseDTO.swift in Sources */,
+				C432DF0F2C69F7F3003DBA18 /* RegionFilteredLikeCountResponseDTO.swift in Sources */,
+				C432DF102C69F7F3003DBA18 /* CityAndDistrictsDTO.swift in Sources */,
+				C432DF112C69F7F3003DBA18 /* NoticeListResponseDTO.swift in Sources */,
+				C432DF122C69F7F3003DBA18 /* MyLevelResponseDTO+Mapping.swift in Sources */,
+				C432DF132C69F7F3003DBA18 /* MyLevelProgressResponseDTO.swift in Sources */,
+				C432DF142C69F7F3003DBA18 /* LevelPolicyResponseDTO.swift in Sources */,
+				C432DF152C69F7F3003DBA18 /* MyLikeListResponseDTO+Mapping.swift in Sources */,
+				C432DF162C69F7F3003DBA18 /* MyDropListResponseDTO+Mapping.swift in Sources */,
+				C432DF172C69F7F3003DBA18 /* MyInfoResponseDTO.swift in Sources */,
+				C432DF182C69F7F3003DBA18 /* UserCircleRadiusResponseDTO.swift in Sources */,
+				C432DF192C69F7F3003DBA18 /* EditCommentRequestDTO.swift in Sources */,
+				C432DF1A2C69F7F3003DBA18 /* ClaimCommentRequestDTO+Mapping.swift in Sources */,
+				C432DF1B2C69F7F3003DBA18 /* DropMusicRequestDTO+Mapping.swift in Sources */,
+				C432DF1C2C69F7F3003DBA18 /* PoiResponseDTO+Mapping.swift in Sources */,
+				C432DF1D2C69F7F3003DBA18 /* MusicCountByDongResponseDTO+Mapping.swift in Sources */,
+				C432DF1E2C69F7F3003DBA18 /* SearchedMusicResponseDTO+Mapping.swift in Sources */,
+				C432DF1F2C69F7F3003DBA18 /* CommunityResponseDTO.swift in Sources */,
+				C432DF202C69F7F3003DBA18 /* MusicWithinAreaResponseDTO.swift in Sources */,
+				C432DF212C69F7F3003DBA18 /* RecentMusicQueryDTO.swift in Sources */,
+				C432DF222C69F7F3003DBA18 /* VillageNameResponseDTO.swift in Sources */,
+				C432DF232C69F7F3003DBA18 /* FCMTokenRequestDTO.swift in Sources */,
+				C432DF242C69F7F3003DBA18 /* SingleMusicResponseDTO.swift in Sources */,
+				C432DF252C69F7F3003DBA18 /* FetchingPopUpInfomationResponseDTO.swift in Sources */,
+				C432DF262C69F7F3003DBA18 /* PopUpUserReadingRequestDTO.swift in Sources */,
+				C432DF272C69F7F3003DBA18 /* MyInfoRepository.swift in Sources */,
+				C432DF282C69F7F3003DBA18 /* FCMRepository.swift in Sources */,
+				C432DF292C69F7F3003DBA18 /* MainRepository.swift in Sources */,
+				C432DF2A2C69F7F3003DBA18 /* SearchingMusicRepository.swift in Sources */,
+				C432DF2B2C69F7F3003DBA18 /* NoticeRepository.swift in Sources */,
+				C432DF2C2C69F7F3003DBA18 /* SettingsRepository.swift in Sources */,
+				C432DF2D2C69F7F3003DBA18 /* MyPageRepository.swift in Sources */,
+				C432DF2E2C69F7F3003DBA18 /* NicknameEditRepository.swift in Sources */,
+				C432DF2F2C69F7F3003DBA18 /* DropMusicRepository.swift in Sources */,
+				C432DF302C69F7F3003DBA18 /* LikeMusicRepository.swift in Sources */,
+				C432DF312C69F7F3003DBA18 /* ClaimCommentRepository.swift in Sources */,
+				C432DF322C69F7F3003DBA18 /* EditCommentRepository.swift in Sources */,
+				C432DF332C69F7F3003DBA18 /* DeleteMusicRepository.swift in Sources */,
+				C432DF342C69F7F3003DBA18 /* BlockUserRepository.swift in Sources */,
+				C432DF352C69F7F3003DBA18 /* PopUpRepository.swift in Sources */,
+				C432DF362C69F7F3003DBA18 /* DefaultMainRepository.swift in Sources */,
+				C432DF372C69F7F3003DBA18 /* DefaultSearchingMusicRepository.swift in Sources */,
+				C432DF382C69F7F3003DBA18 /* DefaultFCMRepository.swift in Sources */,
+				C432DF392C69F7F3003DBA18 /* DefaultNoticeRepository.swift in Sources */,
+				C432DF3A2C69F7F3003DBA18 /* DefaultSettingsRepository.swift in Sources */,
+				C432DF3B2C69F7F3003DBA18 /* DefaultMyPageRepository.swift in Sources */,
+				C432DF3C2C69F7F3003DBA18 /* DefaultNicknameEditRepository.swift in Sources */,
+				C432DF3D2C69F7F3003DBA18 /* DefaultDropMusicRepository.swift in Sources */,
+				C432DF3E2C69F7F3003DBA18 /* DefaultLikeMusicRepository.swift in Sources */,
+				C432DF3F2C69F7F3003DBA18 /* DefaultClaimCommentRepository.swift in Sources */,
+				C432DF402C69F7F3003DBA18 /* DefaultDeleteMusicRepository.swift in Sources */,
+				C432DF412C69F7F3003DBA18 /* DefaultEditCommentRepository.swift in Sources */,
+				C432DF422C69F7F3003DBA18 /* DefaultBlockUserRepository.swift in Sources */,
+				C432DF432C69F7F3003DBA18 /* DefaultMyInfoRepository.swift in Sources */,
+				C432DF442C69F7F3003DBA18 /* DefaultPopUpRepository.swift in Sources */,
+				C432DF452C69F7F3003DBA18 /* RecentMusicQueriesStorage.swift in Sources */,
+				C432DF462C69F7F3003DBA18 /* MyInfoStorage.swift in Sources */,
+				C432DF472C69F7F3003DBA18 /* UserDefaultsRecentMusicSearches.swift in Sources */,
+				C432DF482C69F7F3003DBA18 /* UserDefaultsMyInfoStorage.swift in Sources */,
+				C432DF492C69F7F3003DBA18 /* DroppingInfo.swift in Sources */,
+				C432DF4A2C69F7F3003DBA18 /* EditInfo.swift in Sources */,
+				C432DF4B2C69F7F3003DBA18 /* Music.swift in Sources */,
+				C432DF4C2C69F7F3003DBA18 /* RecommendMusic.swift in Sources */,
+				C432DF4D2C69F7F3003DBA18 /* ModalOption.swift in Sources */,
+				C432DF4E2C69F7F3003DBA18 /* MyLevelProgress.swift in Sources */,
+				C432DF4F2C69F7F3003DBA18 /* LevelPolicy.swift in Sources */,
+				C432DF502C69F7F3003DBA18 /* PopUpInfomation.swift in Sources */,
+				C432DF512C69F7F3003DBA18 /* Notice.swift in Sources */,
+				C432DF522C69F7F3003DBA18 /* FetchingRegionFilteredLikeUseCase.swift in Sources */,
+				C432DF532C69F7F3003DBA18 /* FetchingRegionFilteredLikeCountUseCase.swift in Sources */,
+				C432DF542C69F7F3003DBA18 /* FetchingRegionFilteredDropUseCase.swift in Sources */,
+				C432DF552C69F7F3003DBA18 /* FetchingRegionFilteredDropCountUseCase.swift in Sources */,
+				C432DF562C69F7F3003DBA18 /* EditCommentUseCase.swift in Sources */,
+				C432DF572C69F7F3003DBA18 /* DefaultEditCommentUseCase.swift in Sources */,
+				C432DF582C69F7F3003DBA18 /* MyInfoUseCase.swift in Sources */,
+				C432DF592C69F7F3003DBA18 /* DefaultMyInfoUseCase.swift in Sources */,
+				C432DF5A2C69F7F3003DBA18 /* FetchingUserCircleRadiusUsecase.swift in Sources */,
+				C432DF5B2C69F7F3003DBA18 /* DefaultFetchingUserCircleRadiusUsecase.swift in Sources */,
+				C432DF5C2C69F7F3003DBA18 /* FetchingPOIUseCase.swift in Sources */,
+				C432DF5D2C69F7F3003DBA18 /* DefaultFetchingPOIUseCase.swift in Sources */,
+				C432DF5E2C69F7F3003DBA18 /* FetchingMusicCountUseCase.swift in Sources */,
+				C432DF5F2C69F7F3003DBA18 /* DefaultFetchingMusicCountUseCase.swift in Sources */,
+				C432DF602C69F7F3003DBA18 /* FetchingMusicWithinAreaUseCase.swift in Sources */,
+				C432DF612C69F7F3003DBA18 /* DefaultFetchingMusicWithinAreaUseCase.swift in Sources */,
+				C432DF622C69F7F3003DBA18 /* LikingUseCase.swift in Sources */,
+				C432DF632C69F7F3003DBA18 /* DefaultLikingUseCase.swift in Sources */,
+				C432DF642C69F7F3003DBA18 /* ClaimingCommentUseCase.swift in Sources */,
+				C432DF652C69F7F3003DBA18 /* DefaultClaimingCommentUseCase.swift in Sources */,
+				C432DF662C69F7F3003DBA18 /* DeletingMusicUseCase.swift in Sources */,
+				C432DF672C69F7F3003DBA18 /* DefaultDeletingMusicUseCase.swift in Sources */,
+				C432DF682C69F7F3003DBA18 /* BlockUserUseCase.swift in Sources */,
+				C432DF692C69F7F3003DBA18 /* DefaultBlockUserUseCase.swift in Sources */,
+				C432DF6A2C69F7F3003DBA18 /* FetchingMyInfoUseCase.swift in Sources */,
+				C432DF6B2C69F7F3003DBA18 /* DefaultFetchingMyInfoUseCase.swift in Sources */,
+				C432DF6C2C69F7F3003DBA18 /* SearchMusicUsecase.swift in Sources */,
+				C432DF6D2C69F7F3003DBA18 /* SettingsUseCase.swift in Sources */,
+				C432DF6E2C69F7F3003DBA18 /* FetchingPopUpInfomationUseCase.swift in Sources */,
+				C432DF6F2C69F7F3003DBA18 /* DefaultFetchingPopUpInfomationUseCase.swift in Sources */,
+				C432DF702C69F7F3003DBA18 /* PostingPopUpUserReadingUseCase.swift in Sources */,
+				C432DF712C69F7F3003DBA18 /* DefaultPostingPopUpUserReadingUseCase.swift in Sources */,
+				C432DF722C69F7F3003DBA18 /* FetchingSingleMusicUseCase.swift in Sources */,
+				C432DF732C69F7F3003DBA18 /* DefaultFetchingSingleMusicUseCase.swift in Sources */,
+				C432DF742C69F7F3003DBA18 /* DropMusicUseCase.swift in Sources */,
+				C432DF752C69F7F3003DBA18 /* DefaultDropMusicUseCase.swift in Sources */,
+				C432DF762C69F7F3003DBA18 /* NoticeUseCase.swift in Sources */,
+				C432DF772C69F7F3003DBA18 /* FetchingLevelPolicyUseCase.swift in Sources */,
+				C432DF782C69F7F3003DBA18 /* DefaultFetchingLevelPolicyUseCase.swift in Sources */,
+				C432DF792C69F7F3003DBA18 /* FetchingMyLevelUseCase.swift in Sources */,
+				C432DF7A2C69F7F3003DBA18 /* DefaultFetchingMyLevelUseCase.swift in Sources */,
+				C432DF7B2C69F7F3003DBA18 /* FetchingMyLikeListUseCase.swift in Sources */,
+				C432DF7C2C69F7F3003DBA18 /* DefaultFetchingMyLikeListUseCase.swift in Sources */,
+				C432DF7D2C69F7F3003DBA18 /* FetchingMyDropListUseCase.swift in Sources */,
+				C432DF7E2C69F7F3003DBA18 /* DefaultFetchingMyDropListUseCase.swift in Sources */,
+				C432DF7F2C69F7F3003DBA18 /* FetchingCityAndDistrictsUseCase.swift in Sources */,
+				C432DF802C69F7F3003DBA18 /* DefaultFetchingCityAndDistrictsUseCase.swift in Sources */,
+				C432DF812C69F7F3003DBA18 /* NetworkManager.swift in Sources */,
+				C432DF822C69F7F3003DBA18 /* NetworkService.swift in Sources */,
+				C432DF832C69F7F3003DBA18 /* ResponseSampleData.swift in Sources */,
+				C432DF842C69F7F3003DBA18 /* ShareViewController.swift in Sources */,
+				C432DF852C69F7F3003DBA18 /* ShareViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2837,7 +3207,7 @@
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2845,7 +3215,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.StreetDropRelease.ShareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.StreetDropDebug.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -2870,7 +3240,7 @@
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3086,6 +3456,23 @@
 			package = C41972582ABEDE0200211222 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
+		C432DE042C69D963003DBA18 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RxCocoa;
+		};
+		C432DE062C69D963003DBA18 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RxRelay;
+		};
+		C432DE082C69D963003DBA18 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RxSwift;
+		};
+		C432DEF12C69F6C4003DBA18 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C4FDF55F2C60C4D700551A16 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
 		C47C1D1A2A643B38007317EA /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C47C1D192A643B38007317EA /* XCRemoteSwiftPackageReference "lottie-ios" */;
@@ -3095,6 +3482,36 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 049BC4242A02826400071A12 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = "RxCocoa-Dynamic";
+		};
+		C4C9D5A32C69FBCB005D90C4 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 049BC4342A02845900071A12 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		C4C9D5A52C69FBCB005D90C4 /* ReactiveMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 049BC4342A02845900071A12 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = ReactiveMoya;
+		};
+		C4C9D5A72C69FBCB005D90C4 /* RxMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 049BC4342A02845900071A12 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = RxMoya;
+		};
+		C4C9D5A92C69FBCB005D90C4 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 049BC4392A0284E900071A12 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		C4C9D5AB2C69FBEB005D90C4 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C41972582ABEDE0200211222 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		C4C9D5AD2C69FBF8005D90C4 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C47C1D192A643B38007317EA /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		C4FDF5602C60C4D700551A16 /* OrderedCollections */ = {
 			isa = XCSwiftPackageProductDependency;
