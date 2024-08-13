@@ -418,6 +418,8 @@
 		C46293D42C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293D32C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift */; };
 		C46293D52C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46293D32C649B7600FF4A7A /* FetchingRegionFilteredLikeUseCase.swift */; };
 		C46410F42A629820009DD88F /* MusicAppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46410F32A629820009DD88F /* MusicAppButton.swift */; };
+		C465BD7B2C6ADF2800C42FF1 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = C465BD7A2C6ADF2800C42FF1 /* RxGesture */; };
+		C465BD7D2C6ADF3700C42FF1 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = C465BD7C2C6ADF3700C42FF1 /* RxGesture */; };
 		C4685B362B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B352B725FF500F514C7 /* UserCircleRadiusResponseDTO.swift */; };
 		C4685B382B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B372B72605500F514C7 /* FetchingUserCircleRadiusUsecase.swift */; };
 		C4685B3A2B72610600F514C7 /* DefaultFetchingUserCircleRadiusUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4685B392B72610600F514C7 /* DefaultFetchingUserCircleRadiusUsecase.swift */; };
@@ -830,6 +832,7 @@
 				C4FDF5612C60C4D700551A16 /* OrderedCollections in Frameworks */,
 				0856523F2AF6A2AD00FD9BCB /* FirebaseAnalyticsSwift in Frameworks */,
 				C47C1D1B2A643B38007317EA /* Lottie in Frameworks */,
+				C465BD7B2C6ADF2800C42FF1 /* RxGesture in Frameworks */,
 				049BC42A2A02826400071A12 /* RxSwift in Frameworks */,
 				049BC4282A02826400071A12 /* RxRelay in Frameworks */,
 				049BC43B2A0284E900071A12 /* SnapKit in Frameworks */,
@@ -868,6 +871,7 @@
 				C4C9D5A82C69FBCB005D90C4 /* RxMoya in Frameworks */,
 				C432DE052C69D963003DBA18 /* RxCocoa in Frameworks */,
 				C4C9D5A62C69FBCB005D90C4 /* ReactiveMoya in Frameworks */,
+				C465BD7D2C6ADF3700C42FF1 /* RxGesture in Frameworks */,
 				ADE9937EA437A957C3ABA1A1 /* libPods-ShareExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2227,6 +2231,7 @@
 				085652482AF6A2AD00FD9BCB /* FirebaseInAppMessagingSwift-Beta */,
 				0856524A2AF6A2AD00FD9BCB /* FirebaseMessaging */,
 				C4FDF5602C60C4D700551A16 /* OrderedCollections */,
+				C465BD7A2C6ADF2800C42FF1 /* RxGesture */,
 			);
 			productName = StreetDrop;
 			productReference = 040684FC2A01539800377094 /* StreetDrop.app */;
@@ -2279,6 +2284,7 @@
 				C4C9D5A92C69FBCB005D90C4 /* SnapKit */,
 				C4C9D5AB2C69FBEB005D90C4 /* Kingfisher */,
 				C4C9D5AD2C69FBF8005D90C4 /* Lottie */,
+				C465BD7C2C6ADF3700C42FF1 /* RxGesture */,
 			);
 			productName = ShareExtension;
 			productReference = C42182BA2C697F9700B73A99 /* ShareExtension.appex */;
@@ -2324,6 +2330,7 @@
 				C41972582ABEDE0200211222 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				085652392AF6A2AD00FD9BCB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C4FDF55F2C60C4D700551A16 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				C465BD792C6ADF2800C42FF1 /* XCRemoteSwiftPackageReference "RxGesture" */,
 			);
 			productRefGroup = 040684FD2A01539800377094 /* Products */;
 			projectDirPath = "";
@@ -3388,6 +3395,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		C465BD792C6ADF2800C42FF1 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.4;
+			};
+		};
 		C47C1D192A643B38007317EA /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -3513,6 +3528,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C4FDF55F2C60C4D700551A16 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
+		};
+		C465BD7A2C6ADF2800C42FF1 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C465BD792C6ADF2800C42FF1 /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
+		};
+		C465BD7C2C6ADF3700C42FF1 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C465BD792C6ADF2800C42FF1 /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
 		};
 		C47C1D1A2A643B38007317EA /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
