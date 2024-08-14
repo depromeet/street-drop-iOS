@@ -77,7 +77,10 @@ final class DefaultSearchingMusicRepository: SearchingMusicRepository {
                     longitude: longitude
                 )
             ),
-            responseType: String.self
+            responseType: VillageNameResponseDTO.self
         )
+        .map { dto in
+            return dto.villageName
+        }
     }
 }
