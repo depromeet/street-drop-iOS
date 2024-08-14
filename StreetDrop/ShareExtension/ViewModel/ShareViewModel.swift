@@ -30,13 +30,17 @@ final class ShareViewModel: NSObject, ShareViewModelType {
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
+        let sharedMusicKeyWordEvent: Observable<String>
     }
     
     struct Output {
-        
         fileprivate let showVillageNameRelay: PublishRelay<String> = .init()
         var showVillageName: Observable<String> {
             showVillageNameRelay.asObservable()
+        }
+        fileprivate let showSearchedMusicRelay: PublishRelay<Music> = .init()
+        var showSearchedMusic: Observable<Music> {
+            showSearchedMusicRelay.asObservable()
         }
     }
     
@@ -49,6 +53,21 @@ final class ShareViewModel: NSObject, ShareViewModelType {
             }
             .disposed(by: disposedBag)
         
+        input.sharedMusicKeyWordEvent
+            .bind(with: self) { owner, sharedMusicKeyWord in
+                owner.searchMusicUsecase.searchMusic(keyword: sharedMusicKeyWord)
+                    .subscribe(with: self) { owner, musicList in
+                        guard let firstMusic = musicList.first else {
+                            // TODO: 요셉, 검색된 음악 없다는 이벤트 view에 전달
+                            return
+                        }
+                        owner.output.showSearchedMusicRelay.accept(firstMusic)
+                    } onFailure: { owner, error in
+                        
+                    }
+                    .disposed(by: disposedBag)
+            }
+            .disposed(by: disposedBag)
         
         return output
     }

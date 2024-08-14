@@ -17,6 +17,7 @@ final class ShareViewController: SLComposeServiceViewController {
 final class ShareViewController: UIViewController {
     private let viewModel: ShareViewModel = .init()
     private let disposeBag: DisposeBag = .init()
+    private let sharedMusicKeyWordEvent: PublishRelay<String> = .init()
     
     override func isContentValid() -> Bool {
         return true
@@ -121,12 +122,20 @@ final class ShareViewController: UIViewController {
         super.viewDidLoad()
         bindViewModel()
         configureUI()
+        
+        // 공유된 데이터 가져오기
+        guard let extensionItem = extensionContext?.inputItems.first as? NSExtensionItem else { return }
+        handleExtensionItem(extensionItem)
+    }
     }
 }
 
 private extension ShareViewController {
     func bindViewModel() {
-        let input: ShareViewModel.Input = .init(viewDidLoadEvent: .just(Void()))
+        let input: ShareViewModel.Input = .init(
+            viewDidLoadEvent: .just(Void()),
+            sharedMusicKeyWordEvent: sharedMusicKeyWordEvent.asObservable()
+        )
         let output: ShareViewModel.Output = viewModel.convert(
             input: input,
             disposedBag: disposeBag
@@ -135,6 +144,14 @@ private extension ShareViewController {
         output.showVillageName
             .bind(with: self) { owner, villageName in
                 owner.villageNameLabel.text = villageName
+            }
+            .disposed(by: disposeBag)
+        
+        output.showSearchedMusic
+            .bind(with: self) { owner, music in
+                owner.albumCoverImageView.kf.setImage(with: URL(string: music.albumImage))
+                owner.songNameLabel.text = music.songName
+                owner.artistNameLabel.text = music.artistName
             }
             .disposed(by: disposeBag)
     }
@@ -198,5 +215,56 @@ private extension ShareViewController {
         }
     }
 }
+
+// MARK: - Handle Shared Data
+private extension ShareViewController {
+    func handleExtensionItem(_ extensionItem: NSExtensionItem) {
+        // ExtensionItem에서 ContentText 추출
+        guard let sharedTextItem = extensionItem.attributedContentText,
+              let videoID = extractVideoID(from: sharedTextItem.string) else { return }
+        
+        fetchVideoDetails(videoID: videoID) { [weak self] songName, artistName in
+            self?.sharedMusicKeyWordEvent.accept("\(songName ?? "")-\(artistName ?? "")")
+        }
+    }
     
+    func fetchVideoDetails(videoID: String, completion: @escaping (String?, String?) -> Void) {
+        let apiKey = "AIzaSyDHsdIcuAK98-EW9UueCeF6g4iYiap7bmA" // YouTube Data API 키를 여기에 입력하세요
+        let urlString = "https://www.googleapis.com/youtube/v3/videos?id=\(videoID)&key=\(apiKey)&part=snippet"
+        
+        guard let url = URL(string: urlString) else {
+            completion(nil, nil)
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                completion(nil, nil)
+                return
+            }
+            
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                   let items = json["items"] as? [[String: Any]],
+                   let snippet = items.first?["snippet"] as? [String: Any] {
+                    let title = snippet["title"] as? String
+                    let channelTitle = snippet["channelTitle"] as? String
+                    completion(title, channelTitle)
+                } else {
+                    completion(nil, nil)
+                }
+            } catch {
+                completion(nil, nil)
+            }
+        }
+        task.resume()
+    }
+    
+    func extractVideoID(from url: String) -> String? {
+        guard let urlComponents = URLComponents(string: url),
+              let queryItems = urlComponents.queryItems else {
+            return nil
+        }
+        return queryItems.first(where: { $0.name == "v" })?.value
+    }
 }
