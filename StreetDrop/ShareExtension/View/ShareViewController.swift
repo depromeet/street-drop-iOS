@@ -186,6 +186,7 @@ final class ShareViewController: UIViewController {
         bindAction()
         bindViewModel()
         configureUI()
+        registerKeyboardNotification()
         
         // 공유된 데이터 가져오기
         guard let extensionItem = extensionContext?.inputItems.first as? NSExtensionItem else { return }
@@ -475,5 +476,43 @@ extension ShareViewController: UITextViewDelegate {
         }
         
         return true
+    }
+}
+
+// MARK: - KeyBoard
+private extension ShareViewController {
+    func registerKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            guard let self = self else { return }
+            containerView.snp.updateConstraints { [weak self] in
+                guard let self = self else { return }
+
+                $0.height.equalTo(view.bounds.height)
+            }
+            view.layoutIfNeeded()
+        }
+    }
+
+    @objc func keyboardWillHide() {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.containerView.snp.updateConstraints {
+                let screenHeight = UIScreen.main.bounds.height
+                $0.height.equalTo(596)
+            }
+            self?.view.layoutIfNeeded()
+        }
     }
 }
