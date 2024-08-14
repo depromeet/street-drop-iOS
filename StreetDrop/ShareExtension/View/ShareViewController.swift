@@ -13,15 +13,16 @@ import RxSwift
 import RxRelay
 import SnapKit
 
-final class ShareViewController: SLComposeServiceViewController {
 final class ShareViewController: UIViewController {
+    enum Constant {
+        static let commentPlaceHolder: String = "노래, 현재 감정, 상황, 관련 에피소드, 거리, 가수 등 떠오르는 말을 적어보세요."
+        static let communityButtonTitle: String = "커뮤니티 가이드"
+        static let defaultCommentCount: String = "0/40"
+    }
     private let viewModel: ShareViewModel = .init()
     private let disposeBag: DisposeBag = .init()
     private let sharedMusicKeyWordEvent: PublishRelay<String> = .init()
     
-    override func isContentValid() -> Bool {
-        return true
-    }
     private let containerView: UIView = {
         let view: UIView = .init()
         view.backgroundColor = .gray800
@@ -109,17 +110,80 @@ final class ShareViewController: UIViewController {
         
         return label
     }()
+    
+    private lazy var commentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray700
+        view.layer.cornerRadius = 12
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.gray700.cgColor
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    lazy var commentTextView: UITextView = {
+        let textView = UITextView()
+        textView.textColor = .white
+        textView.font = .pretendard(size: 14, weight: 500)
+        textView.backgroundColor = .gray700
+        textView.keyboardAppearance = .dark
+        textView.keyboardDismissMode = .interactive
+        textView.showsVerticalScrollIndicator = false
+        textView.returnKeyType = .done
+        textView.delegate = self
 
-    override func didSelectPost() {
-        extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
-    }
+        return textView
+    }()
+    
+    private lazy var commentClearButton: UIButton = {
+        let icon = UIImage(named: "cancleButton")
+        let button = UIButton()
+        button.setImage(icon, for: .normal)
+        button.isHidden = true
+        button.isEnabled = false
 
-    override func configurationItems() -> [Any]! {
-        return []
-    }
+        return button
+    }()
+    
+    private lazy var commentCountLabel: UILabel = {
+        let label = UILabel()
+        label.text = Constant.defaultCommentCount
+        label.textColor = .gray300
+        label.font = .pretendard(size: 14, weightName: .medium)
+        label.isHidden = true
+
+        return label
+    }()
+    
+    private lazy var communityGuideButton: UIButton = {
+        let icon = UIImage(named: "infoIcon")
+        let button = UIButton(frame: .zero)
+        button.setImage(icon, for: .normal)
+        button.setTitle(Constant.communityButtonTitle, for: .normal)
+        button.setTitleColor(.gray200, for: .normal)
+        button.titleLabel?.font = .pretendard(size: 12, weightName: .semiBold)
+        button.backgroundColor = .gray700
+        button.layer.cornerRadius = 15
+        button.clipsToBounds = false
+
+        return button
+    }()
+    
+    private let dropButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("드랍하기", for: .normal)
+        button.setTitleColor(.gray400, for: .normal)
+        button.titleLabel?.font = .pretendard(size: 16, weightName: .bold)
+        button.layer.cornerRadius = 10
+        button.backgroundColor = .gray300
+        button.isEnabled = false
+
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindAction()
         bindViewModel()
         configureUI()
         
@@ -127,10 +191,66 @@ final class ShareViewController: UIViewController {
         guard let extensionItem = extensionContext?.inputItems.first as? NSExtensionItem else { return }
         handleExtensionItem(extensionItem)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupPlaceHolder()
     }
 }
 
 private extension ShareViewController {
+    func bindAction() {
+        // 코멘트 플레이스홀더, 글자수라벨 설치, 줄 수 제한, 커멘트있을때만 드랍가능
+        commentTextView.rx.didBeginEditing
+            .subscribe { [weak self] element in
+                self?.removePlaceHolder()
+                self?.commentCountLabel.isHidden = false
+                self?.commentClearButton.isHidden = false
+                self?.commentClearButton.isEnabled = true
+                self?.commentView.layer.borderColor = UIColor.darkPrimary_25.cgColor
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.didEndEditing
+            .subscribe { [weak self] element in
+                self?.setupPlaceHolder()
+                self?.commentClearButton.isHidden = true
+                self?.commentClearButton.isEnabled = false
+                self?.commentView.layer.borderColor = UIColor.gray700.cgColor
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.didChange
+            .subscribe { [weak self] _ in
+                self?.checkMaxCount(max: 40)
+                self?.checkAvailableToDrop()
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.willBeginDragging
+            .subscribe { [weak self] _ in
+                self?.commentView.layer.borderColor = UIColor.darkPrimary_25.cgColor
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.didEndDragging
+            .subscribe { [weak self] _ in
+                self?.commentView.layer.borderColor = UIColor.gray700.cgColor
+            }.disposed(by: disposeBag)
+
+        commentTextView.rx.text.orEmpty
+            .asObservable()
+            .bind { [weak self] text in
+                guard text != Constant.commentPlaceHolder,
+                      !text.isEmpty else { return }
+                self?.commentCountLabel.text = "\(text.count)/40"
+                self?.commentView.layer.borderColor = text.count < 40
+                ? UIColor.darkPrimary_25.cgColor
+                : UIColor.systemCritical.cgColor
+            }.disposed(by: disposeBag)
+
+        commentClearButton.rx.tap
+            .bind { [weak self] in
+                self?.commentTextView.text = nil
+            }.disposed(by: disposeBag)
+    }
+    
     func bindViewModel() {
         let input: ShareViewModel.Input = .init(
             viewDidLoadEvent: .just(Void()),
@@ -171,9 +291,18 @@ private extension ShareViewController {
             belowArrow,
             albumCoverImageView,
             songNameLabel,
-            artistNameLabel
+            artistNameLabel,
+            commentView
         ].forEach {
             containerView.addSubview($0)
+        }
+        
+        [
+            commentTextView,
+            commentCountLabel,
+            commentClearButton
+        ].forEach {
+            commentView.addSubview($0)
         }
         
         villageNameLabel.snp.makeConstraints {
@@ -212,6 +341,28 @@ private extension ShareViewController {
             $0.height.equalTo(16)
             $0.top.equalTo(songNameLabel.snp.bottom).offset(2)
             $0.horizontalEdges.equalToSuperview()
+        }
+        
+        commentView.snp.makeConstraints {
+            $0.top.equalTo(artistNameLabel.snp.bottom).offset(24)
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(112)
+        }
+        
+        commentTextView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(12)
+            $0.leading.equalToSuperview().inset(16)
+            $0.trailing.equalToSuperview().inset(16+40+4) // inset+countLabel+spacing
+        }
+        
+        commentClearButton.snp.makeConstraints {
+            $0.top.trailing.equalToSuperview().inset(16)
+            $0.width.height.equalTo(20)
+        }
+
+        commentCountLabel.snp.makeConstraints {
+            $0.trailing.equalTo(commentView.snp.trailing).inset(16)
+            $0.bottom.equalTo(commentView.snp.bottom).inset(16)
         }
     }
 }
@@ -266,5 +417,63 @@ private extension ShareViewController {
             return nil
         }
         return queryItems.first(where: { $0.name == "v" })?.value
+    }
+    
+    func setupPlaceHolder() {
+        let placeHolder: String = Constant.commentPlaceHolder
+
+        if(commentTextView.text == nil || commentTextView.text == "") {
+            commentTextView.text = placeHolder
+            commentTextView.textColor = .gray300
+        }
+    }
+
+    func removePlaceHolder() {
+        let placeHolder: String = Constant.commentPlaceHolder
+
+        if(commentTextView.text == placeHolder) {
+            commentTextView.text = nil
+            commentTextView.textColor = .gray100
+        }
+    }
+
+    func checkMaxCount(max: Int) {
+        let count = commentTextView.text.count
+
+        if count > max {
+            commentTextView.text = String(commentTextView.text.prefix(40))
+        }
+    }
+
+    func checkAvailableToDrop() {
+        let placeHolder: String = Constant.commentPlaceHolder
+
+        if(commentTextView.text != nil
+           && commentTextView.text != ""
+           && commentTextView.text != placeHolder
+        ) {
+            dropButton.isEnabled = true
+            dropButton.backgroundColor = .primary500
+            dropButton.setTitleColor(.gray900, for: .normal)
+        } else {
+            dropButton.isEnabled = false
+            dropButton.setTitleColor(
+                .gray400,
+                for: .normal
+            )
+            dropButton.backgroundColor = .gray300
+        }
+    }
+}
+
+// MARK: - UITextViewDelegate
+extension ShareViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            view.endEditing(true)
+            return false
+        }
+        
+        return true
     }
 }
