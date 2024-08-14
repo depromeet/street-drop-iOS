@@ -7,6 +7,7 @@
 
 import UIKit
 import Social
+import SafariServices
 
 import Kingfisher
 import RxSwift
@@ -169,6 +170,8 @@ final class ShareViewController: UIViewController {
         return button
     }()
     
+    private lazy var communityGuideDetailView: CommunityGuideDetailView = .init()
+    
     private let dropButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("드랍하기", for: .normal)
@@ -250,6 +253,26 @@ private extension ShareViewController {
             .bind { [weak self] in
                 self?.commentTextView.text = nil
             }.disposed(by: disposeBag)
+        
+        communityGuideButton.rx.tap
+            .bind { [weak self] in
+                guard let self = self else { return }
+                self.endEditing()
+
+                UIView.animate(withDuration: 0.3) {
+                    let isHidden: Bool = (self.communityGuideDetailView.alpha == 0)
+                    self.communityGuideDetailView.alpha = isHidden ? 1 : 0
+                    self.communityGuideDetailView.isUserInteractionEnabled = isHidden ? true : false
+                }
+            }.disposed(by: disposeBag)
+        
+        communityGuideDetailView.shareExtensionCompletionEvent
+            .bind(with: self) { owner, url in
+                let safariVC = SFSafariViewController(url: url)
+                owner.present(safariVC, animated: true, completion: nil)
+            }
+            .disposed(by: disposeBag)
+            
     }
     
     func bindViewModel() {
@@ -293,7 +316,9 @@ private extension ShareViewController {
             albumCoverImageView,
             songNameLabel,
             artistNameLabel,
-            commentView
+            commentView,
+            communityGuideButton,
+            communityGuideDetailView
         ].forEach {
             containerView.addSubview($0)
         }
@@ -364,6 +389,18 @@ private extension ShareViewController {
         commentCountLabel.snp.makeConstraints {
             $0.trailing.equalTo(commentView.snp.trailing).inset(16)
             $0.bottom.equalTo(commentView.snp.bottom).inset(16)
+        }
+        
+        communityGuideButton.snp.makeConstraints {
+            $0.width.equalTo(120)
+            $0.height.equalTo(32)
+            $0.leading.equalToSuperview().inset(24)
+            $0.top.equalTo(commentView.snp.bottom).offset(16)
+        }
+        
+        communityGuideDetailView.snp.makeConstraints {
+            $0.leading.equalTo(communityGuideButton)
+            $0.top.equalTo(communityGuideButton.snp.bottom).offset(8+8) // spacing + 말풍선꼬리높이
         }
     }
 }
@@ -502,6 +539,10 @@ private extension ShareViewController {
 
                 $0.height.equalTo(view.bounds.height)
             }
+            
+            communityGuideDetailView.alpha = 0
+            communityGuideDetailView.isUserInteractionEnabled = false
+            
             view.layoutIfNeeded()
         }
     }
@@ -514,5 +555,9 @@ private extension ShareViewController {
             }
             self?.view.layoutIfNeeded()
         }
+    }
+    
+    @objc func endEditing() {
+        self.view.endEditing(true)
     }
 }

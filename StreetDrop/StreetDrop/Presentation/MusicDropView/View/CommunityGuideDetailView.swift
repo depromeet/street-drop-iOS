@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import Social
 
 import RxSwift
+import RxRelay
 
 class CommunityGuideDetailView: UIView {
 
@@ -17,6 +19,7 @@ class CommunityGuideDetailView: UIView {
     }
 
     let disposeBag: DisposeBag = DisposeBag()
+    let shareExtensionCompletionEvent: PublishRelay<URL> = .init()
 
     //MARK: - UI 요소
 
@@ -69,14 +72,19 @@ private extension CommunityGuideDetailView {
 
     func bindAction() {
         detailGuideLinkButton.rx.tap
-            .bind {
+            .bind(with: self) { owner, _ in
                 guard let url = URL(
                     string: "https://unruly-case-46b.notion.site/4244aa9e3aff4977a2c076d2f1d78df8"
                 ) else {
                     return
                 }
-
+#if SHARE_EXTENSION_TARGET
+                owner.shareExtensionCompletionEvent.accept(url)
+#else
+                // 기본 동작 또는 다른 타겟의 경우
                 UIApplication.shared.open(url)
+#endif
+                
             }.disposed(by: disposeBag)
     }
 
