@@ -389,6 +389,7 @@
 		C434A4D82A17AAAB00C63526 /* SearchingMusicViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */; };
 		C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
 		C434A4DD2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
+		C44442F32C6C7CA700CA93EA /* CommunityGuideDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41589AB92A474B3D0029A2EE /* CommunityGuideDetailView.swift */; };
 		C44980782BC37CB70001E6C3 /* NaverMaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = C44980772BC37CB70001E6C3 /* NaverMaps.plist */; };
 		C449807A2BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44980792BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift */; };
 		C449807C2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C449807B2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift */; };
@@ -2881,6 +2882,7 @@
 				C432DF362C69F7F3003DBA18 /* DefaultMainRepository.swift in Sources */,
 				C432DF372C69F7F3003DBA18 /* DefaultSearchingMusicRepository.swift in Sources */,
 				C432DF382C69F7F3003DBA18 /* DefaultFCMRepository.swift in Sources */,
+				C44442F32C6C7CA700CA93EA /* CommunityGuideDetailView.swift in Sources */,
 				C432DF392C69F7F3003DBA18 /* DefaultNoticeRepository.swift in Sources */,
 				C432DF3A2C69F7F3003DBA18 /* DefaultSettingsRepository.swift in Sources */,
 				C432DF3B2C69F7F3003DBA18 /* DefaultMyPageRepository.swift in Sources */,
@@ -3261,7 +3263,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.StreetDropDebug.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3295,7 +3297,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.StreetDropRelease.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
