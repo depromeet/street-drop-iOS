@@ -184,6 +184,18 @@ final class ShareViewController: UIViewController {
         return button
     }()
     
+    private let dropButtonOnKeyBoard: UIButton = {
+        let button: UIButton = .init(type: .system)
+        button.setTitle("드랍하기", for: .normal)
+        button.setTitleColor(.gray900, for: .normal)
+        button.titleLabel?.font = .pretendard(size: 16, weight: 700)
+        button.backgroundColor = .primary500
+        button.isEnabled = false
+        button.isHidden = true
+        
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bindAction()
@@ -252,6 +264,7 @@ private extension ShareViewController {
         commentClearButton.rx.tap
             .bind { [weak self] in
                 self?.commentTextView.text = nil
+                self?.checkAvailableToDrop()
             }.disposed(by: disposeBag)
         
         communityGuideButton.rx.tap
@@ -318,7 +331,9 @@ private extension ShareViewController {
             artistNameLabel,
             commentView,
             communityGuideButton,
-            communityGuideDetailView
+            communityGuideDetailView,
+            dropButton,
+            dropButtonOnKeyBoard
         ].forEach {
             containerView.addSubview($0)
         }
@@ -401,6 +416,17 @@ private extension ShareViewController {
         communityGuideDetailView.snp.makeConstraints {
             $0.leading.equalTo(communityGuideButton)
             $0.top.equalTo(communityGuideButton.snp.bottom).offset(8+8) // spacing + 말풍선꼬리높이
+        }
+        
+        dropButton.snp.makeConstraints {
+            $0.height.equalTo(56)
+            $0.horizontalEdges.equalToSuperview().inset(24)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(16)
+        }
+        
+        dropButtonOnKeyBoard.snp.makeConstraints {
+            $0.height.equalTo(56)
+            $0.horizontalEdges.equalToSuperview()
         }
     }
 }
@@ -490,16 +516,20 @@ private extension ShareViewController {
            && commentTextView.text != ""
            && commentTextView.text != placeHolder
         ) {
-            dropButton.isEnabled = true
-            dropButton.backgroundColor = .primary500
-            dropButton.setTitleColor(.gray900, for: .normal)
+            [dropButton, dropButtonOnKeyBoard].forEach {
+                $0.isEnabled = true
+                $0.backgroundColor = .primary500
+                $0.setTitleColor(.gray900, for: .normal)
+            }
         } else {
-            dropButton.isEnabled = false
-            dropButton.setTitleColor(
-                .gray400,
-                for: .normal
-            )
-            dropButton.backgroundColor = .gray300
+            [dropButton, dropButtonOnKeyBoard].forEach {
+                $0.isEnabled = false
+                $0.setTitleColor(
+                    .gray400,
+                    for: .normal
+                )
+                $0.backgroundColor = .gray300
+            }
         }
     }
 }
@@ -545,14 +575,26 @@ private extension ShareViewController {
             
             view.layoutIfNeeded()
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35, execute: { [weak self] in
+            guard let self = self,
+                  let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+            else { return }
+            // 키보드의 위치에 맞게 버튼 위치 조정
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            dropButtonOnKeyBoard.isHidden = false
+            checkAvailableToDrop()
+            dropButtonOnKeyBoard.frame.origin.y = view.frame.height - keyboardHeight - 56
+        })
+        
     }
 
     @objc func keyboardWillHide() {
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.containerView.snp.updateConstraints {
-                let screenHeight = UIScreen.main.bounds.height
                 $0.height.equalTo(596)
             }
+            self?.dropButtonOnKeyBoard.isHidden = true
             self?.view.layoutIfNeeded()
         }
     }
