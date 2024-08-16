@@ -34,6 +34,7 @@ final class MainViewModel: ViewModel {
     private let fetchingMusicWithinArea: FetchingMusicWithinArea
     private let fetchingPopUpInfomationUseCase: FetchingPopUpInfomationUseCase
     private let postingPopUpUserReadingUseCase: PostingPopUpUserReadingUseCase
+    private let recommendMusicUsecase: RecommendMusicUsecase
     
     var locationManager = LocationManager()
     private let locationUpdated = PublishRelay<Void>()
@@ -46,7 +47,8 @@ final class MainViewModel: ViewModel {
         fetchingMusicWithinArea: FetchingMusicWithinArea = DefaultFetchingMusicWithinArea(),
         fetchingSingleMusicUseCase: FetchingSingleMusicUseCase = DefaultFetchingSingleMusicUseCase(),
         fetchingPopUpInfomationUseCase: FetchingPopUpInfomationUseCase = DefaultFetchingPopUpInfomationUseCase(),
-        postingPopUpUserReadingUseCase: PostingPopUpUserReadingUseCase = DefaultPostingPopUpUserReadingUseCase()
+        postingPopUpUserReadingUseCase: PostingPopUpUserReadingUseCase = DefaultPostingPopUpUserReadingUseCase(),
+        recommendMusicUsecase: RecommendMusicUsecase = DefaultRecommendMusicUsecase()
     ) {
         self.userCircleRadius = userCircleRadius
         self.myInfoUseCase = myInfoUseCase
@@ -55,6 +57,7 @@ final class MainViewModel: ViewModel {
         self.fetchingMusicWithinArea = fetchingMusicWithinArea
         self.fetchingPopUpInfomationUseCase = fetchingPopUpInfomationUseCase
         self.postingPopUpUserReadingUseCase = postingPopUpUserReadingUseCase
+        self.recommendMusicUsecase = recommendMusicUsecase
         self.locationManager.delegate = self
     }
 }
@@ -78,7 +81,7 @@ extension MainViewModel {
         let musicWithinArea = BehaviorRelay<Musics>(value: [])
         let cameraShouldGoCurrentLocation = PublishRelay<CLLocation>()
         let tappedPOIIndex = PublishRelay<Int>()
-        let showFirstComment = PublishRelay<Void>()
+        let showFirstComment = PublishRelay<String>()
         let presentSharedMusicView = PublishRelay<Int>()
         
         let tipPopUpShowRelay: PublishRelay<PopUpInfomation> = .init()
@@ -110,7 +113,7 @@ extension MainViewModel {
                 owner.output.cameraShouldGoCurrentLocation.accept(self.location)
                 owner.fetchMusicWithArea(output: owner.output, disposedBag: disposedBag)
                 owner.fetchMyInfoAndSave(disposedBag: disposedBag)
-                owner.checkAppFirstLaunched(output: owner.output)
+                owner.fetchPromptOfTheDay(output: owner.output, disposedBag: disposedBag)
                 owner.checkUniversialLinkRemained(output: owner.output)
             }
             .disposed(by: disposedBag)
@@ -125,7 +128,6 @@ extension MainViewModel {
                         print(error.localizedDescription)
                     }
                     .disposed(by: disposedBag)
-
             }
             .disposed(by: disposedBag)
         
@@ -312,10 +314,22 @@ private extension MainViewModel {
             .disposed(by: disposedBag)
     }
     
-    func checkAppFirstLaunched(output: Output) {
-        let isLaunchedBefore = myInfoUseCase.checkLaunchedBefore()
-        if isLaunchedBefore == false {
-            output.showFirstComment.accept(Void())
+    func fetchPromptOfTheDay(output: Output, disposedBag: DisposeBag) {
+        recommendMusicUsecase.getPromptOfTheDay().subscribe { [weak self] result in
+            switch result {
+            case .success(let prompt):
+                self?.showPromptIfFirstLaunchedToday(prompt: prompt, output: output)
+            case .failure(let error):
+                print(error)
+            }
+        }
+        .disposed(by: disposedBag)
+    }
+    
+    func showPromptIfFirstLaunchedToday(prompt: String, output: Output) {
+        let isFirstLaunchToday = myInfoUseCase.checkFirstLaunchToday()
+        if isFirstLaunchToday {
+            output.showFirstComment.accept(prompt)
         }
     }
     

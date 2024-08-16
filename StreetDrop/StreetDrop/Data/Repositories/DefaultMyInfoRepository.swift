@@ -59,4 +59,15 @@ final class DefaultMyInfoRepository: MyInfoRepository {
             return Double(dto.distance)
         }
     }
+    
+    func checkFirstLaunchToday() -> Bool {
+        let lastLaunchDate = myInfoStorage.fetchLastLaunchDate()
+        myInfoStorage.saveLastLaunchDate(Date())
+        
+        if let lastLaunchDate {
+            return !Calendar.current.isDateInToday(lastLaunchDate)
+        } else {
+            return true
+        }
+    }
 }

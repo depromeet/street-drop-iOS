@@ -58,4 +58,12 @@ extension UserDefaultsMyInfoStorage: MyInfoStorage {
     func saveLastSeenNoticeId(_ noticeId: Int) {
         userDefaults.set(noticeId, forKey: UserDefaultKey.lastSeenNoticeId)
     }
+    
+    func fetchLastLaunchDate() -> Date? {
+        userDefaults.object(forKey: UserDefaultKey.lastLaunchDate) as? Date
+    }
+    
+    func saveLastLaunchDate(_ lastLaunchDate: Date) {
+        userDefaults.set(lastLaunchDate, forKey: UserDefaultKey.lastLaunchDate)
+    }
 }
