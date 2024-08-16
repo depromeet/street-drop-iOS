@@ -401,6 +401,8 @@
 		C44A549A2BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A54992BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift */; };
 		C44A549C2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A549B2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift */; };
 		C44A549E2BBC0DC500354F8F /* TipPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A549D2BBC0DC500354F8F /* TipPopUpViewController.swift */; };
+		C44DE1F92C6EDC04004F211C /* ReSearchingMusicForSharingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DE1F82C6EDC04004F211C /* ReSearchingMusicForSharingView.swift */; };
+		C44DE1FB2C6EE07D004F211C /* ReSearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DE1FA2C6EE07D004F211C /* ReSearchingMusicTableViewCell.swift */; };
 		C45A4CB02A3710AC00EE9C36 /* ImageCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */; };
 		C45BF3972A1D0ADF00CEDE74 /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */; };
 		C45BF39E2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */; };
@@ -741,6 +743,8 @@
 		C44A54992BBC097E00354F8F /* FetchingPopUpInfomationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingPopUpInfomationUseCase.swift; sourceTree = "<group>"; };
 		C44A549B2BBC099E00354F8F /* DefaultFetchingPopUpInfomationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingPopUpInfomationUseCase.swift; sourceTree = "<group>"; };
 		C44A549D2BBC0DC500354F8F /* TipPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipPopUpViewController.swift; sourceTree = "<group>"; };
+		C44DE1F82C6EDC04004F211C /* ReSearchingMusicForSharingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReSearchingMusicForSharingView.swift; sourceTree = "<group>"; };
+		C44DE1FA2C6EE07D004F211C /* ReSearchingMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReSearchingMusicTableViewCell.swift; sourceTree = "<group>"; };
 		C45A4CAF2A3710AC00EE9C36 /* ImageCacheError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheError.swift; sourceTree = "<group>"; };
 		C45BF3962A1D0ADF00CEDE74 /* UserDefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKey.swift; sourceTree = "<group>"; };
 		C45BF39D2A1D113200CEDE74 /* UserDefaultsRecentMusicSearches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRecentMusicSearches.swift; sourceTree = "<group>"; };
@@ -1768,6 +1772,7 @@
 			isa = PBXGroup;
 			children = (
 				C42182BC2C697F9700B73A99 /* ShareViewController.swift */,
+				C44DE1FC2C6EE089004F211C /* ReSearchingMusic */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1834,6 +1839,15 @@
 				C44980792BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift */,
 			);
 			path = PopUp;
+			sourceTree = "<group>";
+		};
+		C44DE1FC2C6EE089004F211C /* ReSearchingMusic */ = {
+			isa = PBXGroup;
+			children = (
+				C44DE1F82C6EDC04004F211C /* ReSearchingMusicForSharingView.swift */,
+				C44DE1FA2C6EE07D004F211C /* ReSearchingMusicTableViewCell.swift */,
+			);
+			path = ReSearchingMusic;
 			sourceTree = "<group>";
 		};
 		C45BF3982A1D0AE200CEDE74 /* Constant */ = {
@@ -2904,6 +2918,7 @@
 				C432DF4B2C69F7F3003DBA18 /* Music.swift in Sources */,
 				C432DF4C2C69F7F3003DBA18 /* RecommendMusic.swift in Sources */,
 				C432DF4D2C69F7F3003DBA18 /* ModalOption.swift in Sources */,
+				C44DE1F92C6EDC04004F211C /* ReSearchingMusicForSharingView.swift in Sources */,
 				C432DF4E2C69F7F3003DBA18 /* MyLevelProgress.swift in Sources */,
 				C432DF4F2C69F7F3003DBA18 /* LevelPolicy.swift in Sources */,
 				C432DF502C69F7F3003DBA18 /* PopUpInfomation.swift in Sources */,
@@ -2930,6 +2945,7 @@
 				C432DF652C69F7F3003DBA18 /* DefaultClaimingCommentUseCase.swift in Sources */,
 				C432DF662C69F7F3003DBA18 /* DeletingMusicUseCase.swift in Sources */,
 				C432DF672C69F7F3003DBA18 /* DefaultDeletingMusicUseCase.swift in Sources */,
+				C44DE1FB2C6EE07D004F211C /* ReSearchingMusicTableViewCell.swift in Sources */,
 				C432DF682C69F7F3003DBA18 /* BlockUserUseCase.swift in Sources */,
 				C432DF692C69F7F3003DBA18 /* DefaultBlockUserUseCase.swift in Sources */,
 				C432DF6A2C69F7F3003DBA18 /* FetchingMyInfoUseCase.swift in Sources */,
