@@ -23,6 +23,7 @@ final class ShareViewModel: NSObject, ShareViewModelType {
     private let locationManger: CLLocationManager = .init()
     private let searchMusicUsecase: SearchMusicUsecase
     private let disposeBag: DisposeBag = .init()
+    var sharedSongName: String = ""
     
     init(searchMusicUsecase: SearchMusicUsecase = DefaultSearchingMusicUsecase()) {
         self.searchMusicUsecase = searchMusicUsecase
@@ -31,6 +32,7 @@ final class ShareViewModel: NSObject, ShareViewModelType {
     struct Input {
         let viewDidLoadEvent: Observable<Void>
         let sharedMusicKeyWordEvent: Observable<String>
+        let changingMusicViewClickEvent: Observable<Void>
     }
     
     struct Output {
@@ -41,6 +43,10 @@ final class ShareViewModel: NSObject, ShareViewModelType {
         fileprivate let showSearchedMusicRelay: PublishRelay<Music> = .init()
         var showSearchedMusic: Observable<Music> {
             showSearchedMusicRelay.asObservable()
+        }
+        fileprivate let showReSearchedMusicListRelay: PublishRelay<[Music]> = .init()
+        var showReSearchedMusicList: Observable<[Music]> {
+            showReSearchedMusicListRelay.asObservable()
         }
     }
     
@@ -66,6 +72,19 @@ final class ShareViewModel: NSObject, ShareViewModelType {
                         
                     }
                     .disposed(by: disposedBag)
+            }
+            .disposed(by: disposedBag)
+        
+        input.changingMusicViewClickEvent
+            .bind(with: self) { owner, _ in
+                owner.searchMusicUsecase.searchMusic(keyword: owner.sharedSongName)
+                    .subscribe(with: self) { owner, musicList in
+                        owner.output.showReSearchedMusicListRelay.accept(musicList)
+                    } onFailure: { owner, error in
+                        // TODO: 요셉, 실패 팝업 띄우기
+                    }
+                    .disposed(by: disposedBag)
+
             }
             .disposed(by: disposedBag)
         

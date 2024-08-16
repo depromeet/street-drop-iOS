@@ -12,6 +12,7 @@ import SafariServices
 import Kingfisher
 import RxSwift
 import RxRelay
+import RxGesture
 import SnapKit
 
 final class ShareViewController: UIViewController {
@@ -196,6 +197,17 @@ final class ShareViewController: UIViewController {
         return button
     }()
     
+    private let reSearchingMusicForSharingView: ReSearchingMusicForSharingView = {
+        let reSearchingMusicForSharingView: ReSearchingMusicForSharingView = .init()
+        reSearchingMusicForSharingView.isHidden = true
+        reSearchingMusicForSharingView.backgroundColor = .gray800
+        reSearchingMusicForSharingView.layer.cornerRadius = 20
+        reSearchingMusicForSharingView.layer.borderWidth = 1
+        reSearchingMusicForSharingView.layer.borderColor = UIColor.gray600.cgColor
+        
+        return reSearchingMusicForSharingView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bindAction()
@@ -291,7 +303,8 @@ private extension ShareViewController {
     func bindViewModel() {
         let input: ShareViewModel.Input = .init(
             viewDidLoadEvent: .just(Void()),
-            sharedMusicKeyWordEvent: sharedMusicKeyWordEvent.asObservable()
+            sharedMusicKeyWordEvent: sharedMusicKeyWordEvent.asObservable(),
+            changingMusicViewClickEvent: changingMusicView.rx.tapGesture().asObservable().mapVoid()
         )
         let output: ShareViewModel.Output = viewModel.convert(
             input: input,
@@ -311,15 +324,32 @@ private extension ShareViewController {
                 owner.artistNameLabel.text = music.artistName
             }
             .disposed(by: disposeBag)
+        
+        output.showReSearchedMusicList
+            .bind(with: self) { owner, musicList in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: { [weak self] in
+                    guard let self = self else { return }
+                    containerView.isHidden = true
+                    reSearchingMusicForSharingView.isHidden = false
+                    view.layoutIfNeeded()
+                })
+                owner.reSearchingMusicForSharingView.settingMusicDataRelay.accept(musicList)
+            }
+            .disposed(by: disposeBag)
     }
     
     func configureUI() {
         view.addSubview(containerView)
+        view.addSubview(reSearchingMusicForSharingView)
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
         containerView.snp.makeConstraints {
             $0.height.equalTo(596)
             $0.horizontalEdges.bottom.equalToSuperview()
+        }
+        
+        reSearchingMusicForSharingView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
         [
@@ -440,6 +470,7 @@ private extension ShareViewController {
         
         fetchVideoDetails(videoID: videoID) { [weak self] songName, artistName in
             self?.sharedMusicKeyWordEvent.accept("\(songName ?? "")-\(artistName ?? "")")
+            self?.viewModel.sharedSongName = songName ?? ""
         }
     }
     
