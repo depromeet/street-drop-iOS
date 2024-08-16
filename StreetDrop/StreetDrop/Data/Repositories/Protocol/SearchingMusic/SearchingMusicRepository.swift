@@ -15,4 +15,5 @@ protocol SearchingMusicRepository {
     func fetchRecommendMusicQueries() -> Single<RecommendMusic>
     func fetchRecentMusicQueries() -> Single<[String]>
     func fetchVillageName(latitude: Double, longitude: Double) -> Single<String>
+    func deleteRecentMusicQueries(keyword: String) async
 }
