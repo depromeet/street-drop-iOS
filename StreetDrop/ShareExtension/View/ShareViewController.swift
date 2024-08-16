@@ -323,6 +323,7 @@ private extension ShareViewController {
         }
         
         [
+            dropButton,
             villageNameLabel,
             changingMusicView,
             belowArrow,
@@ -332,7 +333,6 @@ private extension ShareViewController {
             commentView,
             communityGuideButton,
             communityGuideDetailView,
-            dropButton,
             dropButtonOnKeyBoard
         ].forEach {
             containerView.addSubview($0)
