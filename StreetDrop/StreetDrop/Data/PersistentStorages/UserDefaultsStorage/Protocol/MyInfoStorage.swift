@@ -16,4 +16,6 @@ protocol MyInfoStorage {
     func saveLauchedBefore(_ launchedBefore: Bool)
     func fetchLastSeenNoticeId() -> Int?
     func saveLastSeenNoticeId(_ noticeId: Int)
+    func fetchLastLaunchDate() -> Date?
+    func saveLastLaunchDate(_ lastLaunchDate: Date)
 }
