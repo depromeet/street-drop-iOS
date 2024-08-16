@@ -23,6 +23,7 @@ final class ReSearchingMusicForSharingView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        bindAction()
         bindData()
         configureUI()
     }
@@ -114,6 +115,21 @@ final class ReSearchingMusicForSharingView: UIView {
 }
 
 private extension ReSearchingMusicForSharingView {
+    func bindAction() {
+        searchTextField.rx.text.orEmpty
+            .filter { $0.isEmpty }
+            .map { _ in }
+            .bind(with: self) { owner, _ in
+                owner.settingMusicDataRelay.accept([])
+            }
+            .disposed(by: disposeBag)
+        
+        searchTextField.rx.controlEvent(.editingDidEndOnExit)
+            .compactMap { [weak self] in self?.searchTextField.text ?? "" }
+            .bind(to: reSearchingEventRelay)
+            .disposed(by: disposeBag)
+    }
+    
     func bindData() {
         settingMusicDataRelay
             .bind(

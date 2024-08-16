@@ -33,6 +33,7 @@ final class ShareViewModel: NSObject, ShareViewModelType {
         let viewDidLoadEvent: Observable<Void>
         let sharedMusicKeyWordEvent: Observable<String>
         let changingMusicViewClickEvent: Observable<Void>
+        let reSearchingEvent: Observable<String>
     }
     
     struct Output {
@@ -77,18 +78,29 @@ final class ShareViewModel: NSObject, ShareViewModelType {
         
         input.changingMusicViewClickEvent
             .bind(with: self) { owner, _ in
-                owner.searchMusicUsecase.searchMusic(keyword: owner.sharedSongName)
-                    .subscribe(with: self) { owner, musicList in
-                        owner.output.showReSearchedMusicListRelay.accept(musicList)
-                    } onFailure: { owner, error in
-                        // TODO: 요셉, 실패 팝업 띄우기
-                    }
-                    .disposed(by: disposedBag)
-
+                owner.reSearchMusic(keyword: owner.sharedSongName, disposeBag: disposedBag)
+            }
+            .disposed(by: disposedBag)
+        
+        input.reSearchingEvent
+            .bind(with: self) { owner, reSearchingKeyword in
+                owner.reSearchMusic(keyword: reSearchingKeyword, disposeBag: disposedBag)
             }
             .disposed(by: disposedBag)
         
         return output
+    }
+}
+
+private extension ShareViewModel {
+    func reSearchMusic(keyword: String, disposeBag: DisposeBag) {
+        searchMusicUsecase.searchMusic(keyword: keyword)
+            .subscribe(with: self) { owner, musicList in
+                owner.output.showReSearchedMusicListRelay.accept(musicList)
+            } onFailure: { owner, error in
+                // TODO: 요셉, 실패 팝업 띄우기
+            }
+            .disposed(by: disposeBag)
     }
 }
 
