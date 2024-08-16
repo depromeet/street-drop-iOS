@@ -100,12 +100,10 @@ private extension EditCommentViewController {
     //MARK: - UI
 
     func configureUI() {
-        self.cancelButton.setTitle(Constant.empty, for: .normal)
         self.dropButton.setTitle(Constant.editButtonDisabledTitle, for: .disabled)
         self.dropButton.setTitle(Constant.editButtonNormalTitle, for: .normal)
         self.backButton.setTitle(Constant.empty, for: .normal)
         self.locationLabel.isHidden = true
-        self.cancelButton.setTitle(Constant.empty, for: .normal)
 
         self.topView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {

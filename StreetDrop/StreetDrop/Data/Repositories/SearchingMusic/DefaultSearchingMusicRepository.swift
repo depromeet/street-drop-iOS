@@ -80,4 +80,10 @@ final class DefaultSearchingMusicRepository: SearchingMusicRepository {
             responseType: String.self
         )
     }
+    
+    func deleteRecentMusicQueries(keyword: String) async {
+        await self.recentMusicQueriesPersistentStorage.deleteRecentQuery(
+            query: RecentMusicQueryDTO(query: keyword)
+        )
+    }
 }

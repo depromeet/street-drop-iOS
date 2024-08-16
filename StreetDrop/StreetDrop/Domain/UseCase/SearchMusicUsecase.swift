@@ -15,6 +15,7 @@ protocol SearchMusicUsecase {
     func getRecentSearches() -> Single<[String]>
     func getVillageName(latitude: Double, longitude: Double) -> Single<String>
     func fetchRecommendSearch() -> Single<RecommendMusic>
+    func deleteRecentSearch(keyword: String) async
 }
 
 final class DefaultSearchingMusicUsecase: SearchMusicUsecase {
@@ -43,5 +44,9 @@ final class DefaultSearchingMusicUsecase: SearchMusicUsecase {
 
     func fetchRecommendSearch() -> Single<RecommendMusic> {
         return self.searchingMusicRepository.fetchRecommendMusicQueries()
+    }
+    
+    func deleteRecentSearch(keyword: String) async {
+        await self.searchingMusicRepository.deleteRecentMusicQueries(keyword: keyword)
     }
 }

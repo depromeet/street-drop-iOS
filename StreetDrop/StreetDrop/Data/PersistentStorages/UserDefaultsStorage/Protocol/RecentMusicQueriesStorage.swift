@@ -16,6 +16,7 @@ protocol RecentMusicQueriesStorage {
         query: RecentMusicQueryDTO,
         completion: @escaping (Result<RecentMusicQueryDTO, Error>) -> Void
     )
+    func deleteRecentQuery(query: RecentMusicQueryDTO) async
 }
 
 protocol RecommendMusicQueriesStorage {

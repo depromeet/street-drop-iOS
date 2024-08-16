@@ -8,8 +8,6 @@
 import UIKit
 
 class GuideDetailView: UIView {
-    private let text: String
-
     private lazy var speechBubblePointImageView: UIImageView = {
         let speechBubblePointImage = UIImage(named: "speechBubblePoint")
         let imageView = UIImageView(image: speechBubblePointImage)
@@ -19,7 +17,6 @@ class GuideDetailView: UIView {
 
     private lazy var guideLabel: UILabel = {
         let label = UILabel()
-        label.text = self.text
         label.font = .pretendard(size: 12, weightName: .medium)
         label.numberOfLines = 0
         label.textColor = .gray200
@@ -27,10 +24,13 @@ class GuideDetailView: UIView {
         return label
     }()
 
-    init(text: String) {
-        self.text = text
+    init() {
         super.init(frame: .zero)
         configureUI()
+    }
+    
+    func configureText(_ text: String) {
+        guideLabel.text = text
     }
 
     @available(*, unavailable)
