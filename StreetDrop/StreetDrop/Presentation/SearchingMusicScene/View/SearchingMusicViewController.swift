@@ -104,12 +104,6 @@ final class SearchingMusicViewController: UIViewController {
         let textField: UITextField = UITextField()
         textField.font = .pretendard(size: 14, weightName: .medium)
         textField.backgroundColor = UIColor.gray700
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "드랍할 음악 검색",
-            attributes: [
-                .foregroundColor: UIColor.gray300
-            ]
-        )
         textField.textColor = UIColor.gray100
         textField.layer.cornerRadius = 8.0
         
@@ -601,6 +595,12 @@ private extension SearchingMusicViewController {
             }
             .disposed(by: disposeBag)
         
+        output.promptOfTheDay
+            .bind { [weak self] prompt in
+                self?.configureSearchBarPlaceholder(with: prompt)
+            }
+            .disposed(by: disposeBag)
+        
         Observable.combineLatest(
             output.recentMusicQueries,
             output.trendingMusicList,
@@ -666,10 +666,8 @@ private extension SearchingMusicViewController {
         }
         
         self.searchView.snp.makeConstraints {
-            // TODO: 56 -> 60으로 바꼈는지 추후에 피그마 확인
-            $0.height.equalTo(56)
+            $0.height.equalTo(60)
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.top.equalTo(bannerView.snp.bottom).offset(10)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
         }

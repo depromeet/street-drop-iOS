@@ -83,7 +83,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
                         case .success(let prompt):
                             output.promptOfTheDay.accept(prompt)
                         case .failure(_):
-                            output.mostDroppedMusicList.accept([])
+                            output.promptOfTheDay.accept("드랍할 음악 검색")
                         }
                     }
                     .disposed(by: disposedBag)
