@@ -44,8 +44,7 @@ final class RecentQueryCell: UICollectionViewCell {
     private lazy var deletingButton: UIButton = {
         let button = UIButton()
         button.setImage(
-            // TODO: jihye - figma image update
-            UIImage(named: "deletingQuery")?.withRenderingMode(.alwaysTemplate),
+            UIImage(named: "delete"),
             for: .normal
         )
         button.tintColor = .gray400

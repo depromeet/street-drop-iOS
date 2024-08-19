@@ -357,7 +357,7 @@ private extension MainViewController {
         self.view.addSubview(bubbleCommentView)
         bubbleCommentView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.verticalEdges.greaterThanOrEqualTo(self.view.safeAreaLayoutGuide).inset(16)
+            $0.top.greaterThanOrEqualTo(self.view.safeAreaLayoutGuide).inset(16)
             $0.width.lessThanOrEqualTo(self.view.safeAreaLayoutGuide).inset(32)
             $0.bottom.equalTo(musicDropButton.snp.top).offset(-10)
         }
