@@ -24,6 +24,7 @@ final class ShareViewController: UIViewController {
     private let viewModel: ShareViewModel = .init()
     private let disposeBag: DisposeBag = .init()
     private let sharedMusicKeyWordEvent: PublishRelay<String> = .init()
+    private let dropButtonClickEvent: PublishRelay<Void> = .init()
     
     private let containerView: UIView = {
         let view: UIView = .init()
@@ -264,11 +265,12 @@ private extension ShareViewController {
 
         commentTextView.rx.text.orEmpty
             .asObservable()
-            .bind { [weak self] text in
+            .bind(with: self) { owner, text in
                 guard text != Constant.commentPlaceHolder,
                       !text.isEmpty else { return }
-                self?.commentCountLabel.text = "\(text.count)/40"
-                self?.commentView.layer.borderColor = text.count < 40
+                owner.viewModel.comment = text
+                owner.commentCountLabel.text = "\(text.count)/40"
+                owner.commentView.layer.borderColor = text.count < 40
                 ? UIColor.darkPrimary_25.cgColor
                 : UIColor.systemCritical.cgColor
             }.disposed(by: disposeBag)
@@ -312,6 +314,15 @@ private extension ShareViewController {
                 })
             }
             .disposed(by: disposeBag)
+        
+        Observable.merge(
+            [
+                dropButton.rx.tap.asObservable(),
+                dropButtonOnKeyBoard.rx.tap.asObservable()
+            ]
+        )
+        .bind(to: dropButtonClickEvent)
+        .disposed(by: disposeBag)
     }
     
     func bindViewModel() {
@@ -319,7 +330,8 @@ private extension ShareViewController {
             viewDidLoadEvent: .just(Void()),
             sharedMusicKeyWordEvent: sharedMusicKeyWordEvent.asObservable(),
             changingMusicViewClickEvent: changingMusicView.rx.tapGesture().asObservable().mapVoid(),
-            reSearchingEvent: reSearchingMusicForSharingView.reSearchingEvent
+            reSearchingEvent: reSearchingMusicForSharingView.reSearchingEvent,
+            dropButtonClickEvent: dropButtonClickEvent.asObservable()
         )
         let output: ShareViewModel.Output = viewModel.convert(
             input: input,

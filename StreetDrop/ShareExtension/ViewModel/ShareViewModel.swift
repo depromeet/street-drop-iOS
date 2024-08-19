@@ -22,12 +22,19 @@ final class ShareViewModel: NSObject, ShareViewModelType {
     private let output: Output = .init()
     private let locationManger: CLLocationManager = .init()
     private let searchMusicUsecase: SearchMusicUsecase
+    private let dropMusicUseCase: DropMusicUseCase
     private let disposeBag: DisposeBag = .init()
+    private var currentLocation: DroppingInfo.Location?
     var sharedSongName: String = ""
     var selectedMusic: Music?
+    var comment: String?
     
-    init(searchMusicUsecase: SearchMusicUsecase = DefaultSearchingMusicUsecase()) {
+    init(
+        searchMusicUsecase: SearchMusicUsecase = DefaultSearchingMusicUsecase(),
+        dropMusicUseCase: DropMusicUseCase = DefaultDropMusicUseCase()
+    ) {
         self.searchMusicUsecase = searchMusicUsecase
+        self.dropMusicUseCase = dropMusicUseCase
     }
     
     struct Input {
@@ -35,6 +42,7 @@ final class ShareViewModel: NSObject, ShareViewModelType {
         let sharedMusicKeyWordEvent: Observable<String>
         let changingMusicViewClickEvent: Observable<Void>
         let reSearchingEvent: Observable<String>
+        let dropButtonClickEvent: Observable<Void>
     }
     
     struct Output {
@@ -90,6 +98,40 @@ final class ShareViewModel: NSObject, ShareViewModelType {
             }
             .disposed(by: disposedBag)
         
+        input.dropButtonClickEvent
+            .bind(with: self) { owner, _ in
+                guard let selectedMusic = owner.selectedMusic else {
+                    // TODO: 요셉, 선택한 음악정보 없다는 에러팝업
+                    return
+                }
+                
+                guard let comment = owner.comment else {
+                    // TODO: 코멘트 없다는 에러팝업
+                    return
+                }
+                
+                guard let currentLocation = owner.currentLocation else {
+                    // TODO: 현재 위치정보 없다는 에러팝업
+                    return
+                }
+                
+                owner.dropMusicUseCase.drop(
+                    droppingInfo: .init(
+                        location: currentLocation,
+                        music: selectedMusic
+                    ),
+                    content: comment
+                )
+                .subscribe { statusCode in
+                    print("성공")
+                } onFailure: { error in
+                    print(error.localizedDescription)
+                }
+                .disposed(by: disposedBag)
+
+            }
+            .disposed(by: disposedBag)
+        
         return output
     }
 }
@@ -116,6 +158,11 @@ extension ShareViewModel: CLLocationManagerDelegate {
         )
         .subscribe(with: self) { owner, villageName in
             owner.output.showVillageNameRelay.accept(villageName)
+            owner.currentLocation = .init(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude,
+                address: villageName
+            )
         } onFailure: { owner, error in
             print(error.localizedDescription)
         }
