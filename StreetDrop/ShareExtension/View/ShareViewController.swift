@@ -298,6 +298,20 @@ private extension ShareViewController {
             }
             .disposed(by: disposeBag)
             
+        reSearchingMusicForSharingView.selectedMusicEvent
+            .bind(with: self) { owner, music in
+                owner.viewModel.selectedMusic = music
+                owner.albumCoverImageView.kf.setImage(with: URL(string: music.albumImage))
+                owner.songNameLabel.text = music.songName
+                owner.artistNameLabel.text = music.artistName
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: { [weak self] in
+                    guard let self = self else { return }
+                    containerView.isHidden = false
+                    reSearchingMusicForSharingView.isHidden = true
+                    view.layoutIfNeeded()
+                })
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindViewModel() {

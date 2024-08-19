@@ -24,6 +24,7 @@ final class ShareViewModel: NSObject, ShareViewModelType {
     private let searchMusicUsecase: SearchMusicUsecase
     private let disposeBag: DisposeBag = .init()
     var sharedSongName: String = ""
+    var selectedMusic: Music?
     
     init(searchMusicUsecase: SearchMusicUsecase = DefaultSearchingMusicUsecase()) {
         self.searchMusicUsecase = searchMusicUsecase
@@ -69,6 +70,7 @@ final class ShareViewModel: NSObject, ShareViewModelType {
                             return
                         }
                         owner.output.showSearchedMusicRelay.accept(firstMusic)
+                        owner.selectedMusic = firstMusic
                     } onFailure: { owner, error in
                         
                     }

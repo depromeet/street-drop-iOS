@@ -12,11 +12,16 @@ import RxRelay
 import SnapKit
 
 final class ReSearchingMusicForSharingView: UIView {
-    private let reSearchingEventRelay: PublishRelay<String> = .init()
     // View -> ViewController
+    private let reSearchingEventRelay: PublishRelay<String> = .init()
     var reSearchingEvent: Observable<String> {
         reSearchingEventRelay.asObservable()
     }
+    private let selectedMusicEventRelay: PublishRelay<Music> = .init()
+    var selectedMusicEvent: Observable<Music> {
+        selectedMusicEventRelay.asObservable()
+    }
+    
     // ViewController -> View
     let settingMusicDataRelay: PublishRelay<[Music]> = .init()
     private let disposeBag: DisposeBag = .init()
@@ -127,6 +132,10 @@ private extension ReSearchingMusicForSharingView {
         searchTextField.rx.controlEvent(.editingDidEndOnExit)
             .compactMap { [weak self] in self?.searchTextField.text ?? "" }
             .bind(to: reSearchingEventRelay)
+            .disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(Music.self)
+            .bind(to: selectedMusicEventRelay)
             .disposed(by: disposeBag)
     }
     
