@@ -354,11 +354,11 @@ private extension MainViewController {
         
         // MARK: - Bubble Comment View
         
-        view.addSubview(bubbleCommentView)
+        self.view.addSubview(bubbleCommentView)
         bubbleCommentView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(148)
-            $0.height.equalTo(45)
+            $0.top.greaterThanOrEqualTo(self.view.safeAreaLayoutGuide).inset(16)
+            $0.width.lessThanOrEqualTo(self.view.safeAreaLayoutGuide).inset(32)
             $0.bottom.equalTo(musicDropButton.snp.top).offset(-10)
         }
     }
@@ -514,8 +514,9 @@ private extension MainViewController {
             .disposed(by: disposeBag)
         
         output.showFirstComment
-            .bind(with: self) { owner, _ in
+            .bind(with: self) { owner, prompt in
                 owner.bubbleCommentView.isHidden = false
+                owner.bubbleCommentView.configure(with: prompt)
             }
             .disposed(by: disposeBag)
         

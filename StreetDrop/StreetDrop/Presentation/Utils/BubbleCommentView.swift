@@ -36,10 +36,9 @@ final class BubbleCommentView: UIView {
     private lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.font = .pretendard(size: 14, weightName: .medium)
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .gray700
-        label.preferredMaxLayoutWidth = UIScreen.main.bounds.width / 3
         return label
     }()
     
@@ -72,7 +71,8 @@ private extension BubbleCommentView {
         
         commentContainerView.addSubview(commentLabel)
         commentLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.verticalEdges.equalToSuperview().inset(12)
+            $0.horizontalEdges.equalToSuperview().inset(16)
         }
         
         // MARK: - Comment Container Tail ImageView

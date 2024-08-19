@@ -12,9 +12,63 @@ import RxCocoa
 import SnapKit
 import GoogleMobileAds
 
+struct RecommendMusicSectionModel {
+    let type: SectionType
+    let items: [Item]
+    
+    enum SectionType: Hashable {
+        case recentSearchKeyword
+        case trendingMusic
+        case mostDroppedMusic
+        case artist
+        
+        var title: String {
+            switch self {
+            case .recentSearchKeyword:
+                return "최근 검색어"
+            case .trendingMusic:
+                return "지금 인기 있는 음악"
+            case .mostDroppedMusic:
+                return "많이 드랍된 음악"
+            case .artist:
+                return "아티스트"
+            }
+        }
+        
+        var infoText: String? {
+            switch self {
+            case .trendingMusic:
+                return "애플 뮤직의 ‘지금 인기 있는 곡’\n리스트를 반영했어요."
+            default:
+                return nil
+            }
+        }
+    }
+    
+    enum Item: Hashable {
+        case recentSearchKeyword(String)
+        case trendingMusic(Music)
+        case mostDroppedMusic(Music)
+        case artist(Artist)
+    }
+}
+
 final class SearchingMusicViewController: UIViewController {
+    typealias Section = RecommendMusicSectionModel.SectionType
+    typealias Item = RecommendMusicSectionModel.Item
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
+    
     private let viewModel: DefaultSearchingMusicViewModel
     private let disposeBag: DisposeBag = DisposeBag()
+    private let viewDidLoadEvent = PublishRelay<Void>()
+    private let deletingButtonTappedEvent = PublishRelay<String>()
+    private let recentQueryDidPressEvent = PublishRelay<String>()
+    private let artistQueryDidPressEvent = PublishRelay<String>()
+    private let musicDidPressEvent = PublishRelay<Music>()
+    
+    private var collectionView: UICollectionView?
+    private var dataSource: DataSource?
     
     init(viewModel: DefaultSearchingMusicViewModel) {
         self.viewModel = viewModel
@@ -32,7 +86,11 @@ final class SearchingMusicViewController: UIViewController {
         bindAction()
         bindViewModel()
         configureUI()
+        configureCollectionView()
+        configureDataSource()
         configureGADBannerView()
+        
+        self.viewDidLoadEvent.accept(Void())
     }
     
     // MARK: - UI
@@ -44,13 +102,8 @@ final class SearchingMusicViewController: UIViewController {
     
     private lazy var searchTextField: UITextField = {
         let textField: UITextField = UITextField()
+        textField.font = .pretendard(size: 14, weightName: .medium)
         textField.backgroundColor = UIColor.gray700
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "드랍할 음악 검색",
-            attributes: [
-                .foregroundColor: UIColor.gray300
-            ]
-        )
         textField.textColor = UIColor.gray100
         textField.layer.cornerRadius = 8.0
         
@@ -89,37 +142,7 @@ final class SearchingMusicViewController: UIViewController {
         return button
     }()
     
-    private lazy var recentMusicSearchView: UIView = {
-        let view: UIView = UIView()
-        return view
-    }()
-    
-    private lazy var recentSearchResultLabel: UILabel = {
-        let label: UILabel = UILabel()
-        label.text = "최근 검색어"
-        label.textColor = UIColor.gray150
-        label.font = .pretendard(size: 14, weight: 500)
-        label.setLineHeight(lineHeight: 20)
-        return label
-    }()
-    
-    private lazy var recentMusicSearchScrollView: RecentMusicSearchScrollView = {
-        let scrollView = RecentMusicSearchScrollView()
-        return scrollView
-    }()
-    
-    private lazy var recommendMusicSearchCollectionView: RecommendMusicSearchCollectionView = {
-        let collectionView = RecommendMusicSearchCollectionView()
-        return collectionView
-    }()
-    
-    private lazy var questionLabel: UILabel = {
-       let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont(name: "Pretendard-Bold", size: 20)
-        return label
-    }()
-    
+    // TODO: jihye -> RecommendMusicListViewController
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
@@ -127,9 +150,11 @@ final class SearchingMusicViewController: UIViewController {
             SearchingMusicTableViewCell.self,
             forCellReuseIdentifier: SearchingMusicTableViewCell.identifier
         )
+        tableView.contentInset = UIEdgeInsets(
+            top: 8, left: 0, bottom: 32, right: 0
+        )
         tableView.rowHeight = 76
         tableView.keyboardDismissMode = .onDrag
-        
         return tableView
     }()
     
@@ -137,6 +162,377 @@ final class SearchingMusicViewController: UIViewController {
         let bannerView = GADBannerView(adSize: GADAdSizeBanner)
         return bannerView
     }()
+}
+
+extension SearchingMusicViewController {
+    private func displayList(
+        queryItems: [Item],
+        trendingItems: [Item],
+        droppedItems: [Item],
+        artistItems: [Item]
+    ) {
+        var snapshot = Snapshot()
+        
+        if !queryItems.isEmpty {
+            snapshot.appendSections([Section.recentSearchKeyword])
+            snapshot.appendItems(queryItems, toSection: .recentSearchKeyword)
+        }
+        
+        if !trendingItems.isEmpty {
+            snapshot.appendSections([Section.trendingMusic])
+            snapshot.appendItems(trendingItems, toSection: .trendingMusic)
+        }
+        
+        if !droppedItems.isEmpty {
+            snapshot.appendSections([Section.mostDroppedMusic])
+            snapshot.appendItems(droppedItems, toSection: .mostDroppedMusic)
+        }
+        
+        if !artistItems.isEmpty {
+            snapshot.appendSections([Section.artist])
+            snapshot.appendItems(artistItems, toSection: .artist)
+        }
+        
+        dataSource?.apply(snapshot, animatingDifferences: true)
+    }
+}
+
+// MARK: CollectionView
+
+extension SearchingMusicViewController: UICollectionViewDelegate {
+    private func configureCollectionView() {
+        let collectionView = UICollectionView(
+            frame: view.bounds,
+            collectionViewLayout: createLayout()
+        )
+        collectionView.backgroundColor = .clear
+        collectionView.delegate = self
+        collectionView.contentInset = UIEdgeInsets(
+            top: 16, left: 0, bottom: 0, right: 0
+        )
+        view.addSubview(collectionView)
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(self.searchView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.bannerView.snp.top)
+        }
+        
+        self.collectionView = collectionView
+    }
+    
+    private func configureDataSource() {
+        typealias CellRegistration = UICollectionView.CellRegistration
+        typealias RecentSearchCellRegistration = CellRegistration<RecentQueryCell, String>
+        typealias MusicCellRegistration = CellRegistration<RecommendMusicCell, Music>
+        typealias ArtistCellRegistration = CellRegistration<RecommendArtistCell, Artist>
+        
+        guard let collectionView else { return }
+        
+        let recentSearchCellRegistration = RecentSearchCellRegistration { [weak self] cell, indexPath, item in
+            guard let self else { return }
+            cell.configure(with: item, deletingButtonTappedEvent: self.deletingButtonTappedEvent)
+        }
+        
+        let musicCellRegistration = MusicCellRegistration { cell, indexPath, item in
+            cell.configure(with: item)
+        }
+        
+        let artistCellRegistration = ArtistCellRegistration { cell, indexPath, item in
+            cell.configure(with: item)
+        }
+        
+        collectionView.register(
+            RecentSearchesHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: RecentSearchesHeaderView.reuseIdentifier
+        )
+        
+        collectionView.register(
+            RecommendHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, 
+            withReuseIdentifier: RecommendHeaderView.reuseIdentifier
+        )
+        
+        dataSource = DataSource(
+            collectionView: collectionView
+        ) { collectionView, indexPath, item -> UICollectionViewCell? in
+            
+            switch item {
+            case .recentSearchKeyword(let keyword):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: recentSearchCellRegistration,
+                    for: indexPath,
+                    item: keyword
+                )
+                
+            case .trendingMusic(let music):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: musicCellRegistration,
+                    for: indexPath,
+                    item: music
+                )
+                
+            case .mostDroppedMusic(let music):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: musicCellRegistration,
+                    for: indexPath,
+                    item: music
+                )
+                
+            case .artist(let artist):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: artistCellRegistration,
+                    for: indexPath,
+                    item: artist
+                )
+            }
+        }
+        
+        dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            guard let dataSource = self?.dataSource,
+                  let section = dataSource.snapshot().sectionIdentifiers[safe: indexPath.section]
+            else { return nil }
+            
+            switch section {
+            case .recentSearchKeyword:
+                let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: RecentSearchesHeaderView.reuseIdentifier,
+                    for: indexPath
+                ) as? RecentSearchesHeaderView
+                headerView?.configure(with: section.title)
+                
+                return headerView
+                
+            case .trendingMusic:
+                let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: RecommendHeaderView.reuseIdentifier,
+                    for: indexPath
+                ) as? RecommendHeaderView
+                headerView?.configure(
+                    with: section.title,
+                    infoText: section.infoText
+                ) { [weak self] in
+                    guard let self else { return }
+                    self.routeToMusicList(
+                        title: section.title,
+                        musicList: self.viewModel.trendingMusicList
+                    )
+                }
+                
+                return headerView
+                
+            case .mostDroppedMusic:
+                let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: RecommendHeaderView.reuseIdentifier,
+                    for: indexPath
+                ) as? RecommendHeaderView
+                headerView?.configure(with: section.title) { [weak self] in
+                    guard let self else { return }
+                    self.routeToMusicList(
+                        title: section.title,
+                        musicList: self.viewModel.mostDroppedMusicList
+                    )
+                }
+                
+                return headerView
+                
+            case .artist:
+                let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: RecommendHeaderView.reuseIdentifier,
+                    for: indexPath
+                ) as? RecommendHeaderView
+                headerView?.configure(with: section.title, hideArrow: true)
+                
+                return headerView
+            }
+        }
+    }
+    
+    private func routeToMusicList(title: String, musicList: [Music]) {
+        let viewController = RecommendMusicListViewController(
+            viewModel: DefaultRecommendMusicListViewModel(
+                title: title,
+                musicList: musicList,
+                location: self.viewModel.location,
+                address: self.viewModel.address
+            )
+        )
+        
+        self.navigationController?.pushViewController(
+            viewController,
+            animated: true
+        )
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = self.dataSource?.itemIdentifier(for: indexPath) else { return }
+        
+        switch item {
+        case .recentSearchKeyword(let keyword):
+            self.showSearchResultList(with: keyword)
+            self.recentQueryDidPressEvent.accept(keyword)
+        case .trendingMusic(let music):
+            self.musicDidPressEvent.accept(music)
+        case .mostDroppedMusic(let music):
+            self.musicDidPressEvent.accept(music)
+        case .artist(let artist):
+            self.showSearchResultList(with: artist.name)
+            self.artistQueryDidPressEvent.accept(artist.name)
+        }
+    }
+    
+    private func showSearchResultList(with query: String) {
+        self.searchTextField.text = query
+        self.tableView.isHidden = false
+        self.collectionView?.isHidden = true
+        self.searchTextField.resignFirstResponder()
+    }
+}
+
+// MARK: - CollectionView Layout
+
+extension SearchingMusicViewController {
+    private func createLayout() -> UICollectionViewLayout {
+        UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
+            guard let self,
+                  let dataSource = self.dataSource,
+                  let section = dataSource.snapshot().sectionIdentifiers[safe: sectionIndex]
+            else { return nil }
+            
+            // TODO: jihye - bottom inset update
+            if section == .recentSearchKeyword {
+                return self.createRecentSearchKeywordSectionLayout()
+            } else if section == .artist {
+                return self.createArtistSectionLayout()
+            } else {
+                return self.createMusicListSectionLayout()
+            }
+        }
+    }
+    
+    private func createRecentSearchKeywordSectionLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(105),
+            heightDimension: .absolute(28)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(105),
+            heightDimension: .absolute(28)
+        )
+        
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 8
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: 8, leading: 24, bottom: 48, trailing: 24
+        )
+        
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(20)
+        )
+        
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        
+        section.boundarySupplementaryItems = [sectionHeader]
+        
+        return section
+    }
+    
+    private func createArtistSectionLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(50),
+            heightDimension: .absolute(40)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(40)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = .fixed(12)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 12
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: 20, leading: 24, bottom: 32, trailing: 24
+        )
+        section.orthogonalScrollingBehavior = .none
+        
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(28)
+        )
+
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+
+        section.boundarySupplementaryItems = [sectionHeader]
+        
+        return section
+    }
+    
+    // trending music, mostDropped music
+    private func createMusicListSectionLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(0.7),
+            heightDimension: .estimated(176)
+        )
+        
+        let group = NSCollectionLayoutGroup.vertical(
+            layoutSize: groupSize, subitem: item, count: 3
+        )
+        
+        group.interItemSpacing = .fixed(16)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 16
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: 20, leading: 24, bottom: 48, trailing: 24
+        )
+        
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(28)
+        )
+        
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        
+        section.boundarySupplementaryItems = [sectionHeader]
+        
+        return section
+    }
 }
 
 private extension SearchingMusicViewController {
@@ -154,26 +550,8 @@ private extension SearchingMusicViewController {
             .bind { keyword in
                 if let keyword = keyword {
                     self.tableView.isHidden = keyword.isEmpty
-                    self.recentMusicSearchView.isHidden = !keyword.isEmpty
+                    self.collectionView?.isHidden = !keyword.isEmpty
                 }
-            }
-            .disposed(by: disposeBag)
-        
-        self.recentMusicSearchScrollView.queryButtonDidTappedEvent
-            .bind { recentQuery in
-                self.searchTextField.text = recentQuery
-                self.tableView.isHidden = false
-                self.recentMusicSearchView.isHidden = true
-                self.searchTextField.resignFirstResponder()
-            }
-            .disposed(by: disposeBag)
-        
-        self.recommendMusicSearchCollectionView.queryButtonDidTappedEvent
-            .bind { recentQuery in
-                self.searchTextField.text = recentQuery
-                self.tableView.isHidden = false
-                self.recentMusicSearchView.isHidden = true
-                self.searchTextField.resignFirstResponder()
             }
             .disposed(by: disposeBag)
         
@@ -190,17 +568,19 @@ private extension SearchingMusicViewController {
         
         let selectedTableViewCellEvent = self.tableView.rx.itemSelected.map { $0.row }
         
-        let searchTextFieldEmptyEvent = self.searchTextField.rx.text.orEmpty.filter{
+        let searchTextFieldEmptyEvent = self.searchTextField.rx.text.orEmpty.filter {
             $0.isEmpty
         }.map { _ in }
         
         let input = DefaultSearchingMusicViewModel.Input(
-            viewDidAppearEvent: .just(()),
+            viewDidLoadEvent: self.viewDidLoadEvent,
             searchTextFieldEmptyEvent: searchTextFieldEmptyEvent,
             keyBoardDidPressSearchEventWithKeyword: keyBoardDidPressSearchEventWithKeyword,
-            recentQueryDidPressEvent: self.recentMusicSearchScrollView.queryButtonDidTappedEvent,
-            recommendQueryDidPressEvent: self.recommendMusicSearchCollectionView.queryButtonDidTappedEvent,
-            tableViewCellDidPressedEvent: selectedTableViewCellEvent
+            recentQueryDidPressEvent: self.recentQueryDidPressEvent,
+            artistQueryDidPressEvent: self.artistQueryDidPressEvent,
+            musicDidPressEvent: self.musicDidPressEvent,
+            tableViewCellDidPressedEvent: selectedTableViewCellEvent,
+            deletingButtonTappedEvent: self.deletingButtonTappedEvent
         )
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
         
@@ -215,20 +595,33 @@ private extension SearchingMusicViewController {
             }
             .disposed(by: disposeBag)
         
-        output.recentMusicQueries
-            .observe(on: MainScheduler.instance)
-            .bind { queries in
-                self.recentMusicSearchScrollView.setData(queries: queries)
+        output.promptOfTheDay
+            .bind { [weak self] prompt in
+                self?.configureSearchBarPlaceholder(with: prompt)
             }
             .disposed(by: disposeBag)
         
-        output.recommendMusicQueries
-            .observe(on: MainScheduler.instance)
-            .bind { queries in
-                self.setRecommendData(queries.description)
-                self.recommendMusicSearchCollectionView.setData(queries: queries.terms)
-            }
-            .disposed(by: disposeBag)
+        Observable.combineLatest(
+            output.recentMusicQueries,
+            output.trendingMusicList,
+            output.mostDroppedMusicList,
+            output.artists
+        )
+        .observe(on: MainScheduler.instance)
+        .bind { [weak self] recentQueries, trendingList, droppedList, artists in
+            let queryItems = recentQueries.map { Item.recentSearchKeyword($0) }
+            let trendingItems = trendingList.map { Item.trendingMusic($0) }
+            let droppedItems = droppedList.map { Item.mostDroppedMusic($0) }
+            let artistItems = artists.map { Item.artist($0) }
+
+            self?.displayList(
+                queryItems: queryItems,
+                trendingItems: trendingItems,
+                droppedItems: droppedItems,
+                artistItems: artistItems
+            )
+        }
+        .disposed(by: disposeBag)
         
         output.selectedMusic
             .bind { [weak self] music in
@@ -262,31 +655,19 @@ private extension SearchingMusicViewController {
             self.searchView.addSubview($0)
         }
         
-        [
-            self.recentSearchResultLabel,
-            self.recentMusicSearchScrollView,
-            self.questionLabel,
-            self.recommendMusicSearchCollectionView
-        ].forEach {
-            self.recentMusicSearchView.addSubview($0)
-        }
-        
         self.searchCancelView.addSubview(self.searchCancelButton)
         
         [
             self.searchView,
             self.tableView,
-            self.recentMusicSearchView,
             self.bannerView
         ].forEach {
             self.view.addSubview($0)
         }
         
         self.searchView.snp.makeConstraints {
-            // TODO: 56 -> 60으로 바꼈는지 추후에 피그마 확인
-            $0.height.equalTo(56)
+            $0.height.equalTo(60)
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.top.equalTo(bannerView.snp.bottom).offset(10)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
         }
@@ -315,37 +696,10 @@ private extension SearchingMusicViewController {
             $0.leading.equalToSuperview()
         }
         
-        self.recentMusicSearchView.snp.makeConstraints {
-            $0.top.equalTo(self.searchView.snp.bottom).offset(22)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
-        
-        self.recentSearchResultLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().inset(24)
-        }
-        
-        self.recentMusicSearchScrollView.snp.makeConstraints {
-            $0.top.equalTo(self.recentSearchResultLabel.snp.bottom).offset(8)
-            $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(33)
-        }
-        
-        self.questionLabel.snp.makeConstraints {
-            $0.top.equalTo(self.recentMusicSearchScrollView.snp.bottom).offset(54)
-            $0.leading.trailing.equalToSuperview().inset(24)
-        }
-        
-        self.recommendMusicSearchCollectionView.snp.makeConstraints {
-            $0.top.equalTo(self.questionLabel.snp.bottom).offset(24)
-            $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(144)
-        }
-        
         self.tableView.snp.makeConstraints {
-            $0.top.equalTo(self.searchView.snp.bottom).offset(26)
+            $0.top.equalTo(self.searchView.snp.bottom).offset(8)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(60)
+            $0.bottom.equalTo(bannerView.snp.top)
         }
         
         self.bannerView.snp.makeConstraints {
@@ -354,22 +708,6 @@ private extension SearchingMusicViewController {
             $0.width.equalTo(320)
             $0.height.equalTo(50)
         }
-    }
-    
-    func setRecommendData(_ query: [RecommendMusicData]) {
-        let attributedString =  NSMutableAttributedString()
-        let style = NSMutableParagraphStyle()
-        style.maximumLineHeight = 32
-        style.minimumLineHeight = 32
-        
-        for data in query {
-            let attributes: [NSAttributedString.Key : Any] = [
-                .foregroundColor: FontType(rawValue: data.color)?.foregroundColor ?? .white,
-                .paragraphStyle: style
-            ]
-            attributedString.append(NSAttributedString(string: data.text, attributes: attributes))
-        }
-        questionLabel.attributedText = attributedString
     }
     
     func configureGADBannerView() {
@@ -386,6 +724,15 @@ extension SearchingMusicViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    private func configureSearchBarPlaceholder(with prompt: String) {
+        searchTextField.attributedPlaceholder = NSAttributedString(
+            string: prompt,
+            attributes: [
+                .foregroundColor: UIColor.gray300
+            ]
+        )
     }
 }
 

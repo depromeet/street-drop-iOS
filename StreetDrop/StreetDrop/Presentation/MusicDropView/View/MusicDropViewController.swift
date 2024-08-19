@@ -71,15 +71,6 @@ class MusicDropViewController: UIViewController, Toastable, Alertable {
         return button
     }()
 
-    lazy var cancelButton: UIButton = {
-        let button: UIButton = UIButton()
-        button.setTitle("나가기", for: .normal)
-        button.setTitleColor(.gray300, for: .normal)
-        button.titleLabel?.font = .pretendard(size: 14, weight: 600)
-
-        return button
-    }()
-
     lazy var topView: UIView = UIView()
 
     private lazy var scrollView: UIScrollView = {
@@ -299,16 +290,10 @@ private extension MusicDropViewController {
             }.disposed(by: disposeBag)
 
         backButton.rx.tap
-            .bind { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
-            }
-            .disposed(by: disposeBag)
-
-        cancelButton.rx.tap
             .bind(with: self) { owner, _ in
                 let dismissAction: AlertCompletion = { [weak self] in
                     self?.navigationController?.dismiss(animated: true)
-                    self?.navigationController?.popToRootViewController(animated: true)
+                    self?.navigationController?.popViewController(animated: true)
                 }
 
                 owner.showAlert(
@@ -407,7 +392,7 @@ private extension MusicDropViewController {
         self.view.backgroundColor = .gray900
         self.view.clipsToBounds = true
 
-        [backButton, cancelButton].forEach {
+        [backButton].forEach {
             topView.addSubview($0)
         }
 
@@ -452,11 +437,6 @@ private extension MusicDropViewController {
             $0.height.width.equalTo(32)
             $0.leading.centerY.equalToSuperview()
             $0.trailing.equalTo(backButton.titleLabel!.snp.leading)
-        }
-
-        cancelButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(24)
-            $0.centerY.equalToSuperview()
         }
 
         scrollView.snp.makeConstraints {

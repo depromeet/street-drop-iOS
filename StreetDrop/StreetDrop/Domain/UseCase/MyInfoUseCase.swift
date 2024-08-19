@@ -13,4 +13,5 @@ protocol MyInfoUseCase {
     func fetchMyInfo() -> Single<MyInfo>
     func saveMyInfo(_ myInfo: MyInfo) -> Single<Void>
     func checkLaunchedBefore() -> Bool
+    func checkFirstLaunchToday() -> Bool
 }

@@ -13,44 +13,58 @@ import RxRelay
 import RxSwift
 
 protocol SearchingMusicViewModel: ViewModel {
+    var trendingMusicList: [Music] { get }
+    var mostDroppedMusicList: [Music] { get }
+    
     func searchMusic(output: Output, keyword: String)
 }
 
 final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     private let model: SearchMusicUsecase
+    private let recommendMusicUseCase: RecommendMusicUsecase
     let location: CLLocation
     var address: String = ""
     private let disposeBag: DisposeBag = DisposeBag()
     private var musicList: [Music] = []
     
+    var trendingMusicList: [Music] = []
+    var mostDroppedMusicList: [Music] = []
+    
     struct Input {
-        let viewDidAppearEvent: Observable<Void>
+        let viewDidLoadEvent: PublishRelay<Void>
         let searchTextFieldEmptyEvent: Observable<Void>
         let keyBoardDidPressSearchEventWithKeyword: Observable<String>
         let recentQueryDidPressEvent: PublishRelay<String>
-        let recommendQueryDidPressEvent: PublishRelay<String>
+        let artistQueryDidPressEvent: PublishRelay<String>
+        let musicDidPressEvent: PublishRelay<Music>
         let tableViewCellDidPressedEvent: Observable<Int>
+        let deletingButtonTappedEvent: PublishRelay<String>
     }
-    
+   
     struct Output {
         let searchedMusicList = PublishRelay<[Music]>()
-        let recentMusicQueries = BehaviorRelay<[String]>(value: [""])
+        let recentMusicQueries = PublishRelay<[String]>()
         let selectedMusic = PublishRelay<Music>()
-        let recommendMusicQueries = PublishRelay<RecommendMusic>()
+        let promptOfTheDay = PublishRelay<String>()
+        let trendingMusicList = PublishRelay<[Music]>()
+        let mostDroppedMusicList = PublishRelay<[Music]>()
+        let artists = PublishRelay<[Artist]>()
     }
     
     init(
         model: SearchMusicUsecase = DefaultSearchingMusicUsecase(),
+        recommendMusicUseCase: RecommendMusicUsecase = DefaultRecommendMusicUsecase(),
         location: CLLocation
     ) {
         self.model = model
+        self.recommendMusicUseCase = recommendMusicUseCase
         self.location = location
     }
     
     func convert(input: Input, disposedBag: DisposeBag) -> Output {
         let output = Output()
         
-        input.viewDidAppearEvent
+        input.viewDidLoadEvent
             .subscribe(onNext: { [weak self] in
                 self?.model.getRecentSearches()
                     .subscribe { result in
@@ -62,15 +76,49 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
                         }
                     }
                     .disposed(by: disposedBag)
-                self?.model.fetchRecommendSearch().subscribe { result in
-                    switch result {
-                    case .success(let queries):
-                        output.recommendMusicQueries.accept(queries)
-                    case .failure(_):
-                        print("failure")
-                    }
-                }.disposed(by: disposedBag)
                 self?.fetchCurrentLocationVillageName()
+                self?.recommendMusicUseCase.getPromptOfTheDay()
+                    .subscribe { result in
+                        switch result {
+                        case .success(let prompt):
+                            output.promptOfTheDay.accept(prompt)
+                        case .failure(_):
+                            output.promptOfTheDay.accept("드랍할 음악 검색")
+                        }
+                    }
+                    .disposed(by: disposedBag)
+                self?.recommendMusicUseCase.getTrendingMusicList()
+                    .subscribe { [weak self] result in
+                        switch result {
+                        case .success(let musicList):
+                            output.trendingMusicList.accept(musicList)
+                            self?.trendingMusicList = musicList
+                        case .failure(_):
+                            output.mostDroppedMusicList.accept([])
+                        }
+                    }
+                    .disposed(by: disposedBag)
+                self?.recommendMusicUseCase.getMostDroppedMusicList()
+                    .subscribe { result in
+                        switch result {
+                        case .success(let musicList):
+                            output.mostDroppedMusicList.accept(musicList)
+                            self?.mostDroppedMusicList = musicList
+                        case .failure(_):
+                            output.mostDroppedMusicList.accept([])
+                        }
+                    }
+                    .disposed(by: disposedBag)
+                self?.recommendMusicUseCase.getArtistList()
+                    .subscribe { result in
+                        switch result {
+                        case .success(let artists):
+                            output.artists.accept(artists)
+                        case .failure(_):
+                            output.artists.accept([])
+                        }
+                    }
+                    .disposed(by: disposedBag)
             })
             .disposed(by: disposedBag)
         
@@ -95,9 +143,9 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
             }
             .disposed(by: disposedBag)
         
-        input.recommendQueryDidPressEvent
-            .bind { [weak self] recommendQuery in
-                self?.searchMusic(output: output, keyword: recommendQuery)
+        input.artistQueryDidPressEvent
+            .bind { [weak self] artistQuery in
+                self?.searchMusic(output: output, keyword: artistQuery)
             }
             .disposed(by: disposedBag)
         
@@ -105,6 +153,29 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
             .bind { [weak self] indexPathRow in
                 guard let self = self else { return }
                 output.selectedMusic.accept(self.musicList[indexPathRow])
+            }
+            .disposed(by: disposedBag)
+        
+        input.musicDidPressEvent
+            .bind { music in
+                output.selectedMusic.accept(music)
+            }
+            .disposed(by: disposedBag)
+        
+        input.deletingButtonTappedEvent
+            .bind { [weak self] keyword in
+                guard let self else { return }
+                
+                Task {
+                    await self.model.deleteRecentSearch(keyword: keyword)
+                    
+                    do {
+                        let recentQueries = try await self.model.getRecentSearches().value
+                        output.recentMusicQueries.accept(recentQueries)
+                    } catch {
+                        output.recentMusicQueries.accept([])
+                    }
+                }
             }
             .disposed(by: disposedBag)
         

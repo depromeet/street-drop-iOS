@@ -68,6 +68,12 @@ extension UserDefaultsRecentMusicQueriesStorage: RecentMusicQueriesStorage {
             completion(.success(query))
         }
     }
+    
+    func deleteRecentQuery(query: RecentMusicQueryDTO) async {
+        var queries = self.fetchRecentMusicQueries().list
+        self.cleanUpQueries(for: query, in: &queries)
+        self.persist(recentMusicQueries: queries)
+    }
 }
 
 
