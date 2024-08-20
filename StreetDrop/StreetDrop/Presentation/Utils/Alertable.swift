@@ -22,7 +22,11 @@ extension Alertable where Self: UIViewController {
 
         let goSetting = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
             if let appSetting = URL(string: UIApplication.openSettingsURLString) {
+#if SHARE_EXTENSION_TARGET
+#else
+                // 기본 동작 또는 다른 타겟의 경우
                 UIApplication.shared.open(appSetting)
+#endif
             }
         }
 
