@@ -386,6 +386,7 @@ private extension ShareViewController {
         
         output.showReSearchedMusicList
             .bind(with: self) { owner, musicList in
+                owner.endEditing()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: { [weak self] in
                     guard let self = self else { return }
                     containerView.isHidden = true
@@ -397,7 +398,8 @@ private extension ShareViewController {
             .disposed(by: disposeBag)
         
         output.goDropDoneView
-            .bind(onNext: { (droppedMusic, droppedAddress, droppedComment) in
+            .bind(onNext: { [weak self] (droppedMusic, droppedAddress, droppedComment) in
+                self?.endEditing()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: { [weak self] in
                     guard let self = self else { return }
                     containerView.isHidden = true
