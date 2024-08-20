@@ -25,6 +25,10 @@ final class ReSearchingMusicForSharingView: UIView {
     var exitButtonEvent: Observable<Void> {
         exitButtonEventRelay.asObservable()
     }
+    private let backbuttonEventRelay: PublishRelay<Void> = .init()
+    var backbuttonEvent: Observable<Void> {
+        backbuttonEventRelay.asObservable()
+    }
     
     // ViewController -> View
     let settingMusicDataRelay: PublishRelay<[Music]> = .init()
@@ -144,6 +148,14 @@ private extension ReSearchingMusicForSharingView {
         
         exitButton.rx.tap
             .bind(to: exitButtonEventRelay)
+            .disposed(by: disposeBag)
+        
+        backbutton.rx.tap
+            .do(onNext: { [weak self] _ in
+                self?.searchTextField.text = nil
+                self?.endEditing(true)
+            })
+            .bind(to: backbuttonEventRelay)
             .disposed(by: disposeBag)
     }
     
