@@ -46,6 +46,13 @@ final class ShareViewController: UIViewController {
         return label
     }()
     
+    private let exitButton: UIButton = {
+        let button: UIButton = .init()
+        button.setImage(.init(named: "exit"), for: .normal)
+        
+        return button
+    }()
+    
     private let changingMusicView: UIView = {
         let view: UIView = .init()
         view.backgroundColor = .gray600
@@ -209,6 +216,8 @@ final class ShareViewController: UIViewController {
         return reSearchingMusicForSharingView
     }()
     
+    private var dropDoneView: DropDoneView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bindAction()
@@ -229,6 +238,18 @@ final class ShareViewController: UIViewController {
 
 private extension ShareViewController {
     func bindAction() {
+        Observable.merge([
+            exitButton.rx.tap.asObservable(),
+            reSearchingMusicForSharingView.exitButtonEvent.asObservable()
+        ])
+        .bind(with: self) { owner, _ in
+            owner.extensionContext?.completeRequest(
+                returningItems: nil,
+                completionHandler: nil
+            )
+        }
+        .disposed(by: disposeBag)
+        
         // 코멘트 플레이스홀더, 글자수라벨 설치, 줄 수 제한, 커멘트있을때만 드랍가능
         commentTextView.rx.didBeginEditing
             .subscribe { [weak self] element in
@@ -371,15 +392,25 @@ private extension ShareViewController {
                     containerView.isHidden = true
                     reSearchingMusicForSharingView.isHidden = true
                     
-                    let dropDoneView: DropDoneView = .init(
+                    dropDoneView = .init(
                         droppedMusic: droppedMusic,
                         droppedAddress: droppedAddress,
                         droppedComment: droppedComment
                     )
+                    guard let dropDoneView = dropDoneView else { return }
                     view.addSubview(dropDoneView)
                     dropDoneView.snp.makeConstraints {
                         $0.horizontalEdges.bottom.equalToSuperview()
                     }
+                    
+                    dropDoneView.exitButtonEvent
+                        .bind(with: self) { owner, _ in
+                            owner.extensionContext?.completeRequest(
+                                returningItems: nil,
+                                completionHandler: nil
+                            )
+                        }
+                        .disposed(by: disposeBag)
                     
                     view.layoutIfNeeded()
                 })
@@ -404,6 +435,7 @@ private extension ShareViewController {
         [
             dropButton,
             villageNameLabel,
+            exitButton,
             changingMusicView,
             belowArrow,
             albumCoverImageView,
@@ -429,6 +461,13 @@ private extension ShareViewController {
             $0.height.equalTo(24)
             $0.top.equalToSuperview().inset(24)
             $0.centerX.equalToSuperview()
+        }
+        
+        exitButton.snp.makeConstraints {
+            $0.width.equalTo(44)
+            $0.height.equalTo(32)
+            $0.top.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(24)
         }
         
         changingMusicView.snp.makeConstraints {

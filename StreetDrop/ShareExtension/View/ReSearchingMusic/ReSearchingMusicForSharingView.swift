@@ -21,6 +21,10 @@ final class ReSearchingMusicForSharingView: UIView {
     var selectedMusicEvent: Observable<Music> {
         selectedMusicEventRelay.asObservable()
     }
+    private let exitButtonEventRelay: PublishRelay<Void> = .init()
+    var exitButtonEvent: Observable<Void> {
+        exitButtonEventRelay.asObservable()
+    }
     
     // ViewController -> View
     let settingMusicDataRelay: PublishRelay<[Music]> = .init()
@@ -136,6 +140,10 @@ private extension ReSearchingMusicForSharingView {
         
         tableView.rx.modelSelected(Music.self)
             .bind(to: selectedMusicEventRelay)
+            .disposed(by: disposeBag)
+        
+        exitButton.rx.tap
+            .bind(to: exitButtonEventRelay)
             .disposed(by: disposeBag)
     }
     

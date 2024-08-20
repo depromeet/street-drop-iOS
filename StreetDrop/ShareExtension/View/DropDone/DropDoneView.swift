@@ -7,13 +7,22 @@
 
 import UIKit
 
+import RxSwift
+import RxRelay
 import Kingfisher
 import SnapKit
 
 final class DropDoneView: UIView {
+    // View -> ViewController
+    private let exitButtonEventRelay: PublishRelay<Void> = .init()
+    var exitButtonEvent: Observable<Void> {
+        exitButtonEventRelay.asObservable()
+    }
+    
     private let droppedMusic: Music
     private let droppedAddress: String
     private let droppedComment: String
+    private let disposeBag: DisposeBag = .init()
     
     init(
         droppedMusic: Music,
@@ -24,6 +33,7 @@ final class DropDoneView: UIView {
         self.droppedAddress = droppedAddress
         self.droppedComment = droppedComment
         super.init(frame: .zero)
+        bindAction()
         configureUI()
     }
     
@@ -136,6 +146,12 @@ final class DropDoneView: UIView {
 }
 
 private extension DropDoneView {
+    func bindAction() {
+        exitButton.rx.tap
+            .bind(to: exitButtonEventRelay)
+            .disposed(by: disposeBag)
+    }
+    
     func configureUI() {
         layer.cornerRadius = 20
         layer.borderWidth = 1
