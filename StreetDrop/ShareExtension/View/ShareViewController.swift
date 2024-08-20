@@ -363,6 +363,28 @@ private extension ShareViewController {
                 owner.reSearchingMusicForSharingView.settingMusicDataRelay.accept(musicList)
             }
             .disposed(by: disposeBag)
+        
+        output.goDropDoneView
+            .bind(onNext: { (droppedMusic, droppedAddress, droppedComment) in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: { [weak self] in
+                    guard let self = self else { return }
+                    containerView.isHidden = true
+                    reSearchingMusicForSharingView.isHidden = true
+                    
+                    let dropDoneView: DropDoneView = .init(
+                        droppedMusic: droppedMusic,
+                        droppedAddress: droppedAddress,
+                        droppedComment: droppedComment
+                    )
+                    view.addSubview(dropDoneView)
+                    dropDoneView.snp.makeConstraints {
+                        $0.horizontalEdges.bottom.equalToSuperview()
+                    }
+                    
+                    view.layoutIfNeeded()
+                })
+            })
+            .disposed(by: disposeBag)
     }
     
     func configureUI() {

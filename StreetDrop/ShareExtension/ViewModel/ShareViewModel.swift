@@ -58,6 +58,10 @@ final class ShareViewModel: NSObject, ShareViewModelType {
         var showReSearchedMusicList: Observable<[Music]> {
             showReSearchedMusicListRelay.asObservable()
         }
+        fileprivate let goDropDoneViewRelay: PublishRelay<(Music, String, String)> = .init()
+        var goDropDoneView: Observable<(Music, String, String)> {
+            goDropDoneViewRelay.asObservable()
+        }
     }
     
     func convert(input: Input, disposedBag: DisposeBag) -> Output {
@@ -122,9 +126,11 @@ final class ShareViewModel: NSObject, ShareViewModelType {
                     ),
                     content: comment
                 )
-                .subscribe { statusCode in
-                    print("성공")
-                } onFailure: { error in
+                .subscribe(with: self) { owner, statusCode in
+                    owner.output.goDropDoneViewRelay.accept(
+                        (selectedMusic, currentLocation.address, comment)
+                    )
+                } onFailure: { owner, error in
                     print(error.localizedDescription)
                 }
                 .disposed(by: disposedBag)

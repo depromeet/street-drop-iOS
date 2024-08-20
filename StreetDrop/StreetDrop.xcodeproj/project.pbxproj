@@ -437,6 +437,9 @@
 		C47F02242A38633C00F48884 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02232A38633C00F48884 /* SettingsViewModel.swift */; };
 		C47F02282A3864A500F48884 /* SettingElementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02272A3864A500F48884 /* SettingElementCell.swift */; };
 		C47F022A2A3869DC00F48884 /* SettingSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F02292A3869DC00F48884 /* SettingSectionType.swift */; };
+		C48B76F52C73151B0003BC3C /* DropDoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48B76F42C73151B0003BC3C /* DropDoneView.swift */; };
+		C48B76F72C7339DA0003BC3C /* UILabel+actualNumberOfLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48B76F62C7339DA0003BC3C /* UILabel+actualNumberOfLines.swift */; };
+		C48B76F82C7339EB0003BC3C /* UILabel+actualNumberOfLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48B76F62C7339DA0003BC3C /* UILabel+actualNumberOfLines.swift */; };
 		C49BA7612A1BDFC900A83E95 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FC82A1B9338008B076F /* UIFont+Extension.swift */; };
 		C49BA7622A1BDFCC00A83E95 /* UILabel+LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D16FCB2A1B98B0008B076F /* UILabel+LineHeight.swift */; };
 		C49BA7832A1BE71700A83E95 /* SearchingMusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4CB2A1796F300C63526 /* SearchingMusicViewModel.swift */; };
@@ -769,6 +772,8 @@
 		C47F02232A38633C00F48884 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		C47F02272A3864A500F48884 /* SettingElementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingElementCell.swift; sourceTree = "<group>"; };
 		C47F02292A3869DC00F48884 /* SettingSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionType.swift; sourceTree = "<group>"; };
+		C48B76F42C73151B0003BC3C /* DropDoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDoneView.swift; sourceTree = "<group>"; };
+		C48B76F62C7339DA0003BC3C /* UILabel+actualNumberOfLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+actualNumberOfLines.swift"; sourceTree = "<group>"; };
 		C49EDACB2BBD75480025DB55 /* CongratulationsLevelUpPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationsLevelUpPopUpViewController.swift; sourceTree = "<group>"; };
 		C49EDACD2BBD7EFE0025DB55 /* GradientLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLabel.swift; sourceTree = "<group>"; };
 		C4A0567A2A631D6E00AE2F0B /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
@@ -1773,6 +1778,7 @@
 			children = (
 				C42182BC2C697F9700B73A99 /* ShareViewController.swift */,
 				C44DE1FC2C6EE089004F211C /* ReSearchingMusic */,
+				C48B76F32C7314F20003BC3C /* DropDone */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1978,6 +1984,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		C48B76F32C7314F20003BC3C /* DropDone */ = {
+			isa = PBXGroup;
+			children = (
+				C48B76F42C73151B0003BC3C /* DropDoneView.swift */,
+			);
+			path = DropDone;
+			sourceTree = "<group>";
+		};
 		C4A4458E2A5EF203008279C1 /* FCM */ = {
 			isa = PBXGroup;
 			children = (
@@ -2093,6 +2107,7 @@
 				F4AA84DE2C1F3B0200CADB1A /* Array+Extension.swift */,
 				6A51EC3B2C3E52FE00DEF6F3 /* UIViewController+Rx.swift */,
 				6A51EC3D2C3E536000DEF6F3 /* Map+Rx.swift */,
+				C48B76F62C7339DA0003BC3C /* UILabel+actualNumberOfLines.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2623,6 +2638,7 @@
 				41396D912A4EFBF700B69341 /* DefaultEditCommentRepository.swift in Sources */,
 				C419722E2ABD9D6F00211222 /* MyInfoUseCase.swift in Sources */,
 				C4A4E3BC2C6447AF00283C37 /* FetchingRegionFilteredDropCountUseCase.swift in Sources */,
+				C48B76F72C7339DA0003BC3C /* UILabel+actualNumberOfLines.swift in Sources */,
 				C4A0567B2A631D6E00AE2F0B /* CustomSwitch.swift in Sources */,
 				6A26BF342B33D2210007B6B7 /* DefaultFetchingSingleMusicUseCase.swift in Sources */,
 				1876F04E2A66EE030064B887 /* MyLevel.swift in Sources */,
@@ -2842,6 +2858,7 @@
 				C432DF002C69F7F3003DBA18 /* UIViewController+Rx.swift in Sources */,
 				C432DF012C69F7F3003DBA18 /* Map+Rx.swift in Sources */,
 				C432DF022C69F7F3003DBA18 /* UIFont+Extension.swift in Sources */,
+				C48B76F82C7339EB0003BC3C /* UILabel+actualNumberOfLines.swift in Sources */,
 				C432DF032C69F7F3003DBA18 /* TestError.swift in Sources */,
 				C432DF042C69F7F3003DBA18 /* ImageCacheError.swift in Sources */,
 				C432DF052C69F7F3003DBA18 /* UserDefaultsError.swift in Sources */,
@@ -2892,6 +2909,7 @@
 				C432DF322C69F7F3003DBA18 /* EditCommentRepository.swift in Sources */,
 				C432DF332C69F7F3003DBA18 /* DeleteMusicRepository.swift in Sources */,
 				C432DF342C69F7F3003DBA18 /* BlockUserRepository.swift in Sources */,
+				C48B76F52C73151B0003BC3C /* DropDoneView.swift in Sources */,
 				C432DF352C69F7F3003DBA18 /* PopUpRepository.swift in Sources */,
 				C432DF362C69F7F3003DBA18 /* DefaultMainRepository.swift in Sources */,
 				C432DF372C69F7F3003DBA18 /* DefaultSearchingMusicRepository.swift in Sources */,
