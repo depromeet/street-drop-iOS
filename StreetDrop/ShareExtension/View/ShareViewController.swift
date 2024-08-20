@@ -368,7 +368,7 @@ private extension ShareViewController {
         let input: ShareViewModel.Input = .init(
             viewDidLoadEvent: .just(Void()),
             sharedMusicKeyWordEvent: sharedMusicKeyWordEvent.asObservable(),
-            changingMusicViewClickEvent: changingMusicView.rx.tapGesture().asObservable().mapVoid(),
+            changingMusicViewClickEvent: changingMusicView.rx.tapGesture().when(.recognized).asObservable().mapVoid(),
             reSearchingEvent: reSearchingMusicForSharingView.reSearchingEvent,
             dropButtonClickEvent: dropButtonClickEvent.asObservable()
         )
