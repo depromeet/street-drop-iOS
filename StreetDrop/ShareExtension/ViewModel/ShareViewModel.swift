@@ -157,7 +157,7 @@ private extension ShareViewModel {
             .subscribe(with: self) { owner, musicList in
                 owner.output.showReSearchedMusicListRelay.accept(musicList)
             } onFailure: { owner, error in
-                // TODO: 요셉, 실패 팝업 띄우기
+                owner.output.showReSearchedMusicListRelay.accept([])
             }
             .disposed(by: disposeBag)
     }
