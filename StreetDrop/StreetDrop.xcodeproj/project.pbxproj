@@ -389,6 +389,7 @@
 		C434A4D82A17AAAB00C63526 /* SearchingMusicViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */; };
 		C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
 		C434A4DD2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */; };
+		C4429C002C74515B00DC8C36 /* FailedLoadingMusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4429BFF2C74515B00DC8C36 /* FailedLoadingMusicView.swift */; };
 		C44442F32C6C7CA700CA93EA /* CommunityGuideDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41589AB92A474B3D0029A2EE /* CommunityGuideDetailView.swift */; };
 		C44980782BC37CB70001E6C3 /* NaverMaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = C44980772BC37CB70001E6C3 /* NaverMaps.plist */; };
 		C449807A2BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44980792BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift */; };
@@ -735,6 +736,7 @@
 		C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicRepository.swift; sourceTree = "<group>"; };
 		C434A4D72A17AAAB00C63526 /* SearchingMusicViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicViewModelTest.swift; sourceTree = "<group>"; };
 		C434A4DB2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMusicTableViewCell.swift; sourceTree = "<group>"; };
+		C4429BFF2C74515B00DC8C36 /* FailedLoadingMusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedLoadingMusicView.swift; sourceTree = "<group>"; };
 		C44980772BC37CB70001E6C3 /* NaverMaps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NaverMaps.plist; sourceTree = "<group>"; };
 		C44980792BC3AF9F0001E6C3 /* PopUpUserReadingRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpUserReadingRequestDTO.swift; sourceTree = "<group>"; };
 		C449807B2BC3B07E0001E6C3 /* PostingPopUpUserReadingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingPopUpUserReadingUseCase.swift; sourceTree = "<group>"; };
@@ -1779,6 +1781,7 @@
 				C42182BC2C697F9700B73A99 /* ShareViewController.swift */,
 				C44DE1FC2C6EE089004F211C /* ReSearchingMusic */,
 				C48B76F32C7314F20003BC3C /* DropDone */,
+				C4429BFE2C74514300DC8C36 /* FailedLoadingMusicView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1836,6 +1839,14 @@
 				C434A4D22A17983A00C63526 /* SearchingMusicRepository.swift */,
 			);
 			path = SearchingMusic;
+			sourceTree = "<group>";
+		};
+		C4429BFE2C74514300DC8C36 /* FailedLoadingMusicView */ = {
+			isa = PBXGroup;
+			children = (
+				C4429BFF2C74515B00DC8C36 /* FailedLoadingMusicView.swift */,
+			);
+			path = FailedLoadingMusicView;
 			sourceTree = "<group>";
 		};
 		C44A54942BBC080700354F8F /* PopUp */ = {
@@ -2985,6 +2996,7 @@
 				C432DF7A2C69F7F3003DBA18 /* DefaultFetchingMyLevelUseCase.swift in Sources */,
 				C432DF7B2C69F7F3003DBA18 /* FetchingMyLikeListUseCase.swift in Sources */,
 				C432DF7C2C69F7F3003DBA18 /* DefaultFetchingMyLikeListUseCase.swift in Sources */,
+				C4429C002C74515B00DC8C36 /* FailedLoadingMusicView.swift in Sources */,
 				C432DF7D2C69F7F3003DBA18 /* FetchingMyDropListUseCase.swift in Sources */,
 				C432DF7E2C69F7F3003DBA18 /* DefaultFetchingMyDropListUseCase.swift in Sources */,
 				C432DF7F2C69F7F3003DBA18 /* FetchingCityAndDistrictsUseCase.swift in Sources */,

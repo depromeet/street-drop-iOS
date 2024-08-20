@@ -39,7 +39,7 @@ final class ShareViewModel: NSObject, ShareViewModelType {
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
-        let sharedMusicKeyWordEvent: Observable<String>
+        let sharedMusicKeyWordEvent: Observable<String?>
         let changingMusicViewClickEvent: Observable<Void>
         let reSearchingEvent: Observable<String>
         let dropButtonClickEvent: Observable<Void>
@@ -62,6 +62,10 @@ final class ShareViewModel: NSObject, ShareViewModelType {
         var goDropDoneView: Observable<(Music, String, String)> {
             goDropDoneViewRelay.asObservable()
         }
+        fileprivate let goFailedLoadingMusicViewRelay: PublishRelay<Void> = .init()
+        var goFailedLoadingMusicView: Observable<Void> {
+            goFailedLoadingMusicViewRelay.asObservable()
+        }
     }
     
     func convert(input: Input, disposedBag: DisposeBag) -> Output {
@@ -75,10 +79,14 @@ final class ShareViewModel: NSObject, ShareViewModelType {
         
         input.sharedMusicKeyWordEvent
             .bind(with: self) { owner, sharedMusicKeyWord in
+                guard let sharedMusicKeyWord = sharedMusicKeyWord else {
+                    owner.output.goFailedLoadingMusicViewRelay.accept(Void())
+                    return
+                }
                 owner.searchMusicUsecase.searchMusic(keyword: sharedMusicKeyWord)
                     .subscribe(with: self) { owner, musicList in
                         guard let firstMusic = musicList.first else {
-                            // TODO: 요셉, 검색된 음악 없다는 이벤트 view에 전달
+                            owner.output.goFailedLoadingMusicViewRelay.accept(Void())
                             return
                         }
                         owner.output.showSearchedMusicRelay.accept(firstMusic)
@@ -131,6 +139,7 @@ final class ShareViewModel: NSObject, ShareViewModelType {
                         (selectedMusic, currentLocation.address, comment)
                     )
                 } onFailure: { owner, error in
+                    // TODO: 드랍 실패 팝업
                     print(error.localizedDescription)
                 }
                 .disposed(by: disposedBag)
@@ -175,10 +184,5 @@ extension ShareViewModel: CLLocationManagerDelegate {
         .disposed(by: disposeBag)
 
         manager.stopUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
-        // TODO: 요셉, 에러메세지 띄우기
-        print("위치 정보를 가져오는데 실패했습니다: \(error.localizedDescription)")
     }
 }

@@ -23,7 +23,7 @@ final class ShareViewController: UIViewController {
     }
     private let viewModel: ShareViewModel = .init()
     private let disposeBag: DisposeBag = .init()
-    private let sharedMusicKeyWordEvent: PublishRelay<String> = .init()
+    private let sharedMusicKeyWordEvent: PublishRelay<String?> = .init()
     private let dropButtonClickEvent: PublishRelay<Void> = .init()
     
     private let containerView: UIView = {
@@ -217,6 +217,13 @@ final class ShareViewController: UIViewController {
     }()
     
     private var dropDoneView: DropDoneView?
+    
+    private let failedLoadingMusicView: FailedLoadingMusicView = {
+        let failedLoadingMusicView: FailedLoadingMusicView = .init()
+        failedLoadingMusicView.isHidden = true
+        
+        return failedLoadingMusicView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -429,11 +436,28 @@ private extension ShareViewController {
                 })
             })
             .disposed(by: disposeBag)
+        
+        output.goFailedLoadingMusicView
+            .bind(with: self) { owner, _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: { [weak self] in
+                    guard let self = self else { return }
+                    containerView.isHidden = true
+                    reSearchingMusicForSharingView.isHidden = true
+                    failedLoadingMusicView.isHidden = false
+                    view.layoutIfNeeded()
+                })
+            }
+            .disposed(by: disposeBag)
     }
     
     func configureUI() {
-        view.addSubview(containerView)
-        view.addSubview(reSearchingMusicForSharingView)
+        [
+            containerView,
+            reSearchingMusicForSharingView,
+            failedLoadingMusicView
+        ].forEach {
+            view.addSubview($0)
+        }
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
         containerView.snp.makeConstraints {
@@ -559,6 +583,11 @@ private extension ShareViewController {
             $0.height.equalTo(56)
             $0.horizontalEdges.equalToSuperview()
         }
+        
+        failedLoadingMusicView.snp.makeConstraints {
+            $0.height.equalTo(192)
+            $0.horizontalEdges.bottom.equalToSuperview()
+        }
     }
 }
 
@@ -567,7 +596,10 @@ private extension ShareViewController {
     func handleExtensionItem(_ extensionItem: NSExtensionItem) {
         // ExtensionItem에서 ContentText 추출
         guard let sharedTextItem = extensionItem.attributedContentText,
-              let videoID = extractVideoID(from: sharedTextItem.string) else { return }
+              let videoID = extractVideoID(from: sharedTextItem.string) else {
+            sharedMusicKeyWordEvent.accept(nil)
+            return
+        }
         
         fetchVideoDetails(videoID: videoID) { [weak self] songName, artistName in
             self?.sharedMusicKeyWordEvent.accept("\(songName ?? "")-\(artistName ?? "")")
