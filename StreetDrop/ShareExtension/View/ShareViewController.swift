@@ -451,13 +451,11 @@ private extension ShareViewController {
         
         output.goFailedLoadingMusicView
             .bind(with: self) { owner, _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: { [weak self] in
-                    guard let self = self else { return }
-                    containerView.isHidden = true
-                    reSearchingMusicForSharingView.isHidden = true
-                    failedLoadingMusicView.isHidden = false
-                    view.layoutIfNeeded()
-                })
+                owner.containerView.isHidden = true
+                owner.reSearchingMusicForSharingView.isHidden = true
+                owner.failedLoadingMusicView.isHidden = false
+            }
+            .disposed(by: disposeBag)
         
         output.errorAlertShow
             .bind(with: self) { owner, errorMessage in
