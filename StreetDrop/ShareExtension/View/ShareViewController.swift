@@ -362,6 +362,18 @@ private extension ShareViewController {
                 })
             }
             .disposed(by: disposeBag)
+        
+        failedLoadingMusicView.searchingMusicButtonEvent
+            .bind(with: self) { owner, _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: { [weak self] in
+                    guard let self = self else { return }
+                    containerView.isHidden = true
+                    reSearchingMusicForSharingView.isHidden = false
+                    failedLoadingMusicView.isHidden = true
+                    view.layoutIfNeeded()
+                })
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindViewModel() {
