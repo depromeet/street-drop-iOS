@@ -543,8 +543,8 @@ private extension ShareViewController {
                    let items = json["items"] as? [[String: Any]],
                    let snippet = items.first?["snippet"] as? [String: Any] {
                     let title = snippet["title"] as? String
-                    let channelTitle = snippet["channelTitle"] as? String
-                    completion(title, channelTitle)
+                    let tags = snippet["tags"] as? [String]
+                    completion(title, tags?.first ?? "")
                 } else {
                     completion(nil, nil)
                 }
