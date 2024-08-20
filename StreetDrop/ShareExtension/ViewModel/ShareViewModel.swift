@@ -66,6 +66,10 @@ final class ShareViewModel: NSObject, ShareViewModelType {
         var goFailedLoadingMusicView: Observable<Void> {
             goFailedLoadingMusicViewRelay.asObservable()
         }
+        fileprivate let errorAlertShowRelay: PublishRelay<String> = .init()
+        var errorAlertShow: Observable<String> {
+            errorAlertShowRelay.asObservable()
+        }
     }
     
     func convert(input: Input, disposedBag: DisposeBag) -> Output {
@@ -113,17 +117,17 @@ final class ShareViewModel: NSObject, ShareViewModelType {
         input.dropButtonClickEvent
             .bind(with: self) { owner, _ in
                 guard let selectedMusic = owner.selectedMusic else {
-                    // TODO: 요셉, 선택한 음악정보 없다는 에러팝업
+                    owner.output.errorAlertShowRelay.accept("선택한 음악 정보가 없습니다.")
                     return
                 }
                 
                 guard let comment = owner.comment else {
-                    // TODO: 코멘트 없다는 에러팝업
+                    owner.output.errorAlertShowRelay.accept("코멘트가 없습니다.")
                     return
                 }
                 
                 guard let currentLocation = owner.currentLocation else {
-                    // TODO: 현재 위치정보 없다는 에러팝업
+                    owner.output.errorAlertShowRelay.accept("현재 위치정보가 없습니다.")
                     return
                 }
                 
@@ -139,8 +143,7 @@ final class ShareViewModel: NSObject, ShareViewModelType {
                         (selectedMusic, currentLocation.address, comment)
                     )
                 } onFailure: { owner, error in
-                    // TODO: 드랍 실패 팝업
-                    print(error.localizedDescription)
+                    owner.output.errorAlertShowRelay.accept("드랍에 실패 했습니다.")
                 }
                 .disposed(by: disposedBag)
 

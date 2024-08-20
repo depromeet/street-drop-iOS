@@ -15,7 +15,7 @@ import RxRelay
 import RxGesture
 import SnapKit
 
-final class ShareViewController: UIViewController {
+final class ShareViewController: UIViewController, Alertable {
     enum Constant {
         static let commentPlaceHolder: String = "노래, 현재 감정, 상황, 관련 에피소드, 거리, 가수 등 떠오르는 말을 적어보세요."
         static let communityButtonTitle: String = "커뮤니티 가이드"
@@ -458,6 +458,23 @@ private extension ShareViewController {
                     failedLoadingMusicView.isHidden = false
                     view.layoutIfNeeded()
                 })
+        
+        output.errorAlertShow
+            .bind(with: self) { owner, errorMessage in
+                owner.showAlert(
+                    type: .alert(
+                        onConfirm: { [weak self] in
+                            self?.extensionContext?.completeRequest(
+                                returningItems: nil,
+                                completionHandler: nil
+                            )
+                        }
+                    ),
+                    state: .primary,
+                    title: "에러 발생",
+                    subText: errorMessage,
+                    buttonTitle: "확인"
+                )
             }
             .disposed(by: disposeBag)
     }
