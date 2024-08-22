@@ -177,6 +177,8 @@
 		C408B0372C6A5E8200338BFE /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FBB2A1B917B008B076F /* Pretendard-Bold.otf */; };
 		C408B0382C6A5E8200338BFE /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4D16FB62A1B917B008B076F /* Pretendard-Thin.otf */; };
 		C408B03A2C6A63B500338BFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 040685082A01539800377094 /* Assets.xcassets */; };
+		C40F09022C761ACB0034D7E3 /* DropMusicReponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F09012C761ACB0034D7E3 /* DropMusicReponseDTO.swift */; };
+		C40F09032C761ACB0034D7E3 /* DropMusicReponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F09012C761ACB0034D7E3 /* DropMusicReponseDTO.swift */; };
 		C419722E2ABD9D6F00211222 /* MyInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419722D2ABD9D6F00211222 /* MyInfoUseCase.swift */; };
 		C41972302ABDAB0200211222 /* DefaultMyInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419722F2ABDAB0200211222 /* DefaultMyInfoUseCase.swift */; };
 		C41972322ABDAEF200211222 /* MyInfoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41972312ABDAEF200211222 /* MyInfoError.swift */; };
@@ -702,6 +704,7 @@
 		B4B9EE832ADBDFFB000A6507 /* RecommendMusicSearchCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendMusicSearchCollectionView.swift; sourceTree = "<group>"; };
 		B4B9EE852ADEB2AC000A6507 /* RecommendKeywordItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendKeywordItemCell.swift; sourceTree = "<group>"; };
 		C40008E92A32012B00EA7FA9 /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
+		C40F09012C761ACB0034D7E3 /* DropMusicReponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropMusicReponseDTO.swift; sourceTree = "<group>"; };
 		C419722D2ABD9D6F00211222 /* MyInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoUseCase.swift; sourceTree = "<group>"; };
 		C419722F2ABDAB0200211222 /* DefaultMyInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyInfoUseCase.swift; sourceTree = "<group>"; };
 		C41972312ABDAEF200211222 /* MyInfoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoError.swift; sourceTree = "<group>"; };
@@ -943,6 +946,7 @@
 			isa = PBXGroup;
 			children = (
 				049F50212A122C8A001528CB /* DropMusicRequestDTO+Mapping.swift */,
+				C40F09012C761ACB0034D7E3 /* DropMusicReponseDTO.swift */,
 			);
 			path = DropMusic;
 			sourceTree = "<group>";
@@ -2621,6 +2625,7 @@
 				C449807E2BC3B09F0001E6C3 /* DefaultPostingPopUpUserReadingUseCase.swift in Sources */,
 				C41972302ABDAB0200211222 /* DefaultMyInfoUseCase.swift in Sources */,
 				41396D8F2A4EFBE800B69341 /* DefaultDeleteMusicRepository.swift in Sources */,
+				C40F09022C761ACB0034D7E3 /* DropMusicReponseDTO.swift in Sources */,
 				41396D822A4EF65B00B69341 /* EditCommentRequestDTO.swift in Sources */,
 				C434A4D32A17983A00C63526 /* SearchingMusicRepository.swift in Sources */,
 				41A3DDF82A5AD222004CFA2F /* DefaultBlockUserRepository.swift in Sources */,
@@ -2854,6 +2859,7 @@
 				C432DF9C2C69F89A003DBA18 /* PoiEntity.swift in Sources */,
 				C432DF9D2C69F89A003DBA18 /* MusicCountEntity.swift in Sources */,
 				C432DF9E2C69F89A003DBA18 /* MusicWithinAreaEntity.swift in Sources */,
+				C40F09032C761ACB0034D7E3 /* DropMusicReponseDTO.swift in Sources */,
 				C432DF862C69F867003DBA18 /* MyMusic.swift in Sources */,
 				C432DF872C69F867003DBA18 /* MyLevel.swift in Sources */,
 				C432DEF32C69F7F3003DBA18 /* AddressManager.swift in Sources */,

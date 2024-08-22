@@ -10,5 +10,6 @@ import Foundation
 import RxSwift
 
 protocol DropMusicUseCase {
-    func drop(droppingInfo: DroppingInfo, content: String) -> Single<Int>
+    func dropMusicResponsingOnlyStatusCode(droppingInfo: DroppingInfo, content: String) -> Single<Int>
+    func dropMusicResponsingOnlyItemID(droppingInfo: DroppingInfo, content: String) -> Single<Int>
 }

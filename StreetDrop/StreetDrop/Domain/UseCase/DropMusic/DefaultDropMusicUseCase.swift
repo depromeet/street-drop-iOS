@@ -16,7 +16,11 @@ final class DefaultDropMusicUseCase: DropMusicUseCase {
         self.dropMusicRepository = dropMusicRepository
     }
 
-    func drop(droppingInfo: DroppingInfo, content: String) -> Single<Int> {
-        return dropMusicRepository.dropMusic(droppingInfo: droppingInfo, content: content)
+    func dropMusicResponsingOnlyStatusCode(droppingInfo: DroppingInfo, content: String) -> Single<Int> {
+        return dropMusicRepository.dropMusicResponsingOnlyStatusCode(droppingInfo: droppingInfo, content: content)
+    }
+    
+    func dropMusicResponsingOnlyItemID(droppingInfo: DroppingInfo, content: String) -> Single<Int> {
+        return dropMusicRepository.dropMusicResponsingOnlyItemID(droppingInfo: droppingInfo, content: content)
     }
 }
