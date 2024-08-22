@@ -41,6 +41,14 @@ final class MainViewController: UIViewController, Toastable, Alertable {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +72,13 @@ final class MainViewController: UIViewController, Toastable, Alertable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewDidAppearEvent.accept(Void())
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(configureShareExtensionViewOnAppButton),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+        configureShareExtensionViewOnAppButton()
     }
     
     // MARK: - UI
@@ -975,5 +990,24 @@ extension MainViewController: NMFMapViewCameraDelegate {
     
     func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
         self.locationOverlay.circleRadius = viewModel.userCircleRadius / naverMapView.projection.metersPerPixel()
+    }
+}
+
+// MARK: - Share Extension
+
+private extension MainViewController {
+    @objc func configureShareExtensionViewOnAppButton() {
+        guard let sharedDefaults = UserDefaults(suiteName: "group.com.depromeet.StreetDrop") else {
+            print("Failed to access shared UserDefaults.")
+            return
+        }
+        
+        guard let shareExtensionDroppedItemID = sharedDefaults.object(forKey: "ShareExtensionDroppedItemID") as? Int,
+              let scene = view.window?.windowScene,
+              let sceneDelegate = scene.delegate as? SceneDelegate else { return }
+        
+        sceneDelegate.navigateToCommunity(with: shareExtensionDroppedItemID)
+        sharedDefaults.removeObject(forKey: "ShareExtensionDroppedItemID")
+        sharedDefaults.synchronize()
     }
 }

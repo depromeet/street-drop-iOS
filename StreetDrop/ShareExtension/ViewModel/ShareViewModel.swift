@@ -28,6 +28,7 @@ final class ShareViewModel: NSObject, ShareViewModelType {
     var sharedSongName: String = ""
     var selectedMusic: Music?
     var comment: String?
+    var itemID: Int?
     
     init(
         searchMusicUsecase: SearchMusicUsecase = DefaultSearchingMusicUsecase(),
@@ -131,14 +132,15 @@ final class ShareViewModel: NSObject, ShareViewModelType {
                     return
                 }
                 
-                owner.dropMusicUseCase.drop(
+                owner.dropMusicUseCase.dropMusicResponsingOnlyItemID(
                     droppingInfo: .init(
                         location: currentLocation,
                         music: selectedMusic
                     ),
                     content: comment
                 )
-                .subscribe(with: self) { owner, statusCode in
+                .subscribe(with: self) { owner, itemID in
+                    owner.itemID = itemID
                     owner.output.goDropDoneViewRelay.accept(
                         (selectedMusic, currentLocation.address, comment)
                     )

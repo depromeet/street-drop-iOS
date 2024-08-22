@@ -216,8 +216,6 @@ final class ShareViewController: UIViewController, Alertable {
         return reSearchingMusicForSharingView
     }()
     
-    private var dropDoneView: DropDoneView?
-    
     private let failedLoadingMusicView: FailedLoadingMusicView = {
         let failedLoadingMusicView: FailedLoadingMusicView = .init()
         failedLoadingMusicView.isHidden = true
@@ -424,13 +422,13 @@ private extension ShareViewController {
                     containerView.isHidden = true
                     reSearchingMusicForSharingView.isHidden = true
                     
-                    dropDoneView = .init(
+                    let dropDoneView: DropDoneView = .init(
                         droppedMusic: droppedMusic,
                         droppedAddress: droppedAddress,
                         droppedComment: droppedComment
                     )
-                    guard let dropDoneView = dropDoneView else { return }
                     view.addSubview(dropDoneView)
+                    
                     dropDoneView.snp.makeConstraints {
                         $0.horizontalEdges.bottom.equalToSuperview()
                     }
@@ -441,6 +439,58 @@ private extension ShareViewController {
                                 returningItems: nil,
                                 completionHandler: nil
                             )
+                        }
+                        .disposed(by: disposeBag)
+                    
+                    dropDoneView.viewOnAppButtonEvent
+                        .bind(with: self) { owner, _ in
+                            guard let droppedItemID = owner.viewModel.itemID else {
+                                owner.showAlert(
+                                    type: .alert(
+                                        onConfirm: { [weak self] in
+                                            self?.extensionContext?.completeRequest(
+                                                returningItems: nil,
+                                                completionHandler: nil
+                                            )
+                                        }
+                                    ),
+                                    state: .primary,
+                                    title: "에러 발생",
+                                    subText: "드랍된 ID를 찾을 수 없습니다.",
+                                    buttonTitle: "확인"
+                                )
+                                return
+                            }
+                            
+                            guard let url = URL(string: "streetdrop://") else { return }
+                            var responder = self as UIResponder?
+                            while responder != nil {
+                                if let application = responder as? UIApplication {
+                                    guard let sharedDefaults = UserDefaults(suiteName: "group.com.depromeet.StreetDrop") else {
+                                        owner.showAlert(
+                                            type: .alert(
+                                                onConfirm: { [weak self] in
+                                                    self?.extensionContext?.completeRequest(
+                                                        returningItems: nil,
+                                                        completionHandler: nil
+                                                    )
+                                                }
+                                            ),
+                                            state: .primary,
+                                            title: "에러 발생",
+                                            subText: "드랍 아이템 ID 내부 데이터 저장 실패",
+                                            buttonTitle: "확인"
+                                        )
+                                        return
+                                    }
+                                    sharedDefaults.set(droppedItemID, forKey: "ShareExtensionDroppedItemID")
+                                    sharedDefaults.synchronize()
+                                    
+                                    application.open(url, options: [:], completionHandler: nil)
+                                    break
+                                }
+                                responder = responder?.next
+                            }
                         }
                         .disposed(by: disposeBag)
                     

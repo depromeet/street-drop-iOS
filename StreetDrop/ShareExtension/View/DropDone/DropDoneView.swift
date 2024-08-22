@@ -18,6 +18,10 @@ final class DropDoneView: UIView {
     var exitButtonEvent: Observable<Void> {
         exitButtonEventRelay.asObservable()
     }
+    private let viewOnAppButtonEventRelay: PublishRelay<Void> = .init()
+    var viewOnAppButtonEvent: Observable<Void> {
+        viewOnAppButtonEventRelay.asObservable()
+    }
     
     private let droppedMusic: Music
     private let droppedAddress: String
@@ -149,6 +153,10 @@ private extension DropDoneView {
     func bindAction() {
         exitButton.rx.tap
             .bind(to: exitButtonEventRelay)
+            .disposed(by: disposeBag)
+        
+        viewOnAppButton.rx.tap
+            .bind(to: viewOnAppButtonEventRelay)
             .disposed(by: disposeBag)
     }
     
