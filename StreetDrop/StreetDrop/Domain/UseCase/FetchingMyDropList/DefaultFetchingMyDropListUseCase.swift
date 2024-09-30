@@ -18,7 +18,7 @@ final class DefaultFetchingMyDropListUseCase {
 }
 
 extension DefaultFetchingMyDropListUseCase: FetchingMyDropListUseCase {
-    func fetchMyDropList() -> Single<TotalMyMusics> {
-        return repository.fetchMyDropList()
+    func fetchMyDropList(filterType: FilterType) -> Single<TotalMyMusics> {
+        return repository.fetchMyDropList(filterType: filterType)
     }
 }

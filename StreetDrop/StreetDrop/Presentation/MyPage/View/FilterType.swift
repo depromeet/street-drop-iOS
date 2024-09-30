@@ -22,4 +22,18 @@ enum FilterType {
             return "인기순"
         }
     }
+    
+    var param: String {
+        switch self {
+        case .newest:
+            return "RECENT"
+        case .oldest:
+            return "OLDEST"
+        case .mostPopular:
+            /*
+             TODO: - API 개발 후 추가 예정
+             */
+            return ""
+        }
+    }
 }

@@ -18,9 +18,9 @@ final class DefaultMyPageRepository {
 }
 
 extension DefaultMyPageRepository: MyPageRepository {
-    func fetchMyDropList() -> Single<TotalMyMusics> {
+    func fetchMyDropList(filterType: FilterType) -> Single<TotalMyMusics> {
         return networkManager.request(
-            target: .init(NetworkService.myDropList),
+            target: .init(NetworkService.myDropList(filterType: filterType.param)),
             responseType: MyDropListResponseDTO.self
         )
         .map { dto in
@@ -28,9 +28,9 @@ extension DefaultMyPageRepository: MyPageRepository {
         }
     }
     
-    func fetchMyLikeList() -> Single<TotalMyMusics> {
+    func fetchMyLikeList(filterType: FilterType) -> Single<TotalMyMusics> {
         return networkManager.request(
-            target: .init(NetworkService.myLikeList),
+            target: .init(NetworkService.myLikeList(filterType: filterType.param)),
             responseType: MyLikeListResponseDTO.self
         )
         .map { dto in

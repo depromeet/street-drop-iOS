@@ -18,7 +18,7 @@ final class DefaultFetchingMyLikeListUseCase {
 }
 
 extension DefaultFetchingMyLikeListUseCase: FetchingMyLikeListUseCase {
-    func fetchMyLikeList() -> Single<TotalMyMusics> {
-        return repository.fetchMyLikeList()
+    func fetchMyLikeList(filterType: FilterType) -> Single<TotalMyMusics> {
+        return repository.fetchMyLikeList(filterType: filterType)
     }
 }

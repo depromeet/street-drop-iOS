@@ -10,8 +10,8 @@ import Foundation
 import RxSwift
 
 protocol MyPageRepository {
-    func fetchMyDropList() -> Single<TotalMyMusics>
-    func fetchMyLikeList() -> Single<TotalMyMusics>
+    func fetchMyDropList(filterType: FilterType) -> Single<TotalMyMusics>
+    func fetchMyLikeList(filterType: FilterType) -> Single<TotalMyMusics>
     func fetchMyLevel() -> Single<MyLevel>
     func fetchMyLevelProgress() -> Single<MyLevelProgress>
     func fetchLevelPolicy() -> Single<[LevelPolicy]>

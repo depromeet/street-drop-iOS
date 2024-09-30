@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 protocol FetchingMyLikeListUseCase {
-    func fetchMyLikeList() -> Single<TotalMyMusics>
+    func fetchMyLikeList(filterType: FilterType) -> Single<TotalMyMusics>
 }

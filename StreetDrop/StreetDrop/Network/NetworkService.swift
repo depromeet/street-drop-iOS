@@ -28,8 +28,8 @@ enum NetworkService {
     case blockUser(blockUserID: Int)
     case postFCMToken(token: FCMTokenRequestDTO)
     case patchUsersMusicApp(musicAppQuery: String)
-    case myDropList
-    case myLikeList
+    case myDropList(filterType: String)
+    case myLikeList(filterType: String)
     case myLevel
     case myLevelProgress
     case levelPolicy
@@ -161,9 +161,11 @@ extension NetworkService: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .getMyInfo, .myDropList, .myLikeList, .myLevel, .myLevelProgress, .levelPolicy, .recommendMusic, .userCircleRadius, .getPopUpInfomation,
+        case .getMyInfo, .myLevel, .myLevelProgress, .levelPolicy, .recommendMusic, .userCircleRadius, .getPopUpInfomation,
                 .getNoticeList, .getNoticeDetail:
             return .requestPlain
+        case .myDropList(let filterType), .myLikeList(let filterType):
+            return .requestParameters(parameters: ["orderType": filterType], encoding: URLEncoding.default)
         case .searchMusic(let keyword):
             return .requestParameters(
                 parameters: ["keyword": keyword],

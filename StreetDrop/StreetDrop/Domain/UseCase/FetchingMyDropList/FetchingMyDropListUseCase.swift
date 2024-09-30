@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 protocol FetchingMyDropListUseCase {
-    func fetchMyDropList() -> Single<TotalMyMusics>
+    func fetchMyDropList(filterType: FilterType) -> Single<TotalMyMusics>
 }
