@@ -43,6 +43,8 @@
 		0856525D2B1F29FD00FD9BCB /* ModalOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0856525C2B1F29FD00FD9BCB /* ModalOption.swift */; };
 		08810C2E2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810C2D2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift */; };
 		08810C322BD3FC57004FC6C1 /* LevelPolicySubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810C312BD3FC57004FC6C1 /* LevelPolicySubView.swift */; };
+		088F000B2CAACDB100F97992 /* String+ToDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088F000A2CAACDB100F97992 /* String+ToDate.swift */; };
+		088F000D2CAACE0D00F97992 /* Date+TimeAgoDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088F000C2CAACE0D00F97992 /* Date+TimeAgoDisplay.swift */; };
 		08B97EA52B44303C00084F66 /* UniviersialLinkKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B97EA42B44303C00084F66 /* UniviersialLinkKey.swift */; };
 		08BE57162BD4C887007EA949 /* UILabel+applyGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BE57152BD4C887007EA949 /* UILabel+applyGradient.swift */; };
 		08F574512C4696AC00635B54 /* FetchingMyDropListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F574502C4696AC00635B54 /* FetchingMyDropListUseCase.swift */; };
@@ -333,6 +335,8 @@
 		0856525C2B1F29FD00FD9BCB /* ModalOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalOption.swift; sourceTree = "<group>"; };
 		08810C2D2BD3FB00004FC6C1 /* LevelPolicyPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelPolicyPopUpViewController.swift; sourceTree = "<group>"; };
 		08810C312BD3FC57004FC6C1 /* LevelPolicySubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelPolicySubView.swift; sourceTree = "<group>"; };
+		088F000A2CAACDB100F97992 /* String+ToDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ToDate.swift"; sourceTree = "<group>"; };
+		088F000C2CAACE0D00F97992 /* Date+TimeAgoDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+TimeAgoDisplay.swift"; sourceTree = "<group>"; };
 		08B97EA42B44303C00084F66 /* UniviersialLinkKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniviersialLinkKey.swift; sourceTree = "<group>"; };
 		08BE57152BD4C887007EA949 /* UILabel+applyGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+applyGradient.swift"; sourceTree = "<group>"; };
 		08F574502C4696AC00635B54 /* FetchingMyDropListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingMyDropListUseCase.swift; sourceTree = "<group>"; };
@@ -1692,6 +1696,8 @@
 				F4AA84DE2C1F3B0200CADB1A /* Array+Extension.swift */,
 				6A51EC3B2C3E52FE00DEF6F3 /* UIViewController+Rx.swift */,
 				6A51EC3D2C3E536000DEF6F3 /* Map+Rx.swift */,
+				088F000A2CAACDB100F97992 /* String+ToDate.swift */,
+				088F000C2CAACE0D00F97992 /* Date+TimeAgoDisplay.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2062,6 +2068,7 @@
 				41A3DDF12A593ED4004CFA2F /* AlertViewController.swift in Sources */,
 				C47F02222A38633500F48884 /* SettingsViewController.swift in Sources */,
 				C44A54982BBC08D200354F8F /* DefaultPopUpRepository.swift in Sources */,
+				088F000D2CAACE0D00F97992 /* Date+TimeAgoDisplay.swift in Sources */,
 				C434A4DC2A19CA6F00C63526 /* SearchingMusicTableViewCell.swift in Sources */,
 				18D671F62A35C5D4003B1A71 /* UIImage+Resizing.swift in Sources */,
 				C4E4C6B42A5ADC4B00B1C84A /* DefaultSettingsRepository.swift in Sources */,
@@ -2196,6 +2203,7 @@
 				C419724E2ABDCABD00211222 /* DefaultBlockUserUseCase.swift in Sources */,
 				1876F0412A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift in Sources */,
 				C4685B3D2B7261A000F514C7 /* SplashViewModel.swift in Sources */,
+				088F000B2CAACDB100F97992 /* String+ToDate.swift in Sources */,
 				F4AA84DF2C1F3B0200CADB1A /* Array+Extension.swift in Sources */,
 				082F17062AB6DFEC00174D98 /* DropMusicUseCase.swift in Sources */,
 				18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */,

@@ -41,6 +41,7 @@ extension MyPageViewModel: ViewModel {
         let listTypeTapEvent: Observable<MyMusicType>
         let levelPolicyTapEvent: Observable<Void>
         let selectedMusicEvent: Observable<Int>
+        let selectedFilterTypeEvent: Observable<FilterType>
     }
     
     struct Output {
@@ -78,18 +79,30 @@ extension MyPageViewModel: ViewModel {
             .bind(to: lastestListType)
             .disposed(by: disposedBag)
         
-        lastestListType
-            .bind(with: self) { owner, type in
-                owner.myMusicType = type
-                
-                switch type {
-                case .drop:
-                    owner.fetchMyDropMusicsSections(output: output, disposedBag: disposedBag)
-                case .like:
-                    owner.fetchMyLikeMusicsSections(output: output, disposedBag: disposedBag)
-                }
+        Observable.combineLatest(
+            lastestListType,
+            input.selectedFilterTypeEvent
+        )
+        .bind(with: self) { owner, types in
+            let (myMusicType, selectedFilterType) = types
+            owner.myMusicType = myMusicType
+            
+            switch myMusicType {
+            case .drop:
+                owner.fetchMyDropMusicsSections(
+                    filterType: selectedFilterType,
+                    output: output,
+                    disposedBag: disposedBag
+                )
+            case .like:
+                owner.fetchMyLikeMusicsSections(
+                    filterType: selectedFilterType,
+                    output: output,
+                    disposedBag: disposedBag
+                )
             }
-            .disposed(by: disposedBag)
+        }
+        .disposed(by: disposedBag)
         
         input.levelPolicyTapEvent
             .bind(with: self) { owner, _ in
@@ -154,10 +167,11 @@ private extension MyPageViewModel {
     }
     
     func fetchMyDropMusicsSections(
+        filterType: FilterType,
         output: Output,
         disposedBag: DisposeBag
     ) {
-        fetchingMyDropListUseCase.fetchMyDropList()
+        fetchingMyDropListUseCase.fetchMyDropList(filterType: filterType)
             .subscribe(with: self, onSuccess: { owner, totalMusics in
                 output.totalMusicsCount.accept(totalMusics.totalCount)
                 let myMusicsSections = owner.convertToSectionTypes(from: totalMusics)
@@ -169,8 +183,12 @@ private extension MyPageViewModel {
             .disposed(by: disposedBag)
     }
     
-    func fetchMyLikeMusicsSections(output: Output, disposedBag: DisposeBag) {
-        fetchingMyLikeListUseCase.fetchMyLikeList()
+    func fetchMyLikeMusicsSections(
+        filterType: FilterType,
+        output: Output,
+        disposedBag: DisposeBag
+    ) {
+        fetchingMyLikeListUseCase.fetchMyLikeList(filterType: filterType)
             .subscribe(with: self, onSuccess: { owner, totalMusics in
                 output.totalMusicsCount.accept(totalMusics.totalCount)
                 let myMusicsSections = owner.convertToSectionTypes(from: totalMusics)

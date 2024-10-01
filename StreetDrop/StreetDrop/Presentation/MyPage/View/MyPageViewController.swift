@@ -28,7 +28,7 @@ final class MyPageViewController: UIViewController, Toastable, Alertable {
     private let selectedMusicEvent = PublishRelay<Int>()
     private let disposeBag = DisposeBag()
     private let totalMusicsCountRelay: ReplayRelay<Int> = .create(bufferSize: 1)
-    private let selectedFilterType: BehaviorRelay<FilterType> = .init(value: .newest)
+    private let selectedFilterTypeEvent: BehaviorRelay<FilterType> = .init(value: .newest)
     
     // MARK: - Init
     
@@ -454,7 +454,7 @@ private extension MyPageViewController {
     
     func bindFilterButtonAction(in musicListFilterView: MusicListFilterView) {
         musicListFilterView.rx.onSortFilterTap
-            .withLatestFrom(selectedFilterType)
+            .withLatestFrom(selectedFilterTypeEvent)
             .bind(with: self) { owner, type in
                 owner.showFilteringOptionsModal(with: type)
             }
@@ -466,7 +466,7 @@ private extension MyPageViewController {
             }
             .disposed(by: disposeBag)
         
-        selectedFilterType
+        selectedFilterTypeEvent
             .bind(to: musicListFilterView.rx.setSortButtonText)
             .disposed(by: disposeBag)
     }
@@ -532,7 +532,8 @@ private extension MyPageViewController {
             viewWillAppearEvent: viewWillAppearEvent.asObservable(),
             listTypeTapEvent: listTypeTapEvent.asObservable(),
             levelPolicyTapEvent: levelPolicyTapEvent.asObservable(),
-            selectedMusicEvent: selectedMusicEvent.asObservable()
+            selectedMusicEvent: selectedMusicEvent.asObservable(),
+            selectedFilterTypeEvent: selectedFilterTypeEvent.asObservable()
         )
         
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
@@ -731,13 +732,8 @@ private extension MyPageViewController {
     
     func filterMusicList(by type: FilterType) -> UIAction {
         return UIAction { [weak self] _ in
-            self?.selectedFilterType.accept(type)
+            self?.selectedFilterTypeEvent.accept(type)
             self?.navigationController?.dismiss(animated: true)
-            
-            /*
-             TODO:
-             - API 개발후 작업 예정
-             */
         }
     }
 }

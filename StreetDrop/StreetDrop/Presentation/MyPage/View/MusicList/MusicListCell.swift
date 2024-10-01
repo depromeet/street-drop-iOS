@@ -41,6 +41,11 @@ final class MusicListCell: UITableViewCell {
         self.locationLabel.text = item.location
         self.likeLabel.text = String(item.likeCount)
         self.userNameLabel.text = item.userName
+        
+        if let createdDate = item.createdAt.toDate() {
+            let timeAgoText: String = Date().timeAgoDisplay(from: createdDate)
+            self.timeAgoLabel.text = timeAgoText
+        }
         /*
          TODO:
          - 백엔드 개발 완료 후 내가 좋아요한 뮤직 노출 처리
