@@ -30,10 +30,7 @@ enum FilterType {
         case .oldest:
             return "OLDEST"
         case .mostPopular:
-            /*
-             TODO: - API 개발 후 추가 예정
-             */
-            return ""
+            return "MOST_LIKED"
         }
     }
 }
