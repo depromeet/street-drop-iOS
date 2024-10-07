@@ -93,7 +93,7 @@ class MusicDropViewModel: ViewModel {
                 var comment = ""
                 input.comment.bind { comment = $0 }.disposed(by: DisposeBag())
 
-                self.dropMusicUseCase.drop(droppingInfo: self.droppingInfo, content: comment)
+                self.dropMusicUseCase.dropMusicResponsingOnlyStatusCode(droppingInfo: self.droppingInfo, content: comment)
                     .subscribe(onSuccess: { response in
                         if !(200...299).contains(response) {
                             output.isSuccessDrop.accept(

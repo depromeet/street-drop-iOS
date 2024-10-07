@@ -9,5 +9,9 @@
 		<string>applinks:test-open.street-drop.com</string>
 		<string>webcredentials:test-open.street-drop.com</string>
 	</array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.depromeet.StreetDrop</string>
+	</array>
 </dict>
 </plist>

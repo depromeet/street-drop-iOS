@@ -33,6 +33,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let url = URLContexts.first?.url else { return }
         handleDeepLink(isLaunched: false, url: url)
     }
+    
+    func navigateToCommunity(with itemID: Int) {
+        let sceneDelegate = UIApplication.shared.connectedScenes
+            .first?.delegate as? SceneDelegate
+        
+        if let navigationView = topViewController(base: sceneDelegate?.window?.rootViewController)?
+            .navigationController as? UINavigationController{
+            
+            let communityViewModel = CommunityViewModel(
+                communityInfos: [],
+                index: 0
+            )
+            communityViewModel.itemID = itemID
+            
+            let communityView = CommunityViewController(viewModel: communityViewModel)
+            navigationView.pushViewController(communityView, animated: true)
+        }
+    }
 }
 
 // MARK: - Private Methods
@@ -86,24 +104,6 @@ private extension SceneDelegate {
                     print("itemID missing")
                 }
             }
-        }
-    }
-    
-    func navigateToCommunity(with itemID: Int) {
-        let sceneDelegate = UIApplication.shared.connectedScenes
-            .first!.delegate as? SceneDelegate
-        
-        if let navigationView = topViewController(base: sceneDelegate?.window!.rootViewController)?
-            .navigationController as? UINavigationController{
-            
-            let communityViewModel = CommunityViewModel(
-                communityInfos: [],
-                index: 0
-            )
-            communityViewModel.itemID = itemID
-            
-            let communityView = CommunityViewController(viewModel: communityViewModel)
-            navigationView.pushViewController(communityView, animated: true)
         }
     }
     

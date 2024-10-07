@@ -1,9 +1,15 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+# platform :ios, '14.0'
 
-target 'StreetDrop' do
-
+def pods
     pod 'NMapsMap'
     pod 'Google-Mobile-Ads-SDK'
+end
 
+target 'StreetDrop' do
+    pods
+end
+
+target 'ShareExtension' do
+    pods
 end
