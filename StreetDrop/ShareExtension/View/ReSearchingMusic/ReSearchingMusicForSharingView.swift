@@ -100,11 +100,7 @@ final class ReSearchingMusicForSharingView: UIView {
         return textField
     }()
     
-    private lazy var searchCancelView: UIView = {
-        let view: UIView = .init()
-        
-        return view
-    }()
+    private let searchCancelView: UIView = .init()
     
     private lazy var searchCancelButton: UIButton = {
         let button: UIButton = .init()
@@ -131,7 +127,6 @@ private extension ReSearchingMusicForSharingView {
     func bindAction() {
         searchTextField.rx.text.orEmpty
             .filter { $0.isEmpty }
-            .map { _ in }
             .bind(with: self) { owner, _ in
                 owner.settingMusicDataRelay.accept([])
             }

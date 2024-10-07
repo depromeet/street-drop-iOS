@@ -96,8 +96,6 @@ final class ShareViewModel: NSObject, ShareViewModelType {
                         }
                         owner.output.showSearchedMusicRelay.accept(firstMusic)
                         owner.selectedMusic = firstMusic
-                    } onFailure: { owner, error in
-                        
                     }
                     .disposed(by: disposedBag)
             }

@@ -36,9 +36,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func navigateToCommunity(with itemID: Int) {
         let sceneDelegate = UIApplication.shared.connectedScenes
-            .first!.delegate as? SceneDelegate
+            .first?.delegate as? SceneDelegate
         
-        if let navigationView = topViewController(base: sceneDelegate?.window!.rootViewController)?
+        if let navigationView = topViewController(base: sceneDelegate?.window?.rootViewController)?
             .navigationController as? UINavigationController{
             
             let communityViewModel = CommunityViewModel(

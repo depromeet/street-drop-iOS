@@ -308,16 +308,17 @@ private extension ShareViewController {
             }.disposed(by: disposeBag)
         
         communityGuideButton.rx.tap
-            .bind { [weak self] in
-                guard let self = self else { return }
-                self.endEditing()
+            .bind(with: self, onNext: { owner, _ in
+                owner.endEditing()
 
-                UIView.animate(withDuration: 0.3) {
-                    let isHidden: Bool = (self.communityGuideDetailView.alpha == 0)
-                    self.communityGuideDetailView.alpha = isHidden ? 1 : 0
-                    self.communityGuideDetailView.isUserInteractionEnabled = isHidden ? true : false
+                UIView.animate(withDuration: 0.3) { [weak self] in
+                    guard let self else { return }
+                    let isHidden: Bool = (communityGuideDetailView.alpha == 0)
+                    communityGuideDetailView.alpha = isHidden ? 1 : 0
+                    communityGuideDetailView.isUserInteractionEnabled = isHidden ? true : false
                 }
-            }.disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
         
         communityGuideDetailView.shareExtensionCompletionEvent
             .bind(with: self) { owner, url in

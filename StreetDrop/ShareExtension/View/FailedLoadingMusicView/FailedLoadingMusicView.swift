@@ -30,11 +30,7 @@ final class FailedLoadingMusicView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private let warningImageView: UIImageView = {
-        let imageView: UIImageView = .init(image: .init(named: "warning"))
-        
-        return imageView
-    }()
+    private let warningImageView: UIImageView = .init(image: .init(named: "warning"))
     
     private let guidingLabel: UILabel = {
         let label: UILabel = .init()

@@ -1008,6 +1008,5 @@ private extension MainViewController {
         
         sceneDelegate.navigateToCommunity(with: shareExtensionDroppedItemID)
         sharedDefaults.removeObject(forKey: "ShareExtensionDroppedItemID")
-        sharedDefaults.synchronize()
     }
 }

@@ -25,10 +25,6 @@ final class ReSearchingMusicTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been impl")
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
