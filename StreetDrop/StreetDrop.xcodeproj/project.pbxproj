@@ -296,8 +296,8 @@
 		C4F5D3F02C5B4830008AF976 /* FetchingCityAndDistrictsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F5D3EE2C5B4830008AF976 /* FetchingCityAndDistrictsUseCase.swift */; };
 		C4F5D3F22C5B4850008AF976 /* DefaultFetchingCityAndDistrictsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F5D3F12C5B4850008AF976 /* DefaultFetchingCityAndDistrictsUseCase.swift */; };
 		C4F5D3F32C5B4850008AF976 /* DefaultFetchingCityAndDistrictsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F5D3F12C5B4850008AF976 /* DefaultFetchingCityAndDistrictsUseCase.swift */; };
-		C4FDF55D2C60982800551A16 /* RegionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FDF55C2C60982800551A16 /* RegionCollectionViewCell.swift */; };
-		C4FDF55E2C60982800551A16 /* RegionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FDF55C2C60982800551A16 /* RegionCollectionViewCell.swift */; };
+		C4FDF55D2C60982800551A16 /* StateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FDF55C2C60982800551A16 /* StateTableViewCell.swift */; };
+		C4FDF55E2C60982800551A16 /* StateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FDF55C2C60982800551A16 /* StateTableViewCell.swift */; };
 		C4FDF5612C60C4D700551A16 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = C4FDF5602C60C4D700551A16 /* OrderedCollections */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
 		F48DF73A2C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48DF7392C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift */; };
@@ -581,7 +581,7 @@
 		C4F5D3EA2C5B43BB008AF976 /* JSONLoadError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLoadError.swift; sourceTree = "<group>"; };
 		C4F5D3EE2C5B4830008AF976 /* FetchingCityAndDistrictsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingCityAndDistrictsUseCase.swift; sourceTree = "<group>"; };
 		C4F5D3F12C5B4850008AF976 /* DefaultFetchingCityAndDistrictsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingCityAndDistrictsUseCase.swift; sourceTree = "<group>"; };
-		C4FDF55C2C60982800551A16 /* RegionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionCollectionViewCell.swift; sourceTree = "<group>"; };
+		C4FDF55C2C60982800551A16 /* StateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateTableViewCell.swift; sourceTree = "<group>"; };
 		F48DF7392C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPushNotificationCell.swift; sourceTree = "<group>"; };
 		F48DF73B2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingMusicSelectCell.swift; sourceTree = "<group>"; };
 		F4AA84D82C1F030F00CADB1A /* NoticeListResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeListResponseDTO.swift; sourceTree = "<group>"; };
@@ -1740,7 +1740,7 @@
 			isa = PBXGroup;
 			children = (
 				C4AA825F2C590A2A004B8934 /* RegionFilteringModalViewController.swift */,
-				C4FDF55C2C60982800551A16 /* RegionCollectionViewCell.swift */,
+				C4FDF55C2C60982800551A16 /* StateTableViewCell.swift */,
 			);
 			path = FilterModal;
 			sourceTree = "<group>";
@@ -2269,7 +2269,7 @@
 				6A51EC692C48F53400DEF6F3 /* MusicListFilterView.swift in Sources */,
 				C46293C92C6495DD00FF4A7A /* RegionFilteredLikeCountResponseDTO.swift in Sources */,
 				41396D8B2A4EFB2500B69341 /* EditCommentRepository.swift in Sources */,
-				C4FDF55D2C60982800551A16 /* RegionCollectionViewCell.swift in Sources */,
+				C4FDF55D2C60982800551A16 /* StateTableViewCell.swift in Sources */,
 				F4AA84E12C1F732800CADB1A /* DateManager.swift in Sources */,
 				1816ED3F2A68064E005009FC /* MyPageViewModel.swift in Sources */,
 				C49EDACE2BBD7EFE0025DB55 /* GradientLabel.swift in Sources */,
@@ -2408,7 +2408,7 @@
 				C4F5D3F32C5B4850008AF976 /* DefaultFetchingCityAndDistrictsUseCase.swift in Sources */,
 				C4AA826C2C5911FB004B8934 /* ModalPresentable.swift in Sources */,
 				C434A4D12A17981C00C63526 /* DefaultSearchingMusicRepository.swift in Sources */,
-				C4FDF55E2C60982800551A16 /* RegionCollectionViewCell.swift in Sources */,
+				C4FDF55E2C60982800551A16 /* StateTableViewCell.swift in Sources */,
 				18AAF8422A13CC54002EF441 /* MusicWithinAreaResponseDTO.swift in Sources */,
 				C4AA82612C590A2A004B8934 /* RegionFilteringModalViewController.swift in Sources */,
 				C4F5D3E52C5B22D9008AF976 /* CityAndDistrictsDTO.swift in Sources */,

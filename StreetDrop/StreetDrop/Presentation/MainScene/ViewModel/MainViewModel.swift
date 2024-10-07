@@ -115,19 +115,19 @@ extension MainViewModel {
             }
             .disposed(by: disposedBag)
         
-        input.viewDidAppearEvent
-            .bind(with: self) { owner, _ in
-                owner.fetchingPopUpInfomationUseCase.execute()
-                    .subscribe(with: self) { owner, popUpInfomations in
-                        owner.popUpInfomations = popUpInfomations
-                        owner.showFirstPopUpInfomation()
-                    } onFailure: { _, error in
-                        print(error.localizedDescription)
-                    }
-                    .disposed(by: disposedBag)
-
-            }
-            .disposed(by: disposedBag)
+//        input.viewDidAppearEvent
+//            .bind(with: self) { owner, _ in
+//                owner.fetchingPopUpInfomationUseCase.execute()
+//                    .subscribe(with: self) { owner, popUpInfomations in
+//                        owner.popUpInfomations = popUpInfomations
+//                        owner.showFirstPopUpInfomation()
+//                    } onFailure: { _, error in
+//                        print(error.localizedDescription)
+//                    }
+//                    .disposed(by: disposedBag)
+//
+//            }
+//            .disposed(by: disposedBag)
         
         input.viewWillAppearEvent // ViewWillAppear 시, fetchPois
             .skip(1) // 첫 ViewWillAppear땐 CLLocation 가져오지 못해 스킵
