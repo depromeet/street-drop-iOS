@@ -23,10 +23,11 @@ struct MyDropListResponseDTO: Decodable {
         let music: Music
         let content, createdAt: String
         let itemLikeCount: Int
+        let isLiked: Bool
         
         enum CodingKeys: String, CodingKey {
             case itemID = "itemId"
-            case location, user, music, content, createdAt, itemLikeCount
+            case location, user, music, content, createdAt, itemLikeCount, isLiked
         }
     }
     
@@ -76,7 +77,8 @@ extension MyDropListResponseDTO {
                             comment: value.content,
                             createdAt: value.createdAt,
                             location: value.location.address,
-                            likeCount: value.itemLikeCount
+                            likeCount: value.itemLikeCount,
+                            isLiked: value.isLiked
                         )
                     }
                 )

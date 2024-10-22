@@ -40,18 +40,13 @@ final class MusicListCell: UITableViewCell {
         self.commentLabel.text = item.comment
         self.locationLabel.text = item.location
         self.likeLabel.text = String(item.likeCount)
+        updateLikeIconImage(isLiked: item.isLiked)
         self.userNameLabel.text = item.userName
         
         if let createdDate = item.createdAt.toDate() {
             let timeAgoText: String = Date().timeAgoDisplay(from: createdDate)
             self.timeAgoLabel.text = timeAgoText
         }
-        /*
-         TODO:
-         - 백엔드 개발 완료 후 내가 좋아요한 뮤직 노출 처리
-         */
-//                likeIconImageView.tintColor = .primary400
-//                likeIconImageView.image = UIImage(named: "icon-heart-fill")?.withRenderingMode(.alwaysTemplate)
         
         layoutIfNeeded()
     }
@@ -322,6 +317,14 @@ private extension MusicListCell {
         let viewHeight = likeView.bounds.height
         let cornerRadius = min(viewHeight, labelSize.width + 24) / 2
         likeView.roundCorners(.allCorners, radius: cornerRadius)
+    }
+    
+    func updateLikeIconImage(isLiked: Bool) {
+        let image: UIImage? = isLiked ?
+            .init(named: "icon-heart-fill") :
+            .init(named: "icon-heart-empty")
+        likeIconImageView.image = image?.withRenderingMode(.alwaysTemplate)
+        likeIconImageView.tintColor = isLiked ? .main_100 : .gray400
     }
 }
 

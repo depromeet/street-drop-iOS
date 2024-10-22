@@ -76,7 +76,8 @@ extension MyLikeListResponseDTO {
                             comment: value.content,
                             createdAt: value.createdAt,
                             location: value.location.address,
-                            likeCount: value.itemLikeCount
+                            likeCount: value.itemLikeCount,
+                            isLiked: true
                         )
                     }
                 )

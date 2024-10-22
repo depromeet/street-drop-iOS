@@ -96,7 +96,7 @@ extension NetworkService: TargetType {
         case .patchUsersMusicApp:
             return "/users/music-app"
         case .myDropList:
-            return "/users/me/items/drop"
+            return "/v2/users/me/items/drop"
         case .myLikeList:
             return "/users/me/items/like"
         case .myLevel:

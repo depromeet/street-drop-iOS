@@ -32,6 +32,7 @@ struct MyMusic: Hashable {
     let createdAt: String
     let location: String
     let likeCount: Int
+    let isLiked: Bool
     
     private let identifier = UUID()
     

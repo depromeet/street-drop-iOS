@@ -215,4 +215,8 @@ public extension UIColor {
     static var systemCritical: UIColor {
         UIColor(hexString: "#F47068")
     }
+    
+    static var main_100: UIColor {
+        UIColor(hexString: "#88F6FC")
+    }
 }
