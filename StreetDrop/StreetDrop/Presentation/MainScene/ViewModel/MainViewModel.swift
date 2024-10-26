@@ -318,6 +318,7 @@ private extension MainViewModel {
         recommendMusicUsecase.getPromptOfTheDay().subscribe { [weak self] result in
             switch result {
             case .success(let prompt):
+                guard let prompt else { return }
                 self?.showPromptIfFirstLaunchedToday(prompt: prompt, output: output)
             case .failure(let error):
                 print(error)

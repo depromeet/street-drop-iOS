@@ -13,9 +13,6 @@ import RxRelay
 import RxSwift
 
 protocol SearchingMusicViewModel: ViewModel {
-    var trendingMusicList: [Music] { get }
-    var mostDroppedMusicList: [Music] { get }
-    
     func searchMusic(output: Output, keyword: String)
 }
 
@@ -26,16 +23,14 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     var address: String = ""
     private let disposeBag: DisposeBag = DisposeBag()
     private var musicList: [Music] = []
-    
-    var trendingMusicList: [Music] = []
-    var mostDroppedMusicList: [Music] = []
-    
+    private let defaultPrompt = "드랍할 음악 검색"
+
     struct Input {
         let viewDidLoadEvent: PublishRelay<Void>
         let searchTextFieldEmptyEvent: Observable<Void>
         let keyBoardDidPressSearchEventWithKeyword: Observable<String>
         let recentQueryDidPressEvent: PublishRelay<String>
-        let artistQueryDidPressEvent: PublishRelay<String>
+        let keywordQueryDidPressEvent: PublishRelay<String>
         let musicDidPressEvent: PublishRelay<Music>
         let tableViewCellDidPressedEvent: Observable<Int>
         let deletingButtonTappedEvent: PublishRelay<String>
@@ -46,9 +41,8 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         let recentMusicQueries = PublishRelay<[String]>()
         let selectedMusic = PublishRelay<Music>()
         let promptOfTheDay = PublishRelay<String>()
-        let trendingMusicList = PublishRelay<[Music]>()
-        let mostDroppedMusicList = PublishRelay<[Music]>()
-        let artists = PublishRelay<[Artist]>()
+        let recommendSections = PublishRelay<[RecommendSectionDTO]>()
+        let recommendSectionModels = PublishRelay<[RecommendMusicSectionModel]>()
     }
     
     init(
@@ -78,44 +72,25 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
                     .disposed(by: disposedBag)
                 self?.fetchCurrentLocationVillageName()
                 self?.recommendMusicUseCase.getPromptOfTheDay()
-                    .subscribe { result in
+                    .subscribe { [weak self] result in
+                        guard let self else { return }
                         switch result {
                         case .success(let prompt):
-                            output.promptOfTheDay.accept(prompt)
+                            output.promptOfTheDay.accept(prompt ?? self.defaultPrompt)
                         case .failure(_):
-                            output.promptOfTheDay.accept("드랍할 음악 검색")
+                            output.promptOfTheDay.accept(self.defaultPrompt)
                         }
                     }
                     .disposed(by: disposedBag)
-                self?.recommendMusicUseCase.getTrendingMusicList()
-                    .subscribe { [weak self] result in
-                        switch result {
-                        case .success(let musicList):
-                            output.trendingMusicList.accept(musicList)
-                            self?.trendingMusicList = musicList
-                        case .failure(_):
-                            output.mostDroppedMusicList.accept([])
-                        }
-                    }
-                    .disposed(by: disposedBag)
-                self?.recommendMusicUseCase.getMostDroppedMusicList()
+                self?.recommendMusicUseCase.getRecommendSections()
                     .subscribe { result in
                         switch result {
-                        case .success(let musicList):
-                            output.mostDroppedMusicList.accept(musicList)
-                            self?.mostDroppedMusicList = musicList
+                        case .success(let recommendSections):
+                            output.recommendSections.accept(recommendSections)
+                            output.recommendSectionModels.accept(recommendSections.compactMap { $0.sectionModel })
                         case .failure(_):
-                            output.mostDroppedMusicList.accept([])
-                        }
-                    }
-                    .disposed(by: disposedBag)
-                self?.recommendMusicUseCase.getArtistList()
-                    .subscribe { result in
-                        switch result {
-                        case .success(let artists):
-                            output.artists.accept(artists)
-                        case .failure(_):
-                            output.artists.accept([])
+                            output.recommendSections.accept([])
+                            output.recommendSectionModels.accept([])
                         }
                     }
                     .disposed(by: disposedBag)
@@ -143,9 +118,10 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
             }
             .disposed(by: disposedBag)
         
-        input.artistQueryDidPressEvent
-            .bind { [weak self] artistQuery in
-                self?.searchMusic(output: output, keyword: artistQuery)
+        input.keywordQueryDidPressEvent
+            .bind { [weak self] keywordQuery in
+                self?.searchMusic(output: output, keyword: keywordQuery)
+                self?.model.saveRecentSearch(keyword: keywordQuery)
             }
             .disposed(by: disposedBag)
         

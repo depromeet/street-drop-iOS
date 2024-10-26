@@ -10,10 +10,8 @@ import Foundation
 import RxSwift
 
 protocol RecommendMusicUsecase {
-    func getPromptOfTheDay() -> Single<String>
-    func getTrendingMusicList() -> Single<[Music]>
-    func getMostDroppedMusicList() -> Single<[Music]>
-    func getArtistList() -> Single<[Artist]>
+    func getPromptOfTheDay() -> Single<String?>
+    func getRecommendSections() -> Single<[RecommendSectionDTO]>
 }
 
 final class DefaultRecommendMusicUsecase: RecommendMusicUsecase {
@@ -23,19 +21,11 @@ final class DefaultRecommendMusicUsecase: RecommendMusicUsecase {
         self.recommendMusicRepository = recommendMusicRepository
     }
     
-    func getPromptOfTheDay() -> Single<String> {
+    func getPromptOfTheDay() -> Single<String?> {
         recommendMusicRepository.fetchPromptOfTheDay()
     }
     
-    func getTrendingMusicList() -> Single<[Music]> {
-        recommendMusicRepository.fetchTrendingMusicList()
-    }
-    
-    func getMostDroppedMusicList() -> Single<[Music]> {
-        recommendMusicRepository.fetchMostDroppedMusicList()
-    }
-    
-    func getArtistList() -> Single<[Artist]> {
-        recommendMusicRepository.fetchArtistList()
+    func getRecommendSections() -> Single<[RecommendSectionDTO]> {
+        recommendMusicRepository.fetchRecommendSectionList()
     }
 }

@@ -1,5 +1,5 @@
 //
-//  RecommendArtistCell.swift
+//  RecommendKeywordCell.swift
 //  StreetDrop
 //
 //  Created by jihye kim on 07/08/2024.
@@ -9,7 +9,7 @@ import UIKit
 
 import Kingfisher
 
-class RecommendArtistCell: UICollectionViewCell {
+class RecommendKeywordCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -39,8 +39,8 @@ class RecommendArtistCell: UICollectionViewCell {
         return label
     }()
     
-    func configure(with item: Artist) {
-        nameLabel.text = item.name
+    func configure(with item: SearchKeywordEntity) {
+        nameLabel.text = item.text
         
         if let artistImageUrl = URL(string: item.image) {
             imageView.kf.setImage(with: artistImageUrl)
@@ -48,7 +48,7 @@ class RecommendArtistCell: UICollectionViewCell {
     }
 }
 
-private extension RecommendArtistCell {
+private extension RecommendKeywordCell {
     func configureUI() {
         self.contentView.backgroundColor = .gray600
         self.contentView.layer.cornerRadius = self.contentView.frame.height / 2
