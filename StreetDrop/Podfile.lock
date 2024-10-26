@@ -3,7 +3,7 @@ PODS:
     - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleUserMessagingPlatform (2.1.0)
   - NMapsGeometry (1.0.1)
-  - NMapsMap (3.16.2):
+  - NMapsMap (3.18.0):
     - NMapsGeometry
 
 DEPENDENCIES:
@@ -21,7 +21,7 @@ SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 7a466427864972f5229f1f89d004b998a28ddcae
   GoogleUserMessagingPlatform: dce302b8f1b84d6e945812ee7a15c3f65a102cbf
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
-  NMapsMap: aaa64717249b06ae82c3a3addb3a01f0e33100ab
+  NMapsMap: 36dc18a1f5f315121b33fccd2398c7a702bf0fc8
 
 PODFILE CHECKSUM: c1edcf3d49503875acf5f6e7bfd364191c925046
 

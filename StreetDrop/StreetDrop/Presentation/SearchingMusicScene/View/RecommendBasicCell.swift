@@ -1,5 +1,5 @@
 //
-//  RecommendMusicCell.swift
+//  RecommendBasicCell.swift
 //  StreetDrop
 //
 //  Created by jihye kim on 07/08/2024.
@@ -9,7 +9,7 @@ import UIKit
 
 import Kingfisher
 
-class RecommendMusicCell: UICollectionViewCell {
+class RecommendBasicCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -59,7 +59,7 @@ class RecommendMusicCell: UICollectionViewCell {
     }
 }
 
-private extension RecommendMusicCell {
+private extension RecommendBasicCell {
     func configureUI() {
         let infoStackView = UIStackView()
         infoStackView.axis = .vertical

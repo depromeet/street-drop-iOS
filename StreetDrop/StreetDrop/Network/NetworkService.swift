@@ -40,6 +40,8 @@ enum NetworkService {
     case getNoticeList
     case getNoticeDetail(id: Int)
     case checkNewNotice(lastNoticeId: Int?)
+    case getRecommendList
+    case getPromptOfTheDay
 }
 
 extension NetworkService: TargetType {
@@ -119,6 +121,10 @@ extension NetworkService: TargetType {
             return "/notices/\(id)"
         case .checkNewNotice:
             return "/notices/new"
+        case .getRecommendList:
+            return "/v2/search-term/recommend"
+        case .getPromptOfTheDay:
+            return "/post-recommend/random-sentence"
         }
     }
     
@@ -142,7 +148,9 @@ extension NetworkService: TargetType {
                 .getPopUpInfomation,
                 .getNoticeList,
                 .getNoticeDetail,
-                .checkNewNotice:
+                .checkNewNotice,
+                .getRecommendList,
+                .getPromptOfTheDay:
             return .get
         case .dropMusic,
                 .postLikeUp,
@@ -162,7 +170,8 @@ extension NetworkService: TargetType {
     var task: Moya.Task {
         switch self {
         case .getMyInfo, .myDropList, .myLikeList, .myLevel, .myLevelProgress, .levelPolicy, .recommendMusic, .userCircleRadius, .getPopUpInfomation,
-                .getNoticeList, .getNoticeDetail:
+            .getNoticeList, .getNoticeDetail, .getRecommendList,
+            .getPromptOfTheDay:
             return .requestPlain
         case .searchMusic(let keyword):
             return .requestParameters(

@@ -256,13 +256,14 @@
 		C4E4C6BD2A5AE6F500B1C84A /* MusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */; };
 		C4E68C852C2A996000742464 /* AsynchronousError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E68C842C2A996000742464 /* AsynchronousError.swift */; };
 		C51230A18096B11C82137084 /* libPods-StreetDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642A4AE13B198B9F5F5F76E4 /* libPods-StreetDrop.a */; };
+		F47C1B982CCD242B00C2D546 /* RecommendSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C1B972CCD242600C2D546 /* RecommendSection.swift */; };
 		F48DF73A2C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48DF7392C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift */; };
 		F48DF73C2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48DF73B2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift */; };
 		F49CC9F22C638691007484EE /* RecommendMusicUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CC9F12C638691007484EE /* RecommendMusicUsecase.swift */; };
 		F49CC9F62C638CCF007484EE /* DefaultRecommendMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CC9F52C638CCF007484EE /* DefaultRecommendMusicRepository.swift */; };
 		F49CC9F82C638DC6007484EE /* RecommendMusicRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CC9F72C638DC6007484EE /* RecommendMusicRepository.swift */; };
-		F49CC9FC2C6411E5007484EE /* RecommendMusicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CC9FB2C6411E5007484EE /* RecommendMusicCell.swift */; };
-		F49CC9FE2C6411F9007484EE /* RecommendArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CC9FD2C6411F9007484EE /* RecommendArtistCell.swift */; };
+		F49CC9FC2C6411E5007484EE /* RecommendBasicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CC9FB2C6411E5007484EE /* RecommendBasicCell.swift */; };
+		F49CC9FE2C6411F9007484EE /* RecommendKeywordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CC9FD2C6411F9007484EE /* RecommendKeywordCell.swift */; };
 		F49CCA002C667111007484EE /* RecommendHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49CC9FF2C667111007484EE /* RecommendHeaderView.swift */; };
 		F49DB0B42C6E6E3400686E5F /* RecommendMusicListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49DB0B32C6E6E3400686E5F /* RecommendMusicListViewController.swift */; };
 		F49DB0B62C6E6F2100686E5F /* RecommendMusicListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49DB0B52C6E6F2100686E5F /* RecommendMusicListViewModel.swift */; };
@@ -520,13 +521,14 @@
 		C4E4C6B92A5AE40900B1C84A /* UserDefaultsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsError.swift; sourceTree = "<group>"; };
 		C4E4C6BC2A5AE6F500B1C84A /* MusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicApp.swift; sourceTree = "<group>"; };
 		C4E68C842C2A996000742464 /* AsynchronousError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsynchronousError.swift; sourceTree = "<group>"; };
+		F47C1B972CCD242600C2D546 /* RecommendSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendSection.swift; sourceTree = "<group>"; };
 		F48DF7392C1DD8F500F6DEA1 /* SettingPushNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPushNotificationCell.swift; sourceTree = "<group>"; };
 		F48DF73B2C1DD91C00F6DEA1 /* SettingMusicSelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingMusicSelectCell.swift; sourceTree = "<group>"; };
 		F49CC9F12C638691007484EE /* RecommendMusicUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendMusicUsecase.swift; sourceTree = "<group>"; };
 		F49CC9F52C638CCF007484EE /* DefaultRecommendMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRecommendMusicRepository.swift; sourceTree = "<group>"; };
 		F49CC9F72C638DC6007484EE /* RecommendMusicRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendMusicRepository.swift; sourceTree = "<group>"; };
-		F49CC9FB2C6411E5007484EE /* RecommendMusicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendMusicCell.swift; sourceTree = "<group>"; };
-		F49CC9FD2C6411F9007484EE /* RecommendArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendArtistCell.swift; sourceTree = "<group>"; };
+		F49CC9FB2C6411E5007484EE /* RecommendBasicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendBasicCell.swift; sourceTree = "<group>"; };
+		F49CC9FD2C6411F9007484EE /* RecommendKeywordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendKeywordCell.swift; sourceTree = "<group>"; };
 		F49CC9FF2C667111007484EE /* RecommendHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendHeaderView.swift; sourceTree = "<group>"; };
 		F49DB0B32C6E6E3400686E5F /* RecommendMusicListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendMusicListViewController.swift; sourceTree = "<group>"; };
 		F49DB0B52C6E6F2100686E5F /* RecommendMusicListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendMusicListViewModel.swift; sourceTree = "<group>"; };
@@ -1114,6 +1116,7 @@
 		41396DA72A51B8E600B69341 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				F47C1B972CCD242600C2D546 /* RecommendSection.swift */,
 				C472B1872AC5523300482B2D /* DroppingInfo.swift */,
 				41396DA82A51B8F700B69341 /* EditInfo.swift */,
 				C40008E92A32012B00EA7FA9 /* Music.swift */,
@@ -1272,8 +1275,8 @@
 				C45BF3AB2A1EF64300CEDE74 /* RecentQueryCell.swift */,
 				B4B9EE852ADEB2AC000A6507 /* RecommendKeywordItemCell.swift */,
 				B46578C22B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift */,
-				F49CC9FB2C6411E5007484EE /* RecommendMusicCell.swift */,
-				F49CC9FD2C6411F9007484EE /* RecommendArtistCell.swift */,
+				F49CC9FB2C6411E5007484EE /* RecommendBasicCell.swift */,
+				F49CC9FD2C6411F9007484EE /* RecommendKeywordCell.swift */,
 				F49CC9FF2C667111007484EE /* RecommendHeaderView.swift */,
 				F4CBD7BD2C6A534600A5FD91 /* RecentSearchesHeaderView.swift */,
 				F4CBD7BF2C6C181900A5FD91 /* GuideDetailView.swift */,
@@ -1986,7 +1989,7 @@
 				C41972572ABED40100211222 /* DefaultFetchingMyInfoUseCase.swift in Sources */,
 				C419723A2ABDB50B00211222 /* DefaultFetchingMusicCountUseCase.swift in Sources */,
 				F4C996AD2C1EEF2500FF7B9A /* NoticeRepository.swift in Sources */,
-				F49CC9FE2C6411F9007484EE /* RecommendArtistCell.swift in Sources */,
+				F49CC9FE2C6411F9007484EE /* RecommendKeywordCell.swift in Sources */,
 				F4AA84DB2C1F106300CADB1A /* NoticeDetailViewController.swift in Sources */,
 				C47F02282A3864A500F48884 /* SettingElementCell.swift in Sources */,
 				1876F0472A66EDA20064B887 /* MyPageModel.swift in Sources */,
@@ -1994,6 +1997,7 @@
 				1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */,
 				6A7D73DD2BB14015009340E3 /* GradientProgressBar.swift in Sources */,
 				B46578C32B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
+				F47C1B982CCD242B00C2D546 /* RecommendSection.swift in Sources */,
 				C41BD2E92A38467A0090EF2B /* UIImageView+ImageCache.swift in Sources */,
 				41D0974F2A19065B00C011A0 /* UIView+generateCircleGradientView.swift in Sources */,
 				C4BB15982A5EC507001BC5E8 /* FCMRepository.swift in Sources */,
@@ -2017,7 +2021,7 @@
 				1876F0412A66E5440064B887 /* MyLevelResponseDTO+Mapping.swift in Sources */,
 				C4685B3D2B7261A000F514C7 /* SplashViewModel.swift in Sources */,
 				F4AA84DF2C1F3B0200CADB1A /* Array+Extension.swift in Sources */,
-				F49CC9FC2C6411E5007484EE /* RecommendMusicCell.swift in Sources */,
+				F49CC9FC2C6411E5007484EE /* RecommendBasicCell.swift in Sources */,
 				082F17062AB6DFEC00174D98 /* MusicDropUseCase.swift in Sources */,
 				18683FD92A2A251E005A94AC /* ViewModel.swift in Sources */,
 				C41972442ABDC43C00211222 /* ClaimingCommentUseCase.swift in Sources */,

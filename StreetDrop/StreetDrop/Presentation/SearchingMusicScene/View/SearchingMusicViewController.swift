@@ -16,29 +16,38 @@ struct RecommendMusicSectionModel {
     let type: SectionType
     let items: [Item]
     
+    struct Header: Hashable {
+        let title: String
+        let info: String?
+    }
+    
     enum SectionType: Hashable {
         case recentSearchKeyword
-        case trendingMusic
-        case mostDroppedMusic
-        case artist
+        case basic(Header, [Music])
+        case keyword(Header)
         
         var title: String {
             switch self {
             case .recentSearchKeyword:
                 return "최근 검색어"
-            case .trendingMusic:
-                return "지금 인기 있는 음악"
-            case .mostDroppedMusic:
-                return "많이 드랍된 음악"
-            case .artist:
-                return "아티스트"
+            case .basic(let section, _), .keyword(let section):
+                return section.title
             }
         }
         
         var infoText: String? {
             switch self {
-            case .trendingMusic:
-                return "애플 뮤직의 ‘지금 인기 있는 곡’\n리스트를 반영했어요."
+            case .basic(let header, _), .keyword(let header):
+                return header.info
+            default:
+                return nil
+            }
+        }
+        
+        var musicList: [Music]? {
+            switch self {
+            case .basic(_, let musicList):
+                return musicList
             default:
                 return nil
             }
@@ -47,9 +56,8 @@ struct RecommendMusicSectionModel {
     
     enum Item: Hashable {
         case recentSearchKeyword(String)
-        case trendingMusic(Music)
-        case mostDroppedMusic(Music)
-        case artist(Artist)
+        case basic(Music)
+        case keyword(SearchKeywordEntity)
     }
 }
 
@@ -64,7 +72,7 @@ final class SearchingMusicViewController: UIViewController {
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let deletingButtonTappedEvent = PublishRelay<String>()
     private let recentQueryDidPressEvent = PublishRelay<String>()
-    private let artistQueryDidPressEvent = PublishRelay<String>()
+    private let keywordQueryDidPressEvent = PublishRelay<String>()
     private let musicDidPressEvent = PublishRelay<Music>()
     
     private var collectionView: UICollectionView?
@@ -165,11 +173,9 @@ final class SearchingMusicViewController: UIViewController {
 }
 
 extension SearchingMusicViewController {
-    private func displayList(
+    private func displaySections(
         queryItems: [Item],
-        trendingItems: [Item],
-        droppedItems: [Item],
-        artistItems: [Item]
+        _ sections: [RecommendMusicSectionModel]
     ) {
         var snapshot = Snapshot()
         
@@ -178,19 +184,9 @@ extension SearchingMusicViewController {
             snapshot.appendItems(queryItems, toSection: .recentSearchKeyword)
         }
         
-        if !trendingItems.isEmpty {
-            snapshot.appendSections([Section.trendingMusic])
-            snapshot.appendItems(trendingItems, toSection: .trendingMusic)
-        }
-        
-        if !droppedItems.isEmpty {
-            snapshot.appendSections([Section.mostDroppedMusic])
-            snapshot.appendItems(droppedItems, toSection: .mostDroppedMusic)
-        }
-        
-        if !artistItems.isEmpty {
-            snapshot.appendSections([Section.artist])
-            snapshot.appendItems(artistItems, toSection: .artist)
+        for section in sections {
+            snapshot.appendSections([section.type])
+            snapshot.appendItems(section.items, toSection: section.type)
         }
         
         dataSource?.apply(snapshot, animatingDifferences: true)
@@ -224,8 +220,8 @@ extension SearchingMusicViewController: UICollectionViewDelegate {
     private func configureDataSource() {
         typealias CellRegistration = UICollectionView.CellRegistration
         typealias RecentSearchCellRegistration = CellRegistration<RecentQueryCell, String>
-        typealias MusicCellRegistration = CellRegistration<RecommendMusicCell, Music>
-        typealias ArtistCellRegistration = CellRegistration<RecommendArtistCell, Artist>
+        typealias BasicCellRegistration = CellRegistration<RecommendBasicCell, Music>
+        typealias KeywordCellRegistration = CellRegistration<RecommendKeywordCell, SearchKeywordEntity>
         
         guard let collectionView else { return }
         
@@ -234,11 +230,11 @@ extension SearchingMusicViewController: UICollectionViewDelegate {
             cell.configure(with: item, deletingButtonTappedEvent: self.deletingButtonTappedEvent)
         }
         
-        let musicCellRegistration = MusicCellRegistration { cell, indexPath, item in
+        let basicCellRegistration = BasicCellRegistration { cell, indexPath, item in
             cell.configure(with: item)
         }
         
-        let artistCellRegistration = ArtistCellRegistration { cell, indexPath, item in
+        let keywordCellRegistration = KeywordCellRegistration { cell, indexPath, item in
             cell.configure(with: item)
         }
         
@@ -253,7 +249,7 @@ extension SearchingMusicViewController: UICollectionViewDelegate {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, 
             withReuseIdentifier: RecommendHeaderView.reuseIdentifier
         )
-        
+
         dataSource = DataSource(
             collectionView: collectionView
         ) { collectionView, indexPath, item -> UICollectionViewCell? in
@@ -265,26 +261,17 @@ extension SearchingMusicViewController: UICollectionViewDelegate {
                     for: indexPath,
                     item: keyword
                 )
-                
-            case .trendingMusic(let music):
+            case .basic(let music):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: musicCellRegistration,
+                    using: basicCellRegistration,
                     for: indexPath,
                     item: music
                 )
-                
-            case .mostDroppedMusic(let music):
+            case .keyword(let keyword):
                 return collectionView.dequeueConfiguredReusableCell(
-                    using: musicCellRegistration,
+                    using: keywordCellRegistration,
                     for: indexPath,
-                    item: music
-                )
-                
-            case .artist(let artist):
-                return collectionView.dequeueConfiguredReusableCell(
-                    using: artistCellRegistration,
-                    for: indexPath,
-                    item: artist
+                    item: keyword
                 )
             }
         }
@@ -293,7 +280,7 @@ extension SearchingMusicViewController: UICollectionViewDelegate {
             guard let dataSource = self?.dataSource,
                   let section = dataSource.snapshot().sectionIdentifiers[safe: indexPath.section]
             else { return nil }
-            
+
             switch section {
             case .recentSearchKeyword:
                 let headerView = collectionView.dequeueReusableSupplementaryView(
@@ -305,7 +292,7 @@ extension SearchingMusicViewController: UICollectionViewDelegate {
                 
                 return headerView
                 
-            case .trendingMusic:
+            case .basic:
                 let headerView = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: RecommendHeaderView.reuseIdentifier,
@@ -315,32 +302,18 @@ extension SearchingMusicViewController: UICollectionViewDelegate {
                     with: section.title,
                     infoText: section.infoText
                 ) { [weak self] in
-                    guard let self else { return }
+                    guard let self,
+                          let musicList = section.musicList
+                    else { return }
                     self.routeToMusicList(
                         title: section.title,
-                        musicList: self.viewModel.trendingMusicList
+                        musicList: musicList
                     )
                 }
-                
+
                 return headerView
                 
-            case .mostDroppedMusic:
-                let headerView = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: RecommendHeaderView.reuseIdentifier,
-                    for: indexPath
-                ) as? RecommendHeaderView
-                headerView?.configure(with: section.title) { [weak self] in
-                    guard let self else { return }
-                    self.routeToMusicList(
-                        title: section.title,
-                        musicList: self.viewModel.mostDroppedMusicList
-                    )
-                }
-                
-                return headerView
-                
-            case .artist:
+            case .keyword:
                 let headerView = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: RecommendHeaderView.reuseIdentifier,
@@ -376,13 +349,11 @@ extension SearchingMusicViewController: UICollectionViewDelegate {
         case .recentSearchKeyword(let keyword):
             self.showSearchResultList(with: keyword)
             self.recentQueryDidPressEvent.accept(keyword)
-        case .trendingMusic(let music):
+        case .basic(let music):
             self.musicDidPressEvent.accept(music)
-        case .mostDroppedMusic(let music):
-            self.musicDidPressEvent.accept(music)
-        case .artist(let artist):
-            self.showSearchResultList(with: artist.name)
-            self.artistQueryDidPressEvent.accept(artist.name)
+        case .keyword(let keyword):
+            self.showSearchResultList(with: keyword.text)
+            self.keywordQueryDidPressEvent.accept(keyword.text)
         }
     }
     
@@ -403,14 +374,14 @@ extension SearchingMusicViewController {
                   let dataSource = self.dataSource,
                   let section = dataSource.snapshot().sectionIdentifiers[safe: sectionIndex]
             else { return nil }
-            
-            // TODO: jihye - bottom inset update
-            if section == .recentSearchKeyword {
+
+            switch section {
+            case .recentSearchKeyword:
                 return self.createRecentSearchKeywordSectionLayout()
-            } else if section == .artist {
-                return self.createArtistSectionLayout()
-            } else {
+            case .basic(_, _):
                 return self.createMusicListSectionLayout()
+            case .keyword(_):
+                return self.createKeywordSectionLayout()
             }
         }
     }
@@ -455,7 +426,7 @@ extension SearchingMusicViewController {
         return section
     }
     
-    private func createArtistSectionLayout() -> NSCollectionLayoutSection {
+    private func createKeywordSectionLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .estimated(50),
             heightDimension: .absolute(40)
@@ -472,7 +443,7 @@ extension SearchingMusicViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 12
         section.contentInsets = NSDirectionalEdgeInsets(
-            top: 20, leading: 24, bottom: 32, trailing: 24
+            top: 20, leading: 24, bottom: 24, trailing: 24
         )
         section.orthogonalScrollingBehavior = .none
         
@@ -577,7 +548,7 @@ private extension SearchingMusicViewController {
             searchTextFieldEmptyEvent: searchTextFieldEmptyEvent,
             keyBoardDidPressSearchEventWithKeyword: keyBoardDidPressSearchEventWithKeyword,
             recentQueryDidPressEvent: self.recentQueryDidPressEvent,
-            artistQueryDidPressEvent: self.artistQueryDidPressEvent,
+            keywordQueryDidPressEvent: self.keywordQueryDidPressEvent,
             musicDidPressEvent: self.musicDidPressEvent,
             tableViewCellDidPressedEvent: selectedTableViewCellEvent,
             deletingButtonTappedEvent: self.deletingButtonTappedEvent
@@ -603,22 +574,14 @@ private extension SearchingMusicViewController {
         
         Observable.combineLatest(
             output.recentMusicQueries,
-            output.trendingMusicList,
-            output.mostDroppedMusicList,
-            output.artists
+            output.recommendSectionModels
         )
         .observe(on: MainScheduler.instance)
-        .bind { [weak self] recentQueries, trendingList, droppedList, artists in
+        .bind { [weak self] recentQueries, sections in
             let queryItems = recentQueries.map { Item.recentSearchKeyword($0) }
-            let trendingItems = trendingList.map { Item.trendingMusic($0) }
-            let droppedItems = droppedList.map { Item.mostDroppedMusic($0) }
-            let artistItems = artists.map { Item.artist($0) }
-
-            self?.displayList(
+            self?.displaySections(
                 queryItems: queryItems,
-                trendingItems: trendingItems,
-                droppedItems: droppedItems,
-                artistItems: artistItems
+                sections
             )
         }
         .disposed(by: disposeBag)
@@ -703,7 +666,7 @@ private extension SearchingMusicViewController {
         }
         
         self.bannerView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(320)
             $0.height.equalTo(50)

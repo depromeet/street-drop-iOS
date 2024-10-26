@@ -10,8 +10,6 @@ import Foundation
 import RxSwift
 
 protocol RecommendMusicRepository {
-    func fetchPromptOfTheDay() -> Single<String>
-    func fetchTrendingMusicList() -> Single<[Music]>
-    func fetchMostDroppedMusicList() -> Single<[Music]>
-    func fetchArtistList() -> Single<[Artist]>
+    func fetchPromptOfTheDay() -> Single<String?>
+    func fetchRecommendSectionList() -> Single<[RecommendSectionDTO]>
 }
