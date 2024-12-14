@@ -38,8 +38,8 @@ final class DefaultMyInfoUseCase: MyInfoUseCase {
     func checkLaunchedBefore() -> Bool {
         return myInfoRepository.checkLaunchedBefore()
     }
-    
-    func checkFirstLaunchToday() -> Bool {
-        return myInfoRepository.checkFirstLaunchToday()
+
+    func savePromptOfTheDay(_ prompt: String) {
+        myInfoRepository.savePromptOfTheDay(prompt)
     }
 }

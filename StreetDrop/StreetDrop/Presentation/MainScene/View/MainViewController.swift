@@ -512,7 +512,7 @@ private extension MainViewController {
                 self.presentDial(currentIndex: currentIndex)
             }
             .disposed(by: disposeBag)
-        
+
         output.showFirstComment
             .bind(with: self) { owner, prompt in
                 owner.bubbleCommentView.isHidden = false
