@@ -19,6 +19,7 @@ protocol SearchingMusicViewModel: ViewModel {
 final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     private let model: SearchMusicUsecase
     private let recommendMusicUseCase: RecommendMusicUsecase
+    private let searchPlaceholderUseCase: FetchingSearchPlaceholderUseCase
     let location: CLLocation
     var address: String = ""
     private let disposeBag: DisposeBag = DisposeBag()
@@ -48,10 +49,12 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     init(
         model: SearchMusicUsecase = DefaultSearchingMusicUsecase(),
         recommendMusicUseCase: RecommendMusicUsecase = DefaultRecommendMusicUsecase(),
+        searchPlaceholderUseCase: FetchingSearchPlaceholderUseCase = DefaultFetchingSearchPlaceholderUseCase(),
         location: CLLocation
     ) {
         self.model = model
         self.recommendMusicUseCase = recommendMusicUseCase
+        self.searchPlaceholderUseCase = searchPlaceholderUseCase
         self.location = location
     }
     
@@ -60,7 +63,8 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         
         input.viewDidLoadEvent
             .subscribe(onNext: { [weak self] in
-                self?.model.getRecentSearches()
+                guard let self else { return }
+                self.model.getRecentSearches()
                     .subscribe { result in
                         switch result {
                         case .success(let queries):
@@ -70,24 +74,19 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
                         }
                     }
                     .disposed(by: disposedBag)
-                self?.fetchCurrentLocationVillageName()
-                self?.recommendMusicUseCase.getPromptOfTheDay()
-                    .subscribe { [weak self] result in
-                        guard let self else { return }
-                        switch result {
-                        case .success(let prompt):
-                            output.promptOfTheDay.accept(prompt ?? self.defaultPrompt)
-                        case .failure(_):
-                            output.promptOfTheDay.accept(self.defaultPrompt)
-                        }
-                    }
-                    .disposed(by: disposedBag)
-                self?.recommendMusicUseCase.getRecommendSections()
+                self.fetchCurrentLocationVillageName()
+
+                let prompt = self.searchPlaceholderUseCase.fetchPromptOfTheDay()
+                output.promptOfTheDay.accept(prompt ?? self.defaultPrompt)
+
+                self.recommendMusicUseCase.getRecommendSections()
                     .subscribe { result in
                         switch result {
                         case .success(let recommendSections):
                             output.recommendSections.accept(recommendSections)
-                            output.recommendSectionModels.accept(recommendSections.compactMap { $0.sectionModel })
+                            output.recommendSectionModels.accept(
+                                recommendSections.compactMap { $0.sectionModel }
+                            )
                         case .failure(_):
                             output.recommendSections.accept([])
                             output.recommendSectionModels.accept([])

@@ -319,19 +319,13 @@ private extension MainViewModel {
             switch result {
             case .success(let prompt):
                 guard let prompt else { return }
-                self?.showPromptIfFirstLaunchedToday(prompt: prompt, output: output)
+                self?.myInfoUseCase.savePromptOfTheDay(prompt)
+                self?.output.showFirstComment.accept(prompt)
             case .failure(let error):
                 print(error)
             }
         }
         .disposed(by: disposedBag)
-    }
-    
-    func showPromptIfFirstLaunchedToday(prompt: String, output: Output) {
-        let isFirstLaunchToday = myInfoUseCase.checkFirstLaunchToday()
-        if isFirstLaunchToday {
-            output.showFirstComment.accept(prompt)
-        }
     }
     
     func checkUniversialLinkRemained(output: Output) {

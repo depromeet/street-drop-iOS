@@ -12,5 +12,5 @@ enum UserDefaultKey {
     static let launchedBefore = "launchedBefore"
     static let sharedMusicItemID = "sharedMusicItemID"
     static let lastSeenNoticeId = "lastSeenNoticeId"
-    static let lastLaunchDate = "lastLaunchDate"
+    static let promptOfTheDay = "promptOfTheDay"
 }

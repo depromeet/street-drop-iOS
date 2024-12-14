@@ -16,5 +16,6 @@ protocol MyInfoRepository {
     func fetchMyMusicAppFromStorage() -> String?
     func checkLaunchedBefore() -> Bool
     func fetchUserCircleRadius() -> Single<Double>
-    func checkFirstLaunchToday() -> Bool
+    func savePromptOfTheDay(_ prompt: String)
+    func fetchPromptOfTheDay() -> String?
 }
