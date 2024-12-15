@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class RecentSearchesHeaderView: UICollectionReusableView {
+final class RecentSearchesHeaderView: UICollectionReusableView {
     static var reuseIdentifier: String {
         return String(describing: Self.self)
     }

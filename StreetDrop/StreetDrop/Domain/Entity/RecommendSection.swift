@@ -5,15 +5,7 @@
 //  Created by jihye kim on 26/10/2024.
 //
 
-struct RecommendSectionResponse: Decodable {
-    let data: [RecommendSectionDTO]
-}
-
-struct PromptOfTheDayResponse: Decodable {
-    let sentence: String?
-}
-
-struct RecommendSectionDTO: Decodable {
+struct RecommendSectionEntity {
     // Header
     let title: String
     let description: String?
@@ -22,23 +14,17 @@ struct RecommendSectionDTO: Decodable {
     let type: ContentType
     let content: Content
 
-    enum ContentType: String, Decodable {
+    enum ContentType: String {
         case basic
         case keyword
-
-        init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            let rawValue = try container.decode(String.self)
-            self = ContentType(rawValue: rawValue.lowercased()) ?? .basic
-        }
     }
 
-    struct Content: Decodable {
-        let basic: [MusicContent]?
-        let keyword: [KeywordContent]?
+    struct Content {
+        var basic: [MusicContentEntity]?
+        var keyword: [KeywordContentEntity]?
     }
 
-    struct MusicContent: Decodable {
+    struct MusicContentEntity {
         let albumName: String
         let artistName: String
         let songName: String
@@ -48,7 +34,7 @@ struct RecommendSectionDTO: Decodable {
         let genre: [String]
     }
 
-    struct KeywordContent: Decodable {
+    struct KeywordContentEntity {
         let artistName: String
         let albumImage: String
         let albumThumbnailImage: String
@@ -57,7 +43,7 @@ struct RecommendSectionDTO: Decodable {
 
 // MARK: Conversion
 
-extension RecommendSectionDTO {
+extension RecommendSectionEntity {
     typealias HeaderInfo = RecommendMusicSectionModel.Header
     typealias Item = RecommendMusicSectionModel.Item
 

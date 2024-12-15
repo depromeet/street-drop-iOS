@@ -274,6 +274,7 @@
 		F4AA84E12C1F732800CADB1A /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AA84E02C1F732800CADB1A /* DateManager.swift */; };
 		F4AEE56A2D0E169100B65191 /* DefaultFetchingSearchPlaceholderUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AEE5692D0E140C00B65191 /* DefaultFetchingSearchPlaceholderUseCase.swift */; };
 		F4AEE56C2D0E1C7200B65191 /* FetchingSearchPlaceholderUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AEE56B2D0E1C6600B65191 /* FetchingSearchPlaceholderUseCase.swift */; };
+		F4AEE5712D0E4ECA00B65191 /* RecommendSectionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AEE5702D0E4EC300B65191 /* RecommendSectionDTO.swift */; };
 		F4BDF78F2C1DC57500CC6EE6 /* SettingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BDF78E2C1DC57500CC6EE6 /* SettingHeaderView.swift */; };
 		F4C996A12C1E15CD00FF7B9A /* NoticeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C996A02C1E15CC00FF7B9A /* NoticeListViewController.swift */; };
 		F4C996A32C1E1B3400FF7B9A /* NoticeListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C996A22C1E1B3400FF7B9A /* NoticeListCell.swift */; };
@@ -541,6 +542,7 @@
 		F4AA84E02C1F732800CADB1A /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		F4AEE5692D0E140C00B65191 /* DefaultFetchingSearchPlaceholderUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchingSearchPlaceholderUseCase.swift; sourceTree = "<group>"; };
 		F4AEE56B2D0E1C6600B65191 /* FetchingSearchPlaceholderUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingSearchPlaceholderUseCase.swift; sourceTree = "<group>"; };
+		F4AEE5702D0E4EC300B65191 /* RecommendSectionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendSectionDTO.swift; sourceTree = "<group>"; };
 		F4BDF78E2C1DC57500CC6EE6 /* SettingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeaderView.swift; sourceTree = "<group>"; };
 		F4C996A02C1E15CC00FF7B9A /* NoticeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeListViewController.swift; sourceTree = "<group>"; };
 		F4C996A22C1E1B3400FF7B9A /* NoticeListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeListCell.swift; sourceTree = "<group>"; };
@@ -1036,6 +1038,7 @@
 		18F76FAE2A050110006CF9EF /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				F4AEE56F2D0E4EBB00B65191 /* RecommendMusic */,
 				F4AA84D72C1F030300CADB1A /* Notice */,
 				1876F03B2A66E01C0064B887 /* MyLevel */,
 				1876F03A2A66E0170064B887 /* MyLikeList */,
@@ -1571,6 +1574,14 @@
 			path = Notice;
 			sourceTree = "<group>";
 		};
+		F4AEE56F2D0E4EBB00B65191 /* RecommendMusic */ = {
+			isa = PBXGroup;
+			children = (
+				F4AEE5702D0E4EC300B65191 /* RecommendSectionDTO.swift */,
+			);
+			path = RecommendMusic;
+			sourceTree = "<group>";
+		};
 		F4C9969D2C1E159600FF7B9A /* Notice */ = {
 			isa = PBXGroup;
 			children = (
@@ -2004,6 +2015,7 @@
 				18683FDC2A348B15005A94AC /* DefaultMainRepository.swift in Sources */,
 				1876F03F2A66E4E30064B887 /* MyLikeListResponseDTO+Mapping.swift in Sources */,
 				6A7D73DD2BB14015009340E3 /* GradientProgressBar.swift in Sources */,
+				F4AEE5712D0E4ECA00B65191 /* RecommendSectionDTO.swift in Sources */,
 				B46578C32B00BC060024B066 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				F47C1B982CCD242B00C2D546 /* RecommendSection.swift in Sources */,
 				C41BD2E92A38467A0090EF2B /* UIImageView+ImageCache.swift in Sources */,

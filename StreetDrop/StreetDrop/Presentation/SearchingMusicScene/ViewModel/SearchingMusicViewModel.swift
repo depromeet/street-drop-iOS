@@ -17,7 +17,7 @@ protocol SearchingMusicViewModel: ViewModel {
 }
 
 final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
-    private let model: SearchMusicUsecase
+    private let searchMusicUsecase: SearchMusicUsecase
     private let recommendMusicUseCase: RecommendMusicUsecase
     private let searchPlaceholderUseCase: FetchingSearchPlaceholderUseCase
     let location: CLLocation
@@ -42,17 +42,17 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         let recentMusicQueries = PublishRelay<[String]>()
         let selectedMusic = PublishRelay<Music>()
         let promptOfTheDay = PublishRelay<String>()
-        let recommendSections = PublishRelay<[RecommendSectionDTO]>()
+        let recommendSections = PublishRelay<[RecommendSectionEntity]>()
         let recommendSectionModels = PublishRelay<[RecommendMusicSectionModel]>()
     }
     
     init(
-        model: SearchMusicUsecase = DefaultSearchingMusicUsecase(),
+        searchMusicUsecase: SearchMusicUsecase = DefaultSearchingMusicUsecase(),
         recommendMusicUseCase: RecommendMusicUsecase = DefaultRecommendMusicUsecase(),
         searchPlaceholderUseCase: FetchingSearchPlaceholderUseCase = DefaultFetchingSearchPlaceholderUseCase(),
         location: CLLocation
     ) {
-        self.model = model
+        self.searchMusicUsecase = searchMusicUsecase
         self.recommendMusicUseCase = recommendMusicUseCase
         self.searchPlaceholderUseCase = searchPlaceholderUseCase
         self.location = location
@@ -64,7 +64,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         input.viewDidLoadEvent
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                self.model.getRecentSearches()
+                self.searchMusicUsecase.getRecentSearches()
                     .subscribe { result in
                         switch result {
                         case .success(let queries):
@@ -106,7 +106,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
             .bind { [weak self] keyword in
                 if !keyword.isEmpty {
                     self?.searchMusic(output: output, keyword: keyword)
-                    self?.model.saveRecentSearch(keyword: keyword)
+                    self?.searchMusicUsecase.saveRecentSearch(keyword: keyword)
                 }
             }
             .disposed(by: disposedBag)
@@ -120,7 +120,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
         input.keywordQueryDidPressEvent
             .bind { [weak self] keywordQuery in
                 self?.searchMusic(output: output, keyword: keywordQuery)
-                self?.model.saveRecentSearch(keyword: keywordQuery)
+                self?.searchMusicUsecase.saveRecentSearch(keyword: keywordQuery)
             }
             .disposed(by: disposedBag)
         
@@ -142,10 +142,10 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
                 guard let self else { return }
                 
                 Task {
-                    await self.model.deleteRecentSearch(keyword: keyword)
-                    
+                    await self.searchMusicUsecase.deleteRecentSearch(keyword: keyword)
+
                     do {
-                        let recentQueries = try await self.model.getRecentSearches().value
+                        let recentQueries = try await self.searchMusicUsecase.getRecentSearches().value
                         output.recentMusicQueries.accept(recentQueries)
                     } catch {
                         output.recentMusicQueries.accept([])
@@ -158,7 +158,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     }
     
     func searchMusic(output: Output, keyword: String) {
-        model.searchMusic(keyword: keyword)
+        searchMusicUsecase.searchMusic(keyword: keyword)
             .subscribe { result in
                 switch result {
                 case .success(let musicList):
@@ -174,7 +174,7 @@ final class DefaultSearchingMusicViewModel: SearchingMusicViewModel {
     }
     
     func fetchCurrentLocationVillageName() {
-        self.model.getVillageName(
+        self.searchMusicUsecase.getVillageName(
             latitude: self.location.coordinate.latitude,
             longitude: self.location.coordinate.longitude
         )
