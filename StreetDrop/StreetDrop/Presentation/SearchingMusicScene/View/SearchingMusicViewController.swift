@@ -483,7 +483,7 @@ extension SearchingMusicViewController {
         group.interItemSpacing = .fixed(16)
         
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
+        section.orthogonalScrollingBehavior = .groupPaging
         section.interGroupSpacing = 16
         section.contentInsets = NSDirectionalEdgeInsets(
             top: 20, leading: 24, bottom: 48, trailing: 24

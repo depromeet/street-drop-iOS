@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GuideDetailView: UIView {
+final class GuideDetailView: UIView {
     private lazy var speechBubblePointImageView: UIImageView = {
         let speechBubblePointImage = UIImage(named: "speechBubblePoint")
         let imageView = UIImageView(image: speechBubblePointImage)

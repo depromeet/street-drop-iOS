@@ -169,13 +169,11 @@ extension NoticeListViewController: UICollectionViewDelegate {
 
 extension NoticeListViewController {
     func bindAction() {
-        Observable.merge(
-            self.backButton.rx.tap.asObservable()
-        )
-        .bind { _ in
-            self.navigationController?.popViewController(animated: true)
-        }
-        .disposed(by: disposeBag)
+        self.backButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindViewModel() {

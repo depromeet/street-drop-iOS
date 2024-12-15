@@ -9,7 +9,7 @@ import UIKit
 
 import Kingfisher
 
-class RecommendKeywordCell: UICollectionViewCell {
+final class RecommendKeywordCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()

@@ -11,14 +11,14 @@ import RxRelay
 import RxSwift
 import SnapKit
 
-class RecommendHeaderView: UICollectionReusableView {
+final class RecommendHeaderView: UICollectionReusableView {
     static var reuseIdentifier: String {
         return String(describing: Self.self)
     }
     
-    let titleLabel = UILabel()
-    let arrowIconImageView = UIImageView()
-    let infoIconButton = UIButton()
+    private let titleLabel = UILabel()
+    private let arrowIconImageView = UIImageView()
+    private let infoIconButton = UIButton()
     private let disposeBag: DisposeBag = DisposeBag()
     private let infoGuideView = GuideDetailView()
     
