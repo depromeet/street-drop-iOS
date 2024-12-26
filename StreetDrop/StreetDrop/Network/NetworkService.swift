@@ -41,9 +41,9 @@ enum NetworkService {
     case getNoticeDetail(id: Int)
     case checkNewNotice(lastNoticeId: Int?)
     case getRegionFilteredDropCount(state: String, city: String)
-    case getRegionFilteredDropList(state: String, city: String)
+    case getRegionFilteredDropList(state: String, city: String, order: Order)
     case getRegionFilteredLikeCount(state: String, city: String)
-    case getRegionFilteredLikeList(state: String, city: String)
+    case getRegionFilteredLikeList(state: String, city: String, order: Order)
 }
 
 extension NetworkService: TargetType {
@@ -283,11 +283,12 @@ extension NetworkService: TargetType {
                 ],
                 encoding: URLEncoding.queryString
             )
-        case let .getRegionFilteredDropList(state, city):
+        case let .getRegionFilteredDropList(state, city, order):
             return .requestParameters(
                 parameters: [
                     "state": state,
-                    "city": city
+                    "city": city,
+                    "order": order.rawValue
                 ],
                 encoding: URLEncoding.queryString
             )
@@ -299,11 +300,12 @@ extension NetworkService: TargetType {
                 ],
                 encoding: URLEncoding.queryString
             )
-        case let .getRegionFilteredLikeList(state, city):
+        case let .getRegionFilteredLikeList(state, city, order):
             return .requestParameters(
                 parameters: [
                     "state": state,
-                    "city": city
+                    "city": city,
+                    "order": order.rawValue
                 ],
                 encoding: URLEncoding.queryString
             )

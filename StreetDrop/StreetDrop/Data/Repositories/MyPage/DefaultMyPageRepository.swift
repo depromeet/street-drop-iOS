@@ -111,10 +111,10 @@ extension DefaultMyPageRepository: MyPageRepository {
         }
     }
     
-    func fetchRegionFilteredDropList(state: String, city: String) -> Single<TotalMyMusics> {
+    func fetchRegionFilteredDropList(state: String, city: String, order: Order) -> Single<TotalMyMusics> {
         return networkManager.request(
             target: .init(
-                NetworkService.getRegionFilteredDropList(state: state, city: city)
+                NetworkService.getRegionFilteredDropList(state: state, city: city, order: order)
             ),
             responseType: MyDropListResponseDTO.self
         )
@@ -135,10 +135,10 @@ extension DefaultMyPageRepository: MyPageRepository {
         }
     }
     
-    func fetchRegionFilteredLikeList(state: String, city: String) -> Single<TotalMyMusics> {
+    func fetchRegionFilteredLikeList(state: String, city: String, order: Order) -> Single<TotalMyMusics> {
         return networkManager.request(
             target: .init(
-                NetworkService.getRegionFilteredLikeList(state: state, city: city)
+                NetworkService.getRegionFilteredLikeList(state: state, city: city, order: order)
             ),
             responseType: MyDropListResponseDTO.self
         )

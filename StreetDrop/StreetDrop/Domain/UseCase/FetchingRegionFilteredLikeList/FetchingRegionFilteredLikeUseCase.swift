@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol FetchingRegionFilteredLikeUseCase {
-    func execute(state: String, city: String) -> Single<TotalMyMusics>
+    func execute(state: String, city: String, order: Order) -> Single<TotalMyMusics>
 }
 
 final class DefaultFetchingRegionFilteredLikeUseCase: FetchingRegionFilteredLikeUseCase {
@@ -20,7 +20,7 @@ final class DefaultFetchingRegionFilteredLikeUseCase: FetchingRegionFilteredLike
         self.myPageRepository = myPageRepository
     }
     
-    func execute(state: String, city: String) -> Single<TotalMyMusics> {
-        return myPageRepository.fetchRegionFilteredLikeList(state: state, city: city)
+    func execute(state: String, city: String, order: Order) -> Single<TotalMyMusics> {
+        return myPageRepository.fetchRegionFilteredLikeList(state: state, city: city, order: order)
     }
 }

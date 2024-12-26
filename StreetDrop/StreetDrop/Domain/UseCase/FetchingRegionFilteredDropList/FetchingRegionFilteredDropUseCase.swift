@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol FetchingRegionFilteredDropUseCase {
-    func execute(state: String, city: String) -> Single<TotalMyMusics>
+    func execute(state: String, city: String, order: Order) -> Single<TotalMyMusics>
 }
 
 final class DefaultFetchingRegionFilteredDropUseCase: FetchingRegionFilteredDropUseCase {
@@ -20,7 +20,7 @@ final class DefaultFetchingRegionFilteredDropUseCase: FetchingRegionFilteredDrop
         self.myPageRepository = myPageRepository
     }
     
-    func execute(state: String, city: String) -> Single<TotalMyMusics> {
-        return myPageRepository.fetchRegionFilteredDropList(state: state, city: city)
+    func execute(state: String, city: String, order: Order) -> Single<TotalMyMusics> {
+        return myPageRepository.fetchRegionFilteredDropList(state: state, city: city, order: order)
     }
 }
