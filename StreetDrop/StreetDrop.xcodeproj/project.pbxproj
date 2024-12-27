@@ -819,6 +819,7 @@
 			isa = PBXGroup;
 			children = (
 				040685082A01539800377094 /* Assets.xcassets */,
+				C4F5D3E02C5B2265008AF976 /* CityAndDistrictsData.json */,
 				C4D16FC52A1B9184008B076F /* Font */,
 				0406850D2A01539800377094 /* Info.plist */,
 				C44980772BC37CB70001E6C3 /* NaverMaps.plist */,
@@ -1120,7 +1121,6 @@
 		1816ED442A6858C2005009FC /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
-				C4F5D3E02C5B2265008AF976 /* CityAndDistrictsData.json */,
 				1876F0432A66E6E00064B887 /* MyPageRepository.swift */,
 				1816ED452A6858DE005009FC /* NicknameEditRepository.swift */,
 			);

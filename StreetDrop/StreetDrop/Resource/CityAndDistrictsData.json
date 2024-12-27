@@ -2,7 +2,7 @@
     "informations": [
         {
             "name": "전체",
-            "districts": []
+            "districts": ["-"]
         },
         {
             "name": "서울",

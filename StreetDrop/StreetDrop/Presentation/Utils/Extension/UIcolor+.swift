@@ -104,6 +104,10 @@ public extension UIColor {
     static var primaryGradation_3: UIColor {
         UIColor(hexString: "#68EFF7")
     }
+    
+    static var textPrimary: UIColor {
+        UIColor(hexString: "#FFFFFF")
+    }
 
     static var pointGradation_1: UIColor {
         UIColor(hexString: "#98F9FF")
