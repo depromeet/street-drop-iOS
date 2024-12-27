@@ -18,6 +18,7 @@ final class RegionFilteringModalViewController: UIViewController, ModalPresentab
     private let viewModel: RegionFilteringModalViewModel = .init()
     private var cityDataSource: UITableViewDiffableDataSource<Int, String>?
     private var guDataSource: UITableViewDiffableDataSource<Int, String>?
+    private let cityCellClickEvent: PublishRelay<String> = .init()
     
     let modalContainerView: UIView = {
         let view: UIView = .init()
@@ -51,6 +52,9 @@ final class RegionFilteringModalViewController: UIViewController, ModalPresentab
         tableView.rowHeight = 56
         tableView.showsVerticalScrollIndicator = false
         
+        tableView.delegate = self
+        tableView.separatorStyle = .none
+        
         return tableView
     }()
     
@@ -59,6 +63,8 @@ final class RegionFilteringModalViewController: UIViewController, ModalPresentab
         tableView.backgroundColor = .gray800
         tableView.register(GuTableViewCell.self, forCellReuseIdentifier: GuTableViewCell.identifier)
         tableView.rowHeight = 56
+        
+        tableView.separatorStyle = .none
         
         return tableView
     }()
@@ -86,7 +92,8 @@ final class RegionFilteringModalViewController: UIViewController, ModalPresentab
 private extension RegionFilteringModalViewController {
     func bindViewModel() {
         let input: RegionFilteringModalViewModel.Input = .init(
-            viewDidLoadEvent: .just(Void())
+            viewDidLoadEvent: .just(Void()),
+            cityCellClickEvent: cityCellClickEvent.asObservable()
         )
         
         let output = viewModel.convert(input: input, disposedBag: disposeBag)
@@ -151,20 +158,32 @@ private extension RegionFilteringModalViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
         snapshot.appendSections([0])
         snapshot.appendItems(cityNames, toSection: 0)
-        cityDataSource?.apply(snapshot, animatingDifferences: true)
+        cityDataSource?.apply(snapshot, animatingDifferences: false)
     }
     
     func displayGuNames(_ cityNames: [String]) {
         var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
         snapshot.appendSections([0])
         snapshot.appendItems(cityNames, toSection: 0)
-        guDataSource?.apply(snapshot, animatingDifferences: true)
+        guDataSource?.apply(snapshot, animatingDifferences: false) {
+            DispatchQueue.main.async { [weak self] in
+                if let rowCount = self?.guTableView.numberOfRows(inSection: 0), rowCount > 0 {
+                    self?.guTableView.selectRow(
+                        at: IndexPath(row: 0, section: 0),
+                        animated: true,
+                        scrollPosition: .top
+                    )
+                } else {
+                    print("No rows available to select.")
+                }
+            }
+        }
     }
 }
 
 // MARK: - Table View
 
-extension RegionFilteringModalViewController {
+extension RegionFilteringModalViewController: UITableViewDelegate {
     private func configureDataSource() {
         cityDataSource = UITableViewDiffableDataSource<Int, String>(
             tableView: cityTableView,
@@ -191,5 +210,11 @@ extension RegionFilteringModalViewController {
                 return cell
             }
         )
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let selectedCity = cityDataSource?.itemIdentifier(for: indexPath) {
+            cityCellClickEvent.accept(selectedCity)
+        }
     }
 }

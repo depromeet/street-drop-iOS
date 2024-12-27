@@ -32,6 +32,7 @@ final class RegionFilteringModalViewModel: ViewModel {
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
+        let cityCellClickEvent: Observable<String>
     }
     
     struct Output {
@@ -56,6 +57,13 @@ final class RegionFilteringModalViewModel: ViewModel {
             .bind(with: self) { owner, _ in
                 let cityNames = owner.cityAndDistricts.keys.map { String($0) }
                 owner.output.cityNamesRelay.accept(cityNames)
+            }
+            .disposed(by: disposedBag)
+        
+        input.cityCellClickEvent
+            .bind(with: self) { owner, clickedCity in
+                guard let guNames = owner.cityAndDistricts[clickedCity] else { return }
+                owner.output.guNamesRelay.accept(guNames)
             }
             .disposed(by: disposedBag)
         

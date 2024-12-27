@@ -15,6 +15,7 @@ final class GuTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         nameLabel.textColor = selected ? .textPrimary : .gray400
+        contentView.backgroundColor = .gray800
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -45,13 +46,13 @@ final class GuTableViewCell: UITableViewCell {
 
 private extension GuTableViewCell {
     func configureUI() {
-        backgroundColor = .gray600
+        contentView.backgroundColor = .gray800
         
-        addSubview(nameLabel)
+        contentView.addSubview(nameLabel)
         
         nameLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview()
+            $0.leading.equalToSuperview().inset(24)
         }
     }
 }
